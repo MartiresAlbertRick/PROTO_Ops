@@ -1,34 +1,40 @@
 ﻿@model OPSCO_Web.Models.OSC_Team
 
 @{
+    /**/
+
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
-
+<h3>Team</h3>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-        <h4>OSC_Team</h4>
+        <h4>Edit</h4>
         <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Url.Action("Index", "Team", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+        <br />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.TeamId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
                 @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DepartmentId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-4">
+                @Html.DropDownList("DepartmentId", (IEnumerable<SelectListItem>)ViewBag.Departments, "--Select Department--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_depname" })
                 @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,35 +48,24 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BIUserGroup, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BIUserGroup, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BIUserGroup, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AIQUserGroup, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AIQUserGroup, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AIQUserGroup, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+    <div class="navbar navbar-default navbar-fixed-bottom table-nav">
+        <div class="container-fluid">
+            <div class="col-md-12 navbar-form">
+                <button type="submit" disabled class="btn btn-primary btn-sm pull-right" id="submit">
+                    <i class="fa fa-save"></i> Save
+                </button>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="~/Scripts/Site.js"></script>
+<script>
+    $(function () {
+        validate($('#submit'));
+    });
+</script>

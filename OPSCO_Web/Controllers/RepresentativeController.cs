@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace OPSCO_Web.Controllers
 {
@@ -15,9 +17,33 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: Representative
-        public ActionResult Index()
+        public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-            return View(db.Representatives.ToList());
+            foreach (OSC_Representative rep in db.Representatives)
+            {
+                rep.Team = db.Teams.Find(rep.TeamId);
+                rep.Location = db.Locations.Find(rep.LocationId);
+                rep.CoreRole = db.CoreRoles.Find(rep.CoreRoleId);
+                rep.FullName = rep.FirstName + " " + rep.LastName;
+            }
+
+            int? defaultPageSize = 10;
+
+            if (pageSize != null)
+            {
+                defaultPageSize = pageSize;
+            }
+
+            var reps = (from r in db.Representatives
+                        select r);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                reps = reps.Where(r => r.FirstName.Contains(searchString) || r.LastName.Contains(searchString));
+            }
+
+            return View(reps.OrderBy(r => r.TeamId).ThenBy(r => r.FirstName).ToPagedList(page ?? 1, (int)defaultPageSize));
+            //return View(db.Representatives.ToList());
         }
 
         // GET: Representative/Details/5
@@ -38,6 +64,7 @@ namespace OPSCO_Web.Controllers
         // GET: Representative/Create
         public ActionResult Create()
         {
+            ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
             return View();
         }
 

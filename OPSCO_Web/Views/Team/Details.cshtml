@@ -3,56 +3,41 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
+<h3>Team</h3>
 <div>
-    <h4>OSC_Team</h4>
+    <h4>Details</h4>
     <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <a href="@Url.Action("Index", "Team", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+                <a href="@Url.Action("Edit", "Team", new { id = Model.TeamId } )" class="btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.TeamName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.TeamName)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.DepartmentId)
+            Department
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.DepartmentId)
+            @Html.DisplayFor(model => model.Department.DepartmentName)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.IsActive)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BIUserGroup)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BIUserGroup)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AIQUserGroup)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AIQUserGroup)
-        </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TeamId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

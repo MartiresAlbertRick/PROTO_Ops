@@ -50,23 +50,10 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<script type="text/javascript" src="~/Scripts/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
 <script>
     $(function () {
         validate($('#submit'));
-
-        $('txt_depname').focusout(function () {
-            validate($('#submit'));
-        });
-
-        $("#isactive").change(function () {
-
-            // check if checkbox is being checked
-            // taken from /a/23007488 by Alexandru Chichinete
-            if ($("#isactive").is(":checked")) {
-                // enable form submit
-            }
-        });
     });
 </script>

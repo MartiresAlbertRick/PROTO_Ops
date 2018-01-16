@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using PagedList;
 using PagedList.Mvc;
-using System.Threading.Tasks;
 
 namespace OPSCO_Web.Controllers
 {
@@ -37,7 +36,7 @@ namespace OPSCO_Web.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                teams = teams.Where(t => t.TeamName.Contains(searchString) || t.Department.DepartmentName.Contains(searchString));
+                teams = teams.Where(t => t.TeamName.Contains(searchString));
             }
 
             return View(teams.OrderBy(t => t.DepartmentId).ThenBy(t => t.TeamName).ToPagedList(page ?? 1, (int)defaultPageSize));
@@ -52,6 +51,7 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_Team oSC_Team = db.Teams.Find(id);
+            oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
             if (oSC_Team == null)
             {
                 return HttpNotFound();
@@ -86,6 +86,7 @@ namespace OPSCO_Web.Controllers
         // GET: Team/Edit/5
         public ActionResult Edit(long? id)
         {
+            ViewBag.Departments = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -122,6 +123,7 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_Team oSC_Team = db.Teams.Find(id);
+            oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
             if (oSC_Team == null)
             {
                 return HttpNotFound();

@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Team";
 }
-<h2>Team</h2>
+<h3>Team</h3>
 <div class="row">
     <div class="col-md-4">
         <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "Team", null)">
@@ -65,35 +65,29 @@
     <div class="container-fluid">
         <div class="col-md-12">
             @Html.DropDownList("PageSize",
-                                   new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
-                                   "Key", "Value", Model.PageSize),
-                                   new { @class = "form-control input-sm page-size", id = "pagesizelist" })
+                new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
+                "Key", "Value", Model.PageSize),
+                new { @class = "form-control input-sm page-size", id = "pagesizelist" })
         </div>
         <div class="col-md-12">
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-                                new PagedListRenderOptions()
-                                {
-                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                                    DisplayPageCountAndCurrentLocation = true,
-                                    DisplayItemSliceAndTotal = true
-                                })
-        </div>
+                new PagedListRenderOptions()
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayPageCountAndCurrentLocation = true,
+                    MaximumPageNumbersToDisplay = 5,
+                    DisplayItemSliceAndTotal = true
+                })
+</div>
     </div>
 </div>
 
-<script type="text/javascript" src="~/Scripts/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
 <script>
-    //Code effective but with problem
-    //var search = $('#search');
-    //
-    //search.putCursorAtEnd().on('focus', function () {
-    //    search.putCursorAtEnd();
-    //});
-
     $('#pagesizelist').change(function () {
         var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
         window.location.href = url;
