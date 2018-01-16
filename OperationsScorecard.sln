@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPSCO_Web", "OPSCO_Web\OPSCO_Web.csproj", "{9C7E3997-AAE2-42AF-BF8E-B40AA73E16F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPSCO_Web.Tests", "OPSCO_Web.Tests\OPSCO_Web.Tests.csproj", "{27BD0D21-5CD6-473F-9298-18257A677BC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C7E3997-AAE2-42AF-BF8E-B40AA73E16F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7E3997-AAE2-42AF-BF8E-B40AA73E16F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7E3997-AAE2-42AF-BF8E-B40AA73E16F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7E3997-AAE2-42AF-BF8E-B40AA73E16F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27BD0D21-5CD6-473F-9298-18257A677BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27BD0D21-5CD6-473F-9298-18257A677BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27BD0D21-5CD6-473F-9298-18257A677BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27BD0D21-5CD6-473F-9298-18257A677BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E3E9A62-86EF-4695-AC28-98D5270CE669}
+	EndGlobalSection
+EndGlobal

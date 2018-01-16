@@ -1,0 +1,160 @@
+﻿body {
+    background: url("../Images/osc_bg.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 12.5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.alert {
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+}
+
+.searchbox {
+    position: relative;
+}
+
+.searchbox > input[type=text] {
+    border-radius: 14px;
+    padding-right: 25px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.page-size {
+    max-width: 80px;
+}
+
+/*table-nav*/
+
+#wrapper > #page-content-wrapper > .navbar.table-nav {
+    left: 250px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled > #page-content-wrapper > .navbar.table-nav {
+    left: 50px;
+    -webkit-transition: all 0.5s ease;
+       -moz-transition: all 0.5s ease;
+         -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+}
+
+#wrapper > #page-content-wrapper > form > .navbar.table-nav,
+#wrapper > #page-content-wrapper > form > .navbar.table-nav .navbar-form {
+    left: 250px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled > #page-content-wrapper > form > .navbar.table-nav,
+#wrapper > #page-content-wrapper > form > .navbar.table-nav .navbar-form {
+    left: 50px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper > #page-content-wrapper > form > .navbar.table-nav .navbar-form, 
+#wrapper.toggled > #page-content-wrapper > form > .navbar.table-nav .navbar-form {
+    margin-right: 50px;
+}
+
+        /*validation*/
+.input-required, .unfilled {
+    border-left: solid 2.5px #a94442;
+}
+
+.filled {
+    border-left: solid 2.5px #3c763d;
+}
+
+/*switch*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px; /*60px*/
+    height: 24px; /*34px*/
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px; /*26px*/
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px); /*26px*/
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+/*switch*/

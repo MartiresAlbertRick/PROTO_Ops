@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OSCModelStoreContainer" CdmEntityContainer="OSCEntities">
+    <EntitySetMapping Name="OSC_ActivityTracker">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ActivityTracker">
+        <MappingFragment StoreEntitySet="OSC_ActivityTracker">
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="NoOfHours" ColumnName="NoOfHours" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_BusinessArea">
+      <EntityTypeMapping TypeName="OSCModel.OSC_BusinessArea">
+        <MappingFragment StoreEntitySet="OSC_BusinessArea">
+          <ScalarProperty Name="BusinessAreaId" ColumnName="BusinessAreaId" />
+          <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+          <ScalarProperty Name="BusinessAreaDescription" ColumnName="BusinessAreaDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_CoreRole">
+      <EntityTypeMapping TypeName="OSCModel.OSC_CoreRole">
+        <MappingFragment StoreEntitySet="OSC_CoreRole">
+          <ScalarProperty Name="CoreRoleId" ColumnName="CoreRoleId" />
+          <ScalarProperty Name="CoreRole" ColumnName="CoreRole" />
+          <ScalarProperty Name="Tier" ColumnName="Tier" />
+          <ScalarProperty Name="MonthlyHours" ColumnName="MonthlyHours" />
+          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Department">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Department">
+        <MappingFragment StoreEntitySet="OSC_Department">
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_IndividualScorecard_Current">
+      <EntityTypeMapping TypeName="OSCModel.OSC_IndividualScorecard_Current">
+        <MappingFragment StoreEntitySet="OSC_IndividualScorecard_Current">
+          <ScalarProperty Name="IndividualScorecardId" ColumnName="IndividualScorecardId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Location">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Location">
+        <MappingFragment StoreEntitySet="OSC_Location">
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Manager">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Manager">
+        <MappingFragment StoreEntitySet="OSC_Manager">
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="PRDUserId" ColumnName="PRDUserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ManualEntry">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ManualEntry">
+        <MappingFragment StoreEntitySet="OSC_ManualEntry">
+          <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="GainLossOccurances" ColumnName="GainLossOccurances" />
+          <ScalarProperty Name="GainLossAmount" ColumnName="GainLossAmount" />
+          <ScalarProperty Name="CallManagementScore" ColumnName="CallManagementScore" />
+          <ScalarProperty Name="ProjectResponsibility" ColumnName="ProjectResponsibility" />
+          <ScalarProperty Name="ScheduleAdherence" ColumnName="ScheduleAdherence" />
+          <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+          <ScalarProperty Name="ProductAccuracy" ColumnName="ProductAccuracy" />
+          <ScalarProperty Name="Commitment" ColumnName="Commitment" />
+          <ScalarProperty Name="JHValues" ColumnName="JHValues" />
+          <ScalarProperty Name="CallEfficiency" ColumnName="CallEfficiency" />
+          <ScalarProperty Name="Engagement" ColumnName="Engagement" />
+          <ScalarProperty Name="AdministrativeProcedures" ColumnName="AdministrativeProcedures" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ActiveProjects" ColumnName="ActiveProjects" />
+          <ScalarProperty Name="CompletedProjects" ColumnName="CompletedProjects" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_NptCategory">
+      <EntityTypeMapping TypeName="OSCModel.OSC_NptCategory">
+        <MappingFragment StoreEntitySet="OSC_NptCategory">
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+          <ScalarProperty Name="IsCategory" ColumnName="IsCategory" />
+          <ScalarProperty Name="IsSubCategory" ColumnName="IsSubCategory" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Representative">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Representative">
+        <MappingFragment StoreEntitySet="OSC_Representative">
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="PRDUserId" ColumnName="PRDUserId" />
+          <ScalarProperty Name="AIQUserId" ColumnName="AIQUserId" />
+          <ScalarProperty Name="BIUserId" ColumnName="BIUserId" />
+          <ScalarProperty Name="WorkdayId" ColumnName="WorkdayId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="CoreRoleId" ColumnName="CoreRoleId" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="OnShoreRep" ColumnName="OnShoreRep" />
+          <ScalarProperty Name="PhoneRep" ColumnName="PhoneRep" />
+          <ScalarProperty Name="WorkHours" ColumnName="WorkHours" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="HasPrevious" ColumnName="HasPrevious" />
+          <ScalarProperty Name="PreviousId" ColumnName="PreviousId" />
+          <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Team">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Team">
+        <MappingFragment StoreEntitySet="OSC_Team">
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="BIUserGroup" ColumnName="BIUserGroup" />
+          <ScalarProperty Name="AIQUserGroup" ColumnName="AIQUserGroup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_WorkStatus">
+      <EntityTypeMapping TypeName="OSCModel.OSC_WorkStatus">
+        <MappingFragment StoreEntitySet="OSC_WorkStatus">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_WorkType">
+      <EntityTypeMapping TypeName="OSCModel.OSC_WorkType">
+        <MappingFragment StoreEntitySet="OSC_WorkType">
+          <ScalarProperty Name="WorkTypeId" ColumnName="WorkTypeId" />
+          <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+          <ScalarProperty Name="WorkTypeDescription" ColumnName="WorkTypeDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="set_group">
+      <EntityTypeMapping TypeName="OSCModel.set_group">
+        <MappingFragment StoreEntitySet="set_group">
+          <ScalarProperty Name="grp_id" ColumnName="grp_id" />
+          <ScalarProperty Name="grp_name" ColumnName="grp_name" />
+          <ScalarProperty Name="grp_desc" ColumnName="grp_desc" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="set_module">
+      <EntityTypeMapping TypeName="OSCModel.set_module">
+        <MappingFragment StoreEntitySet="set_module">
+          <ScalarProperty Name="mod_id" ColumnName="mod_id" />
+          <ScalarProperty Name="mod_name" ColumnName="mod_name" />
+          <ScalarProperty Name="mod_desc" ColumnName="mod_desc" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="set_user">
+      <EntityTypeMapping TypeName="OSCModel.set_user">
+        <MappingFragment StoreEntitySet="set_user">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+          <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+          <ScalarProperty Name="user_middle_name" ColumnName="user_middle_name" />
+          <ScalarProperty Name="can_PROD" ColumnName="can_PROD" />
+          <ScalarProperty Name="can_UAT" ColumnName="can_UAT" />
+          <ScalarProperty Name="can_PEER" ColumnName="can_PEER" />
+          <ScalarProperty Name="can_DEV" ColumnName="can_DEV" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_CustomizeScorecard">
+      <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
+        <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportAIQ">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportAIQ">
+        <MappingFragment StoreEntitySet="OSC_ImportAIQ">
+          <ScalarProperty Name="AIQReportId" ColumnName="AIQReportId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="Agent" ColumnName="Agent" />
+          <ScalarProperty Name="IntervalStaffedDuration" ColumnName="IntervalStaffedDuration" />
+          <ScalarProperty Name="TotalPercServiceTime" ColumnName="TotalPercServiceTime" />
+          <ScalarProperty Name="TotalACDCalls" ColumnName="TotalACDCalls" />
+          <ScalarProperty Name="ExtInCalls" ColumnName="ExtInCalls" />
+          <ScalarProperty Name="ExtInAvgActiveDur" ColumnName="ExtInAvgActiveDur" />
+          <ScalarProperty Name="ExtOutCalls" ColumnName="ExtOutCalls" />
+          <ScalarProperty Name="AvgExtOutActiveDur" ColumnName="AvgExtOutActiveDur" />
+          <ScalarProperty Name="ACDWrapUpTime" ColumnName="ACDWrapUpTime" />
+          <ScalarProperty Name="ACDTalkTime" ColumnName="ACDTalkTime" />
+          <ScalarProperty Name="ACDRingTime" ColumnName="ACDRingTime" />
+          <ScalarProperty Name="Aux" ColumnName="Aux" />
+          <ScalarProperty Name="AvgHoldDur" ColumnName="AvgHoldDur" />
+          <ScalarProperty Name="IntervalIdleDur" ColumnName="IntervalIdleDur" />
+          <ScalarProperty Name="Transfers" ColumnName="Transfers" />
+          <ScalarProperty Name="HeldContacts" ColumnName="HeldContacts" />
+          <ScalarProperty Name="Redirects" ColumnName="Redirects" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportBIProd">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIProd">
+        <MappingFragment StoreEntitySet="OSC_ImportBIProd">
+          <ScalarProperty Name="BIPReportId" ColumnName="BIPReportId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
+          <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+          <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="Date2" ColumnName="Date2" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportBIQual">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIQual">
+        <MappingFragment StoreEntitySet="OSC_ImportBIQual">
+          <ScalarProperty Name="BIQReportId" ColumnName="BIQReportId" />
+          <ScalarProperty Name="Repid" ColumnName="Repid" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
+          <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+          <ScalarProperty Name="Field1" ColumnName="Field1" />
+          <ScalarProperty Name="Field2" ColumnName="Field2" />
+          <ScalarProperty Name="Count1" ColumnName="Count1" />
+          <ScalarProperty Name="Count2" ColumnName="Count2" />
+          <ScalarProperty Name="Count3" ColumnName="Count3" />
+          <ScalarProperty Name="Count4" ColumnName="Count4" />
+          <ScalarProperty Name="ErrorPoints" ColumnName="ErrorPoints" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportNPT">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportNPT">
+        <MappingFragment StoreEntitySet="OSC_ImportNPT">
+          <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
+          <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
+          <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportTA">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportTA">
+        <MappingFragment StoreEntitySet="OSC_ImportTA">
+          <ScalarProperty Name="TAReportId" ColumnName="TAReportId" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="AssignedId" ColumnName="AssignedId" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleInt" ColumnName="MiddleInt" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+          <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+          <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Queue" ColumnName="Queue" />
+          <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+          <ScalarProperty Name="SuspendDate" ColumnName="SuspendDate" />
+          <ScalarProperty Name="UnsuspendDate" ColumnName="UnsuspendDate" />
+          <ScalarProperty Name="LastStatusUpdate" ColumnName="LastStatusUpdate" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="GAC" ColumnName="GAC" />
+          <ScalarProperty Name="Assoc" ColumnName="Assoc" />
+          <ScalarProperty Name="Certificate" ColumnName="Certificate" />
+          <ScalarProperty Name="CheckAmount" ColumnName="CheckAmount" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
+          <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+          <ScalarProperty Name="AdminSystem" ColumnName="AdminSystem" />
+          <ScalarProperty Name="CheckAmountTotal" ColumnName="CheckAmountTotal" />
+          <ScalarProperty Name="UCIVendorMatchDate" ColumnName="UCIVendorMatchDate" />
+          <ScalarProperty Name="ReasonCodeForAdv" ColumnName="ReasonCodeForAdv" />
+          <ScalarProperty Name="ReasonDescription" ColumnName="ReasonDescription" />
+          <ScalarProperty Name="TinSourceType" ColumnName="TinSourceType" />
+          <ScalarProperty Name="SSBusinessUnit" ColumnName="SSBusinessUnit" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ManageGroup">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
+        <MappingFragment StoreEntitySet="OSC_ManageGroup">
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ScorecardField">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ScorecardField">
+        <MappingFragment StoreEntitySet="OSC_ScorecardField">
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+          <ScalarProperty Name="IsCore" ColumnName="IsCore" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamNptCategory">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamNptCategory">
+        <MappingFragment StoreEntitySet="OSC_TeamNptCategory">
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamWorkItem">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
+        <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
+          <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+          <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="January" ColumnName="January" />
+          <ScalarProperty Name="February" ColumnName="February" />
+          <ScalarProperty Name="March" ColumnName="March" />
+          <ScalarProperty Name="April" ColumnName="April" />
+          <ScalarProperty Name="May" ColumnName="May" />
+          <ScalarProperty Name="June" ColumnName="June" />
+          <ScalarProperty Name="July" ColumnName="July" />
+          <ScalarProperty Name="August" ColumnName="August" />
+          <ScalarProperty Name="September" ColumnName="September" />
+          <ScalarProperty Name="October" ColumnName="October" />
+          <ScalarProperty Name="November" ColumnName="November" />
+          <ScalarProperty Name="December" ColumnName="December" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

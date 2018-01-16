@@ -1,0 +1,14 @@
+﻿.table {
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+    background-color: #fff;
+}
+
+.table thead tr th {
+    vertical-align: middle;
+}
+
+.table thead tr {
+    color: #fff;
+    background-color: #35597D;
+}

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<OPSCO_Web.Models.OSC_ActivityTracker>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RepId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Month)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TeamId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Month)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Activity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeamId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ActivityId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ActivityId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ActivityId })
+        </td>
+    </tr>
+}
+
+</table>

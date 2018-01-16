@@ -1,0 +1,147 @@
+﻿@model IEnumerable<OPSCO_Web.Models.OSC_Representative>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PRDUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AIQUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BIUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkdayId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TeamId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoreRoleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OnShoreRep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneRep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasPrevious)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreviousId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCurrent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRDUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AIQUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BIUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkdayId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeamId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoreRoleId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OnShoreRep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneRep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HasPrevious)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PreviousId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCurrent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RepId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RepId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RepId })
+        </td>
+    </tr>
+}
+
+</table>

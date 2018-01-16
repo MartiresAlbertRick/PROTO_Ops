@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OSCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="OSC_ActivityTracker">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="DateFrom" Type="DateTime" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
+    <Property Name="Activity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NoOfHours" Type="Double" />
+    <Property Name="DateModified" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NoOfDays" Type="Double" />
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_BusinessArea">
+    <Key>
+      <PropertyRef Name="BusinessAreaCode" />
+    </Key>
+    <Property Name="BusinessAreaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BusinessAreaDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_CoreRole">
+    <Key>
+      <PropertyRef Name="CoreRoleId" />
+    </Key>
+    <Property Name="CoreRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CoreRole" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Tier" Type="Int32" />
+    <Property Name="MonthlyHours" Type="Double" />
+    <Property Name="Percentage" Type="Double" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OSC_Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_IndividualScorecard_Current">
+    <Key>
+      <PropertyRef Name="IndividualScorecardId" />
+    </Key>
+    <Property Name="IndividualScorecardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OSC_Manager">
+    <Key>
+      <PropertyRef Name="ManagerId" />
+    </Key>
+    <Property Name="ManagerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PRDUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ManualEntry">
+    <Key>
+      <PropertyRef Name="EntryId" />
+    </Key>
+    <Property Name="EntryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="GainLossOccurances" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GainLossAmount" Type="Double" />
+    <Property Name="CallManagementScore" Type="Double" />
+    <Property Name="ProjectResponsibility" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ScheduleAdherence" Type="Double" />
+    <Property Name="Compliance" Type="Double" />
+    <Property Name="ProductAccuracy" Type="Double" />
+    <Property Name="Commitment" Type="Double" />
+    <Property Name="JHValues" Type="Double" />
+    <Property Name="CallEfficiency" Type="Double" />
+    <Property Name="Engagement" Type="Double" />
+    <Property Name="AdministrativeProcedures" Type="Double" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="ActiveProjects" Type="Int32" />
+    <Property Name="CompletedProjects" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OSC_NptCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsCategory" Type="Boolean" Nullable="false" />
+    <Property Name="IsSubCategory" Type="Boolean" Nullable="false" />
+    <Property Name="Category" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Representative">
+    <Key>
+      <PropertyRef Name="RepId" />
+    </Key>
+    <Property Name="RepId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PRDUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AIQUserId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BIUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WorkdayId" Type="Int64" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="CoreRoleId" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="OnShoreRep" Type="Boolean" />
+    <Property Name="PhoneRep" Type="Boolean" />
+    <Property Name="WorkHours" Type="Double" />
+    <Property Name="LocationId" Type="Int32" />
+    <Property Name="HasPrevious" Type="Boolean" />
+    <Property Name="PreviousId" Type="Int64" />
+    <Property Name="IsCurrent" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Team">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DepartmentId" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="BIUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AIQUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_WorkStatus">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="StatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StatusDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_WorkType">
+    <Key>
+      <PropertyRef Name="WorkTypeCode" />
+    </Key>
+    <Property Name="WorkTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WorkTypeDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="set_group">
+    <Key>
+      <PropertyRef Name="grp_id" />
+    </Key>
+    <Property Name="grp_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="grp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="grp_desc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="set_module">
+    <Key>
+      <PropertyRef Name="mod_id" />
+    </Key>
+    <Property Name="mod_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="mod_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mod_desc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="set_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="user_name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="user_last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user_first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user_middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="can_PROD" Type="Boolean" />
+    <Property Name="can_UAT" Type="Boolean" />
+    <Property Name="can_PEER" Type="Boolean" />
+    <Property Name="can_DEV" Type="Boolean" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="OSC_CustomizeScorecard">
+    <Key>
+      <PropertyRef Name="TeamId" />
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="FieldId" Type="Int32" Nullable="false" />
+    <Property Name="Order" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OSC_ImportAIQ">
+    <Key>
+      <PropertyRef Name="AIQReportId" />
+    </Key>
+    <Property Name="AIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="Agent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IntervalStaffedDuration" Type="Int64" />
+    <Property Name="TotalPercServiceTime" Type="Double" />
+    <Property Name="TotalACDCalls" Type="Int32" />
+    <Property Name="ExtInCalls" Type="Int32" />
+    <Property Name="ExtInAvgActiveDur" Type="Int64" />
+    <Property Name="ExtOutCalls" Type="Int32" />
+    <Property Name="AvgExtOutActiveDur" Type="Int64" />
+    <Property Name="ACDWrapUpTime" Type="Int64" />
+    <Property Name="ACDTalkTime" Type="Int64" />
+    <Property Name="ACDRingTime" Type="Int64" />
+    <Property Name="Aux" Type="Int64" />
+    <Property Name="AvgHoldDur" Type="Int64" />
+    <Property Name="IntervalIdleDur" Type="Int64" />
+    <Property Name="Transfers" Type="Int32" />
+    <Property Name="HeldContacts" Type="Int32" />
+    <Property Name="Redirects" Type="Int32" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_ImportBIProd">
+    <Key>
+      <PropertyRef Name="BIPReportId" />
+    </Key>
+    <Property Name="BIPReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Count" Type="Int32" />
+    <Property Name="Date1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Date2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Double" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_ImportBIQual">
+    <Key>
+      <PropertyRef Name="BIQReportId" />
+    </Key>
+    <Property Name="BIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Repid" Type="Int64" />
+    <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Field1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Field2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Count1" Type="Int64" />
+    <Property Name="Count2" Type="Int64" />
+    <Property Name="Count3" Type="Int64" />
+    <Property Name="Count4" Type="Int64" />
+    <Property Name="ErrorPoints" Type="Double" />
+    <Property Name="Rating" Type="Double" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_ImportNPT">
+    <Key>
+      <PropertyRef Name="NPTReportId" />
+    </Key>
+    <Property Name="NPTReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="Activity" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfActivity" Type="DateTime" Precision="0" />
+    <Property Name="TimeSpent" Type="Double" />
+    <Property Name="TypeOfActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int64" />
+    <Property Name="SubCategoryId" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OSC_ImportTA">
+    <Key>
+      <PropertyRef Name="TAReportId" />
+    </Key>
+    <Property Name="TAReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="AssignedId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleInt" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+    <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Queue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Suspended" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="SuspendDate" Type="DateTime" Precision="3" />
+    <Property Name="UnsuspendDate" Type="DateTime" Precision="3" />
+    <Property Name="LastStatusUpdate" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GAC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Assoc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Certificate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="CheckAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AdminSystem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckAmountTotal" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="UCIVendorMatchDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReasonCodeForAdv" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ReasonDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TinSourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SSBusinessUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_ManageGroup">
+    <Key>
+      <PropertyRef Name="ManagerId" />
+      <PropertyRef Name="EntityId" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ManagerId" Type="Int64" Nullable="false" />
+    <Property Name="EntityId" Type="Int64" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ScorecardField">
+    <Key>
+      <PropertyRef Name="FieldId" />
+      <PropertyRef Name="FieldName" />
+    </Key>
+    <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FieldName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsCore" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OSC_TeamNptCategory">
+    <Key>
+      <PropertyRef Name="TeamId" />
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="CategoryId" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_TeamWorkItem">
+    <Key>
+      <PropertyRef Name="WorkItemNo" />
+    </Key>
+    <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="January" Type="Double" />
+    <Property Name="February" Type="Double" />
+    <Property Name="March" Type="Double" />
+    <Property Name="April" Type="Double" />
+    <Property Name="May" Type="Double" />
+    <Property Name="June" Type="Double" />
+    <Property Name="July" Type="Double" />
+    <Property Name="August" Type="Double" />
+    <Property Name="September" Type="Double" />
+    <Property Name="October" Type="Double" />
+    <Property Name="November" Type="Double" />
+    <Property Name="December" Type="Double" />
+    <Property Name="Year" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
+    <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" />
+    <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" />
+    <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" />
+    <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" />
+    <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" />
+    <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" />
+    <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" />
+    <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" />
+    <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" />
+    <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" />
+    <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
+    <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
+    <EntitySet Name="set_group" EntityType="Self.set_group" />
+    <EntitySet Name="set_module" EntityType="Self.set_module" />
+    <EntitySet Name="set_user" EntityType="Self.set_user" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" />
+    <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" />
+    <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
+    <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
+    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" />
+    <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
+    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
+  </EntityContainer>
+</Schema>

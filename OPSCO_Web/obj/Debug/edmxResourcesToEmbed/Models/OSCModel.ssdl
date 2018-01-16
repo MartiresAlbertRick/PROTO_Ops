@@ -1,0 +1,763 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="OSC_ActivityTracker">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="200" />
+    <Property Name="NoOfHours" Type="float" />
+    <Property Name="DateModified" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoOfDays" Type="float" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_BusinessArea">
+    <Key>
+      <PropertyRef Name="BusinessAreaCode" />
+    </Key>
+    <Property Name="BusinessAreaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessAreaCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="BusinessAreaDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_CoreRole">
+    <Key>
+      <PropertyRef Name="CoreRoleId" />
+    </Key>
+    <Property Name="CoreRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CoreRole" Type="nvarchar" MaxLength="255" />
+    <Property Name="Tier" Type="int" />
+    <Property Name="MonthlyHours" Type="float" />
+    <Property Name="Percentage" Type="float" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_CustomizeScorecard">
+    <Key>
+      <PropertyRef Name="TeamId" />
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="FieldId" Type="int" Nullable="false" />
+    <Property Name="Order" Type="int" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+  </EntityType>
+  <EntityType Name="OSC_Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportAIQ">
+    <Key>
+      <PropertyRef Name="AIQReportId" />
+    </Key>
+    <Property Name="AIQReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Agent" Type="nvarchar" MaxLength="100" />
+    <Property Name="IntervalStaffedDuration" Type="bigint" />
+    <Property Name="TotalPercServiceTime" Type="float" />
+    <Property Name="TotalACDCalls" Type="int" />
+    <Property Name="ExtInCalls" Type="int" />
+    <Property Name="ExtInAvgActiveDur" Type="bigint" />
+    <Property Name="ExtOutCalls" Type="int" />
+    <Property Name="AvgExtOutActiveDur" Type="bigint" />
+    <Property Name="ACDWrapUpTime" Type="bigint" />
+    <Property Name="ACDTalkTime" Type="bigint" />
+    <Property Name="ACDRingTime" Type="bigint" />
+    <Property Name="Aux" Type="bigint" />
+    <Property Name="AvgHoldDur" Type="bigint" />
+    <Property Name="IntervalIdleDur" Type="bigint" />
+    <Property Name="Transfers" Type="int" />
+    <Property Name="HeldContacts" Type="int" />
+    <Property Name="Redirects" Type="int" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_ImportAIQ_temp">
+          <Property Name="Agent" Type="nvarchar" MaxLength="100" />
+          <Property Name="IntervalStaffedDuration" Type="nvarchar" MaxLength="20" />
+          <Property Name="TotalPercServiceTime" Type="float" />
+          <Property Name="TotalACDCalls" Type="int" />
+          <Property Name="ExtInCalls" Type="int" />
+          <Property Name="ExtInAvgActiveDur" Type="nvarchar" MaxLength="20" />
+          <Property Name="ExtOutCalls" Type="int" />
+          <Property Name="AvgExtOutActiveDur" Type="nvarchar" MaxLength="20" />
+          <Property Name="ACDWrapUpTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="ACDTalkTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="ACDRingTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="Aux" Type="nvarchar" MaxLength="20" />
+          <Property Name="AvgHoldDur" Type="nvarchar" MaxLength="20" />
+          <Property Name="IntervalIdleDur" Type="nvarchar" MaxLength="20" />
+          <Property Name="Transfers" Type="int" />
+          <Property Name="HeldContacts" Type="int" />
+          <Property Name="Redirects" Type="int" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportBIProd">
+    <Key>
+      <PropertyRef Name="BIPReportId" />
+    </Key>
+    <Property Name="BIPReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Count" Type="int" />
+    <Property Name="Date1" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date2" Type="nvarchar" MaxLength="20" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_ImportBIProd_temp">
+          <Property Name="Group" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+          <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+          <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Date1" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date2" Type="nvarchar" MaxLength="20" />
+          <Property Name="Rating" Type="float" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportBIQual">
+    <Key>
+      <PropertyRef Name="BIQReportId" />
+    </Key>
+    <Property Name="BIQReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Repid" Type="bigint" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="Field1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Field2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Count1" Type="bigint" />
+    <Property Name="Count2" Type="bigint" />
+    <Property Name="Count3" Type="bigint" />
+    <Property Name="Count4" Type="bigint" />
+    <Property Name="ErrorPoints" Type="float" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_ImportBIQual_temp">
+          <Property Name="Group" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+          <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+          <Property Name="Field1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Field2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Count1" Type="bigint" />
+          <Property Name="Count2" Type="bigint" />
+          <Property Name="Count3" Type="bigint" />
+          <Property Name="Count4" Type="bigint" />
+          <Property Name="ErrorPoints" Type="float" />
+          <Property Name="Rating" Type="float" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportNPT">
+    <Key>
+      <PropertyRef Name="NPTReportId" />
+    </Key>
+    <Property Name="NPTReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="1000" />
+    <Property Name="DateOfActivity" Type="date" />
+    <Property Name="TimeSpent" Type="float" />
+    <Property Name="TypeOfActivity" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+    <Property Name="ItemType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Path" Type="nvarchar" MaxLength="1000" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Source" Type="nvarchar" MaxLength="10" />
+    <Property Name="CategoryId" Type="bigint" />
+    <Property Name="SubCategoryId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_ImportNPT_temp">
+          <Property Name="Activity" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DateOfActivity" Type="date" />
+          <Property Name="TimeSpent" Type="float" />
+          <Property Name="TypeOfActivity" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="ItemType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Path" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportTA">
+    <Key>
+      <PropertyRef Name="TAReportId" />
+    </Key>
+    <Property Name="TAReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="AssignedId" Type="nvarchar" MaxLength="50" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleInt" Type="nvarchar" MaxLength="5" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDateTime" Type="datetime" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Queue" Type="nvarchar" MaxLength="50" />
+    <Property Name="Suspended" Type="nvarchar" MaxLength="5" />
+    <Property Name="SuspendDate" Type="datetime" />
+    <Property Name="UnsuspendDate" Type="datetime" />
+    <Property Name="LastStatusUpdate" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" />
+    <Property Name="GAC" Type="nvarchar" MaxLength="30" />
+    <Property Name="Assoc" Type="nvarchar" MaxLength="30" />
+    <Property Name="Certificate" Type="nvarchar" MaxLength="30" />
+    <Property Name="CheckAmount" Type="money" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="ProductType" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdminSystem" Type="nvarchar" MaxLength="50" />
+    <Property Name="CheckAmountTotal" Type="money" />
+    <Property Name="UCIVendorMatchDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReasonCodeForAdv" Type="nvarchar" MaxLength="20" />
+    <Property Name="ReasonDescription" Type="nvarchar(max)" />
+    <Property Name="TinSourceType" Type="nvarchar" MaxLength="50" />
+    <Property Name="SSBusinessUnit" Type="nvarchar" MaxLength="50" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_ImportTA_temp">
+          <Property Name="AssignedId" Type="nvarchar" MaxLength="100" />
+          <Property Name="Group" Type="nvarchar" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="MiddleInt" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDateTime" Type="datetime" />
+          <Property Name="BusinessArea" Type="nvarchar" MaxLength="100" />
+          <Property Name="WorkType" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="Queue" Type="nvarchar" MaxLength="100" />
+          <Property Name="Suspended" Type="nvarchar" MaxLength="10" />
+          <Property Name="SuspendDate" Type="datetime" />
+          <Property Name="UnsuspendDate" Type="datetime" />
+          <Property Name="LastStatusUpdate" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Account" Type="nvarchar" MaxLength="100" />
+          <Property Name="GAC" Type="nvarchar" MaxLength="100" />
+          <Property Name="Assoc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Certificate" Type="nvarchar" MaxLength="100" />
+          <Property Name="CheckAmount" Type="money" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="ProductType" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdminSystem" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckAmountTotal" Type="money" />
+          <Property Name="UCIVendorMatchDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReasonCodeForAdv" Type="nvarchar" MaxLength="20" />
+          <Property Name="ReasonDescription" Type="nvarchar(max)" />
+          <Property Name="TinSourceType" Type="nvarchar" MaxLength="50" />
+          <Property Name="SSBusinessUnit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <EntityType Name="OSC_IndividualScorecard_Current">
+    <Key>
+      <PropertyRef Name="IndividualScorecardId" />
+    </Key>
+    <Property Name="IndividualScorecardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OSC_Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Location" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ManageGroup">
+    <Key>
+      <PropertyRef Name="ManagerId" />
+      <PropertyRef Name="EntityId" />
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ManagerId" Type="bigint" Nullable="false" />
+    <Property Name="EntityId" Type="bigint" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Manager">
+    <Key>
+      <PropertyRef Name="ManagerId" />
+    </Key>
+    <Property Name="ManagerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PRDUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ManualEntry">
+    <Key>
+      <PropertyRef Name="EntryId" />
+    </Key>
+    <Property Name="EntryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="GainLossOccurances" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="GainLossAmount" Type="float" />
+    <Property Name="CallManagementScore" Type="float" />
+    <Property Name="ProjectResponsibility" Type="nvarchar" MaxLength="50" />
+    <Property Name="ScheduleAdherence" Type="float" />
+    <Property Name="Compliance" Type="float" />
+    <Property Name="ProductAccuracy" Type="float" />
+    <Property Name="Commitment" Type="float" />
+    <Property Name="JHValues" Type="float" />
+    <Property Name="CallEfficiency" Type="float" />
+    <Property Name="Engagement" Type="float" />
+    <Property Name="AdministrativeProcedures" Type="float" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="ActiveProjects" Type="int" />
+    <Property Name="CompletedProjects" Type="int" />
+  </EntityType>
+  <EntityType Name="OSC_NptCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryDesc" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsCategory" Type="bit" Nullable="false" />
+    <Property Name="IsSubCategory" Type="bit" Nullable="false" />
+    <Property Name="Category" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Representative">
+    <Key>
+      <PropertyRef Name="RepId" />
+    </Key>
+    <Property Name="RepId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PRDUserId" Type="nvarchar" MaxLength="50" />
+    <Property Name="AIQUserId" Type="nvarchar" MaxLength="100" />
+    <Property Name="BIUserId" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkdayId" Type="bigint" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="CoreRoleId" Type="int" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="255" />
+    <Property Name="OnShoreRep" Type="bit" />
+    <Property Name="PhoneRep" Type="bit" />
+    <Property Name="WorkHours" Type="float" />
+    <Property Name="LocationId" Type="int" />
+    <Property Name="HasPrevious" Type="bit" />
+    <Property Name="PreviousId" Type="bigint" />
+    <Property Name="IsCurrent" Type="bit" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ScorecardField">
+    <Key>
+      <PropertyRef Name="FieldId" />
+      <PropertyRef Name="FieldName" />
+    </Key>
+    <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FieldName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsCore" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="OSC_Team">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamName" Type="nvarchar" MaxLength="255" />
+    <Property Name="DepartmentId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="BIUserGroup" Type="nvarchar" MaxLength="50" />
+    <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="OSC_TeamGroupIds">
+          <Property Name="TeamId" Type="bigint" />
+          <Property Name="GroupId" Type="nvarchar" MaxLength="50" />
+          <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_TeamNptCategory">
+    <Key>
+      <PropertyRef Name="TeamId" />
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="CategoryId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_TeamWorkItem">
+    <Key>
+      <PropertyRef Name="WorkItemNo" />
+    </Key>
+    <Property Name="WorkItemNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="BusinessAreaCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkTypeCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="StatusCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="January" Type="float" />
+    <Property Name="February" Type="float" />
+    <Property Name="March" Type="float" />
+    <Property Name="April" Type="float" />
+    <Property Name="May" Type="float" />
+    <Property Name="June" Type="float" />
+    <Property Name="July" Type="float" />
+    <Property Name="August" Type="float" />
+    <Property Name="September" Type="float" />
+    <Property Name="October" Type="float" />
+    <Property Name="November" Type="float" />
+    <Property Name="December" Type="float" />
+    <Property Name="Year" Type="int" />
+  </EntityType>
+  <EntityType Name="OSC_WorkStatus">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="StatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StatusDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_WorkType">
+    <Key>
+      <PropertyRef Name="WorkTypeCode" />
+    </Key>
+    <Property Name="WorkTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkTypeCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="WorkTypeDescription" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="set_group">
+    <Key>
+      <PropertyRef Name="grp_id" />
+    </Key>
+    <Property Name="grp_id" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="grp_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="grp_desc" Type="nvarchar" MaxLength="255" />
+    <Property Name="created_date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.set_group_access' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="set_group_access">
+          <Property Name="grp_id" Type="nvarchar" MaxLength="25" />
+          <Property Name="mod_id" Type="nvarchar" MaxLength="25" />
+          <Property Name="can_view" Type="bit" />
+          <Property Name="can_add" Type="bit" />
+          <Property Name="can_edit" Type="bit" />
+          <Property Name="can_delete" Type="bit" />
+        </EntityType>-->
+  <EntityType Name="set_module">
+    <Key>
+      <PropertyRef Name="mod_id" />
+    </Key>
+    <Property Name="mod_id" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="mod_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="mod_desc" Type="nvarchar" MaxLength="255" />
+    <Property Name="created_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="set_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar" MaxLength="25" />
+    <Property Name="user_last_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_first_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_middle_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="can_PROD" Type="bit" />
+    <Property Name="can_UAT" Type="bit" />
+    <Property Name="can_PEER" Type="bit" />
+    <Property Name="can_DEV" Type="bit" />
+    <Property Name="created_date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'dbbtOSCp1.dbo.set_user_access' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="set_user_access">
+          <Property Name="user_id" Type="nvarchar" MaxLength="25" />
+          <Property Name="grp_id" Type="nvarchar" MaxLength="25" />
+        </EntityType>-->
+  <EntityContainer Name="OSCModelStoreContainer">
+    <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="set_module" EntityType="Self.set_module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="set_user" EntityType="Self.set_user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
+    [OSC_CustomizeScorecard].[FieldId] AS [FieldId], 
+    [OSC_CustomizeScorecard].[Order] AS [Order], 
+    [OSC_CustomizeScorecard].[Month] AS [Month], 
+    [OSC_CustomizeScorecard].[Year] AS [Year]
+    FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportAIQ].[AIQReportId] AS [AIQReportId], 
+    [OSC_ImportAIQ].[RepId] AS [RepId], 
+    [OSC_ImportAIQ].[Agent] AS [Agent], 
+    [OSC_ImportAIQ].[IntervalStaffedDuration] AS [IntervalStaffedDuration], 
+    [OSC_ImportAIQ].[TotalPercServiceTime] AS [TotalPercServiceTime], 
+    [OSC_ImportAIQ].[TotalACDCalls] AS [TotalACDCalls], 
+    [OSC_ImportAIQ].[ExtInCalls] AS [ExtInCalls], 
+    [OSC_ImportAIQ].[ExtInAvgActiveDur] AS [ExtInAvgActiveDur], 
+    [OSC_ImportAIQ].[ExtOutCalls] AS [ExtOutCalls], 
+    [OSC_ImportAIQ].[AvgExtOutActiveDur] AS [AvgExtOutActiveDur], 
+    [OSC_ImportAIQ].[ACDWrapUpTime] AS [ACDWrapUpTime], 
+    [OSC_ImportAIQ].[ACDTalkTime] AS [ACDTalkTime], 
+    [OSC_ImportAIQ].[ACDRingTime] AS [ACDRingTime], 
+    [OSC_ImportAIQ].[Aux] AS [Aux], 
+    [OSC_ImportAIQ].[AvgHoldDur] AS [AvgHoldDur], 
+    [OSC_ImportAIQ].[IntervalIdleDur] AS [IntervalIdleDur], 
+    [OSC_ImportAIQ].[Transfers] AS [Transfers], 
+    [OSC_ImportAIQ].[HeldContacts] AS [HeldContacts], 
+    [OSC_ImportAIQ].[Redirects] AS [Redirects], 
+    [OSC_ImportAIQ].[TeamId] AS [TeamId], 
+    [OSC_ImportAIQ].[Month] AS [Month], 
+    [OSC_ImportAIQ].[Year] AS [Year], 
+    [OSC_ImportAIQ].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportAIQ].[UploadedBy] AS [UploadedBy]
+    FROM [dbo].[OSC_ImportAIQ] AS [OSC_ImportAIQ]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportBIProd].[BIPReportId] AS [BIPReportId], 
+    [OSC_ImportBIProd].[RepId] AS [RepId], 
+    [OSC_ImportBIProd].[Group] AS [Group], 
+    [OSC_ImportBIProd].[UserIdName] AS [UserIdName], 
+    [OSC_ImportBIProd].[BusinessArea] AS [BusinessArea], 
+    [OSC_ImportBIProd].[WorkType] AS [WorkType], 
+    [OSC_ImportBIProd].[Status] AS [Status], 
+    [OSC_ImportBIProd].[Count] AS [Count], 
+    [OSC_ImportBIProd].[Date1] AS [Date1], 
+    [OSC_ImportBIProd].[Date2] AS [Date2], 
+    [OSC_ImportBIProd].[Rating] AS [Rating], 
+    [OSC_ImportBIProd].[TeamId] AS [TeamId], 
+    [OSC_ImportBIProd].[Month] AS [Month], 
+    [OSC_ImportBIProd].[Year] AS [Year], 
+    [OSC_ImportBIProd].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportBIProd].[UploadedBy] AS [UploadedBy]
+    FROM [dbo].[OSC_ImportBIProd] AS [OSC_ImportBIProd]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportBIQual].[BIQReportId] AS [BIQReportId], 
+    [OSC_ImportBIQual].[Repid] AS [Repid], 
+    [OSC_ImportBIQual].[Group] AS [Group], 
+    [OSC_ImportBIQual].[UserIdName] AS [UserIdName], 
+    [OSC_ImportBIQual].[BusinessArea] AS [BusinessArea], 
+    [OSC_ImportBIQual].[Field1] AS [Field1], 
+    [OSC_ImportBIQual].[Field2] AS [Field2], 
+    [OSC_ImportBIQual].[Count1] AS [Count1], 
+    [OSC_ImportBIQual].[Count2] AS [Count2], 
+    [OSC_ImportBIQual].[Count3] AS [Count3], 
+    [OSC_ImportBIQual].[Count4] AS [Count4], 
+    [OSC_ImportBIQual].[ErrorPoints] AS [ErrorPoints], 
+    [OSC_ImportBIQual].[Rating] AS [Rating], 
+    [OSC_ImportBIQual].[TeamId] AS [TeamId], 
+    [OSC_ImportBIQual].[Month] AS [Month], 
+    [OSC_ImportBIQual].[Year] AS [Year], 
+    [OSC_ImportBIQual].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportBIQual].[UploadedBy] AS [UploadedBy]
+    FROM [dbo].[OSC_ImportBIQual] AS [OSC_ImportBIQual]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportNPT].[NPTReportId] AS [NPTReportId], 
+    [OSC_ImportNPT].[RepId] AS [RepId], 
+    [OSC_ImportNPT].[Activity] AS [Activity], 
+    [OSC_ImportNPT].[DateOfActivity] AS [DateOfActivity], 
+    [OSC_ImportNPT].[TimeSpent] AS [TimeSpent], 
+    [OSC_ImportNPT].[TypeOfActivity] AS [TypeOfActivity], 
+    [OSC_ImportNPT].[CreatedBy] AS [CreatedBy], 
+    [OSC_ImportNPT].[ItemType] AS [ItemType], 
+    [OSC_ImportNPT].[Path] AS [Path], 
+    [OSC_ImportNPT].[TeamId] AS [TeamId], 
+    [OSC_ImportNPT].[Month] AS [Month], 
+    [OSC_ImportNPT].[Year] AS [Year], 
+    [OSC_ImportNPT].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportNPT].[UploadedBy] AS [UploadedBy], 
+    [OSC_ImportNPT].[Source] AS [Source], 
+    [OSC_ImportNPT].[CategoryId] AS [CategoryId], 
+    [OSC_ImportNPT].[SubCategoryId] AS [SubCategoryId], 
+    [OSC_ImportNPT].[IsActive] AS [IsActive]
+    FROM [dbo].[OSC_ImportNPT] AS [OSC_ImportNPT]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportTA].[TAReportId] AS [TAReportId], 
+    [OSC_ImportTA].[RepId] AS [RepId], 
+    [OSC_ImportTA].[AssignedId] AS [AssignedId], 
+    [OSC_ImportTA].[Group] AS [Group], 
+    [OSC_ImportTA].[FirstName] AS [FirstName], 
+    [OSC_ImportTA].[MiddleInt] AS [MiddleInt], 
+    [OSC_ImportTA].[LastName] AS [LastName], 
+    [OSC_ImportTA].[CreateDateTime] AS [CreateDateTime], 
+    [OSC_ImportTA].[BusinessArea] AS [BusinessArea], 
+    [OSC_ImportTA].[WorkType] AS [WorkType], 
+    [OSC_ImportTA].[Status] AS [Status], 
+    [OSC_ImportTA].[Queue] AS [Queue], 
+    [OSC_ImportTA].[Suspended] AS [Suspended], 
+    [OSC_ImportTA].[SuspendDate] AS [SuspendDate], 
+    [OSC_ImportTA].[UnsuspendDate] AS [UnsuspendDate], 
+    [OSC_ImportTA].[LastStatusUpdate] AS [LastStatusUpdate], 
+    [OSC_ImportTA].[Account] AS [Account], 
+    [OSC_ImportTA].[GAC] AS [GAC], 
+    [OSC_ImportTA].[Assoc] AS [Assoc], 
+    [OSC_ImportTA].[Certificate] AS [Certificate], 
+    [OSC_ImportTA].[CheckAmount] AS [CheckAmount], 
+    [OSC_ImportTA].[First_Name] AS [First_Name], 
+    [OSC_ImportTA].[Last_Name] AS [Last_Name], 
+    [OSC_ImportTA].[CustomerNo] AS [CustomerNo], 
+    [OSC_ImportTA].[ProductType] AS [ProductType], 
+    [OSC_ImportTA].[AdminSystem] AS [AdminSystem], 
+    [OSC_ImportTA].[CheckAmountTotal] AS [CheckAmountTotal], 
+    [OSC_ImportTA].[UCIVendorMatchDate] AS [UCIVendorMatchDate], 
+    [OSC_ImportTA].[ReasonCodeForAdv] AS [ReasonCodeForAdv], 
+    [OSC_ImportTA].[ReasonDescription] AS [ReasonDescription], 
+    [OSC_ImportTA].[TinSourceType] AS [TinSourceType], 
+    [OSC_ImportTA].[SSBusinessUnit] AS [SSBusinessUnit], 
+    [OSC_ImportTA].[TeamId] AS [TeamId], 
+    [OSC_ImportTA].[Month] AS [Month], 
+    [OSC_ImportTA].[Year] AS [Year], 
+    [OSC_ImportTA].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportTA].[UploadedBy] AS [UploadedBy]
+    FROM [dbo].[OSC_ImportTA] AS [OSC_ImportTA]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ManageGroup].[ManagerId] AS [ManagerId], 
+    [OSC_ManageGroup].[EntityId] AS [EntityId], 
+    [OSC_ManageGroup].[Type] AS [Type]
+    FROM [dbo].[OSC_ManageGroup] AS [OSC_ManageGroup]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ScorecardField].[FieldId] AS [FieldId], 
+    [OSC_ScorecardField].[FieldName] AS [FieldName], 
+    [OSC_ScorecardField].[IsCore] AS [IsCore], 
+    [OSC_ScorecardField].[IsActive] AS [IsActive]
+    FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
+    [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
+    FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_TeamWorkItem].[WorkItemNo] AS [WorkItemNo], 
+    [OSC_TeamWorkItem].[TeamId] AS [TeamId], 
+    [OSC_TeamWorkItem].[BusinessAreaCode] AS [BusinessAreaCode], 
+    [OSC_TeamWorkItem].[WorkTypeCode] AS [WorkTypeCode], 
+    [OSC_TeamWorkItem].[StatusCode] AS [StatusCode], 
+    [OSC_TeamWorkItem].[January] AS [January], 
+    [OSC_TeamWorkItem].[February] AS [February], 
+    [OSC_TeamWorkItem].[March] AS [March], 
+    [OSC_TeamWorkItem].[April] AS [April], 
+    [OSC_TeamWorkItem].[May] AS [May], 
+    [OSC_TeamWorkItem].[June] AS [June], 
+    [OSC_TeamWorkItem].[July] AS [July], 
+    [OSC_TeamWorkItem].[August] AS [August], 
+    [OSC_TeamWorkItem].[September] AS [September], 
+    [OSC_TeamWorkItem].[October] AS [October], 
+    [OSC_TeamWorkItem].[November] AS [November], 
+    [OSC_TeamWorkItem].[December] AS [December], 
+    [OSC_TeamWorkItem].[Year] AS [Year]
+    FROM [dbo].[OSC_TeamWorkItem] AS [OSC_TeamWorkItem]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

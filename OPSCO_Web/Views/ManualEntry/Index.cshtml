@@ -1,0 +1,153 @@
+﻿@model IEnumerable<OPSCO_Web.Models.OSC_ManualEntry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TeamId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RepId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GainLossOccurances)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GainLossAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CallManagementScore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectResponsibility)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScheduleAdherence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Compliance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductAccuracy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Commitment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JHValues)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CallEfficiency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Engagement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdministrativeProcedures)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Month)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateUploaded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActiveProjects)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompletedProjects)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeamId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GainLossOccurances)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GainLossAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CallManagementScore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectResponsibility)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScheduleAdherence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Compliance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductAccuracy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Commitment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JHValues)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CallEfficiency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Engagement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdministrativeProcedures)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Month)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateUploaded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActiveProjects)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompletedProjects)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EntryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EntryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EntryId })
+        </td>
+    </tr>
+}
+
+</table>
