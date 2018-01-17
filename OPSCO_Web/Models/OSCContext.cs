@@ -126,9 +126,9 @@ namespace OPSCO_Web.Models
             public Nullable<System.DateTime> EndDate { get; set; }
             public string Comments { get; set; }
             [Display(Name = "On Shore")]
-            public Nullable<bool> OnShoreRep { get; set; }
+            public bool OnShoreRep { get; set; }
             [Display(Name = "Phone Representative")]
-            public Nullable<bool> PhoneRep { get; set; }
+            public bool PhoneRep { get; set; }
             [Display(Name = "Work Hours")]
             public Nullable<double> WorkHours { get; set; }
             [Display(Name = "Has Previous")]

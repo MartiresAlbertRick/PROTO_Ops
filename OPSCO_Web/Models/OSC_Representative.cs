@@ -27,8 +27,8 @@ namespace OPSCO_Web.Models
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Comments { get; set; }
-        public Nullable<bool> OnShoreRep { get; set; }
-        public Nullable<bool> PhoneRep { get; set; }
+        public bool OnShoreRep { get; set; }
+        public bool PhoneRep { get; set; }
         public Nullable<double> WorkHours { get; set; }
         public Nullable<int> LocationId { get; set; }
         public Nullable<bool> HasPrevious { get; set; }

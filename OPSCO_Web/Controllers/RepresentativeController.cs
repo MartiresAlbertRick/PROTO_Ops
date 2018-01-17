@@ -65,6 +65,8 @@ namespace OPSCO_Web.Controllers
         public ActionResult Create()
         {
             ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+            ViewBag.Locations = new SelectList(db.Locations, "LocationId", "Location");
+            ViewBag.CoreRoles = new SelectList(db.CoreRoles, "CoreRoleId", "CoreRole");
             return View();
         }
 
