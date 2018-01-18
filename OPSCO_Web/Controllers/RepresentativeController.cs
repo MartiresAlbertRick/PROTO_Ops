@@ -54,6 +54,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_Representative oSC_Representative = db.Representatives.Find(id);
+            oSC_Representative.Team = db.Teams.Find(oSC_Representative.TeamId);
+            oSC_Representative.CoreRole = db.CoreRoles.Find(oSC_Representative.CoreRoleId);
+            oSC_Representative.Location = db.Locations.Find(oSC_Representative.LocationId);
             if (oSC_Representative == null)
             {
                 return HttpNotFound();
@@ -90,6 +93,9 @@ namespace OPSCO_Web.Controllers
         // GET: Representative/Edit/5
         public ActionResult Edit(long? id)
         {
+            ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+            ViewBag.Locations = new SelectList(db.Locations, "LocationId", "Location");
+            ViewBag.CoreRoles = new SelectList(db.CoreRoles, "CoreRoleId", "CoreRole");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -126,6 +132,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_Representative oSC_Representative = db.Representatives.Find(id);
+            oSC_Representative.Team = db.Teams.Find(oSC_Representative.TeamId);
+            oSC_Representative.CoreRole = db.CoreRoles.Find(oSC_Representative.CoreRoleId);
+            oSC_Representative.Location = db.Locations.Find(oSC_Representative.LocationId);
             if (oSC_Representative == null)
             {
                 return HttpNotFound();

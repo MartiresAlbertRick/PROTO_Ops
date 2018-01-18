@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "New Record";
 }
+
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/Site.js"></script>
+<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
 <h3>Representative</h3>
 @using (Html.BeginForm())
 {
@@ -100,7 +106,7 @@
             @Html.LabelFor(model => model.OnShoreRep, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.OnShoreRep, new { disabled = true, @checked = true })
+                    @Html.CheckBoxFor(model => model.OnShoreRep)
                     @Html.ValidationMessageFor(model => model.OnShoreRep, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -109,7 +115,7 @@
             @Html.LabelFor(model => model.PhoneRep, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.PhoneRep, new { disabled = true, @checked = true })
+                    @Html.CheckBoxFor(model => model.PhoneRep)
                     @Html.ValidationMessageFor(model => model.PhoneRep, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -144,14 +150,10 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
-<script type="text/javascript" src="~/Scripts/moment.js"></script>
-<script type="text/javascript" src="~/Scripts/Site.js"></script>
-<script>
+<script type="text/javascript">
     $(function () {
         validate($('#submit'));
-        $('#txt_startdt').datepicker();
+        $('#txt_startdt').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+        $('#txt_enddt').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
     });
 </script>

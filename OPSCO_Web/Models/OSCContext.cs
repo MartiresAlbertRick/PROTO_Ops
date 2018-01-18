@@ -69,7 +69,7 @@ namespace OPSCO_Web.Models
             [Key]
             public long DepartmentId { get; set; }
             [Required]
-            [Display(Name = "Department Name")]
+            [Display(Name = "Department")]
             public string DepartmentName { get; set; }
             [Display(Name = "Active Flag")]
             public bool IsActive { get; set; }
@@ -84,7 +84,7 @@ namespace OPSCO_Web.Models
             [Key]
             public long TeamId { get; set; }
             [Required]
-            [Display(Name = "Team Name")]
+            [Display(Name = "Team")]
             public string TeamName { get; set; }
             public Nullable<long> DepartmentId { get; set; }
             [Display(Name = "Active Flag")]
@@ -181,4 +181,18 @@ namespace OPSCO_Web.Models
         }
     }
 
+    [MetadataType(typeof(OSC_Manager.Metadata))]
+    public partial class OSC_Manager
+    {
+        sealed class Metadata
+        {
+            [Key]
+            public long ManagerId { get; set; }
+            [Display(Name = "PRD Id")]
+            public string PRDUserId { get; set; }
+            public string Name { get; set; }
+            [Display(Name = "Active Flag")]
+            public bool IsActive { get; set; }
+        }
+    }
 }

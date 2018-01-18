@@ -4,12 +4,54 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
+<h3>Representative</h3>
 <div>
-    <h4>OSC_Representative</h4>
+    <h4>Details</h4>
     <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <a href="@Url.Action("Index", "Representative", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+                <a href="@Url.Action("Edit", "Representative", new { id = Model.RepId } )" class="btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Team.TeamName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Team.TeamName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CoreRole.CoreRole)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoreRole.CoreRole)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PRDUserId)
         </dt>
@@ -33,146 +75,47 @@
         <dd>
             @Html.DisplayFor(model => model.BIUserId)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WorkdayId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WorkdayId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TeamId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TeamId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CoreRoleId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CoreRoleId)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.StartDate)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Comments)
+            @Html.DisplayNameFor(model => model.Location.Location)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Comments)
+            @Html.DisplayFor(model => model.Location.Location)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.OnShoreRep)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.OnShoreRep)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.PhoneRep)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.PhoneRep)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.WorkHours)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.WorkHours)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasPrevious)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasPrevious)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PreviousId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PreviousId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsCurrent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsCurrent)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.IsActive)
         </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RepId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

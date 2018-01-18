@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace OPSCO_Web.Controllers
 {
@@ -15,9 +17,26 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: Manager
-        public ActionResult Index()
+        public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-            return View(db.Managers.ToList());
+
+            int? defaultPageSize = 10;
+
+            if (pageSize != null)
+            {
+                defaultPageSize = pageSize;
+            }
+
+            var managers = (from m in db.Managers
+                        select m);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                managers = managers.Where(r => r.PRDUserId.Contains(searchString) || r.Name.Contains(searchString));
+            }
+
+            return View(managers.OrderBy(r => r.Name).ToPagedList(page ?? 1, (int)defaultPageSize));
+            //return View(db.Managers.ToList());
         }
 
         // GET: Manager/Details/5
