@@ -91,31 +91,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ' does not have a prima
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_ImportAIQ_temp">
-          <Property Name="Agent" Type="nvarchar" MaxLength="100" />
-          <Property Name="IntervalStaffedDuration" Type="nvarchar" MaxLength="20" />
-          <Property Name="TotalPercServiceTime" Type="float" />
-          <Property Name="TotalACDCalls" Type="int" />
-          <Property Name="ExtInCalls" Type="int" />
-          <Property Name="ExtInAvgActiveDur" Type="nvarchar" MaxLength="20" />
-          <Property Name="ExtOutCalls" Type="int" />
-          <Property Name="AvgExtOutActiveDur" Type="nvarchar" MaxLength="20" />
-          <Property Name="ACDWrapUpTime" Type="nvarchar" MaxLength="20" />
-          <Property Name="ACDTalkTime" Type="nvarchar" MaxLength="20" />
-          <Property Name="ACDRingTime" Type="nvarchar" MaxLength="20" />
-          <Property Name="Aux" Type="nvarchar" MaxLength="20" />
-          <Property Name="AvgHoldDur" Type="nvarchar" MaxLength="20" />
-          <Property Name="IntervalIdleDur" Type="nvarchar" MaxLength="20" />
-          <Property Name="Transfers" Type="int" />
-          <Property Name="HeldContacts" Type="int" />
-          <Property Name="Redirects" Type="int" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
-          <Property Name="DateUploaded" Type="datetime" />
-          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportBIProd">
     <Key>
@@ -138,23 +113,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd' does not have a pr
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_ImportBIProd_temp">
-          <Property Name="Group" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
-          <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
-          <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Count" Type="int" />
-          <Property Name="Date1" Type="nvarchar" MaxLength="20" />
-          <Property Name="Date2" Type="nvarchar" MaxLength="20" />
-          <Property Name="Rating" Type="float" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
-          <Property Name="DateUploaded" Type="datetime" />
-          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportBIQual">
@@ -181,25 +139,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a pr
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_ImportBIQual_temp">
-          <Property Name="Group" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
-          <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
-          <Property Name="Field1" Type="nvarchar" MaxLength="50" />
-          <Property Name="Field2" Type="nvarchar" MaxLength="50" />
-          <Property Name="Count1" Type="bigint" />
-          <Property Name="Count2" Type="bigint" />
-          <Property Name="Count3" Type="bigint" />
-          <Property Name="Count4" Type="bigint" />
-          <Property Name="ErrorPoints" Type="float" />
-          <Property Name="Rating" Type="float" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
-          <Property Name="DateUploaded" Type="datetime" />
-          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportNPT">
     <Key>
@@ -224,21 +163,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a prima
     <Property Name="SubCategoryId" Type="bigint" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_ImportNPT_temp">
-          <Property Name="Activity" Type="nvarchar" MaxLength="1000" />
-          <Property Name="DateOfActivity" Type="date" />
-          <Property Name="TimeSpent" Type="float" />
-          <Property Name="TypeOfActivity" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
-          <Property Name="ItemType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Path" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
-          <Property Name="DateUploaded" Type="datetime" />
-          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportTA">
@@ -283,44 +207,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA' does not have a primar
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA_temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_ImportTA_temp">
-          <Property Name="AssignedId" Type="nvarchar" MaxLength="100" />
-          <Property Name="Group" Type="nvarchar" MaxLength="100" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
-          <Property Name="MiddleInt" Type="nvarchar" MaxLength="20" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreateDateTime" Type="datetime" />
-          <Property Name="BusinessArea" Type="nvarchar" MaxLength="100" />
-          <Property Name="WorkType" Type="nvarchar" MaxLength="100" />
-          <Property Name="Status" Type="nvarchar" MaxLength="100" />
-          <Property Name="Queue" Type="nvarchar" MaxLength="100" />
-          <Property Name="Suspended" Type="nvarchar" MaxLength="10" />
-          <Property Name="SuspendDate" Type="datetime" />
-          <Property Name="UnsuspendDate" Type="datetime" />
-          <Property Name="LastStatusUpdate" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Account" Type="nvarchar" MaxLength="100" />
-          <Property Name="GAC" Type="nvarchar" MaxLength="100" />
-          <Property Name="Assoc" Type="nvarchar" MaxLength="100" />
-          <Property Name="Certificate" Type="nvarchar" MaxLength="100" />
-          <Property Name="CheckAmount" Type="money" />
-          <Property Name="First_Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="Last_Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="CustomerNo" Type="nvarchar" MaxLength="30" />
-          <Property Name="ProductType" Type="nvarchar" MaxLength="50" />
-          <Property Name="AdminSystem" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheckAmountTotal" Type="money" />
-          <Property Name="UCIVendorMatchDate" Type="nvarchar" MaxLength="50" />
-          <Property Name="ReasonCodeForAdv" Type="nvarchar" MaxLength="20" />
-          <Property Name="ReasonDescription" Type="nvarchar(max)" />
-          <Property Name="TinSourceType" Type="nvarchar" MaxLength="50" />
-          <Property Name="SSBusinessUnit" Type="nvarchar" MaxLength="50" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
-          <Property Name="DateUploaded" Type="datetime" />
-          <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
   <EntityType Name="OSC_IndividualScorecard_Current">
     <Key>
       <PropertyRef Name="IndividualScorecardId" />
@@ -449,13 +335,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
     <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="OSC_TeamGroupIds">
-          <Property Name="TeamId" Type="bigint" />
-          <Property Name="GroupId" Type="nvarchar" MaxLength="50" />
-          <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
-        </EntityType>-->
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamNptCategory">
     <Key>
@@ -517,16 +396,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <Property Name="grp_desc" Type="nvarchar" MaxLength="255" />
     <Property Name="created_date" Type="datetime" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.set_group_access' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="set_group_access">
-          <Property Name="grp_id" Type="nvarchar" MaxLength="25" />
-          <Property Name="mod_id" Type="nvarchar" MaxLength="25" />
-          <Property Name="can_view" Type="bit" />
-          <Property Name="can_add" Type="bit" />
-          <Property Name="can_edit" Type="bit" />
-          <Property Name="can_delete" Type="bit" />
-        </EntityType>-->
   <EntityType Name="set_module">
     <Key>
       <PropertyRef Name="mod_id" />
@@ -551,12 +420,6 @@ warning 6013: The table/view 'dbbtOSCp1.dbo.set_group_access' does not have a pr
     <Property Name="can_DEV" Type="bit" />
     <Property Name="created_date" Type="datetime" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'dbbtOSCp1.dbo.set_user_access' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="set_user_access">
-          <Property Name="user_id" Type="nvarchar" MaxLength="25" />
-          <Property Name="grp_id" Type="nvarchar" MaxLength="25" />
-        </EntityType>-->
   <EntityContainer Name="OSCModelStoreContainer">
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
