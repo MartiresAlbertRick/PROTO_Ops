@@ -172,12 +172,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityTrackerController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\DepartmentScorecardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\IndividualScorecardController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\ManualEntryController.cs" />
     <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\TeamScorecardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -441,6 +444,9 @@
     <Content Include="Views\Import\Index.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\IndividualScorecard\Index.cshtml" />
+    <Content Include="Views\DepartmentScorecard\Index.cshtml" />
+    <Content Include="Views\TeamScorecard\Index.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

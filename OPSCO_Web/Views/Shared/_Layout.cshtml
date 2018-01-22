@@ -21,8 +21,7 @@
             <div class="navbar-collapse collapse">
                 <!--<ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("API", "Index", "API")</li>
                 </ul>-->
                 <div class="nav navbar-text navbar-right">
                     <div class="container-fluid">
@@ -57,6 +56,8 @@
                             @Html.ActionLink("Team", "Index", "Team")
                             @Html.ActionLink("Representative", "Index", "Representative")
                             @Html.ActionLink("Manager", "Index", "Manager")
+                            @Html.ActionLink("Activity Tracker", "Index", "ActivityTracker")
+                            @Html.ActionLink("Manual Entry", "Index", "ManualEntry")
                         </div>
                     </li>
                     <li class="panel">
@@ -71,8 +72,8 @@
                             <i class="fa fa-bar-chart-o fa-lg"></i><span class="desc">Scorecard</span>
                         </a>
                         <div class="submenu collapse" id="scorecard">
-                            @Html.ActionLink("Individual", "Index", "Department")
-                            @Html.ActionLink("Team", "Index", "Department")
+                            @Html.ActionLink("Individual", "Index", "IndividualScorecard")
+                            @Html.ActionLink("Team", "Index", "TeamScorecard")
                         </div>
                     </li>
                 </ul>
