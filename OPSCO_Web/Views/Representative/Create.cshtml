@@ -47,14 +47,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Team</label>
+            @Html.Label("Team", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
                 @Html.DropDownList("TeamId", (IEnumerable<SelectListItem>)ViewBag.Teams, "--Select Team--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
                 @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Role</label>
+            @Html.Label("Role", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
                 @Html.DropDownList("CoreRoleId", (IEnumerable<SelectListItem>)ViewBag.CoreRoles, "--Select Role--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
                 @Html.ValidationMessageFor(model => model.CoreRoleId, "", new { @class = "text-danger" })
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Location</label>
+            @Html.Label("Location", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
                 @Html.DropDownList("LocationId", (IEnumerable<SelectListItem>)ViewBag.Locations, "--Select Location--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
                 @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })

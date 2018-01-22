@@ -51,5 +51,7 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_ScorecardField> OSC_ScorecardField { get; set; }
         public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
+
+        public System.Data.Entity.DbSet<OPSCO_Web.Models.IndividualScorecard> IndividualScorecards { get; set; }
     }
 }

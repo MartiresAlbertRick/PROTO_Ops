@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+
 namespace OPSCO_Web.Models
 {
     public class OSCContext : DbContext, IOSCContext
@@ -27,6 +28,28 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_Location> Locations { get; set; }
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
         #endregion "DBSets"
+
+        public List<SelectListItem> months = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "January", Value = "1" },
+            new SelectListItem { Text = "February", Value = "2" },
+            new SelectListItem { Text = "March", Value = "3" },
+            new SelectListItem { Text = "April", Value = "4" },
+            new SelectListItem { Text = "May", Value = "5" },
+            new SelectListItem { Text = "June", Value = "6" },
+            new SelectListItem { Text = "July", Value = "7" },
+            new SelectListItem { Text = "August", Value = "8" },
+            new SelectListItem { Text = "September", Value = "9" },
+            new SelectListItem { Text = "October", Value = "10" },
+            new SelectListItem { Text = "November", Value = "11" },
+            new SelectListItem { Text = "December", Value = "12" },
+        };
+
+        public List<SelectListItem> years = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "2018", Value = "2018" },
+            new SelectListItem { Text = "2017", Value = "2017" }
+        };
 
         #region "IOSCContext"
         IQueryable<OSC_Department> IOSCContext.Departments
@@ -60,6 +83,24 @@ namespace OPSCO_Web.Models
         }
 
         #endregion "IOSCContext"        
+    }
+
+    public class IndividualScorecard
+    {
+        [Key]
+        public int IndividualScorecardId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+    }
+
+    public class Import
+    {
+        [Key]
+        public int ImportId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
     }
 
     [MetadataType(typeof(OSC_Department.Metadata))]
