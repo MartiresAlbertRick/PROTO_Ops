@@ -427,5 +427,14 @@
     <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
   </EntityContainer>
+  <EntityType Name="OSC_TeamGroupIds">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

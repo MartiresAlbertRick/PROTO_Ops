@@ -422,5 +422,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamGroupIds">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
+        <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
+          <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

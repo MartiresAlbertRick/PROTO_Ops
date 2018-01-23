@@ -27,6 +27,9 @@ namespace OPSCO_Web.Models
 
         public DbSet<OSC_Location> Locations { get; set; }
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
+        public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
+
+        public DbSet<OSC_ImportBIProd> BIP { get; set; }
         #endregion "DBSets"
 
         public List<SelectListItem> months = new List<SelectListItem>()
@@ -50,6 +53,12 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "2018", Value = "2018" },
             new SelectListItem { Text = "2017", Value = "2017" }
         };
+        public OSC_TeamGroupIds GetTeamIdByGroupId(string groupId, string groupType)
+        {
+            OSC_TeamGroupIds result = new OSC_TeamGroupIds();
+            result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
+            return result;
+        }
 
         #region "IOSCContext"
         IQueryable<OSC_Department> IOSCContext.Departments

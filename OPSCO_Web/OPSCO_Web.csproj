@@ -84,6 +84,11 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -258,6 +263,9 @@
     <Compile Include="Models\OSC_Team.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OSC_TeamGroupIds.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OSC_TeamNptCategory.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
@@ -340,6 +348,30 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\osc_bg.jpg" />
     <Content Include="ImportFile\None.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\OSCModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OSCModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\OSCModel.edmx.diagram">
+      <DependentUpon>OSCModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Models\OSCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OSCModel.edmx</DependentUpon>
@@ -350,30 +382,6 @@
       <DependentUpon>OSCModel.edmx</DependentUpon>
       <LastGenOutput>OSCModel.cs</LastGenOutput>
     </Content>
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <EntityDeploy Include="Models\OSCModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OSCModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\OSCModel.edmx.diagram">
-      <DependentUpon>OSCModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

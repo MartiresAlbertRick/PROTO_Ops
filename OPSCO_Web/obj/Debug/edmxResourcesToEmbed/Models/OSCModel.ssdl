@@ -335,6 +335,16 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
     <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_TeamGroupIds">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="GroupId" Type="nvarchar" MaxLength="50" />
+    <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamNptCategory">
     <Key>
@@ -593,6 +603,13 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_ScorecardField].[IsCore] AS [IsCore], 
     [OSC_ScorecardField].[IsActive] AS [IsActive]
     FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_TeamGroupIds].[TeamId] AS [TeamId], 
+    [OSC_TeamGroupIds].[GroupId] AS [GroupId], 
+    [OSC_TeamGroupIds].[GroupType] AS [GroupType]
+    FROM [dbo].[OSC_TeamGroupIds] AS [OSC_TeamGroupIds]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 

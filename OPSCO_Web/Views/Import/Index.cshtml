@@ -1,5 +1,111 @@
-﻿@{
+﻿@model OPSCO_Web.Models.Import
+@{
     ViewBag.Title = "Index";
 }
 <h3>Import</h3>
-
+@using (Html.BeginForm("Import", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Upload Files</h4>
+        <hr />
+        <div class="form-group">
+            @Html.Label("Month", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, "--Select Month--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Year", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, "--Select Year--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("BI Productivity", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("BIProductivity", null, new { @class = "form-control input-sm", id = "txt_bip" })
+                    <span class="input-group-btn">
+                        <button id="cmd_bip" type="button" class="btn btn-default btn-sm" onclick=" $('#bip').click() ">
+                            <i class="fa fa-folder-open"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="file" style="display:none;" id="bip" accept=".xlsx,.xls" name="bip" onchange="$('#txt_bip').val($('#bip').val());" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("BI Quality", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("BIQuality", null, new { @class = "form-control input-sm", id = "txt_biq" })
+                    <span class="input-group-btn">
+                        <button id="cmd_biq" type="button" class="btn btn-default btn-sm" onclick=" $('#biq').click() ">
+                            <i class="fa fa-folder-open"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="file" style="display:none;" id="biq" accept=".xlsx,.xls" name="biq" onchange="$('#txt_biq').val($('#biq').val());" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("AIQ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("AIQ", null, new { @class = "form-control input-sm", id = "txt_aiq" })
+                    <span class="input-group-btn">
+                        <button id="cmd_aiq" type="button" class="btn btn-default btn-sm" onclick=" $('#aiq').click() ">
+                            <i class="fa fa-folder-open"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="file" style="display:none;" id="aiq" accept=".xlsx,.xls" name="aiq" onchange="$('#txt_aiq').val($('#aiq').val());" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("TA", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("TA", null, new { @class = "form-control input-sm", id = "txt_ta" })
+                    <span class="input-group-btn">
+                        <button id="cmd_ta" type="button" class="btn btn-default btn-sm" onclick=" $('#ta').click() ">
+                            <i class="fa fa-folder-open"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="file" style="display:none;" id="ta" accept=".xlsx,.xls" name="ta" onchange="$('#txt_ta').val($('#ta').val());" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("NPT", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("NPT", null, new { @class = "form-control input-sm", id = "txt_npt" })
+                    <span class="input-group-btn">
+                        <button id="cmd_npt" type="button" class="btn btn-default btn-sm" onclick=" $('#npt').click() ">
+                            <i class="fa fa-folder-open"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="file" style="display:none;" id="npt" accept=".xlsx,.xls" name="npt" onchange="$('#txt_npt').val($('#npt').val());" />
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-default navbar-fixed-bottom table-nav">
+        <div class="container-fluid">
+            <div class="navbar-right navbar-form">
+                <button type="submit" disabled class="btn btn-primary btn-sm pull-right" id="submit">
+                    <i class="fa fa-upload"></i> Start Import
+                </button>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/Site.js"></script>
+<script type="text/javascript">
+    $(function () {
+        validate($('#submit'));
+    });
+</script>

@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b46e466296fd432ea35b80c73d03c053" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="6104723b98ab42daa61a80eb57679631" Name="Diagram1">
         <EntityTypeShape EntityType="OSCModel.OSC_ActivityTracker" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_BusinessArea" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_CoreRole" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OSCModel.OSC_Department" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OSCModel.OSC_Department" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_IndividualScorecard_Current" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OSCModel.OSC_Location" Width="1.5" PointX="4.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OSCModel.OSC_Location" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_Manager" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ManualEntry" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_NptCategory" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_Representative" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OSCModel.OSC_Team" Width="1.5" PointX="7" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OSCModel.OSC_Team" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_WorkStatus" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_WorkType" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.set_group" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
@@ -31,6 +31,7 @@
         <EntityTypeShape EntityType="OSCModel.OSC_ScorecardField" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamNptCategory" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamWorkItem" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OSCModel.OSC_TeamGroupIds" Width="1.5" PointX="7.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
