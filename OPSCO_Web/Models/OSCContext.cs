@@ -30,6 +30,10 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
+        public DbSet<OSC_ImportBIQual> BIQ { get; set; }
+        public DbSet<OSC_ImportAIQ> AIQ { get; set; }
+        public DbSet<OSC_ImportTA> TA { get; set; }
+        public DbSet<OSC_ImportNPT> NPT { get; set; }
         #endregion "DBSets"
 
         public List<SelectListItem> months = new List<SelectListItem>()
