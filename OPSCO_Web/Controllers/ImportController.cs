@@ -68,10 +68,10 @@ namespace OPSCO_Web.Controllers
                         obj.BusinessArea = ((Excel.Range)range.Cells[row, 3]).Text;
                         obj.WorkType = ((Excel.Range)range.Cells[row, 4]).Text;
                         obj.Status = ((Excel.Range)range.Cells[row, 5]).Text;
-                        obj.Count = ((Excel.Range)range.Cells[row, 6]).Text;
+                        obj.Count = Convert.ToInt32(((Excel.Range)range.Cells[row, 6]).Text);
                         obj.Date1 = ((Excel.Range)range.Cells[row, 7]).Text;
                         obj.Date2 = ((Excel.Range)range.Cells[row, 8]).Text;
-                        obj.Rating = ((Excel.Range)range.Cells[row, 9]).Text;
+                        obj.Rating = Convert.ToDouble(((Excel.Range)range.Cells[row, 9]).Text);
                         obj.Month = import.Month;
                         obj.Year = import.Year;
                         obj.DateUploaded = DateTime.Now;
@@ -83,11 +83,11 @@ namespace OPSCO_Web.Controllers
                         obj.RepId = db.Representatives.Where(r => (r.BIUserId == obj.UserIdName) &&
                                                                 (r.TeamId == db.GetTeamIdByGroupId(obj.Group, "BI").TeamId)).FirstOrDefault().RepId;
                         obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
-                        //db.BIP.Add(obj);
+                        db.BIP.Add(obj);
                     }
                     try
                     {
-                        //db.SaveChanges();
+                        db.SaveChanges();
                         ViewBag.MessageBIP = "Success";
                         if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     }
@@ -131,12 +131,12 @@ namespace OPSCO_Web.Controllers
                         obj.BusinessArea = ((Excel.Range)range.Cells[row, 3]).Text;
                         obj.Field1 = ((Excel.Range)range.Cells[row, 4]).Text;
                         obj.Field2 = ((Excel.Range)range.Cells[row, 5]).Text;
-                        obj.Count1 = ((Excel.Range)range.Cells[row, 6]).Text;
-                        obj.Count2 = ((Excel.Range)range.Cells[row, 7]).Text;
-                        obj.Count3 = ((Excel.Range)range.Cells[row, 8]).Text;
-                        obj.Count4 = ((Excel.Range)range.Cells[row, 9]).Text;
-                        obj.ErrorPoints = ((Excel.Range)range.Cells[row, 10]).Text;
-                        obj.Rating = ((Excel.Range)range.Cells[row, 11]).Text;
+                        obj.Count1 = Convert.ToInt64(((Excel.Range)range.Cells[row, 6]).Text);
+                        obj.Count2 = Convert.ToInt64(((Excel.Range)range.Cells[row, 7]).Text);
+                        obj.Count3 = Convert.ToInt64(((Excel.Range)range.Cells[row, 8]).Text);
+                        obj.Count4 = Convert.ToInt64(((Excel.Range)range.Cells[row, 9]).Text);
+                        obj.ErrorPoints = Convert.ToDouble(((Excel.Range)range.Cells[row, 10]).Text);
+                        obj.Rating = Convert.ToDouble(((Excel.Range)range.Cells[row, 11]).Text);
                         obj.Month = import.Month;
                         obj.Year = import.Year;
                         obj.DateUploaded = DateTime.Now;
@@ -148,11 +148,11 @@ namespace OPSCO_Web.Controllers
                         obj.Repid = db.Representatives.Where(r => (r.BIUserId == obj.UserIdName) &&
                                                                 (r.TeamId == db.GetTeamIdByGroupId(obj.Group, "BI").TeamId)).FirstOrDefault().RepId;
                         obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
-                        //db.BIQ.Add(obj);
+                        db.BIQ.Add(obj);
                     }
                     try
                     {
-                        //db.SaveChanges();
+                        db.SaveChanges();
                         ViewBag.MessageBIP = "Success";
                         if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     }
@@ -187,37 +187,42 @@ namespace OPSCO_Web.Controllers
                     Excel.Workbook workbook = application.Workbooks.Open(path);
                     Excel.Worksheet worksheet = workbook.ActiveSheet;
                     Excel.Range range = worksheet.UsedRange;
-                    List<OSC_ImportBIQual> list = new List<OSC_ImportBIQual>();
+                    List<OSC_ImportAIQ> list = new List<OSC_ImportAIQ>();
                     for (int row = 2; row <= range.Rows.Count; row++)
                     {
-                        OSC_ImportBIQual obj = new OSC_ImportBIQual();
-                        obj.Group = ((Excel.Range)range.Cells[row, 1]).Text;
-                        obj.UserIdName = ((Excel.Range)range.Cells[row, 2]).Text;
-                        obj.BusinessArea = ((Excel.Range)range.Cells[row, 3]).Text;
-                        obj.Field1 = ((Excel.Range)range.Cells[row, 4]).Text;
-                        obj.Field2 = ((Excel.Range)range.Cells[row, 5]).Text;
-                        obj.Count1 = ((Excel.Range)range.Cells[row, 6]).Text;
-                        obj.Count2 = ((Excel.Range)range.Cells[row, 7]).Text;
-                        obj.Count3 = ((Excel.Range)range.Cells[row, 8]).Text;
-                        obj.Count4 = ((Excel.Range)range.Cells[row, 9]).Text;
-                        obj.ErrorPoints = ((Excel.Range)range.Cells[row, 10]).Text;
-                        obj.Rating = ((Excel.Range)range.Cells[row, 11]).Text;
+                        OSC_ImportAIQ obj = new OSC_ImportAIQ();
+                        obj.Agent = ((Excel.Range)range.Cells[row, 1]).Text;
+                        obj.IntervalStaffedDuration = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 2]).Text);
+                        obj.TotalPercServiceTime = Convert.ToDouble(((Excel.Range)range.Cells[row, 3]).Text);
+                        obj.TotalACDCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 4]).Text);
+                        obj.ExtInCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 5]).Text);
+                        obj.ExtInAvgActiveDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 6]).Text);
+                        obj.ExtOutCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 7]).Text);
+                        obj.AvgExtOutActiveDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 8]).Text);
+                        obj.ACDWrapUpTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 9]).Text);
+                        obj.ACDTalkTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 10]).Text);
+                        obj.ACDRingTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 11]).Text);
+                        obj.Aux = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 12]).Text);
+                        obj.AvgHoldDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 13]).Text);
+                        obj.IntervalIdleDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 14]).Text);
+                        obj.Transfers = Convert.ToInt32(((Excel.Range)range.Cells[row, 15]).Text);
+                        obj.HeldContacts = Convert.ToInt32(((Excel.Range)range.Cells[row, 16]).Text);
+                        obj.Redirects = Convert.ToInt32(((Excel.Range)range.Cells[row, 17]).Text);
                         obj.Month = import.Month;
                         obj.Year = import.Year;
                         obj.DateUploaded = DateTime.Now;
                         obj.UploadedBy = User.Identity.Name;
                         list.Add(obj);
                     }
-                    foreach (OSC_ImportBIQual obj in list)
+                    foreach (OSC_ImportAIQ obj in list)
                     {
-                        obj.Repid = db.Representatives.Where(r => (r.BIUserId == obj.UserIdName) &&
-                                                                (r.TeamId == db.GetTeamIdByGroupId(obj.Group, "BI").TeamId)).FirstOrDefault().RepId;
-                        obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
-                        //db.BIP.Add(obj);
+                        obj.RepId = db.Representatives.Where(r => (r.AIQUserId == obj.Agent) && ((bool)r.IsCurrent)).FirstOrDefault().RepId;
+                        obj.TeamId = db.Representatives.Where(r => (r.AIQUserId == obj.Agent) && ((bool)r.IsCurrent)).FirstOrDefault().TeamId;
+                        db.AIQ.Add(obj);
                     }
                     try
                     {
-                        //db.SaveChanges();
+                        db.SaveChanges();
                         ViewBag.MessageBIP = "Success";
                         if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     }
@@ -247,6 +252,72 @@ namespace OPSCO_Web.Controllers
                     string path = Server.MapPath("~/ImportFile/" + fname);
                     if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     ta.SaveAs(path);
+                    #region "EXCEL"
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(path);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    Excel.Range range = worksheet.UsedRange;
+                    List<OSC_ImportTA> list = new List<OSC_ImportTA>();
+                    for (int row = 2; row <= range.Rows.Count; row++)
+                    {
+                        OSC_ImportTA obj = new OSC_ImportTA();
+                        obj.AssignedId = ((Excel.Range)range.Cells[row, 1]).Text;
+                        obj.Group = ((Excel.Range)range.Cells[row, 2]).Text;
+                        obj.FirstName = ((Excel.Range)range.Cells[row, 3]).Text;
+                        obj.MiddleInt = ((Excel.Range)range.Cells[row, 4]).Text;
+                        obj.LastName = ((Excel.Range)range.Cells[row, 5]).Text;
+                        obj.CreateDateTime = ((Excel.Range)range.Cells[row, 6]).Text;
+                        obj.BusinessArea = ((Excel.Range)range.Cells[row, 7]).Text;
+                        obj.WorkType = ((Excel.Range)range.Cells[row, 8]).Text;
+                        obj.Status = ((Excel.Range)range.Cells[row, 9]).Text;
+                        obj.Queue = ((Excel.Range)range.Cells[row, 10]).Text;
+                        obj.Suspended = ((Excel.Range)range.Cells[row, 11]).Text;
+                        obj.SuspendDate = ((Excel.Range)range.Cells[row, 12]).Text;
+                        obj.UnsuspendDate = ((Excel.Range)range.Cells[row, 13]).Text;
+                        obj.LastStatusUpdate = ((Excel.Range)range.Cells[row, 14]).Text;
+                        obj.Account = ((Excel.Range)range.Cells[row, 15]).Text;
+                        obj.GAC = ((Excel.Range)range.Cells[row, 16]).Text;
+                        obj.Assoc = ((Excel.Range)range.Cells[row, 17]).Text;
+                        obj.Certificate = ((Excel.Range)range.Cells[row, 18]).Text;
+                        obj.CheckAmount = ((Excel.Range)range.Cells[row, 19]).Text;
+                        obj.First_Name = ((Excel.Range)range.Cells[row, 20]).Text;
+                        obj.Last_Name = ((Excel.Range)range.Cells[row, 21]).Text;
+                        obj.CustomerNo = ((Excel.Range)range.Cells[row, 22]).Text;
+                        obj.ProductType = ((Excel.Range)range.Cells[row, 23]).Text;
+                        obj.AdminSystem = ((Excel.Range)range.Cells[row, 24]).Text;
+                        obj.CheckAmountTotal = ((Excel.Range)range.Cells[row, 25]).Text;
+                        obj.UCIVendorMatchDate = ((Excel.Range)range.Cells[row, 26]).Text;
+                        obj.ReasonCodeForAdv = ((Excel.Range)range.Cells[row, 27]).Text;
+                        obj.ReasonDescription = ((Excel.Range)range.Cells[row, 28]).Text;
+                        obj.TinSourceType = ((Excel.Range)range.Cells[row, 29]).Text;
+                        obj.SSBusinessUnit = ((Excel.Range)range.Cells[row, 30]).Text;
+                        obj.Month = import.Month;
+                        obj.Year = import.Year;
+                        obj.DateUploaded = DateTime.Now;
+                        obj.UploadedBy = User.Identity.Name;
+                        list.Add(obj);
+                    }
+                    foreach (OSC_ImportTA obj in list)
+                    {
+                        if (Convert.ToDateTime(obj.CreateDateTime).Month == obj.Month)
+                        {
+                            obj.RepId = db.Representatives.Where(r => (r.PRDUserId == obj.AssignedId) && ((bool)r.IsCurrent)).FirstOrDefault().RepId;
+                            obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
+                            db.TA.Add(obj);
+                        }
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        ViewBag.MessageBIP = "Success";
+                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorBIP = "Error: " + ex.Message.ToString();
+                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    }
+                    #endregion "EXCEL"
                 }
                 else
                 {
@@ -267,6 +338,52 @@ namespace OPSCO_Web.Controllers
                     string path = Server.MapPath("~/ImportFile/" + fname);
                     if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     npt.SaveAs(path);
+                    #region "EXCEL"
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(path);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    Excel.Range range = worksheet.UsedRange;
+                    List<OSC_ImportNPT> list = new List<OSC_ImportNPT>();
+                    for (int row = 2; row <= range.Rows.Count; row++)
+                    {
+                        OSC_ImportNPT obj = new OSC_ImportNPT();
+                        obj.Activity = ((Excel.Range)range.Cells[row, 1]).Text;
+                        obj.DateOfActivity = Convert.ToDateTime(((Excel.Range)range.Cells[row, 2]).Text);
+                        obj.TimeSpent = Convert.ToDouble(((Excel.Range)range.Cells[row, 3]).Text) * 60;
+                        obj.TypeOfActivity = ((Excel.Range)range.Cells[row, 4]).Text;
+                        obj.CreatedBy = ((Excel.Range)range.Cells[row, 5]).Text;
+                        obj.ItemType = ((Excel.Range)range.Cells[row, 6]).Text;
+                        obj.Path = ((Excel.Range)range.Cells[row, 7]).Text;
+                        obj.Month = import.Month;
+                        obj.Year = import.Year;
+                        obj.DateUploaded = DateTime.Now;
+                        obj.UploadedBy = User.Identity.Name;
+                        obj.Source = "Import";
+                        list.Add(obj);
+                    }
+                    foreach (OSC_ImportNPT obj in list)
+                    {
+                        if (Convert.ToDateTime(obj.DateOfActivity).Month == obj.Month)
+                        { 
+                            obj.RepId = db.Representatives.Where(r => (r.LastName + ", " + r.FirstName == obj.CreatedBy) &&
+                                                                    ((bool)r.IsCurrent)).FirstOrDefault().RepId;
+                            obj.TeamId = db.Representatives.Where(r => (r.LastName + ", " + r.FirstName == obj.CreatedBy) && 
+                                                                    ((bool)r.IsCurrent)).FirstOrDefault().TeamId;
+                            db.NPT.Add(obj);
+                        }
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        ViewBag.MessageBIP = "Success";
+                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorBIP = "Error: " + ex.Message.ToString();
+                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    }
+                    #endregion "EXCEL"
                 }
                 else
                 {

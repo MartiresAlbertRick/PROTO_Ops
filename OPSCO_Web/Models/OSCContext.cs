@@ -27,6 +27,7 @@ namespace OPSCO_Web.Models
 
         public DbSet<OSC_Location> Locations { get; set; }
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
+        public DbSet<OSC_NptCategory> NptCategories { get; set; }
         public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
@@ -63,6 +64,40 @@ namespace OPSCO_Web.Models
             result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
             return result;
         }
+
+        #region "DateTimeFormatting"
+        //return time string format hh:mm:ss
+        public string GetTimeFormat(long sec)
+        {
+            string result;
+            long hours, mins, secs;
+            hours = sec / 3600;
+            mins = (sec % 3600) / 60;
+            secs = (sec % 3600) % 60;
+            result = hours.ToString("00") + ":" + mins.ToString("00") + ":" + secs.ToString("00");
+            return result;
+        }
+
+        //return seconds long format sssssss
+        public long GetSecondsFormat(string _hour)
+        {
+            long returnValue, hours = 0, mins = 0, secs = 0;
+            char delimiter = ':';
+            int ctr = 1;
+            string[] time = _hour.Split(delimiter);
+
+            foreach (string s in time)
+            {
+                if (ctr == 1) { hours = Convert.ToInt64(s); }
+                else if (ctr == 2) { mins = Convert.ToInt64(s); }
+                else { secs = Convert.ToInt64(s); }
+                ctr++;
+            }
+
+            returnValue = (hours * 3600) + (mins * 60) + secs;
+            return returnValue;
+        }
+        #endregion "DateTimeFormatting"
 
         #region "IOSCContext"
         IQueryable<OSC_Department> IOSCContext.Departments
@@ -248,5 +283,37 @@ namespace OPSCO_Web.Models
             [Display(Name = "Active Flag")]
             public bool IsActive { get; set; }
         }
+    }
+
+    [MetadataType(typeof(OSC_ActivityTracker.Metadata))]
+    public partial class OSC_ActivityTracker
+    {
+        sealed class Metadata
+        {
+            [Key]
+            public long ActivityId { get; set; }
+            public long RepId { get; set; }
+            public int Month { get; set; }
+            public int Year { get; set; }
+            [Display(Name = "Date From")]
+            public DateTime DateFrom { get; set; }
+            [Display(Name = "Date To")]
+            public DateTime DateTo { get; set; }
+            [Display(Name = "Activity")]
+            public string Activity { get; set; }
+            [Display(Name = "No of Hours")]
+            public double NoOfHours { get; set; }
+            [Display(Name = "Date Modified")]
+            public DateTime DateModified { get; set; }
+            [Display(Name = "Modified By")]
+            public string ModifiedBy { get; set; }
+            [Display(Name = "No of Days")]
+            public double NoOfDays { get; set; }
+            public long TeamId { get; set; }
+            [Display(Name = "Active Flag")]
+            public bool IsActive { get; set; }
+        }
+        public virtual OSC_Team Team { get; set; }
+        public virtual OSC_Representative Representative { get; set; }
     }
 }
