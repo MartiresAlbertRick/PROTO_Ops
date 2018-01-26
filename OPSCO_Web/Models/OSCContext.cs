@@ -52,11 +52,16 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "November", Value = "11" },
             new SelectListItem { Text = "December", Value = "12" },
         };
-
         public List<SelectListItem> years = new List<SelectListItem>()
         {
             new SelectListItem { Text = "2018", Value = "2018" },
             new SelectListItem { Text = "2017", Value = "2017" }
+        };
+        public List<SelectListItem> activities = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "Time-off", Value = "Time-off" },
+            new SelectListItem { Text = "Overtime", Value = "Overtime" },
+            new SelectListItem { Text = "Holiday", Value = "Holiday" }
         };
         public OSC_TeamGroupIds GetTeamIdByGroupId(string groupId, string groupType)
         {
@@ -210,8 +215,10 @@ namespace OPSCO_Web.Models
             public Nullable<long> TeamId { get; set; }
             public Nullable<int> CoreRoleId { get; set; }
             [Display(Name = "Start Date")]
+            [DataType(DataType.Date)]
             public Nullable<System.DateTime> StartDate { get; set; }
             [Display(Name = "End Date")]
+            [DataType(DataType.Date)]
             public Nullable<System.DateTime> EndDate { get; set; }
             public string Comments { get; set; }
             [Display(Name = "On Shore")]
@@ -296,8 +303,10 @@ namespace OPSCO_Web.Models
             public int Month { get; set; }
             public int Year { get; set; }
             [Display(Name = "Date From")]
+            [DataType(DataType.Date)]
             public DateTime DateFrom { get; set; }
             [Display(Name = "Date To")]
+            [DataType(DataType.Date)]
             public DateTime DateTo { get; set; }
             [Display(Name = "Activity")]
             public string Activity { get; set; }

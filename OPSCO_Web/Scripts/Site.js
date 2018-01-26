@@ -64,6 +64,30 @@ function validate($btn) {
             allowSubmit();
         });
     });
+    $('input[type=date].input-required').each(function (index, item) {
+        $(item).unbind('focusin');
+        $(item).unbind('focusout');
+        if ($(item).val() != '') {
+            $(item).removeClass('unfilled');
+            $(item).addClass('filled');
+            allowSubmit();
+        }
+        $(item).on('focusin', function () {
+            $(item).removeClass('filled');
+            $(item).addClass('unfilled');
+        });
+        $(item).on('focusout', function () {
+            if ($(item).val() == '') {
+                $(item).removeClass('filled');
+                $(item).addClass('unfilled');
+            }
+            else {
+                $(item).removeClass('unfilled');
+                $(item).addClass('filled');
+            }
+            allowSubmit();
+        });
+    });
     $('textarea.input-required').each(function (index, item) {
         $(item).unbind('focusin');
         $(item).unbind('focusout');

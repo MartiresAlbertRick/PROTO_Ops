@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace OPSCO_Web.Controllers
 {
@@ -15,9 +17,34 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: ActivityTracker
-        public ActionResult Index()
+        public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-            return View(db.ActivityTrackers.ToList());
+            foreach (OSC_ActivityTracker act in db.ActivityTrackers)
+            {
+                act.Team = db.Teams.Find(act.TeamId);
+                act.Representative = db.Representatives.Find(act.RepId);
+                act.Representative.Location = db.Locations.Find(act.Representative.LocationId);
+                act.Representative.CoreRole = db.CoreRoles.Find(act.Representative.CoreRoleId);
+                act.Representative.FullName = act.Representative.FirstName + " " + act.Representative.LastName;
+            }
+
+            int? defaultPageSize = 10;
+
+            if (pageSize != null)
+            {
+                defaultPageSize = pageSize;
+            }
+
+            var acts = (from a in db.ActivityTrackers
+                        where a.Activity != "Attendance"
+                        select a);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                acts = acts.Where(a => a.Activity.Contains(searchString) || a.Representative.FullName.Contains(searchString));
+            }
+
+            return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));
         }
 
         // GET: ActivityTracker/Details/5
@@ -36,8 +63,19 @@ namespace OPSCO_Web.Controllers
         }
 
         // GET: ActivityTracker/Create
-        public ActionResult Create()
+        public ActionResult Create(long? teamId)
         {
+            foreach (OSC_Representative rep in db.Representatives)
+            { rep.FullName = rep.FirstName + " " + rep.LastName; }
+            ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+            ViewBag.Activity = db.activities;
+            long defaultTeamId = 0;
+            var reps = (from r in db.Representatives select r);
+            if (teamId != null)
+            { reps = reps.Where(r => r.TeamId == teamId); }
+            else
+            { reps = reps.Where(r => r.TeamId == defaultTeamId); }
+            ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
             return View();
         }
 

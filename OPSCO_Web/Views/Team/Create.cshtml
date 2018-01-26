@@ -19,21 +19,21 @@
         <br />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
             <div class="col-md-4">
                 @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
                 @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Department</label>
+            @Html.Label("Department", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
             <div class="col-md-4">
                 @Html.DropDownList("DepartmentId", (IEnumerable<SelectListItem>)ViewBag.Departments, "--Select Department--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_depname" })
                 @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
             <div class="col-md-4">
                 <div class="checkbox">
                     @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
@@ -41,7 +41,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">

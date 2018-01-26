@@ -26,84 +26,84 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.RepId)
     <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control input-sm" } })
             @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Team.TeamName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Team.TeamName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.DropDownList("TeamId", (IEnumerable<SelectListItem>)ViewBag.Teams, "--Select Team--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
             @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.CoreRole.CoreRole, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CoreRole.CoreRole, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.DropDownList("CoreRoleId", (IEnumerable<SelectListItem>)ViewBag.CoreRoles, "--Select Role--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
             @Html.ValidationMessageFor(model => model.CoreRoleId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.PRDUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PRDUserId, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.PRDUserId, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.PRDUserId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.AIQUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.AIQUserId, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.AIQUserId, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.AIQUserId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.BIUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.BIUserId, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.BIUserId, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.BIUserId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control input-sm", id="txt_startdt" } })
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control input-sm", id="txt_enddt" } })
             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Location.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Location.Location, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.DropDownList("LocationId", (IEnumerable<SelectListItem>)ViewBag.Locations, "--Select Location--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
             @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.OnShoreRep, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.OnShoreRep, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             <div class="checkbox">
                 @Html.EditorFor(model => model.OnShoreRep)
@@ -112,7 +112,7 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.PhoneRep, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PhoneRep, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             <div class="checkbox">
                 @Html.EditorFor(model => model.PhoneRep)
@@ -121,14 +121,14 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.WorkHours, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.WorkHours, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.WorkHours, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.WorkHours, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             <div class="checkbox">
                 @Html.EditorFor(model => model.IsActive)
