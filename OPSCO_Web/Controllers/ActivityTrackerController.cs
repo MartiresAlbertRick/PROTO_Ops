@@ -55,6 +55,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
+            oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
+            oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
             if (oSC_ActivityTracker == null)
             {
                 return HttpNotFound();
@@ -63,7 +66,7 @@ namespace OPSCO_Web.Controllers
         }
 
         // GET: ActivityTracker/Create
-        public ActionResult Create(long? teamId)
+        public ActionResult Create(long? teamId, long? repId)
         {
             foreach (OSC_Representative rep in db.Representatives)
             { rep.FullName = rep.FirstName + " " + rep.LastName; }
@@ -76,6 +79,10 @@ namespace OPSCO_Web.Controllers
             else
             { reps = reps.Where(r => r.TeamId == defaultTeamId); }
             ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
+            if (repId != null)
+            {
+                ViewBag.WorkHours = db.Representatives.Find(repId).WorkHours;
+            }
             return View();
         }
 
@@ -86,6 +93,10 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ActivityId,RepId,Month,Year,DateFrom,DateTo,Activity,NoOfHours,DateModified,ModifiedBy,NoOfDays,TeamId,IsActive")] OSC_ActivityTracker oSC_ActivityTracker)
         {
+            oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
+            oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
+            oSC_ActivityTracker.DateModified = DateTime.Now;
+            oSC_ActivityTracker.ModifiedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.ActivityTrackers.Add(oSC_ActivityTracker);
@@ -104,6 +115,10 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
+            oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
+            oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
+            ViewBag.Activity = db.activities;
             if (oSC_ActivityTracker == null)
             {
                 return HttpNotFound();
@@ -116,8 +131,12 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ActivityId,RepId,Month,Year,DateFrom,DateTo,Activity,NoOfHours,DateModified,ModifiedBy,NoOfDays,TeamId,IsActive")] OSC_ActivityTracker oSC_ActivityTracker)
+        public ActionResult Edit([Bind(Include = "ActivityId, RepId, Month, Year, DateFrom, DateTo, Activity, NoOfHours, DateModified, ModifiedBy, NoOfDays, TeamId, IsActive")] OSC_ActivityTracker oSC_ActivityTracker)
         {
+            oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
+            oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
+            oSC_ActivityTracker.DateModified = DateTime.Now;
+            oSC_ActivityTracker.ModifiedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.Entry(oSC_ActivityTracker).State = EntityState.Modified;
@@ -135,6 +154,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
+            oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
+            oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
             if (oSC_ActivityTracker == null)
             {
                 return HttpNotFound();

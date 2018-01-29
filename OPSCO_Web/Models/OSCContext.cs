@@ -24,6 +24,9 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_ActivityTracker> ActivityTrackers { get; set; }
         public DbSet<OSC_ManualEntry> ManualEntries { get; set; }
         public DbSet<OSC_CustomizeScorecard> CustomizeScorecards {get; set;}
+        public DbSet<OSC_WorkType> WorkTypes { get; set; }
+        public DbSet<OSC_WorkStatus> Statuses { get; set; }
+        public DbSet<OSC_BusinessArea> BusinessAreas { get; set; }
 
         public DbSet<OSC_Location> Locations { get; set; }
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
@@ -37,6 +40,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_ImportNPT> NPT { get; set; }
         #endregion "DBSets"
 
+        #region "StaticLists"
         public List<SelectListItem> months = new List<SelectListItem>()
         {
             new SelectListItem { Text = "January", Value = "1" },
@@ -63,12 +67,22 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "Overtime", Value = "Overtime" },
             new SelectListItem { Text = "Holiday", Value = "Holiday" }
         };
+        public List<SelectListItem> projectResponsibilities = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "Below", Value = "Below" },
+            new SelectListItem { Text = "Meets", Value = "Meets" },
+            new SelectListItem { Text = "Exceeds", Value = "Exceeds" }
+        };
+        #endregion "StaticLists"
+
+        #region "GetReferrence"
         public OSC_TeamGroupIds GetTeamIdByGroupId(string groupId, string groupType)
         {
             OSC_TeamGroupIds result = new OSC_TeamGroupIds();
             result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
             return result;
         }
+        #endregion "GetReferrence"
 
         #region "DateTimeFormatting"
         //return time string format hh:mm:ss
@@ -212,24 +226,24 @@ namespace OPSCO_Web.Models
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            public Nullable<long> TeamId { get; set; }
-            public Nullable<int> CoreRoleId { get; set; }
+            public long TeamId { get; set; }
+            public int CoreRoleId { get; set; }
             [Display(Name = "Start Date")]
             [DataType(DataType.Date)]
-            public Nullable<System.DateTime> StartDate { get; set; }
+            public DateTime StartDate { get; set; }
             [Display(Name = "End Date")]
             [DataType(DataType.Date)]
-            public Nullable<System.DateTime> EndDate { get; set; }
+            public DateTime EndDate { get; set; }
             public string Comments { get; set; }
             [Display(Name = "On Shore")]
             public bool OnShoreRep { get; set; }
             [Display(Name = "Phone Representative")]
             public bool PhoneRep { get; set; }
             [Display(Name = "Work Hours")]
-            public Nullable<double> WorkHours { get; set; }
+            public double WorkHours { get; set; }
             [Display(Name = "Has Previous")]
             public Nullable<bool> HasPrevious { get; set; }
-            public Nullable<int> LocationId { get; set; }
+            public int LocationId { get; set; }
             [Display(Name = "Previous Id")]
             public Nullable<long> PreviousId { get; set; }
             [Display(Name = "Current Flag")]
@@ -319,6 +333,52 @@ namespace OPSCO_Web.Models
             [Display(Name = "No of Days")]
             public double NoOfDays { get; set; }
             public long TeamId { get; set; }
+            [Display(Name = "Active Flag")]
+            public bool IsActive { get; set; }
+        }
+        public virtual OSC_Team Team { get; set; }
+        public virtual OSC_Representative Representative { get; set; }
+    }
+
+    [MetadataType(typeof(OSC_ManualEntry.Metadata))]
+    public partial class OSC_ManualEntry
+    {
+        sealed class Metadata
+        {
+            public long EntryId { get; set; }
+            public long TeamId { get; set; }
+            public long RepId { get; set; }
+            [Display(Name = " Gain/Loss Occurances")]
+            public decimal GainLossOccurances { get; set; }
+            [Display(Name = " Gain/Loss Amount")]
+            public double GainLossAmount { get; set; }
+            [Display(Name = " Call Management Score")]
+            public double CallManagementScore { get; set; }
+            [Display(Name = " Project Responsibility")]
+            public string ProjectResponsibility { get; set; }
+            [Display(Name = "Schedule Adherence")]
+            public double ScheduleAdherence { get; set; }
+            public double Compliance { get; set; }
+            [Display(Name = "Product Accuracy")]
+            public double ProductAccuracy { get; set; }
+            public double Commitment { get; set; }
+            [Display(Name = "JH Values")]
+            public double JHValues { get; set; }
+            [Display(Name = "Call Efficiency")]
+            public double CallEfficiency { get; set; }
+            public double Engagement { get; set; }
+            [Display(Name = "Administrative Procedures")]
+            public double AdministrativeProcedures { get; set; }
+            [Display(Name = "Active Projects")]
+            public int ActiveProjects { get; set; }
+            [Display(Name = "Completed Projects")]
+            public int CompletedProjects { get; set; }
+            public int Month { get; set; }
+            public int Year { get; set; }
+            [Display(Name = "Date Modified")]
+            public DateTime DateUploaded { get; set; }
+            [Display(Name = "Modified By")]
+            public string UploadedBy { get; set; }
             [Display(Name = "Active Flag")]
             public bool IsActive { get; set; }
         }

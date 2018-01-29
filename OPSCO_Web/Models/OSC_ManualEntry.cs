@@ -33,7 +33,7 @@ namespace OPSCO_Web.Models
         public Nullable<int> Year { get; set; }
         public Nullable<System.DateTime> DateUploaded { get; set; }
         public string UploadedBy { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool IsActive { get; set; }
         public Nullable<int> ActiveProjects { get; set; }
         public Nullable<int> CompletedProjects { get; set; }
     }
