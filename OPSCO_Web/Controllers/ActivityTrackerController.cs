@@ -41,7 +41,7 @@ namespace OPSCO_Web.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                acts = acts.Where(a => a.Activity.Contains(searchString) || a.Representative.FullName.Contains(searchString));
+                acts = acts.Where(a => a.Activity.Contains(searchString));
             }
 
             return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));

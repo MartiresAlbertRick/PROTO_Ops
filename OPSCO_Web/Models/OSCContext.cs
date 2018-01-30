@@ -384,5 +384,6 @@ namespace OPSCO_Web.Models
         }
         public virtual OSC_Team Team { get; set; }
         public virtual OSC_Representative Representative { get; set; }
+        public string MonthName { get; set; }
     }
 }
