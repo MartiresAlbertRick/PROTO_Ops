@@ -15,7 +15,7 @@
         <div class="input-group">
             @Html.TextBox("SearchString", null, new { @class = "form-control input-sm", id = "search", @placeholder = "Search keyword + Enter..." })
             <span class="input-group-btn">
-                <button type="button" class="btn btn-default btn-sm" id="cmd_search">
+                <button type="button" class="btn btn-default btn-sm" id="cmd_search" title="Find">
                     <span class="fa fa-search"></span>
                 </button>
             </span>
@@ -23,7 +23,7 @@
     </div>
 </div>
 <br />
-<table class="table table-striped table-hover input-sm">
+<table class="table coverbg table-striped table-hover input-sm">
     <thead>
         <tr>
             <th>

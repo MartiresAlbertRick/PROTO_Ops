@@ -31,6 +31,6 @@ namespace OPSCO_Web.Models
         public string Source { get; set; }
         public Nullable<long> CategoryId { get; set; }
         public Nullable<long> SubCategoryId { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -97,7 +97,7 @@
     <Property Name="Year" Type="Int32" />
     <Property Name="DateUploaded" Type="DateTime" Precision="3" />
     <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="ActiveProjects" Type="Int32" />
     <Property Name="CompletedProjects" Type="Int32" />
   </EntityType>
@@ -129,8 +129,8 @@
     <Property Name="StartDate" Type="DateTime" Precision="0" />
     <Property Name="EndDate" Type="DateTime" Precision="0" />
     <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="OnShoreRep" Type="Boolean" />
-    <Property Name="PhoneRep" Type="Boolean" />
+    <Property Name="OnShoreRep" Type="Boolean" Nullable="false" />
+    <Property Name="PhoneRep" Type="Boolean" Nullable="false" />
     <Property Name="WorkHours" Type="Double" />
     <Property Name="LocationId" Type="Int32" />
     <Property Name="HasPrevious" Type="Boolean" />
@@ -305,7 +305,7 @@
     <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="CategoryId" Type="Int64" />
     <Property Name="SubCategoryId" Type="Int64" />
-    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_ImportTA">
     <Key>

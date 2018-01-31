@@ -8,9 +8,14 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <a href="@Url.Action("Index", "ActivityTracker", null)" class="btn btn-default btn-sm">
-                <i class="fa fa-chevron-left"></i> Back to List
-            </a>
+            <div class="btn-group">
+                <a href="@Url.Action("Index", "ActivityTracker", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+                <a href="@Url.Action("Edit", "ActivityTracker", new { id = Model.ActivityId } )" class="btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
         </div>
     </div>
     <br />
@@ -24,14 +29,12 @@
         <dt>
             @Html.DisplayNameFor(model => model.Representative.FullName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Representative.FullName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Team.TeamName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Team.TeamName)
         </dd>

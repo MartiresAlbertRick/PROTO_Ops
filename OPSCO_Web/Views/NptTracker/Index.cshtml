@@ -1,13 +1,13 @@
 ﻿@using PagedList
 @using PagedList.Mvc
-@model IPagedList<OPSCO_Web.Models.OSC_Representative>
+@model IPagedList<OPSCO_Web.Models.OSC_ImportNPT>
 @{
-    ViewBag.Title = "Representative";
+    ViewBag.Title = "NPT Tracker";
 }
-<h3>Representative</h3>
+<h3>NPT Tracker</h3>
 <div class="row">
     <div class="col-md-6">
-        <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "Representative", null)">
+        <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "NptTracker", null)">
             <i class="fa fa-plus"></i> New Record
         </a>
     </div>
@@ -27,16 +27,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().FullName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.First().Team.TeamName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().CoreRole.CoreRole)
+                @Html.DisplayNameFor(model => model.First().Representative.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Location.Location)
+                @Html.DisplayNameFor(model => model.First().TypeOfActivity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().DateOfActivity)
             </th>
             <th>&nbsp;</th>
         </tr>
@@ -46,25 +46,23 @@
         {
             <tr>
                 <td>
-                    <a href="@Url.Action("Details", new { id = item.RepId })">
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </a>
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Team.TeamName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CoreRole.CoreRole)
+                    @Html.DisplayFor(modelItem => item.Representative.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location.Location)
+                    @Html.DisplayFor(modelItem => item.TypeOfActivity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfActivity)
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.RepId })" title="Edit Record">
+                        <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.NPTReportId })" title="Edit Record">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.RepId })" title="Delete Record">
+                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.NPTReportId })" title="Delete Record">
                             <i class="fa fa-trash"></i>
                         </a>
                     </div>
@@ -79,26 +77,25 @@
     <div class="container-fluid">
         <div class="col-md-12">
             @Html.DropDownList("PageSize",
-                new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
-                "Key", "Value", Model.PageSize),
-                new { @class = "form-control input-sm page-size", id = "pagesizelist" })
+                                new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
+                                "Key", "Value", Model.PageSize),
+                                new { @class = "form-control input-sm page-size", id = "pagesizelist" })
         </div>
         <div class="col-md-12">
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-                new PagedListRenderOptions()
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayPageCountAndCurrentLocation = true,
-                    MaximumPageNumbersToDisplay = 5,
-                    DisplayItemSliceAndTotal = true
-                })
+                                new PagedListRenderOptions()
+                                {
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                    DisplayPageCountAndCurrentLocation = true,
+                                    MaximumPageNumbersToDisplay = 5,
+                                    DisplayItemSliceAndTotal = true
+                                })
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
 <script>

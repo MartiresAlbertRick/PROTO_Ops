@@ -183,6 +183,7 @@
     <Compile Include="Controllers\IndividualScorecardController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\ManualEntryController.cs" />
+    <Compile Include="Controllers\NptTrackerController.cs" />
     <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\TeamScorecardController.cs" />
@@ -368,6 +369,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OSCModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="ImportFile\OSC_Scripts_0124.sql" />
     <Content Include="Models\OSCModel.edmx.diagram">
       <DependentUpon>OSCModel.edmx</DependentUpon>
     </Content>
@@ -455,6 +457,11 @@
     <Content Include="Views\DepartmentScorecard\Index.cshtml" />
     <Content Include="Views\TeamScorecard\Index.cshtml" />
     <Content Include="Views\IndividualScorecard\Index.cshtml" />
+    <Content Include="Views\NptTracker\Create.cshtml" />
+    <Content Include="Views\NptTracker\Delete.cshtml" />
+    <Content Include="Views\NptTracker\Details.cshtml" />
+    <Content Include="Views\NptTracker\Edit.cshtml" />
+    <Content Include="Views\NptTracker\Index.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

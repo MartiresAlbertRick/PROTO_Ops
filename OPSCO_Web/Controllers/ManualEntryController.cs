@@ -54,6 +54,10 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ManualEntry oSC_ManualEntry = db.ManualEntries.Find(id);
+            oSC_ManualEntry.Team = db.Teams.Find(oSC_ManualEntry.TeamId);
+            oSC_ManualEntry.Representative = db.Representatives.Find(oSC_ManualEntry.RepId);
+            oSC_ManualEntry.Representative.FullName = oSC_ManualEntry.Representative.FirstName + " " + oSC_ManualEntry.Representative.LastName;
+            oSC_ManualEntry.PeriodCoverage = Convert.ToDateTime(oSC_ManualEntry.Month + "/1/" + oSC_ManualEntry.Year);
             if (oSC_ManualEntry == null)
             {
                 return HttpNotFound();
@@ -83,8 +87,12 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EntryId,TeamId,RepId,GainLossOccurances,GainLossAmount,CallManagementScore,ProjectResponsibility,ScheduleAdherence,Compliance,ProductAccuracy,Commitment,JHValues,CallEfficiency,Engagement,AdministrativeProcedures,Month,Year,DateUploaded,UploadedBy,IsActive,ActiveProjects,CompletedProjects")] OSC_ManualEntry oSC_ManualEntry)
+        public ActionResult Create([Bind(Include = "EntryId,TeamId,RepId,GainLossOccurances,GainLossAmount,CallManagementScore,ProjectResponsibility,ScheduleAdherence,Compliance,ProductAccuracy,Commitment,JHValues,CallEfficiency,Engagement,AdministrativeProcedures,Month,Year,DateUploaded,UploadedBy,IsActive,ActiveProjects,CompletedProjects,PeriodCoverage")] OSC_ManualEntry oSC_ManualEntry)
         {
+            oSC_ManualEntry.Month = Convert.ToDateTime(oSC_ManualEntry.PeriodCoverage).Month;
+            oSC_ManualEntry.Year = Convert.ToDateTime(oSC_ManualEntry.PeriodCoverage).Year;
+            oSC_ManualEntry.DateUploaded = DateTime.Now;
+            oSC_ManualEntry.UploadedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.ManualEntries.Add(oSC_ManualEntry);
@@ -103,6 +111,11 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ManualEntry oSC_ManualEntry = db.ManualEntries.Find(id);
+            oSC_ManualEntry.Team = db.Teams.Find(oSC_ManualEntry.TeamId);
+            oSC_ManualEntry.Representative = db.Representatives.Find(oSC_ManualEntry.RepId);
+            oSC_ManualEntry.Representative.FullName = oSC_ManualEntry.Representative.FirstName + " " + oSC_ManualEntry.Representative.LastName;
+            ViewBag.ProjectResponsibilities = db.projectResponsibilities;
+            oSC_ManualEntry.PeriodCoverage = Convert.ToDateTime(oSC_ManualEntry.Month + "/1/" + oSC_ManualEntry.Year);
             if (oSC_ManualEntry == null)
             {
                 return HttpNotFound();
@@ -117,6 +130,10 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EntryId,TeamId,RepId,GainLossOccurances,GainLossAmount,CallManagementScore,ProjectResponsibility,ScheduleAdherence,Compliance,ProductAccuracy,Commitment,JHValues,CallEfficiency,Engagement,AdministrativeProcedures,Month,Year,DateUploaded,UploadedBy,IsActive,ActiveProjects,CompletedProjects")] OSC_ManualEntry oSC_ManualEntry)
         {
+            oSC_ManualEntry.Month = Convert.ToDateTime(oSC_ManualEntry.PeriodCoverage).Month;
+            oSC_ManualEntry.Year = Convert.ToDateTime(oSC_ManualEntry.PeriodCoverage).Year;
+            oSC_ManualEntry.DateUploaded = DateTime.Now;
+            oSC_ManualEntry.UploadedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.Entry(oSC_ManualEntry).State = EntityState.Modified;
@@ -134,6 +151,10 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ManualEntry oSC_ManualEntry = db.ManualEntries.Find(id);
+            oSC_ManualEntry.Team = db.Teams.Find(oSC_ManualEntry.TeamId);
+            oSC_ManualEntry.Representative = db.Representatives.Find(oSC_ManualEntry.RepId);
+            oSC_ManualEntry.Representative.FullName = oSC_ManualEntry.Representative.FirstName + " " + oSC_ManualEntry.Representative.LastName;
+            oSC_ManualEntry.PeriodCoverage = Convert.ToDateTime(oSC_ManualEntry.Month + "/1/" + oSC_ManualEntry.Year);
             if (oSC_ManualEntry == null)
             {
                 return HttpNotFound();
