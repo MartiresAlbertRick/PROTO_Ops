@@ -148,6 +148,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a prima
         <EntityType Name="OSC_ImportNPT">
           <Key>
             <PropertyRef Name="NPTReportId" />
+            
           </Key>
           <Property Name="NPTReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RepId" Type="bigint" />
@@ -166,7 +167,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a prima
           <Property Name="Source" Type="nvarchar" MaxLength="10" />
           <Property Name="CategoryId" Type="bigint" />
           <Property Name="SubCategoryId" Type="bigint" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -275,7 +276,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a pri
           <Property Name="Year" Type="int" />
           <Property Name="DateUploaded" Type="datetime" />
           <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="ActiveProjects" Type="int" />
           <Property Name="CompletedProjects" Type="int" />
         </EntityType>
@@ -307,8 +308,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a pri
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="Comments" Type="nvarchar" MaxLength="255" />
-          <Property Name="OnShoreRep" Type="bit" />
-          <Property Name="PhoneRep" Type="bit" />
+          <Property Name="OnShoreRep" Type="bit" Nullable="false" />
+          <Property Name="PhoneRep" Type="bit" Nullable="false" />
           <Property Name="WorkHours" Type="float" />
           <Property Name="LocationId" Type="int" />
           <Property Name="HasPrevious" Type="bit" />
@@ -746,7 +747,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <Property Name="Year" Type="Int32" />
           <Property Name="DateUploaded" Type="DateTime" Precision="3" />
           <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="ActiveProjects" Type="Int32" />
           <Property Name="CompletedProjects" Type="Int32" />
         </EntityType>
@@ -778,8 +779,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="OnShoreRep" Type="Boolean" />
-          <Property Name="PhoneRep" Type="Boolean" />
+          <Property Name="OnShoreRep" Type="Boolean" Nullable="false" />
+          <Property Name="PhoneRep" Type="Boolean" Nullable="false" />
           <Property Name="WorkHours" Type="Double" />
           <Property Name="LocationId" Type="Int32" />
           <Property Name="HasPrevious" Type="Boolean" />
@@ -954,7 +955,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CategoryId" Type="Int64" />
           <Property Name="SubCategoryId" Type="Int64" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="OSC_ImportTA">
           <Key>

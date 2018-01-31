@@ -32,6 +32,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
         public DbSet<OSC_NptCategory> NptCategories { get; set; }
         public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
+        public DbSet<OSC_TeamNptCategory> TeamNptCategories { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
         public DbSet<OSC_ImportBIQual> BIQ { get; set; }
@@ -385,5 +386,46 @@ namespace OPSCO_Web.Models
         public virtual OSC_Team Team { get; set; }
         public virtual OSC_Representative Representative { get; set; }
         public string MonthName { get; set; }
+        [Display(Name = "Period Coverage")]
+        [DataType(DataType.Date)]
+        public DateTime PeriodCoverage { get; set; }
+    }
+
+    [MetadataType(typeof(OSC_ImportNPT.Metadata))]
+    public partial class OSC_ImportNPT
+    {
+        sealed class Metadata
+        {
+            public long NPTReportId { get; set; }
+            public Nullable<long> RepId { get; set; }
+            [Display(Name = "Activity Description")]
+            public string Activity { get; set; }
+            [Display(Name = "Date of Activity")]
+            [DataType(DataType.Date)]
+            public Nullable<System.DateTime> DateOfActivity { get; set; }
+            [Display(Name = "Time Spent")]
+            public Nullable<double> TimeSpent { get; set; }
+            [Display(Name = "Category")]
+            public string TypeOfActivity { get; set; }
+            [Display(Name = "Created By")]
+            public string CreatedBy { get; set; }
+            [Display(Name = "Item Type")]
+            public string ItemType { get; set; }
+            public string Path { get; set; }
+            public Nullable<long> TeamId { get; set; }
+            public Nullable<int> Month { get; set; }
+            public Nullable<int> Year { get; set; }
+            [Display(Name = "Date Modified")]
+            public Nullable<System.DateTime> DateUploaded { get; set; }
+            [Display(Name = "Modified By")]
+            public string UploadedBy { get; set; }
+            public string Source { get; set; }
+            public Nullable<long> CategoryId { get; set; }
+            public Nullable<long> SubCategoryId { get; set; }
+            [Display(Name = "Active Flag")]
+            public bool IsActive { get; set; }
+        }
+        public virtual OSC_Team Team { get; set; }
+        public virtual OSC_Representative Representative { get; set; }
     }
 }
