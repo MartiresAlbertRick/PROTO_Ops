@@ -27,13 +27,13 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.First().TypeOfActivity)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.First().Team.TeamName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().Representative.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().TypeOfActivity)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().DateOfActivity)
@@ -44,30 +44,32 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Team.TeamName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Representative.FullName)
-                </td>
-                <td>
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.NPTReportId })">
                     @Html.DisplayFor(modelItem => item.TypeOfActivity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateOfActivity)
-                </td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.NPTReportId })" title="Edit Record">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.NPTReportId })" title="Delete Record">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Team.TeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Representative.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfActivity)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.NPTReportId })" title="Edit Record">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.NPTReportId })" title="Delete Record">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

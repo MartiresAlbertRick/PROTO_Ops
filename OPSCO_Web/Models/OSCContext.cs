@@ -428,4 +428,16 @@ namespace OPSCO_Web.Models
         public virtual OSC_Team Team { get; set; }
         public virtual OSC_Representative Representative { get; set; }
     }
+
+    [MetadataType(typeof(OSC_TeamNptCategory.Metadata))]
+    public partial class OSC_TeamNptCategory
+    {
+        sealed class Metadata
+        {
+            public long TeamId { get; set; }
+            public long CategoryId { get; set; }
+        }
+        [Display(Name = "Category")]
+        public string CategoryDesc { get; set; }
+    }
 }

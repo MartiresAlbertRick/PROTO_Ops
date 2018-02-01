@@ -64,6 +64,8 @@ namespace OPSCO_Web.Controllers
         {
             foreach (OSC_Representative rep in db.Representatives)
             { rep.FullName = rep.FirstName + " " + rep.LastName; }
+            foreach (OSC_TeamNptCategory n in db.TeamNptCategories)
+            { n.CategoryDesc = db.NptCategories.Find(n.CategoryId).CategoryDesc; }
             ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
@@ -79,16 +81,7 @@ namespace OPSCO_Web.Controllers
                 teamNptCategories = teamNptCategories.Where(t => t.TeamId == defaultTeamId);
             }
             ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
-            //ViewBag.TeamNptCategories = new SelectList();
-            
-            //View
-            //Team
-            //Representative
-            //Category
-            //ActivityDescription
-            //DateOfActivity
-            //TimeSpent
-            //ActiveFlag
+            ViewBag.TeamNptCategories = new SelectList(teamNptCategories, "CategoryDesc", "CategoryDesc");
 
             return View();
         }
@@ -100,6 +93,10 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NPTReportId,RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,CreatedBy,ItemType,Path,TeamId,Month,Year,DateUploaded,UploadedBy,Source,CategoryId,SubCategoryId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
         {
+            oSC_ImportNPT.Month = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Month;
+            oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
+            oSC_ImportNPT.DateUploaded = DateTime.Now;
+            oSC_ImportNPT.UploadedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.NPT.Add(oSC_ImportNPT);
@@ -113,11 +110,19 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker/Edit/5
         public ActionResult Edit(long? id)
         {
+            foreach (OSC_TeamNptCategory n in db.TeamNptCategories)
+            { n.CategoryDesc = db.NptCategories.Find(n.CategoryId).CategoryDesc; }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
+            oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
+            oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
+            oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
+            var teamNptCategories = (from t in db.TeamNptCategories select t);
+            teamNptCategories = teamNptCategories.Where(t => t.TeamId == oSC_ImportNPT.TeamId);
+            ViewBag.TeamNptCategories = new SelectList(teamNptCategories, "CategoryDesc", "CategoryDesc");
             if (oSC_ImportNPT == null)
             {
                 return HttpNotFound();
@@ -132,6 +137,10 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "NPTReportId,RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,CreatedBy,ItemType,Path,TeamId,Month,Year,DateUploaded,UploadedBy,Source,CategoryId,SubCategoryId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
         {
+            oSC_ImportNPT.Month = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Month;
+            oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
+            oSC_ImportNPT.DateUploaded = DateTime.Now;
+            oSC_ImportNPT.UploadedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.Entry(oSC_ImportNPT).State = EntityState.Modified;
