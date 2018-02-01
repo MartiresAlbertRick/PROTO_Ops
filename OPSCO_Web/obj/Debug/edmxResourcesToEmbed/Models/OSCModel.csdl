@@ -432,9 +432,11 @@
   <EntityType Name="OSC_TeamGroupIds">
     <Key>
       <PropertyRef Name="TeamId" />
+      <PropertyRef Name="TGIId" />
     </Key>
     <Property Name="TeamId" Type="Int64" Nullable="false" />
     <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
 </Schema>

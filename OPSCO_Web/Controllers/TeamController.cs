@@ -87,11 +87,13 @@ namespace OPSCO_Web.Controllers
         public ActionResult Edit(long? id)
         {
             ViewBag.Departments = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
+            ViewBag.GroupTypes = db.userGroupType;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_Team oSC_Team = db.Teams.Find(id);
+            oSC_Team.GroupIds = db.GetGroupIds(id);
             if (oSC_Team == null)
             {
                 return HttpNotFound();

@@ -20,3 +20,8 @@ go
 alter table OSC_ImportNPT
 alter column IsActive bit not null
 go
+
+alter table OSC_TeamGroupIds
+add TGIId bigint identity(1,1) not null
+go
+

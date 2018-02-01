@@ -52,6 +52,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
+            oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
+            oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
+            oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
             if (oSC_ImportNPT == null)
             {
                 return HttpNotFound();
@@ -158,6 +161,9 @@ namespace OPSCO_Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
+            oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
+            oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
+            oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
             if (oSC_ImportNPT == null)
             {
                 return HttpNotFound();

@@ -345,10 +345,12 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a pr
         <EntityType Name="OSC_TeamGroupIds">
           <Key>
             <PropertyRef Name="TeamId" />
+            <PropertyRef Name="TGIId" />
           </Key>
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="GroupId" Type="nvarchar" MaxLength="50" />
           <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
+          <Property Name="TGIId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -614,7 +616,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
             <DefiningQuery>SELECT 
     [OSC_TeamGroupIds].[TeamId] AS [TeamId], 
     [OSC_TeamGroupIds].[GroupId] AS [GroupId], 
-    [OSC_TeamGroupIds].[GroupType] AS [GroupType]
+    [OSC_TeamGroupIds].[GroupType] AS [GroupType], 
+    [OSC_TeamGroupIds].[TGIId] AS [TGIId]
     FROM [dbo].[OSC_TeamGroupIds] AS [OSC_TeamGroupIds]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
@@ -1082,10 +1085,12 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
         <EntityType Name="OSC_TeamGroupIds">
           <Key>
             <PropertyRef Name="TeamId" />
+            <PropertyRef Name="TGIId" />
           </Key>
           <Property Name="TeamId" Type="Int64" Nullable="false" />
           <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1517,6 +1522,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <EntitySetMapping Name="OSC_TeamGroupIds">
             <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
               <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
+                <ScalarProperty Name="TGIId" ColumnName="TGIId" />
                 <ScalarProperty Name="GroupType" ColumnName="GroupType" />
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />

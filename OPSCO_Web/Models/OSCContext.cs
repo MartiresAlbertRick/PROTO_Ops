@@ -74,6 +74,11 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "Meets", Value = "Meets" },
             new SelectListItem { Text = "Exceeds", Value = "Exceeds" }
         };
+        public List<SelectListItem> userGroupType = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "BI", Value = "BI" },
+            new SelectListItem { Text = "AIQ", Value = "AIQ" }
+        };
         #endregion "StaticLists"
 
         #region "GetReferrence"
@@ -82,6 +87,12 @@ namespace OPSCO_Web.Models
             OSC_TeamGroupIds result = new OSC_TeamGroupIds();
             result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
             return result;
+        }
+
+        public List<OSC_TeamGroupIds> GetGroupIds(long? teamId)
+        {
+            var result = TeamGroupIds.Where(t => t.TeamId == teamId);
+            return result.ToList();
         }
         #endregion "GetReferrence"
 
@@ -117,7 +128,7 @@ namespace OPSCO_Web.Models
             returnValue = (hours * 3600) + (mins * 60) + secs;
             return returnValue;
         }
-        #endregion "DateTimeFormatting"
+        #endregion "DateTimeFormatting"C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\ImportFile\OSC_Scripts_0124.sql
 
         #region "IOSCContext"
         IQueryable<OSC_Department> IOSCContext.Departments
@@ -202,6 +213,7 @@ namespace OPSCO_Web.Models
             public string AIQUserGroup { get; set; }
         }
         public virtual OSC_Department Department { get; set; }
+        public virtual ICollection<OSC_TeamGroupIds> GroupIds { get; set; }
     }
 
     [MetadataType(typeof(OSC_Representative.Metadata))]
@@ -439,5 +451,19 @@ namespace OPSCO_Web.Models
         }
         [Display(Name = "Category")]
         public string CategoryDesc { get; set; }
+    }
+
+    [MetadataType(typeof(OSC_TeamGroupIds.Metadata))]
+    public partial class OSC_TeamGroupIds
+    {
+        sealed class Metadata
+        {
+            public long TGIId { get; set; }
+            public long TeamId { get; set; }
+            [Display(Name = "Group Id")]
+            public string GroupId { get; set; }
+            [Display(Name = "Group Type")]
+            public string GroupType { get; set; }
+        }
     }
 }

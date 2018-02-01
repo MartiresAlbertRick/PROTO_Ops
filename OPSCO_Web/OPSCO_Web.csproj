@@ -462,6 +462,7 @@
     <Content Include="Views\NptTracker\Details.cshtml" />
     <Content Include="Views\NptTracker\Edit.cshtml" />
     <Content Include="Views\NptTracker\Index.cshtml" />
+    <Content Include="Views\Shared\SideNav.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

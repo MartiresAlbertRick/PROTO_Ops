@@ -26,5 +26,10 @@ namespace OPSCO_Web.Controllers
 
             return View();
         }
+
+        public PartialViewResult SideNav()
+        {
+            return PartialView("SideNav");
+        }
     }
 }

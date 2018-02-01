@@ -17,5 +17,6 @@ namespace OPSCO_Web.Models
         public long TeamId { get; set; }
         public string GroupId { get; set; }
         public string GroupType { get; set; }
+        public long TGIId { get; set; }
     }
 }
