@@ -87,7 +87,6 @@ namespace OPSCO_Web.Controllers
         public ActionResult Edit(long? id)
         {
             ViewBag.Departments = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
-            ViewBag.GroupTypes = db.userGroupType;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -142,6 +141,27 @@ namespace OPSCO_Web.Controllers
             db.Teams.Remove(oSC_Team);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Settings(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OSC_Team oSC_Team = db.Teams.Find(id);
+            oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
+            if (oSC_Team == null)
+            {
+                return HttpNotFound();
+            }
+            return View(oSC_Team);
+        }
+
+        public PartialViewResult GroupIdSection(OSC_TeamGroupIds oSC_TeamGroupIds)
+        {
+            ViewBag.GroupTypes = db.userGroupType;
+            return PartialView("_GroupIdSection", oSC_TeamGroupIds);
         }
 
         protected override void Dispose(bool disposing)

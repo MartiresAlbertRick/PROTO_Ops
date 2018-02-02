@@ -61,22 +61,18 @@
             <tbody>
                 @foreach (var item in Model.GroupIds)
                 {
-                    <tr id="@item.TGIId">
-                        <td class="col-md-4">
-                            @Html.DropDownList("GroupType", new SelectList(ViewBag.GroupTypes), "--Select Grouptype--", htmlAttributes: new { @class = "form-control input-sm", id = "cmb_" + item.TGIId })
-                            @Html.EditorFor(modelItem => item.GroupType, new { htmlAttributes = new { @class = "form-control input-sm" } })
-                        </td>
-                        <td class="col-md-6">
-                            @Html.EditorFor(modelItem => item.GroupId, new { htmlAttributes = new { @class = "form-control input-sm" } })
-                        </td>
-                        <td>
-                            <a class="btn btn-danger btn-xs" title="Remove Group Id">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                    @Html.Action("GroupIdSection", item)
                 }
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <a class="btn btn-success btn-sm pull-right">
+                            <i class="fa fa-plus"></i> Add
+                        </a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
