@@ -158,11 +158,31 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Team);
         }
 
-        public PartialViewResult GroupIdSection(OSC_TeamGroupIds oSC_TeamGroupIds)
+        [HttpPost]
+        public PartialViewResult _SaveGroupId([Bind(Include = "TeamId,GroupId,GroupType")]OSC_TeamGroupIds oSC_TeamGroupIds, long? teamId)
+        {
+            oSC_TeamGroupIds.TeamId = (long)teamId;
+            db.TeamGroupIds.Add(oSC_TeamGroupIds);
+            db.SaveChanges();
+            ViewBag.TeamId = teamId;
+            ViewBag.GroupTypes = db.userGroupType;
+            return PartialView("_GroupIdSection", db.TeamGroupIds.Where(t => t.TeamId == teamId));
+        }
+
+        public PartialViewResult _GroupIdSection(long? id)
+        {
+            ViewBag.TeamId = id;
+            ViewBag.GroupTypes = db.userGroupType;
+            return PartialView(db.TeamGroupIds.Where(t => t.TeamId == id));
+        }
+
+        public PartialViewResult _GroupIdRow(OSC_TeamGroupIds oSC_TeamGroupIds)
         {
             ViewBag.GroupTypes = db.userGroupType;
-            return PartialView("_GroupIdSection", oSC_TeamGroupIds);
+            return PartialView("_GroupIdRow", oSC_TeamGroupIds);
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

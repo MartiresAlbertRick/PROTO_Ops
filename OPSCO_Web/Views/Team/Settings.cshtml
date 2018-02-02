@@ -28,14 +28,28 @@
                 <a href="#tab_groupids" aria-controls="tab_groupids" role="tab" data-toggle="tab">Group Ids</a>
             </li>
             <li role="presentation">
-                <a href="#tab_timings" aria-controls="tab_groupids" role="tab" data-toggle="tab">Timings</a>
+                <a href="#tab_timings" aria-controls="tab_timings" role="tab" data-toggle="tab">Timings</a>
             </li>
             <li role="presentation">
-                <a href="#tab_nptcategories" aria-controls="tab_groupids" role="tab" data-toggle="tab">NPT Categories</a>
+                <a href="#tab_nptcategories" aria-controls="tab_nptcategories" role="tab" data-toggle="tab">NPT Categories</a>
             </li>
             <li role="presentation">
-                <a href="#tab_customscorecard" aria-controls="tab_groupids" role="tab" data-toggle="tab">Customize Scorecard</a>
+                <a href="#tab_customscorecard" aria-controls="tab_customscorecard" role="tab" data-toggle="tab">Customize Scorecard</a>
             </li>
         </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab_groupids">
+            @Html.Action("_GroupIdSection", new { id = Model.TeamId })
+        </div>
+        <div class="tab-pane fade" id="tab_timings">
+            Timings
+        </div>
+        <div class="tab-pane fade" id="tab_nptcategories">
+            NPT Categories
+        </div>
+        <div class="tab-pane fade" id="tab_customscorecard">
+            Custom Scorecard
+        </div>
     </div>
 </div>

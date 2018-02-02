@@ -48,33 +48,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <h4>User Groups</h4>
-        <table class="table coverbg table-striped table-hover input-sm">
-            <thead>
-                <tr>
-                    <td class="col-md-3">@Html.DisplayNameFor(model => model.GroupIds.First().GroupType)</td>
-                    <td class="col-md-6">@Html.DisplayNameFor(model => model.GroupIds.First().GroupId)</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.GroupIds)
-                {
-                    @Html.Action("GroupIdSection", item)
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3">
-                        <a class="btn btn-success btn-sm pull-right">
-                            <i class="fa fa-plus"></i> Add
-                        </a>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
             <div class="navbar-right navbar-form">
