@@ -1,0 +1,2 @@
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\obj\Debug\BTSS_Auth.csprojResolveAssemblyReference.cache
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\obj\Debug\BTSS_Auth.csproj.CoreCompileInputs.cache
