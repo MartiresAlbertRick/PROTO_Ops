@@ -76,15 +76,30 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker/Create
         public ActionResult Create(long? teamId)
         {
+            #region "BTSS"
+            string role = Session["role"].ToString();
+            string user_name = Session["logon_user"].ToString();
+            #endregion "BTSS"
+
             db.InitializeRepresentatives();
             db.InitializeTeamNptCategories();
-            ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+
+            long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+            ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
             var teamNptCategories = (from t in db.TeamNptCategories select t);
             if (teamId != null)
             {
-                reps = reps.Where(r => r.TeamId == teamId);
+                long repId = db.GetRepresentativeByPRD(user_name).RepId;
+                if (role == "Staff")
+                {
+                    reps = reps.Where(r => r.TeamId == teamId && r.RepId == repId);
+                }
+                else
+                {
+                    reps = reps.Where(r => r.TeamId == teamId);
+                }
                 teamNptCategories = teamNptCategories.Where(t => t.TeamId == teamId);
             }
             else
@@ -103,7 +118,7 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NPTReportId,RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,CreatedBy,ItemType,Path,TeamId,Month,Year,DateUploaded,UploadedBy,Source,CategoryId,SubCategoryId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
+        public ActionResult Create([Bind(Include = "RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,CreatedBy,ItemType,Path,TeamId,Month,Year,DateUploaded,UploadedBy,Source,CategoryId,SubCategoryId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
         {
             oSC_ImportNPT.Month = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Month;
             oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
