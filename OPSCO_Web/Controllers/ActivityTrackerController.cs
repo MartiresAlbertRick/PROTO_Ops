@@ -35,9 +35,20 @@ namespace OPSCO_Web.Controllers
                 defaultPageSize = pageSize;
             }
 
+            string role = Session["role"].ToString();
+            string user_name = Session["logon_user"].ToString();
+
             var acts = (from a in db.ActivityTrackers
                         where a.Activity != "Attendance"
                         select a);
+
+            switch (role)
+            {
+                case "Staff":
+                    long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
+                    acts = acts.Where(a => a.RepId == repId);
+                    break;
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {

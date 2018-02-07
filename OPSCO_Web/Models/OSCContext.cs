@@ -7,11 +7,11 @@ using System.Data.Entity;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-
+using BTSS_Auth;
 
 namespace OPSCO_Web.Models
 {
-    public class OSCContext : DbContext, IOSCContext
+    public class OSCContext : DbContext
     {
         public OSCContext() : base("name=OSCEntities")
         { }
@@ -130,38 +130,7 @@ namespace OPSCO_Web.Models
         }
         #endregion "DateTimeFormatting"C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\ImportFile\OSC_Scripts_0124.sql
 
-        #region "IOSCContext"
-        IQueryable<OSC_Department> IOSCContext.Departments
-        {
-            get { return Departments; }
-        }
-
-        IQueryable<OSC_Team> IOSCContext.Teams
-        {
-            get { return Teams; }
-        }
-
-        OSC_Department IOSCContext.FindDepartmentById(long ID)
-        {
-            return Set<OSC_Department>().Find(ID);
-        }
-
-        int IOSCContext.SaveChanges()
-        {
-            return SaveChanges();
-        }
-
-        T IOSCContext.Add<T>(T entity)
-        {
-            return Set<T>().Add(entity);
-        }
-
-        T IOSCContext.Delete<T>(T entity)
-        {
-            return Set<T>().Remove(entity);
-        }
-
-        #endregion "IOSCContext"        
+        public BTSS_AppFacade appFacade = new BTSS_AppFacade();
     }
 
     public class IndividualScorecard

@@ -270,3 +270,5 @@ C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
+C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\bin\BTSS_Auth.dll
+C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web\bin\BTSS_Auth.pdb

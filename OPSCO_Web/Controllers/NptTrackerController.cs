@@ -34,7 +34,18 @@ namespace OPSCO_Web.Controllers
                 defaultPageSize = pageSize;
             }
 
+            string role = Session["role"].ToString();
+            string user_name = Session["logon_user"].ToString();
+
             var npts = (from n in db.NPT where n.Source == "Manual" select n);
+
+            switch (role)
+            {
+                case "Staff":
+                    long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
+                    npts = npts.Where(n => n.RepId == repId);
+                    break;
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {

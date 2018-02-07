@@ -190,7 +190,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\IOSCContext.cs" />
     <Compile Include="Models\OSCContext.cs" />
     <Compile Include="Models\OSCModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -478,6 +477,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BTSS_Auth\BTSS_Auth.csproj">
+      <Project>{aaabe0e6-a414-4272-9539-6255aefa250c}</Project>
+      <Name>BTSS_Auth</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
