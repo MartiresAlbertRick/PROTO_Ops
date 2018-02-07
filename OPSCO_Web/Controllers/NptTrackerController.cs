@@ -19,21 +19,7 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-            foreach (OSC_ImportNPT npt in db.NPT)
-            {
-                npt.Team = db.Teams.Find(npt.TeamId);
-                npt.Representative = db.Representatives.Find(npt.RepId);
-                npt.Representative.Location = db.Locations.Find(npt.Representative.LocationId);
-                npt.Representative.CoreRole = db.CoreRoles.Find(npt.Representative.CoreRoleId);
-                npt.Representative.FullName = npt.Representative.FirstName + " " + npt.Representative.LastName;
-            }
-            int? defaultPageSize = 10;
-
-            if (pageSize != null)
-            {
-                defaultPageSize = pageSize;
-            }
-
+            #region "BTSS"
             string role = Session["role"].ToString();
             string user_name = Session["logon_user"].ToString();
 
@@ -41,18 +27,32 @@ namespace OPSCO_Web.Controllers
 
             switch (role)
             {
+                case "Manager":
+                case "Team Leader":
+                case "Department Analyst":
+                    break;
                 case "Staff":
-                    long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
+                    long repId = db.GetRepresentativeByPRD(user_name).RepId;
                     npts = npts.Where(n => n.RepId == repId);
                     break;
             }
+            #endregion "BTSS"
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                npts = npts.Where(n => n.DateOfActivity.ToString().Contains(searchString) || n.TypeOfActivity.Contains(searchString));
-            }
+            #region "Initialize"
+            db.InitializeNpts();
+            #endregion "Initialize"
 
+            #region "Table"
+            int? defaultPageSize = 10;
+
+            if (pageSize != null) defaultPageSize = pageSize;
+
+            if (!String.IsNullOrEmpty(searchString)) npts = npts.Where(n => n.DateOfActivity.ToString().Contains(searchString) || n.TypeOfActivity.Contains(searchString));
+            #endregion "Table"
+
+            #region "Return"
             return View(npts.OrderByDescending(n => n.DateOfActivity).ToPagedList(page ?? 1, (int)defaultPageSize));
+            #endregion "Return"
         }
 
         // GET: NptTracker/Details/5
@@ -76,10 +76,8 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker/Create
         public ActionResult Create(long? teamId)
         {
-            foreach (OSC_Representative rep in db.Representatives)
-            { rep.FullName = rep.FirstName + " " + rep.LastName; }
-            foreach (OSC_TeamNptCategory n in db.TeamNptCategories)
-            { n.CategoryDesc = db.NptCategories.Find(n.CategoryId).CategoryDesc; }
+            db.InitializeRepresentatives();
+            db.InitializeTeamNptCategories();
             ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
@@ -124,8 +122,7 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker/Edit/5
         public ActionResult Edit(long? id)
         {
-            foreach (OSC_TeamNptCategory n in db.TeamNptCategories)
-            { n.CategoryDesc = db.NptCategories.Find(n.CategoryId).CategoryDesc; }
+            db.InitializeTeamNptCategories();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

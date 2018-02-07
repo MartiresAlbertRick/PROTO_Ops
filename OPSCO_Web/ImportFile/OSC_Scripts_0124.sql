@@ -25,3 +25,7 @@ alter table OSC_TeamGroupIds
 add TGIId bigint identity(1,1) not null
 go
 
+alter table OSC_ManageGroup
+add MGId bigint identity(1,1) not null
+go
+

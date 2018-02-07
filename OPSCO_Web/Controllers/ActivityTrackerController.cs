@@ -19,22 +19,8 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-            foreach (OSC_ActivityTracker act in db.ActivityTrackers)
-            {
-                act.Team = db.Teams.Find(act.TeamId);
-                act.Representative = db.Representatives.Find(act.RepId);
-                act.Representative.Location = db.Locations.Find(act.Representative.LocationId);
-                act.Representative.CoreRole = db.CoreRoles.Find(act.Representative.CoreRoleId);
-                act.Representative.FullName = act.Representative.FirstName + " " + act.Representative.LastName;
-            }
 
-            int? defaultPageSize = 10;
-
-            if (pageSize != null)
-            {
-                defaultPageSize = pageSize;
-            }
-
+            #region "BTSS"
             string role = Session["role"].ToString();
             string user_name = Session["logon_user"].ToString();
 
@@ -44,18 +30,32 @@ namespace OPSCO_Web.Controllers
 
             switch (role)
             {
+                case "Manager":
+                case "Team Leader":
+                case "Department Analyst":
+                    break;
                 case "Staff":
                     long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
                     acts = acts.Where(a => a.RepId == repId);
                     break;
             }
+            #endregion "BTSS"
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                acts = acts.Where(a => a.Activity.Contains(searchString));
-            }
+            #region "Initialize"
+            db.InitializeActivities();
+            #endregion "Initialize"
 
+            #region "Table"
+            int? defaultPageSize = 10;
+
+            if (pageSize != null) defaultPageSize = pageSize;
+
+            if (!String.IsNullOrEmpty(searchString)) acts = acts.Where(a => a.Activity.Contains(searchString));
+            #endregion "Table"
+
+            #region "Return"
             return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));
+            #endregion "Return"
         }
 
         // GET: ActivityTracker/Details/5

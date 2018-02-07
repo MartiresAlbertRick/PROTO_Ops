@@ -17,5 +17,6 @@ namespace OPSCO_Web.Models
         public long ManagerId { get; set; }
         public long EntityId { get; set; }
         public string Type { get; set; }
+        public long MGId { get; set; }
     }
 }

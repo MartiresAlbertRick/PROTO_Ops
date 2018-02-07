@@ -354,10 +354,12 @@
       <PropertyRef Name="ManagerId" />
       <PropertyRef Name="EntityId" />
       <PropertyRef Name="Type" />
+      <PropertyRef Name="MGId" />
     </Key>
     <Property Name="ManagerId" Type="Int64" Nullable="false" />
     <Property Name="EntityId" Type="Int64" Nullable="false" />
     <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="OSC_ScorecardField">
     <Key>

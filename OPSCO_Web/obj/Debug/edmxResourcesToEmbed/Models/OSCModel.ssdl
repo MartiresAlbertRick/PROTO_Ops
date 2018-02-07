@@ -233,10 +233,12 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a pri
       <PropertyRef Name="ManagerId" />
       <PropertyRef Name="EntityId" />
       <PropertyRef Name="Type" />
+      <PropertyRef Name="MGId" />
     </Key>
     <Property Name="ManagerId" Type="bigint" Nullable="false" />
     <Property Name="EntityId" Type="bigint" Nullable="false" />
     <Property Name="Type" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="MGId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_Manager">
     <Key>
@@ -595,7 +597,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
       <DefiningQuery>SELECT 
     [OSC_ManageGroup].[ManagerId] AS [ManagerId], 
     [OSC_ManageGroup].[EntityId] AS [EntityId], 
-    [OSC_ManageGroup].[Type] AS [Type]
+    [OSC_ManageGroup].[Type] AS [Type], 
+    [OSC_ManageGroup].[MGId] AS [MGId]
     FROM [dbo].[OSC_ManageGroup] AS [OSC_ManageGroup]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">

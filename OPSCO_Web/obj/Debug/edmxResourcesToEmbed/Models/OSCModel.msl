@@ -374,6 +374,7 @@
     <EntitySetMapping Name="OSC_ManageGroup">
       <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
         <MappingFragment StoreEntitySet="OSC_ManageGroup">
+          <ScalarProperty Name="MGId" ColumnName="MGId" />
           <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
           <ScalarProperty Name="EntityId" ColumnName="EntityId" />
           <ScalarProperty Name="Type" ColumnName="Type" />

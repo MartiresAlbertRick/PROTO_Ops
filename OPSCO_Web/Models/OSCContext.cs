@@ -33,6 +33,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_NptCategory> NptCategories { get; set; }
         public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
         public DbSet<OSC_TeamNptCategory> TeamNptCategories { get; set; }
+        public DbSet<OSC_ManageGroup> ManageGroups { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
         public DbSet<OSC_ImportBIQual> BIQ { get; set; }
@@ -81,7 +82,19 @@ namespace OPSCO_Web.Models
         };
         #endregion "StaticLists"
 
-        #region "GetReferrence"
+        #region "GetReference"
+        public OSC_Representative GetRepresentativeByPRD(string user_name)
+        {
+            OSC_Representative rep = Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault();
+            return rep;
+        }
+
+        public OSC_Manager GetManagerByUserName(string user_name)
+        {
+            OSC_Manager mgr = Managers.Where(t => t.PRDUserId == user_name).FirstOrDefault();
+            return mgr;
+        }
+
         public OSC_TeamGroupIds GetTeamIdByGroupId(string groupId, string groupType)
         {
             OSC_TeamGroupIds result = new OSC_TeamGroupIds();
@@ -94,7 +107,72 @@ namespace OPSCO_Web.Models
             var result = TeamGroupIds.Where(t => t.TeamId == teamId);
             return result.ToList();
         }
+
+        public bool IsManaged(long? teamId, string user_name, string role)
+        {
+            OSC_ManageGroup mg = new OSC_ManageGroup();
+            mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == GetManagerByUserName(user_name).ManagerId).FirstOrDefault();
+            if (mg != null)
+            {
+                return true;
+            }
+            else
+            {
+                mg = ManageGroups.Where(m => m.Type == "DEPT" && m.EntityId == Teams.Find((long)teamId).DepartmentId && m.ManagerId == GetManagerByUserName(user_name).ManagerId).FirstOrDefault();
+                if (mg != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         #endregion "GetReferrence"
+
+        #region "InitializeLists"
+        public bool InitializeRepresentatives()
+        {
+            foreach (OSC_Representative rep in Representatives)
+            {
+                rep.FullName = rep.FirstName + " " + rep.LastName;
+            }
+            return true;
+        }
+
+        public bool InitializeNpts()
+        {
+            foreach (OSC_ImportNPT npt in NPT)
+            {
+                npt.Team = Teams.Find(npt.TeamId);
+                npt.Representative = Representatives.Find(npt.RepId);
+                npt.Representative.Location = Locations.Find(npt.Representative.LocationId);
+                npt.Representative.CoreRole = CoreRoles.Find(npt.Representative.CoreRoleId);
+                npt.Representative.FullName = npt.Representative.FirstName + " " + npt.Representative.LastName;
+            }
+            return true;
+        }
+
+        public bool InitializeActivities()
+        {
+            foreach (OSC_ActivityTracker act in ActivityTrackers)
+            {
+                act.Team = Teams.Find(act.TeamId);
+                act.Representative = Representatives.Find(act.RepId);
+                act.Representative.Location = Locations.Find(act.Representative.LocationId);
+                act.Representative.CoreRole = CoreRoles.Find(act.Representative.CoreRoleId);
+                act.Representative.FullName = act.Representative.FirstName + " " + act.Representative.LastName;
+            }
+            return true;
+        }
+
+        public bool InitializeTeamNptCategories()
+        {
+            foreach (OSC_TeamNptCategory n in TeamNptCategories)
+            {
+                n.CategoryDesc = NptCategories.Find(n.CategoryId).CategoryDesc;
+            }
+            return true;
+        }
+        #endregion "InitializeLists"
 
         #region "DateTimeFormatting"
         //return time string format hh:mm:ss
