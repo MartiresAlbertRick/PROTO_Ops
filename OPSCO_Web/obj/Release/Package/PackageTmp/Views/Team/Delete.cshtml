@@ -1,0 +1,52 @@
+﻿@model OPSCO_Web.Models.OSC_Team
+
+@{
+    ViewBag.Title = "Delete";
+}
+<h3>Team</h3>
+<h4>Delete</h4>
+<div>
+    <h4>Are you sure you want to delete this?</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index", "Team", null)" class="btn btn-default btn-sm">
+                <i class="fa fa-chevron-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+    <br />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TeamName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.DepartmentName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Department.DepartmentName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="navbar navbar-default navbar-fixed-bottom table-nav">
+        <div class="container-fluid">
+            <div class="navbar-right navbar-form">
+                <button type="submit" class="btn btn-primary btn-sm pull-right" id="submit">
+                    <i class="fa fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+}

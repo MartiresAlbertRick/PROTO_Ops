@@ -1,0 +1,219 @@
+﻿@model OPSCO_Web.Models.OSC_ManualEntry
+
+@{
+    ViewBag.Title = "New Record";
+}
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="~/Scripts/Site.js"></script>
+<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+
+<h3>Manual Entry</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>New Record</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index", "ManualEntry", null)" class="btn btn-default btn-sm">
+                <i class="fa fa-chevron-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Team", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownList("TeamId", (IEnumerable<SelectListItem>)ViewBag.Teams, "--Select Team--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_team" })
+            @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Representative", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownList("RepId", (IEnumerable<SelectListItem>)ViewBag.Representatives, "--Select Representative--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_reps" })
+            @Html.ValidationMessageFor(model => model.RepId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Period Coverage", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.PeriodCoverage, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled", id = "txt_dtcvg", placeholder = "MM/DD/YYYY" } })
+            @Html.ValidationMessageFor(model => model.PeriodCoverage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GainLossOccurances, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.GainLossOccurances, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.GainLossOccurances, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GainLossAmount, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.GainLossAmount, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.GainLossAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CallManagementScore, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.CallManagementScore, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.CallManagementScore, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectResponsibility, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.DropDownList("ProjectResponsibility", (IEnumerable<SelectListItem>)ViewBag.ProjectResponsibilities, "--Select--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
+                    @Html.ValidationMessageFor(model => model.ProjectResponsibility, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ScheduleAdherence, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.ScheduleAdherence, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.ScheduleAdherence, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Compliance, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Compliance, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.Compliance, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductAccuracy, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.ProductAccuracy, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.ProductAccuracy, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Commitment, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Commitment, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.Commitment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.JHValues, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.JHValues, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.JHValues, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CallEfficiency, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.CallEfficiency, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.CallEfficiency, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Engagement, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Engagement, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.Engagement, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.AdministrativeProcedures, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.AdministrativeProcedures, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.AdministrativeProcedures, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActiveProjects, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.ActiveProjects, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.ActiveProjects, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompletedProjects, htmlAttributes: new { @class = "control-label input-sm col-md-6" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.CompletedProjects, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+                    @Html.ValidationMessageFor(model => model.CompletedProjects, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom table-nav">
+    <div class="container-fluid">
+        <div class="navbar-right navbar-form">
+            <button type="submit" disabled class="btn btn-primary btn-sm pull-right" id="submit">
+                <i class="fa fa-save"></i> Save
+            </button>
+        </div>
+    </div>
+</div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+$(function () {
+    validate($('#submit'));
+    $('#txt_dtcvg').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+    $('#cmb_team').change(function () {
+        var url = '@Url.Action("Create")?teamId=' + $(this).val();
+        window.location.href = url;
+    });
+});
+</script>

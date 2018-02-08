@@ -1,0 +1,42 @@
+﻿@model OPSCO_Web.Models.OSC_Manager
+@{
+    ViewBag.Title = "Details";
+}
+<h3>Manager</h3>
+<div>
+    <h4>Details</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <a href="@Url.Action("Index", "Manager", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+                <a href="@Url.Action("Edit", "Manager", new { id = Model.ManagerId } )" class="btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PRDUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PRDUserId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+</div>

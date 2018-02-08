@@ -1,0 +1,67 @@
+﻿.navbar-blue {
+    background: #0C2C4D; /*002d5b*/
+    color: #ffffff;
+}
+
+.navbar-blue .container-fluid {
+    background: #0C2C4D; /*002d5b*/
+    color: #ffffff;
+}
+
+.navbar-blue a {
+    color: #ffffff;
+}
+
+.navbar-blue .navbar-brand {
+    font-size: 15px;
+}
+
+.navbar-blue .navbar-brand:hover,
+.navbar-blue .navbar-brand:focus {
+    transition: all 0.3s;
+    color: #9f9f9f;
+    background-color: transparent;
+}
+
+.navbar-blue .navbar-nav > li > a:hover,
+.navbar-blue .navbar-nav > li > a:focus {
+    transition: all 0.3s;
+    color: #fff;
+    background-color: #35597D;
+}
+
+.navbar-blue .navbar-nav > .active > a,
+.navbar-blue .navbar-nav > .active > a:hover,
+.navbar-blue .navbar-nav > .active > a:focus {
+    transition: all 0.3s ease;
+    background-color: #35597D; /*124171*/ /*01458D*/
+}
+
+.navbar-blue .navbar-nav > .disabled > a,
+.navbar-blue .navbar-nav > .disabled > a:hover,
+.navbar-blue .navbar-nav > .disabled > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.navbar-blue .navbar-toggle:hover,
+.navbar-blue .navbar-toggle:focus {
+    transition: all 0.3s;
+    background-color: #35597D; /*002d5b*/
+}
+
+.navbar-blue .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+.navbar-blue .navbar-collapse,
+.navbar-blue .navbar-form {
+    border-color: #fff;
+}
+
+.navbar-blue .navbar-nav > .open > a,
+.navbar-blue .navbar-nav > .open > a:hover,
+.navbar-blue .navbar-nav > .open > a:focus {
+    color: #fff;
+    background-color: #35597D;
+}

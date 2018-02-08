@@ -1,0 +1,5 @@
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\bin\Release\BTSS_Auth.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\bin\Release\BTSS_Auth.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\obj\Release\BTSS_Auth.csproj.CoreCompileInputs.cache
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\obj\Release\BTSS_Auth.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\BTSS_Auth\obj\Release\BTSS_Auth.pdb

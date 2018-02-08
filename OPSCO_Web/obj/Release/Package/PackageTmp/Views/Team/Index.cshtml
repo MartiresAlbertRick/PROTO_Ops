@@ -1,0 +1,107 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<OPSCO_Web.Models.OSC_Team>
+@{
+    ViewBag.Title = "Team";
+}
+<h3>Team</h3>
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "Team", null)">
+            <i class="fa fa-plus"></i> New Record
+        </a>
+    </div>
+    <div class="col-md-6">
+        <div class="input-group">
+            @Html.TextBox("SearchString", null, new { @class = "form-control input-sm", id = "search", @placeholder = "Search keyword + Enter..." })
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-sm" id="cmd_search" title="Find">
+                    <span class="fa fa-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<br />
+<table id="table" class="table coverbg table-striped table-hover input-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().TeamName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Department.DepartmentName)
+            </th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.TeamId })">
+                        @Html.DisplayFor(modelItem => item.TeamName)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.TeamId })" title="Edit Record">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.TeamId })" title="Delete Record">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br /><br /><br /><br />
+<div class="navbar navbar-default navbar-fixed-bottom table-nav">
+    <br />
+    <div class="container-fluid">
+        <div class="col-md-12">
+            @Html.DropDownList("PageSize",
+                new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
+                "Key", "Value", Model.PageSize),
+                new { @class = "form-control input-sm page-size", id = "pagesizelist" })
+        </div>
+        <div class="col-md-12">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+                new PagedListRenderOptions()
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayPageCountAndCurrentLocation = true,
+                    MaximumPageNumbersToDisplay = 5,
+                    DisplayItemSliceAndTotal = true
+                })
+</div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="~/Scripts/Site.js"></script>
+<script>
+    $('#pagesizelist').change(function () {
+        var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
+        window.location.href = url;
+    });
+    $('#search').keypress(function (e) {
+        if (e.which == 13) {
+            var url = '@Url.Action("Index")?searchString=' + $(this).val() + '&pageSize=' + $('#pagesizelist').val();
+            window.location.href = url;
+        }
+    });
+    $('#cmd_search').click(function () {
+        var url = '@Url.Action("Index")?searchString=' + $('#search').val() + '&pageSize=' + $('#pagesizelist').val();
+        window.location.href = url;
+    });
+</script>

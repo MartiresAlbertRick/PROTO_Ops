@@ -1,0 +1,56 @@
+﻿@model IEnumerable<OPSCO_Web.Models.OSC_TeamGroupIds>
+<h4>User Groups</h4>
+<div class="col-md-8">
+    @using (Ajax.BeginForm("_CommentsForPhoto",
+                        new { TeamId = ViewBag.TeamId },
+                        new AjaxOptions { UpdateTargetId = "table" }))
+    {
+        <table id="table" class="table coverbg table-striped table-hover input-sm">
+            <thead>
+                <tr>
+                    <td class="col-md-3">@Html.DisplayNameFor(model => model.GroupType)</td>
+                    <td class="col-md-6">@Html.DisplayNameFor(model => model.GroupId)</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @Html.Action("_GroupIdRow", item)
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <a id="btn_add" class="btn btn-success btn-sm pull-right">
+                            <i class="fa fa-plus"></i> Add
+                        </a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    }
+    </div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="~/Scripts/Site.js"></script>
+<script>
+    $(function () {
+        var col1 = '<select id="cmb_0" class="form-control input-sm input-required unfilled"><option value="">--Select Grouptype--</option><option value="BI">BI</option><option value="AIQ">AIQ</option></select>';
+        var col2 = '<input id="txt_0" type="text" class="form-control input-sm input-required unfilled" />';
+        $('#btn_add').click(function () {
+            $('#table tbody').append('<tr><td class="col-md-4">' + col1 + '</td><td class="col-md-6">' + col2 + '</td><td></td></tr>');
+            validate($('#btn_add'));
+            $('#cmb_0').on('change', function () {
+                saveRecord();
+            });
+            $('#txt_0').on('focusout', function () {
+                saveRecord();
+            });
+        });
+        function saveRecord() {
+            if ($('#cmb_0').val() != "" && $('#txt_0').val() != "") {
+                
+            }
+        }
+    });
+</script>

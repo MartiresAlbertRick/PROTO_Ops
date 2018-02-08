@@ -1,0 +1,134 @@
+﻿@model OPSCO_Web.Models.OSC_ManualEntry
+
+@{
+    ViewBag.Title = "Details";
+}
+<h3>Manual Entry</h3>
+<div>
+    <h4>Details</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <a href="@Url.Action("Index", "ManualEntry", null)" class="btn btn-default btn-sm">
+                    <i class="fa fa-chevron-left"></i> Back to List
+                </a>
+                <a href="@Url.Action("Edit", "ManualEntry", new { id = Model.EntryId } )" class="btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodCoverage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PeriodCoverage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Representative.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Representative.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Team.TeamName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Team.TeamName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GainLossOccurances)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GainLossOccurances)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GainLossAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GainLossAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CallManagementScore)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CallManagementScore)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectResponsibility)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectResponsibility)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduleAdherence)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScheduleAdherence)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Compliance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Compliance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductAccuracy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProductAccuracy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Commitment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Commitment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JHValues)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JHValues)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CallEfficiency)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CallEfficiency)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Engagement)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Engagement)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdministrativeProcedures)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdministrativeProcedures)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActiveProjects)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActiveProjects)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedProjects)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompletedProjects)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+
+</div>

@@ -19,13 +19,20 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
+            #region "BTSS"
             string role;
             string user_name;
-            #region "BTSS"
             try
             {
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanView = db.appFacade.CanView(grp_id, "Activity Tracker");
+                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+
+                if (ViewBag.CanView == true) return HttpNotFound();
             }
             catch (Exception exception)
             {
@@ -37,16 +44,35 @@ namespace OPSCO_Web.Controllers
             var acts = (from a in db.ActivityTrackers
                         where a.Activity != "Attendance"
                         select a);
-
+            List<long> TeamIds = new List<long>();
             switch (role)
             {
                 case "Manager":
                 case "Team Leader":
+                    foreach (OSC_ActivityTracker act in acts)
+                    {
+                        if (db.IsManaged(act.TeamId, user_name, role))
+                            if (!TeamIds.Contains(act.TeamId))
+                                TeamIds.Add(act.TeamId);
+                    }
+                    acts = (from a in db.ActivityTrackers
+                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId)
+                            select a);
+                    break;
                 case "Department Analyst":
+                    foreach (OSC_ActivityTracker act in acts)
+                    {
+                        if (db.IsManaged(act.TeamId, user_name, role))
+                            if (!TeamIds.Contains(act.TeamId))
+                                TeamIds.Add(act.TeamId);
+                    }
+                    acts = (from a in db.ActivityTrackers
+                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId) && a.IsActive == true
+                            select a);
                     break;
                 case "Staff":
                     long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
-                    acts = acts.Where(a => a.RepId == repId);
+                    acts = acts.Where(a => a.RepId == repId && a.IsActive);
                     break;
             }
             #endregion "BTSS"
@@ -89,9 +115,9 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker/Create
         public ActionResult Create(long? teamId, long? repId)
         {
+            #region "BTSS"
             string role;
             string user_name;
-            #region "BTSS"
             try
             {
                 role = Session["role"].ToString();
@@ -121,6 +147,14 @@ namespace OPSCO_Web.Controllers
                 case "Manager":
                 case "Team Leader":
                 case "Department Analyst":
+                    List<long> TeamIds = new List<long>();
+                    foreach (OSC_Team team in db.Teams)
+                    {
+                        if (db.IsManaged(team.TeamId, user_name, role))
+                            if (!TeamIds.Contains(team.TeamId))
+                                TeamIds.Add(team.TeamId);
+                    }
+                    ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive == true), "TeamId", "TeamName");
                     break;
                 case "Staff":
                     long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
@@ -165,6 +199,7 @@ namespace OPSCO_Web.Controllers
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = "svcBizTech";
+            oSC_ActivityTracker.IsActive = true;
             if (ModelState.IsValid)
             {
                 db.ActivityTrackers.Add(oSC_ActivityTracker);
@@ -205,6 +240,7 @@ namespace OPSCO_Web.Controllers
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = "svcBizTech";
+            if (Session["role"].ToString() == "Staff" || Session["role"].ToString() == "Department Analyst") oSC_ActivityTracker.IsActive = true;
             if (ModelState.IsValid)
             {
                 db.Entry(oSC_ActivityTracker).State = EntityState.Modified;
