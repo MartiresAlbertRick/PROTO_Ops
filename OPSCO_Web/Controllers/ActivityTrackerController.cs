@@ -32,7 +32,7 @@ namespace OPSCO_Web.Controllers
                 ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
                 ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
 
-                if (ViewBag.CanView == true) return HttpNotFound();
+                if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
             {
@@ -76,11 +76,9 @@ namespace OPSCO_Web.Controllers
                     break;
             }
             #endregion "BTSS"
-
             #region "Initialize"
             db.InitializeActivities();
             #endregion "Initialize"
-
             #region "Table"
             int? defaultPageSize = 10;
 
@@ -88,7 +86,6 @@ namespace OPSCO_Web.Controllers
 
             if (!String.IsNullOrEmpty(searchString)) acts = acts.Where(a => a.Activity.Contains(searchString));
             #endregion "Table"
-
             #region "Return"
             return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
@@ -97,19 +94,35 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanView = db.appFacade.CanView(grp_id, "Activity Tracker");
+                if (!ViewBag.CanView) return HttpNotFound();
             }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "Method"
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            if (oSC_ActivityTracker == null) return HttpNotFound();
+            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
-            if (oSC_ActivityTracker == null)
-            {
-                return HttpNotFound();
-            }
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ActivityTracker);
+            #endregion "Return"
         }
 
         // GET: ActivityTracker/Create
@@ -122,6 +135,9 @@ namespace OPSCO_Web.Controllers
             {
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
+                if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
             {
@@ -129,15 +145,12 @@ namespace OPSCO_Web.Controllers
                 return HttpNotFound();
             }
             #endregion "BTSS"
-
             #region "Initialize"
             db.InitializeRepresentatives();
             #endregion
-
             #region "ViewBagActivity"
             ViewBag.Activity = db.activities;
             #endregion "ViewBagActivity"
-
             #region "ViewBagTeam"
             switch (role)
             {
@@ -162,7 +175,6 @@ namespace OPSCO_Web.Controllers
                     break;
             }
             #endregion "ViewBagTeam"
-
             #region "ViewBagRepresentative"
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
@@ -178,11 +190,9 @@ namespace OPSCO_Web.Controllers
             }
             ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
             #endregion "ViewBagRepresentative"
-
             #region "ViewBagWorkHours"
             if (repId != null) ViewBag.WorkHours = db.Representatives.Find(repId).WorkHours;
             #endregion "ViewBagWorkHours"
-
             #region "Return" 
             return View();
             #endregion "Return" 
@@ -195,38 +205,76 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ActivityId,RepId,Month,Year,DateFrom,DateTo,Activity,NoOfHours,DateModified,ModifiedBy,NoOfDays,TeamId,IsActive")] OSC_ActivityTracker oSC_ActivityTracker)
         {
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
+                if (!ViewBag.CanAdd) return HttpNotFound();
+            }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "AddValues"
             oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = "svcBizTech";
             oSC_ActivityTracker.IsActive = true;
+            #endregion "AddValues"
+            #region "Method"
             if (ModelState.IsValid)
             {
                 db.ActivityTrackers.Add(oSC_ActivityTracker);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ActivityTracker);
+            #endregion "Return"
         }
 
         // GET: ActivityTracker/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                if (!ViewBag.CanEdit) return HttpNotFound();
             }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "Method"
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            ViewBag.Activity = db.activities;
+            if (oSC_ActivityTracker == null) return HttpNotFound();
+            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
-            ViewBag.Activity = db.activities;
-            if (oSC_ActivityTracker == null)
-            {
-                return HttpNotFound();
-            }
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ActivityTracker);
+            #endregion "Return"
         }
 
         // POST: ActivityTracker/Edit/5
@@ -236,10 +284,30 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ActivityId, RepId, Month, Year, DateFrom, DateTo, Activity, NoOfHours, DateModified, ModifiedBy, NoOfDays, TeamId, IsActive")] OSC_ActivityTracker oSC_ActivityTracker)
         {
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                if (!ViewBag.CanEdit) return HttpNotFound();
+            }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "AddValues"
             oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = "svcBizTech";
+            #endregion "AddValues"
+            #region "Method"
             if (Session["role"].ToString() == "Staff" || Session["role"].ToString() == "Department Analyst") oSC_ActivityTracker.IsActive = true;
             if (ModelState.IsValid)
             {
@@ -247,25 +315,44 @@ namespace OPSCO_Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ActivityTracker);
+            #endregion "Return"
         }
 
         // GET: ActivityTracker/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+                if (!ViewBag.CanDelete) return HttpNotFound();
             }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "Method"
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            if (oSC_ActivityTracker == null) return HttpNotFound();
+            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
-            if (oSC_ActivityTracker == null)
-            {
-                return HttpNotFound();
-            }
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ActivityTracker);
+            #endregion "Return"
         }
 
         // POST: ActivityTracker/Delete/5
@@ -273,10 +360,41 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+                if (!ViewBag.CanDelete) return HttpNotFound();
+            }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "AddValues"
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
-            db.ActivityTrackers.Remove(oSC_ActivityTracker);
-            db.SaveChanges();
+            oSC_ActivityTracker.IsActive = false;
+            #endregion "AddValues"
+            #region "Method"
+            if (ModelState.IsValid)
+            {
+                db.Entry(oSC_ActivityTracker).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            #endregion "Method"
+            #region "Return"
             return RedirectToAction("Index");
+            #endregion "Return"
+            //old delete method
+            //db.ActivityTrackers.Remove(oSC_ActivityTracker);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

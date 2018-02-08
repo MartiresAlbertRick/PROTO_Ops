@@ -111,8 +111,10 @@ namespace OPSCO_Web.Models
         public bool IsManaged(long? teamId, string user_name, string role)
         {
             OSC_ManageGroup mg = new OSC_ManageGroup();
-            long managerId = GetManagerByUserName(user_name).ManagerId;
-            mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == managerId).FirstOrDefault();
+            long? managerId = GetManagerByUserName(user_name).ManagerId;
+            if (managerId == 0 || managerId == null) return false;
+
+            mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == (long)managerId).FirstOrDefault();
             if (mg != null)
             {
                 return true;
