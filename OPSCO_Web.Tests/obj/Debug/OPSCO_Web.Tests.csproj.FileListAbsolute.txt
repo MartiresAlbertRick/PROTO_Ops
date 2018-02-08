@@ -135,3 +135,5 @@ C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSC
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSCO_Web.Tests.pdb
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web.Tests\bin\Debug\BTSS_Auth.dll
 C:\Users\Albert Rick\Documents\Projects\PROTO_Ops\OPSCO_Web.Tests\bin\Debug\BTSS_Auth.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\BTSS_Auth.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\BTSS_Auth.pdb
