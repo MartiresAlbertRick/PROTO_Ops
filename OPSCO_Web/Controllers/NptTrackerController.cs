@@ -83,7 +83,7 @@ namespace OPSCO_Web.Controllers
 
             db.InitializeRepresentatives();
             db.InitializeTeamNptCategories();
-
+            
             long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
             ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
             long defaultTeamId = 0;

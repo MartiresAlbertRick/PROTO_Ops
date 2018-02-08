@@ -19,10 +19,20 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
-
+            string role;
+            string user_name;
             #region "BTSS"
-            string role = Session["role"].ToString();
-            string user_name = Session["logon_user"].ToString();
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+            }
+            catch (Exception exception)
+            {
+                //session expired
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
 
             var acts = (from a in db.ActivityTrackers
                         where a.Activity != "Attendance"
@@ -79,22 +89,69 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker/Create
         public ActionResult Create(long? teamId, long? repId)
         {
-            foreach (OSC_Representative rep in db.Representatives)
-            { rep.FullName = rep.FirstName + " " + rep.LastName; }
-            ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+            string role;
+            string user_name;
+            #region "BTSS"
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+            }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+
+            #region "Initialize"
+            db.InitializeRepresentatives();
+            #endregion
+
+            #region "ViewBagActivity"
             ViewBag.Activity = db.activities;
+            #endregion "ViewBagActivity"
+
+            #region "ViewBagTeam"
+            switch (role)
+            {
+                case "Admin":
+                    ViewBag.Teams = new SelectList(db.Teams, "TeamId", "TeamName");
+                    break;
+                case "Manager":
+                case "Team Leader":
+                case "Department Analyst":
+                    break;
+                case "Staff":
+                    long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+                    ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
+                    break;
+            }
+            #endregion "ViewBagTeam"
+
+            #region "ViewBagRepresentative"
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
             if (teamId != null)
-            { reps = reps.Where(r => r.TeamId == teamId); }
-            else
-            { reps = reps.Where(r => r.TeamId == defaultTeamId); }
-            ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
-            if (repId != null)
             {
-                ViewBag.WorkHours = db.Representatives.Find(repId).WorkHours;
+                long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
+                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repIdd); 
+                else reps = reps.Where(r => r.TeamId == teamId);
             }
+            else
+            {
+                reps = reps.Where(r => r.TeamId == defaultTeamId);
+            }
+            ViewBag.Representatives = new SelectList(reps, "RepId", "FullName");
+            #endregion "ViewBagRepresentative"
+
+            #region "ViewBagWorkHours"
+            if (repId != null) ViewBag.WorkHours = db.Representatives.Find(repId).WorkHours;
+            #endregion "ViewBagWorkHours"
+
+            #region "Return" 
             return View();
+            #endregion "Return" 
         }
 
         // POST: ActivityTracker/Create
