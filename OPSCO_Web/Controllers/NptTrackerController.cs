@@ -118,12 +118,12 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,CreatedBy,ItemType,Path,TeamId,Month,Year,DateUploaded,UploadedBy,Source,CategoryId,SubCategoryId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
+        public ActionResult Create([Bind(Include = "NPTReportId,RepId,Activity,DateOfActivity,TimeSpent,TypeOfActivity,TeamId,IsActive")] OSC_ImportNPT oSC_ImportNPT)
         {
-            oSC_ImportNPT.Month = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Month;
-            oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
-            oSC_ImportNPT.DateUploaded = DateTime.Now;
-            oSC_ImportNPT.UploadedBy = "svcBizTech";
+            //oSC_ImportNPT.Month = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Month;
+            //oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
+            //oSC_ImportNPT.DateUploaded = DateTime.Now;
+            //oSC_ImportNPT.UploadedBy = "svcBizTech";
             if (ModelState.IsValid)
             {
                 db.NPT.Add(oSC_ImportNPT);

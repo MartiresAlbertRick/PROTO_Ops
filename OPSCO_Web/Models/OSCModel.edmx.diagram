@@ -25,13 +25,13 @@
         <EntityTypeShape EntityType="OSCModel.OSC_ImportAIQ" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ImportBIProd" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ImportBIQual" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OSCModel.OSC_ImportNPT" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ImportTA" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ManageGroup" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ScorecardField" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamNptCategory" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamWorkItem" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamGroupIds" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="OSCModel.OSC_ImportNPT" Width="1.5" PointX="9.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -215,7 +215,7 @@ namespace OPSCO_Web.Controllers
             oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
-            oSC_ActivityTracker.ModifiedBy = "svcBizTech";
+            oSC_ActivityTracker.ModifiedBy = user_name;
             oSC_ActivityTracker.IsActive = true;
             #endregion "AddValues"
             #region "Method"
@@ -294,7 +294,7 @@ namespace OPSCO_Web.Controllers
             oSC_ActivityTracker.Month = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Month;
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
-            oSC_ActivityTracker.ModifiedBy = "svcBizTech";
+            oSC_ActivityTracker.ModifiedBy = user_name;
             #endregion "AddValues"
             #region "Method"
             if (Session["role"].ToString() == "Staff" || Session["role"].ToString() == "Department Analyst") oSC_ActivityTracker.IsActive = true;
@@ -368,6 +368,8 @@ namespace OPSCO_Web.Controllers
             #endregion "BTSS"
             #region "AddValues"
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            oSC_ActivityTracker.DateModified = DateTime.Now;
+            oSC_ActivityTracker.ModifiedBy = user_name;
             oSC_ActivityTracker.IsActive = false;
             #endregion "AddValues"
             #region "Method"

@@ -1,5 +1,4 @@
 ﻿@model OPSCO_Web.Models.OSC_ImportNPT
-
 @{
     ViewBag.Title = "New Record";
 }
@@ -66,15 +65,6 @@
         <div class="col-md-4">
             @Html.EditorFor(model => model.TimeSpent, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
             @Html.ValidationMessageFor(model => model.TimeSpent, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-        <div class="col-md-4">
-            <div class="checkbox">
-                @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-            </div>
         </div>
     </div>
 </div>

@@ -29,3 +29,6 @@ alter table OSC_ManageGroup
 add MGId bigint identity(1,1) not null
 go
 
+alter table OSC_ImportNPT
+add primary key (NPTReportId)
+go

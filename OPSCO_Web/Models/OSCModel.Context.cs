@@ -45,12 +45,12 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_ImportAIQ> OSC_ImportAIQ { get; set; }
         public virtual DbSet<OSC_ImportBIProd> OSC_ImportBIProd { get; set; }
         public virtual DbSet<OSC_ImportBIQual> OSC_ImportBIQual { get; set; }
-        public virtual DbSet<OSC_ImportNPT> OSC_ImportNPT { get; set; }
         public virtual DbSet<OSC_ImportTA> OSC_ImportTA { get; set; }
         public virtual DbSet<OSC_ManageGroup> OSC_ManageGroup { get; set; }
         public virtual DbSet<OSC_ScorecardField> OSC_ScorecardField { get; set; }
         public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
         public virtual DbSet<OSC_TeamGroupIds> OSC_TeamGroupIds { get; set; }
+        public virtual DbSet<OSC_ImportNPT> OSC_ImportNPT { get; set; }
     }
 }

@@ -138,8 +138,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a pr
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportNPT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportNPT">
     <Key>
       <PropertyRef Name="NPTReportId" />
@@ -439,6 +437,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
@@ -529,28 +528,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_ImportBIQual].[DateUploaded] AS [DateUploaded], 
     [OSC_ImportBIQual].[UploadedBy] AS [UploadedBy]
     FROM [dbo].[OSC_ImportBIQual] AS [OSC_ImportBIQual]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ImportNPT].[NPTReportId] AS [NPTReportId], 
-    [OSC_ImportNPT].[RepId] AS [RepId], 
-    [OSC_ImportNPT].[Activity] AS [Activity], 
-    [OSC_ImportNPT].[DateOfActivity] AS [DateOfActivity], 
-    [OSC_ImportNPT].[TimeSpent] AS [TimeSpent], 
-    [OSC_ImportNPT].[TypeOfActivity] AS [TypeOfActivity], 
-    [OSC_ImportNPT].[CreatedBy] AS [CreatedBy], 
-    [OSC_ImportNPT].[ItemType] AS [ItemType], 
-    [OSC_ImportNPT].[Path] AS [Path], 
-    [OSC_ImportNPT].[TeamId] AS [TeamId], 
-    [OSC_ImportNPT].[Month] AS [Month], 
-    [OSC_ImportNPT].[Year] AS [Year], 
-    [OSC_ImportNPT].[DateUploaded] AS [DateUploaded], 
-    [OSC_ImportNPT].[UploadedBy] AS [UploadedBy], 
-    [OSC_ImportNPT].[Source] AS [Source], 
-    [OSC_ImportNPT].[CategoryId] AS [CategoryId], 
-    [OSC_ImportNPT].[SubCategoryId] AS [SubCategoryId], 
-    [OSC_ImportNPT].[IsActive] AS [IsActive]
-    FROM [dbo].[OSC_ImportNPT] AS [OSC_ImportNPT]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
