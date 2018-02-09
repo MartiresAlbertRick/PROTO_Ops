@@ -97,8 +97,7 @@ namespace OPSCO_Web.Models
 
         public OSC_TeamGroupIds GetTeamIdByGroupId(string groupId, string groupType)
         {
-            OSC_TeamGroupIds result = new OSC_TeamGroupIds();
-            result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
+            OSC_TeamGroupIds result = TeamGroupIds.Where(t => t.GroupId == groupId && t.GroupType == groupType).FirstOrDefault();
             return result;
         }
 
@@ -110,11 +109,17 @@ namespace OPSCO_Web.Models
 
         public bool IsManaged(long? teamId, string user_name, string role)
         {
-            OSC_ManageGroup mg = new OSC_ManageGroup();
+            if (role == "Admin") return true;
+            if (role == "Staff")
+            {
+                var rep = (from r in Representatives where r.PRDUserId == user_name && r.TeamId == teamId select r);
+                if (rep != null) return true;
+                else return false;
+            }
+            //Team Leader, Manager and Department Analyst
             long? managerId = GetManagerByUserName(user_name).ManagerId;
             if (managerId == 0 || managerId == null) return false;
-
-            mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == (long)managerId).FirstOrDefault();
+            OSC_ManageGroup mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == (long)managerId).FirstOrDefault();
             if (mg != null)
             {
                 return true;
@@ -130,7 +135,7 @@ namespace OPSCO_Web.Models
             }
             return false;
         }
-        #endregion "GetReferrence"
+        #endregion "GetReference"
 
         #region "InitializeLists"
         public bool InitializeRepresentatives()
@@ -212,7 +217,9 @@ namespace OPSCO_Web.Models
         }
         #endregion "DateTimeFormatting"C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\ImportFile\OSC_Scripts_0124.sql
 
+        #region "BTSS"
         public BTSS_AppFacade appFacade = new BTSS_AppFacade();
+        #endregion "BTSS"
     }
 
     public class IndividualScorecard

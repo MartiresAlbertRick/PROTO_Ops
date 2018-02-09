@@ -81,9 +81,7 @@ namespace OPSCO_Web.Controllers
             #endregion "Initialize"
             #region "Table"
             int? defaultPageSize = 10;
-
             if (pageSize != null) defaultPageSize = pageSize;
-
             if (!String.IsNullOrEmpty(searchString)) acts = acts.Where(a => a.Activity.Contains(searchString));
             #endregion "Table"
             #region "Return"
@@ -115,7 +113,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
@@ -267,7 +265,7 @@ namespace OPSCO_Web.Controllers
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             ViewBag.Activity = db.activities;
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
@@ -345,7 +343,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (role != "Admin" && !db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
