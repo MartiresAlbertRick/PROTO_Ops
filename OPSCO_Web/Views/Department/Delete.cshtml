@@ -34,10 +34,11 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
             <div class="navbar-right navbar-form">
-                <button type="submit" class="btn btn-primary btn-sm pull-right" id="submit">
+                <button type="submit" class="btn btn-danger btn-sm pull-right" id="submit">
                     <i class="fa fa-trash"></i> Delete
                 </button>
             </div>

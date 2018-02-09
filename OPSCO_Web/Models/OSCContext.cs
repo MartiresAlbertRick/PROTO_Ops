@@ -416,6 +416,7 @@ namespace OPSCO_Web.Models
     {
         sealed class Metadata
         {
+            [Key]
             public long EntryId { get; set; }
             public long TeamId { get; set; }
             public long RepId { get; set; }
@@ -466,6 +467,7 @@ namespace OPSCO_Web.Models
     {
         sealed class Metadata
         {
+            [Key]
             public long NPTReportId { get; set; }
             public Nullable<long> RepId { get; set; }
             [Display(Name = "Activity Description")]

@@ -49,16 +49,6 @@ namespace OPSCO_Web.Controllers
             {
                 case "Manager":
                 case "Team Leader":
-                    foreach (OSC_ActivityTracker act in acts)
-                    {
-                        if (db.IsManaged(act.TeamId, user_name, role))
-                            if (!TeamIds.Contains(act.TeamId))
-                                TeamIds.Add(act.TeamId);
-                    }
-                    acts = (from a in db.ActivityTrackers
-                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId)
-                            select a);
-                    break;
                 case "Department Analyst":
                     foreach (OSC_ActivityTracker act in acts)
                     {
@@ -101,6 +91,7 @@ namespace OPSCO_Web.Controllers
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
                 ViewBag.CanView = db.appFacade.CanView(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
