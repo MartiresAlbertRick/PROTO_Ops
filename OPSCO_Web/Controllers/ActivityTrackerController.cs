@@ -383,6 +383,7 @@ namespace OPSCO_Web.Controllers
             return RedirectToAction("Index");
             #endregion "Return"
             //old delete method
+            //OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             //db.ActivityTrackers.Remove(oSC_ActivityTracker);
             //db.SaveChanges();
             //return RedirectToAction("Index");

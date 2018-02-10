@@ -299,6 +299,7 @@ namespace OPSCO_Web.Controllers
             oSC_ImportNPT.Year = Convert.ToDateTime(oSC_ImportNPT.DateOfActivity).Year;
             oSC_ImportNPT.DateUploaded = DateTime.Now;
             oSC_ImportNPT.UploadedBy = user_name;
+            oSC_ImportNPT.Source = "Manual";
             if (Session["role"].ToString() != "Admin") oSC_ImportNPT.IsActive = true;
             #endregion "AddValues"
             #region "Method"
@@ -317,19 +318,35 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "NPT Tracker");
+                if (!ViewBag.CanDelete) return HttpNotFound();
             }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "Method"
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
+            if (oSC_ImportNPT == null) return HttpNotFound();
+            if (!db.IsManaged(oSC_ImportNPT.TeamId, user_name, role)) return HttpNotFound();
             oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
             oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
             oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
-            if (oSC_ImportNPT == null)
-            {
-                return HttpNotFound();
-            }
+            #endregion "Method"
+            #region "Return"
             return View(oSC_ImportNPT);
+            #endregion "Return"
         }
 
         // POST: NptTracker/Delete/5
@@ -337,10 +354,43 @@ namespace OPSCO_Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
+            #region "BTSS"
+            string role;
+            string user_name;
+            try
+            {
+                role = Session["role"].ToString();
+                user_name = Session["logon_user"].ToString();
+                string grp_id = Session["grp_id"].ToString();
+                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "NPT Tracker");
+                if (!ViewBag.CanDelete) return HttpNotFound();
+            }
+            catch (Exception exception)
+            {
+                string result = exception.Message.ToString();
+                return HttpNotFound();
+            }
+            #endregion "BTSS"
+            #region "AddValues"
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
-            db.NPT.Remove(oSC_ImportNPT);
-            db.SaveChanges();
+            oSC_ImportNPT.DateUploaded = DateTime.Now;
+            oSC_ImportNPT.UploadedBy = user_name;
+            oSC_ImportNPT.IsActive = false;
+            #endregion "AddValues"
+            #region "Method"
+            if (ModelState.IsValid)
+            {
+                db.Entry(oSC_ImportNPT).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            #endregion "Method"
+            #region "Return"
             return RedirectToAction("Index");
+            #endregion "Return"
+            //OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
+            //db.NPT.Remove(oSC_ImportNPT);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
