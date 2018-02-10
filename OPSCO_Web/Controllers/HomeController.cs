@@ -15,8 +15,8 @@ namespace OPSCO_Web.Controllers
         {
             string logon_user = Request.ServerVariables["LOGON_USER"].ToString();
             logon_user = logon_user.Remove(0, logon_user.IndexOf('\\') + 1);
-            //Session["logon_user"] = logon_user;
-            Session["logon_user"] = "martiab";
+            logon_user = "martiab";
+            Session["logon_user"] = logon_user;
             Session["user_id"] = "";
             var s = db.appFacade.GetUserInfo(logon_user);
             if (s != null)

@@ -56,10 +56,13 @@ namespace OPSCO_Web.Controllers
                             if (!TeamIds.Contains((long)npt.TeamId))
                                 TeamIds.Add((long)npt.TeamId);
                     }
+                    npts = (from n in db.NPT
+                            where n.Source == "Manual" && TeamIds.Contains((long)n.TeamId) && n.IsActive == true
+                            select n);
                     break;
                 case "Staff":
                     long repId = db.GetRepresentativeByPRD(user_name).RepId;
-                    npts = npts.Where(n => n.RepId == repId);
+                    npts = npts.Where(n => n.RepId == repId && n.IsActive);
                     break;
             }
             #endregion "BTSS"

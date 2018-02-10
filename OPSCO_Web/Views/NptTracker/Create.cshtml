@@ -77,12 +77,12 @@
 </div>
 }
 <script type="text/javascript">
-$(function () {
-    validate($('#submit'));
-    $('#txt_doa').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
-    $('#cmb_team').change(function () {
-        var url = '@Url.Action("Create")?teamId=' + $(this).val();
-        window.location.href = url;
+    $(function () {
+        validate($('#submit'));
+        $('#txt_doa').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+        $('#cmb_team').change(function () {
+            var url = '@Url.Action("Create")?teamId=' + $(this).val();
+            window.location.href = url;
+        });
     });
-});
 </script>
