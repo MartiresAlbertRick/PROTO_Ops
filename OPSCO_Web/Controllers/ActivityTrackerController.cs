@@ -61,7 +61,7 @@ namespace OPSCO_Web.Controllers
                             select a);
                     break;
                 case "Staff":
-                    long repId = db.Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault().RepId;
+                    long repId = db.GetRepresentativeByPRD(user_name).RepId;
                     acts = acts.Where(a => a.RepId == repId && a.IsActive);
                     break;
             }
@@ -295,9 +295,9 @@ namespace OPSCO_Web.Controllers
             oSC_ActivityTracker.Year = Convert.ToDateTime(oSC_ActivityTracker.DateFrom).Year;
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = user_name;
+            if (Session["role"].ToString() != "Admin") oSC_ActivityTracker.IsActive = true;
             #endregion "AddValues"
             #region "Method"
-            if (Session["role"].ToString() == "Staff" || Session["role"].ToString() == "Department Analyst") oSC_ActivityTracker.IsActive = true;
             if (ModelState.IsValid)
             {
                 db.Entry(oSC_ActivityTracker).State = EntityState.Modified;
