@@ -187,6 +187,20 @@ namespace OPSCO_Web.Models
             return true;
         }
 
+        public bool InitializeManualEntries()
+        {
+            foreach (OSC_ManualEntry me in ManualEntries)
+            {
+                me.MonthName = months.Where(m => m.Value == Convert.ToString(me.Month)).First().Text;
+                me.Team = Teams.Find(me.TeamId);
+                me.Representative = Representatives.Find(me.RepId);
+                me.Representative.Location = Locations.Find(me.Representative.LocationId);
+                me.Representative.CoreRole = CoreRoles.Find(me.Representative.CoreRoleId);
+                me.Representative.FullName = me.Representative.FirstName + " " + me.Representative.LastName;
+            }
+            return true;
+        }
+
         public bool InitializeTeamNptCategories()
         {
             foreach (OSC_TeamNptCategory n in TeamNptCategories)

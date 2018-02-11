@@ -1,5 +1,4 @@
 ﻿@model OPSCO_Web.Models.OSC_ManualEntry
-
 @{
     ViewBag.Title = "New Record";
 }
@@ -7,13 +6,10 @@
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 <script src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-
 <h3>Manual Entry</h3>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
     <h4>New Record</h4>
     <hr />
@@ -45,15 +41,6 @@
         <div class="col-md-4">
             @Html.EditorFor(model => model.PeriodCoverage, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled", id = "txt_dtcvg", placeholder = "MM/DD/YYYY" } })
             @Html.ValidationMessageFor(model => model.PeriodCoverage, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-        <div class="col-md-4">
-            <div class="checkbox">
-                @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-            </div>
         </div>
     </div>
     <div class="row">
@@ -193,7 +180,6 @@
         </div>
     </div>
 </div>
-
 <div class="navbar navbar-default navbar-fixed-bottom table-nav">
     <div class="container-fluid">
         <div class="navbar-right navbar-form">

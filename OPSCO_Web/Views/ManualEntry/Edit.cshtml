@@ -1,17 +1,12 @@
 ﻿@model OPSCO_Web.Models.OSC_ManualEntry
-
 @{
-    /**/
-
     ViewBag.Title = "Edit";
 }
 <script src="~/Scripts/jquery-3.2.1.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 <script src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-
 <h3>Manual Entry</h3>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -29,7 +24,6 @@
     <br />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.EntryId)
-
     <div class="form-group">
         @Html.LabelFor(model => model.Team.TeamName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
@@ -53,15 +47,19 @@
             @Html.ValidationMessageFor(model => model.PeriodCoverage, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-        <div class="col-md-4">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { disabled = true } })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+    @if (Session["role"].ToString() == "Admin")
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-    </div>
+    }
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">

@@ -255,10 +255,12 @@ namespace OPSCO_Web.Controllers
                 return HttpNotFound();
             }
             #endregion "BTSS"
+            #region "ViewBagActivities"
+            ViewBag.Activity = db.activities;
+            #endregion "ViewBagActivities"
             #region "Method"
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
-            ViewBag.Activity = db.activities;
             if (oSC_ActivityTracker == null) return HttpNotFound();
             if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
