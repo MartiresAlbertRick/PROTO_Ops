@@ -6,54 +6,49 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h4>Edit</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-12">
-                <a href="@Url.Action("Index", "Team", null)" class="btn btn-default btn-sm">
-                    <i class="fa fa-chevron-left"></i> Back to List
-                </a>
-            </div>
+<div class="form-horizontal">
+    <h4>Edit</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index", "Team", null)" class="btn btn-default btn-sm">
+                <i class="fa fa-chevron-left"></i> Back to List
+            </a>
         </div>
-        <br />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TeamId)
+    </div>
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.TeamId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
-                @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+            @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Department.DepartmentName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                @Html.DropDownList("DepartmentId", (IEnumerable<SelectListItem>)ViewBag.Departments, "--Select Department--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_depname" })
-                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Department.DepartmentName, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownList("DepartmentId", (IEnumerable<SelectListItem>)ViewBag.Departments, "--Select Department--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled", id = "cmb_depname" })
+            @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
         </div>
-
+    </div>
+    @if (Session["role"].ToString() == "Admin")
+    {
         <div class="form-group">
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 <div class="checkbox">
-                    @if (Session["role"].ToString() == "Admin")
-                    {
-                        @Html.EditorFor(model => model.IsActive)
-                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(model => model.IsActive)
-                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                    }
+
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>
+    }
+</div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
             <div class="navbar-right navbar-form">

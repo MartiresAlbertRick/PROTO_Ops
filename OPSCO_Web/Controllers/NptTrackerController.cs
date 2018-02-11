@@ -19,6 +19,9 @@ namespace OPSCO_Web.Controllers
         // GET: NptTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
+            #region "Initialize"
+            db.InitializeNpts();
+            #endregion "Initialize"
             #region "BTSS"
             string role;
             string user_name;
@@ -61,14 +64,15 @@ namespace OPSCO_Web.Controllers
                             select n);
                     break;
                 case "Staff":
-                    long repId = db.GetRepresentativeByPRD(user_name).RepId;
+                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    long repId;
+                    repId = 0;
+                    if (oSC_Representative != null)
+                    { repId = oSC_Representative.RepId; }
                     npts = npts.Where(n => n.RepId == repId && n.IsActive);
                     break;
             }
             #endregion "BTSS"
-            #region "Initialize"
-            db.InitializeNpts();
-            #endregion "Initialize"
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
@@ -158,7 +162,7 @@ namespace OPSCO_Web.Controllers
                     break;
                 case "Staff":
                     long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
-                    ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
+                    ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId && t.IsActive), "TeamId", "TeamName");
                     break;
 
             }
@@ -170,8 +174,8 @@ namespace OPSCO_Web.Controllers
             if (teamId != null)
             {
                 long repId = db.GetRepresentativeByPRD(user_name).RepId;
-                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repId);
-                else { reps = reps.Where(r => r.TeamId == teamId); }
+                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repId && r.IsActive);
+                else { reps = reps.Where(r => r.TeamId == teamId && r.IsActive); }
                 teamNptCategories = teamNptCategories.Where(t => t.TeamId == teamId);
             }
             else

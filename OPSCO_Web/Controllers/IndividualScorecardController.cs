@@ -64,7 +64,7 @@ namespace OPSCO_Web.Controllers
                     break;
                 case "Staff":
                     long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
-                    ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
+                    ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId && t.IsActive), "TeamId", "TeamName");
                     break;
 
             }
@@ -75,8 +75,20 @@ namespace OPSCO_Web.Controllers
             if (teamId != null)
             {
                 long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
-                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repIdd);
-                else reps = reps.Where(r => r.TeamId == teamId);
+                switch(role)
+                {
+                    case "Admin":
+                        reps = reps.Where(r => r.TeamId == teamId);
+                        break;
+                    case "Manager":
+                    case "Team Leader":
+                    case "Department Analyst":
+                        reps = reps.Where(r => r.TeamId == teamId && r.IsActive);
+                        break;
+                    case "Staff":
+                        reps = reps.Where(r => r.TeamId == teamId && r.RepId == repIdd && r.IsActive);
+                        break;
+                }
             }
             else
             {

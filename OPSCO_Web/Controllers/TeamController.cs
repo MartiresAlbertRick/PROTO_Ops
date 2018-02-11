@@ -19,6 +19,9 @@ namespace OPSCO_Web.Controllers
         // GET: Team
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
+            #region "Initialize"
+            db.InitializeTeams();
+            #endregion "Initialize"
             #region "BTSS"
             string role;
             string user_name;
@@ -62,9 +65,6 @@ namespace OPSCO_Web.Controllers
                     break;
             }
             #endregion "BTSS"
-            #region "Initialize"
-            db.InitializeTeams();
-            #endregion "Initialize"
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
@@ -307,6 +307,7 @@ namespace OPSCO_Web.Controllers
             #endregion "BTSS"
             #region "AddValues"
             OSC_Team oSC_Team = db.Teams.Find(id);
+            if (oSC_Team == null) return HttpNotFound();
             oSC_Team.IsActive = false;
             #endregion "AddValues"
             #region "Method"

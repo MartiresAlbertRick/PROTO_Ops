@@ -19,6 +19,9 @@ namespace OPSCO_Web.Controllers
         // GET: ActivityTracker
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
+            #region "Initialize"
+            db.InitializeActivities();
+            #endregion "Initialize"
             #region "BTSS"
             string role;
             string user_name;
@@ -61,14 +64,15 @@ namespace OPSCO_Web.Controllers
                             select a);
                     break;
                 case "Staff":
-                    long repId = db.GetRepresentativeByPRD(user_name).RepId;
+                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    long repId;
+                    repId = 0;
+                    if (oSC_Representative != null)
+                    { repId = oSC_Representative.RepId; }
                     acts = acts.Where(a => a.RepId == repId && a.IsActive);
                     break;
             }
             #endregion "BTSS"
-            #region "Initialize"
-            db.InitializeActivities();
-            #endregion "Initialize"
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
@@ -140,7 +144,7 @@ namespace OPSCO_Web.Controllers
             #region "ViewBagActivity"
             ViewBag.Activity = db.activities;
             #endregion "ViewBagActivity"
-            #region "ViewBagTeam"
+            #region "ViewBagTeams"
             switch (role)
             {
                 case "Admin":
@@ -163,15 +167,15 @@ namespace OPSCO_Web.Controllers
                     ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
                     break;
             }
-            #endregion "ViewBagTeam"
+            #endregion "ViewBagTeams"
             #region "ViewBagRepresentative"
             long defaultTeamId = 0;
             var reps = (from r in db.Representatives select r);
             if (teamId != null)
             {
                 long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
-                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repIdd); 
-                else reps = reps.Where(r => r.TeamId == teamId);
+                if (role == "Staff") reps = reps.Where(r => r.TeamId == teamId && r.RepId == repIdd && r.IsActive); 
+                else reps = reps.Where(r => r.TeamId == teamId && r.IsActive);
             }
             else
             {
@@ -368,6 +372,7 @@ namespace OPSCO_Web.Controllers
             #endregion "BTSS"
             #region "AddValues"
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
+            if (oSC_ActivityTracker == null) return HttpNotFound();
             oSC_ActivityTracker.DateModified = DateTime.Now;
             oSC_ActivityTracker.ModifiedBy = user_name;
             oSC_ActivityTracker.IsActive = false;

@@ -1,9 +1,7 @@
 ﻿@model OPSCO_Web.Models.OSC_Representative
-
 @{
     ViewBag.Title = "Details";
 }
-
 <h3>Representative</h3>
 <div>
     <h4>Details</h4>
@@ -14,9 +12,18 @@
                 <a href="@Url.Action("Index", "Representative", null)" class="btn btn-default btn-sm">
                     <i class="fa fa-chevron-left"></i> Back to List
                 </a>
-                <a href="@Url.Action("Edit", "Representative", new { id = Model.RepId } )" class="btn btn-default btn-sm">
-                    <i class="fa fa-edit"></i> Edit
-                </a>
+                @if (ViewBag.CanEdit)
+                { 
+                    <a href="@Url.Action("Edit", "Representative", new { id = Model.RepId } )" class="btn btn-default btn-sm">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Edit", "Representative", new { id = Model.RepId } )" class="btn btn-default btn-sm disabled">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                }
             </div>
         </div>
     </div>
@@ -111,11 +118,14 @@
         <dd>
             @Html.DisplayFor(model => model.WorkHours)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+        @if (Session["role"].ToString() == "Admin")
+        { 
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
+        }
     </dl>
 </div>

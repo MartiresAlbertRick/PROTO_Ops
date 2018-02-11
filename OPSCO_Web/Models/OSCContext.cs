@@ -85,7 +85,7 @@ namespace OPSCO_Web.Models
         #region "GetReference"
         public OSC_Representative GetRepresentativeByPRD(string user_name)
         {
-            OSC_Representative rep = Representatives.Where(t => t.PRDUserId == user_name).FirstOrDefault();
+            OSC_Representative rep = Representatives.Where(t => t.PRDUserId == user_name && t.IsActive).FirstOrDefault();
             return rep;
         }
 
@@ -154,6 +154,9 @@ namespace OPSCO_Web.Models
             foreach (OSC_Representative rep in Representatives)
             {
                 rep.FullName = rep.FirstName + " " + rep.LastName;
+                rep.Team = Teams.Find(rep.TeamId);
+                rep.Location = Locations.Find(rep.LocationId);
+                rep.CoreRole = CoreRoles.Find(rep.CoreRoleId);
             }
             return true;
         }
