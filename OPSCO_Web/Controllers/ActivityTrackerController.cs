@@ -50,11 +50,11 @@ namespace OPSCO_Web.Controllers
                 case "Manager":
                 case "Team Leader":
                 case "Department Analyst":
-                    foreach (OSC_ActivityTracker act in acts)
+                    foreach (OSC_ActivityTracker obj in acts)
                     {
-                        if (db.IsManaged(act.TeamId, user_name, role))
-                            if (!TeamIds.Contains(act.TeamId))
-                                TeamIds.Add(act.TeamId);
+                        if (db.IsManaged(obj.TeamId, user_name, role))
+                            if (!TeamIds.Contains(obj.TeamId))
+                                TeamIds.Add(obj.TeamId);
                     }
                     acts = (from a in db.ActivityTrackers
                             where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId) && a.IsActive == true

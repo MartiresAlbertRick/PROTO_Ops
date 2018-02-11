@@ -1,5 +1,4 @@
 ﻿@model OPSCO_Web.Models.OSC_ActivityTracker
-
 @{
     ViewBag.Title = "Edit";
 }
@@ -8,7 +7,6 @@
 <script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-
 <h3>Activity</h3>
 @using (Html.BeginForm())
 {
@@ -84,7 +82,7 @@
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
             <div class="col-md-4">
                 <div class="checkbox">
-                    @if (Session["role"].ToString() == "Admin" || Session["role"].ToString() == "Manager" || Session["role"].ToString() == "Team Leader")
+                    @if (Session["role"].ToString() == "Admin")
                     {
                         @Html.EditorFor(model => model.IsActive)
                         @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })

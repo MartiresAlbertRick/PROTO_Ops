@@ -76,8 +76,15 @@
         @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             <div class="checkbox">
-                @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                @if (Session["role"].ToString() == "Admin")
+                {
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.IsActive)
+                }
             </div>
         </div>
     </div>

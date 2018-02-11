@@ -7,7 +7,7 @@
 <h3>Activity Tracker</h3>
 <div class="row">
     <div class="col-md-6">
-        @if (ViewBag.CanAdd == true)
+        @if (ViewBag.CanAdd)
         {
             <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ActivityTracker", null)">
                 <i class="fa fa-plus"></i> New Record

@@ -120,17 +120,18 @@ namespace OPSCO_Web.Models
             long? managerId = GetManagerByUserName(user_name).ManagerId;
             if (managerId == 0 || managerId == null) return false;
             OSC_ManageGroup mg = ManageGroups.Where(m => m.Type == "TEAM" && m.EntityId == (long)teamId && m.ManagerId == (long)managerId).FirstOrDefault();
-            if (mg != null)
-            {
-                return true;
-            }
+            if (mg != null) return true;
             else
             {
-                long depId = (long)Teams.Find((long)teamId).DepartmentId;
-                mg = ManageGroups.Where(m => m.Type == "DEPT" && m.EntityId == depId && m.ManagerId == managerId).FirstOrDefault();
-                if (mg != null)
+                if (role == "Manager" || role == "Department Analyst")
                 {
-                    return true;
+                    long depId = (long)Teams.Find((long)teamId).DepartmentId;
+                    mg = ManageGroups.Where(m => m.Type == "DEPT" && m.EntityId == depId && m.ManagerId == managerId).FirstOrDefault();
+                    if (mg != null) return true; 
+                }
+                else
+                {
+                    return false;
                 }
             }
             return false;
@@ -138,6 +139,16 @@ namespace OPSCO_Web.Models
         #endregion "GetReference"
 
         #region "InitializeLists"
+
+        public bool InitializeTeams()
+        {
+            foreach (OSC_Team team in Teams)
+            {
+                team.Department = Departments.Find(team.DepartmentId);
+            }
+            return true;
+        }
+
         public bool InitializeRepresentatives()
         {
             foreach (OSC_Representative rep in Representatives)
