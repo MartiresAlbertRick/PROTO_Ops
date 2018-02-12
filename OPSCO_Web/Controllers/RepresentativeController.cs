@@ -153,7 +153,7 @@ namespace OPSCO_Web.Controllers
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
-                    ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive == true), "TeamId", "TeamName");
+                    ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
                     long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;

@@ -49,9 +49,9 @@
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
             <div class="navbar-right navbar-form">
-                <button type="submit" disabled class="btn btn-primary btn-sm pull-right" id="submit">
+                <a disabled class="btn btn-primary btn-sm pull-right" id="submit">
                     <i class="fa fa-download"></i> Generate
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -65,6 +65,13 @@
         $('#cmb_team').change(function () {
             var url = '@Url.Action("Index")?teamId=' + $(this).val() + '&month=' + $('#cmb_month').val() + '&year=' + $('#cmb_year').val();
             window.location.href = url;
+        });
+
+        $('#submit').click(function () {
+            var url = '@Url.Action("ScorecardView")?teamId=' + $('#cmb_team').val() + '&repId=' + $('#cmb_reps').val() + '&month=' + $('#cmb_month').val() + '&year=' + $('#cmb_year').val();
+            //window.location.href = url;
+            var win = window.open(url, '_blank')
+            win.focus();
         });
     });
 </script>

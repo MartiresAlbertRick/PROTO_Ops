@@ -466,6 +466,7 @@
     <Content Include="Views\Shared\_GroupIdRow.cshtml" />
     <Content Include="Views\Team\Settings.cshtml" />
     <Content Include="Views\Shared\_GroupIdSection.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardView.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

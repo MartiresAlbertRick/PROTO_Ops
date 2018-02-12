@@ -60,7 +60,7 @@ namespace OPSCO_Web.Controllers
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
-                    ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive == true), "TeamId", "TeamName");
+                    ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
                     long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
@@ -99,6 +99,25 @@ namespace OPSCO_Web.Controllers
             #region "Return"
             return View();
             #endregion "Return"
+        }
+
+        public ActionResult ScorecardView(long? teamId, long? repId, int? month, int? year)
+        {
+            OSC_Team oSC_Team = db.Teams.Find((long)teamId);
+            if (oSC_Team == null) return HttpNotFound();
+            OSC_Representative oSC_Representative = db.Representatives.Find((long)repId);
+            if (oSC_Representative == null) return HttpNotFound();
+            oSC_Representative.FullName = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+            ViewBag.Title = oSC_Representative.FullName;
+            ViewBag.Team = oSC_Team.TeamName;
+            ViewBag.Representative = oSC_Representative.FullName;
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString((int)month)).First().Text;
+            ViewBag.Year = year;
+            Session["IS_Team"] = teamId;
+            Session["IS_Rep"] = repId;
+            Session["IS_Month"] = month;
+            Session["IS_Year"] = year;
+            return View();
         }
     }
 }
