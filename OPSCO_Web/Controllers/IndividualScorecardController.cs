@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
-
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -119,5 +118,44 @@ namespace OPSCO_Web.Controllers
             Session["IS_Year"] = year;
             return View();
         }
+
+        public PartialViewResult ScorecardBase()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult ScorecardCover()
+        {
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            OSC_Team oSC_Team = db.Teams.Find(teamId);
+            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
+            oSC_Representative.FullName = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+            ViewBag.Team = oSC_Team.TeamName;
+            ViewBag.Representative = oSC_Representative.FullName;
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public PartialViewResult ScorecardMainTable()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult ScorecardHighlights()
+        {
+            return PartialView();
+        }
+
+
+        //public ActionResult ExportPDF()
+        //{
+
+        //}
     }
 }

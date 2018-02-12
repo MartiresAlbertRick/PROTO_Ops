@@ -467,6 +467,15 @@
     <Content Include="Views\Team\Settings.cshtml" />
     <Content Include="Views\Shared\_GroupIdSection.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardView.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardBase.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardCover.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardMainTable.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardProductivityChart.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardNptChart.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardHighlights.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardWorkitemsTable.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardProgressBars.cshtml" />
+    <Content Include="Views\IndividualScorecard\ScorecardBarCharts.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />
@@ -485,6 +494,9 @@
       <Project>{aaabe0e6-a414-4272-9539-6255aefa250c}</Project>
       <Name>BTSS_Auth</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
