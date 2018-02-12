@@ -111,9 +111,11 @@
         $('#txt_dtto').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
         $('#txt_dtfrom').change(function () {
             calculate();
+            $(this).focusout();
         });
         $('#txt_dtto').change(function () {
             calculate();
+            $(this).focusout();
         });
 
         function calculate() {

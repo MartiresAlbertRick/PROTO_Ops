@@ -6,10 +6,24 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Scorecard</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/Site.js"></script>
 </head>
 <body>
-    <div> 
-        @Html.Action("ScorecardBase")
+    <div class="container-fluid">
+        <div class="col-md-10 col-md-offset-1">
+            @Html.Action("ScorecardBase")
+        </div>
     </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <button class="btn btn-primary btn-sm navbar-btn">
+                <i class="fa fa-file-pdf-o"></i> Export to PDF
+            </button>
+        </div>
+    </nav>
 </body>
 </html>

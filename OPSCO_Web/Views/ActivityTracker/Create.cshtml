@@ -102,9 +102,11 @@
         });
         $('#txt_dtfrom').change(function () {
             calculate();
+            $(this).focusout();
         });
         $('#txt_dtto').change(function () {
             calculate();
+            $(this).focusout();
         });
 
         function calculate() {

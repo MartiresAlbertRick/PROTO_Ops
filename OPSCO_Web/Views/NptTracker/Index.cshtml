@@ -47,6 +47,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.First().DateOfActivity)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().TimeSpent)
+            </th>
             @if (Session["role"].ToString() == "Admin")
             {
                 <th>@Html.DisplayNameFor(model => model.First().IsActive)</th>
@@ -71,6 +74,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfActivity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeSpent)
             </td>
             @if (Session["role"].ToString() == "Admin")
             {

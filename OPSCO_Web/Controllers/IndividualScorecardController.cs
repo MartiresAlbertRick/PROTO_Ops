@@ -74,7 +74,7 @@ namespace OPSCO_Web.Controllers
             if (teamId != null)
             {
                 long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
-                switch(role)
+                switch (role)
                 {
                     case "Admin":
                         reps = reps.Where(r => r.TeamId == teamId);
@@ -143,6 +143,11 @@ namespace OPSCO_Web.Controllers
         }
 
         public PartialViewResult ScorecardMainTable()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult ScorecardProductivityChart()
         {
             return PartialView();
         }

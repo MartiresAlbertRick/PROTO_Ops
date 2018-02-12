@@ -100,5 +100,8 @@
 $(function () {
     validate($('#submit'));
     $('#txt_doa').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+    $('#txt_doa').change(function () {
+        $(this).focusout();
+    });
 });
 </script>

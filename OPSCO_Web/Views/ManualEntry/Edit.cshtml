@@ -214,5 +214,8 @@
 $(function () {
     validate($('#submit'));
     $('#txt_dtcvg').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+    $('#txt_dtcvg').change(function () {
+        $(this).focusout();
+    });
 });
 </script>
