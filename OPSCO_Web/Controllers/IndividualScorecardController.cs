@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
+using SelectPdf;
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -119,6 +120,21 @@ namespace OPSCO_Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GetPdf()
+        {
+            var converter = new HtmlToPdf(); ;
+            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardView" + 
+                "?teamId=" + Session["IS_Team"].ToString() +
+                "&repId=" + Session["IS_Rep"].ToString() + 
+                "&month=" + Session["IS_Month"].ToString() + 
+                "&year=" + Session["IS_Year"].ToString());
+            doc.Save(System.Web.HttpContext.Current.Response, true, "test.pdf");
+            //doc.Close();
+
+            return doc;
+        }
+
         public PartialViewResult ScorecardBase()
         {
             return PartialView();
@@ -157,6 +173,10 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
+        public PartialViewResult ScorecardNptChart()
+        {
+            return PartialView();
+        }
 
         //public ActionResult ExportPDF()
         //{

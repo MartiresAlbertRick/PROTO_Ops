@@ -8,21 +8,38 @@
     <title>@ViewBag.Title - Scorecard</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Content/Table.css" />
+    <link rel="stylesheet" href="~/Content/Callout.css" />
     <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
     <script type="text/javascript" src="~/Scripts/Site.js"></script>
+    <style>
+        html, body {
+            font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+            background-color: #ecf0f5;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
+        <div class="col-md-12">
+            <h4>
+                <i class="fa fa-user"></i> Individual Scorecard
+            </h4>
+        </div>
         <div class="col-md-10 col-md-offset-1">
             @Html.Action("ScorecardBase")
         </div>
     </div>
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
-            <button class="btn btn-primary btn-sm navbar-btn">
+            <a id="btn_export" class="btn btn-primary btn-sm navbar-btn" click="$('#submit').click()">
                 <i class="fa fa-file-pdf-o"></i> Export to PDF
-            </button>
+            </a>
+            @using (Html.BeginForm("GetPdf", "IndividualScorecard", FormMethod.Post))
+            {
+                <input type="submit" hidden id="submit" />
+            }
         </div>
     </nav>
 </body>

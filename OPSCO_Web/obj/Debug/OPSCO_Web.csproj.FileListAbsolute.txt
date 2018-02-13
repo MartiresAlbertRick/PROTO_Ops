@@ -392,3 +392,6 @@ C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ClosedXML.
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ClosedXML.xml
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\DocumentFormat.OpenXml.xml
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ExcelNumberFormat.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.HtmlToPdf.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.HtmlToPdf.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.Html.dep
