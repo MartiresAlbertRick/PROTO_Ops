@@ -384,3 +384,11 @@ C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.cs
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ClosedXML.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\DocumentFormat.OpenXml.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ExcelNumberFormat.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\FastMember.Signed.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ClosedXML.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ClosedXML.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\DocumentFormat.OpenXml.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ExcelNumberFormat.xml
