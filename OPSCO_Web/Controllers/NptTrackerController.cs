@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using PagedList;
 using PagedList.Mvc;
+using System.IO;
+using ClosedXML.Excel;
 
 namespace OPSCO_Web.Controllers
 {
@@ -81,6 +83,45 @@ namespace OPSCO_Web.Controllers
             #region "Return"
             return View(npts.OrderByDescending(n => n.DateOfActivity).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
+        }
+
+        [HttpPost]
+        public FileResult Export()
+        {
+            #region "Initialize"
+            db.InitializeNpts();
+            #endregion "Initialize"
+            #region "TransferData"
+            DataTable dt = new DataTable("NPT");
+            dt.Columns.AddRange(new DataColumn[8] {
+                new DataColumn("Team"),
+                new DataColumn("Representative"),
+                new DataColumn("Category"),
+                new DataColumn("Activity Description"),
+                new DataColumn("Date of Activity"),
+                new DataColumn("Time Spent"),
+                new DataColumn("Modified By"),
+                new DataColumn("Date Modified")
+            });
+            var npts = (from n in db.NPT
+                        where n.Source == "Manual"
+                        select n);
+            foreach (var npt in npts)
+            {
+                dt.Rows.Add(npt.Team.TeamName, npt.Representative.FullName, npt.TypeOfActivity, npt.Activity, npt.DateOfActivity, npt.TimeSpent, npt.UploadedBy, npt.DateUploaded);
+            }
+            #endregion "TransferData"
+            #region "GenerateSpreadsheet"
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NPTList_" + DateTime.Now.ToShortDateString() + ".xlsx");
+                }
+            }
+            #endregion "GenerateSpreadsheet"
         }
 
         // GET: NptTracker/Details/5

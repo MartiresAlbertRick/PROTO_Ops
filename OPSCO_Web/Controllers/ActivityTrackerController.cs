@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using PagedList;
 using PagedList.Mvc;
+using System.IO;
+using ClosedXML.Excel;
 
 namespace OPSCO_Web.Controllers
 {
@@ -81,6 +83,45 @@ namespace OPSCO_Web.Controllers
             #region "Return"
             return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
+        }
+
+        public FileResult Export()
+        {
+            #region "Initialize"
+            db.InitializeActivities();
+            #endregion "Initialize"
+            #region "TransferData"
+            DataTable dt = new DataTable("Activities");
+            dt.Columns.AddRange(new DataColumn[9] {
+                new DataColumn("Team"),
+                new DataColumn("Representative"),
+                new DataColumn("Activity"),
+                new DataColumn("Date From"),
+                new DataColumn("Date To"),
+                new DataColumn("No of Hours"),
+                new DataColumn("No of Days"),
+                new DataColumn("Modified By"),
+                new DataColumn("Date Modified")
+            });
+            var acts = (from a in db.ActivityTrackers
+                        where a.Activity != "Attendance"
+                        select a);
+            foreach(var act in acts)
+            {
+                dt.Rows.Add(act.Team.TeamName, act.Representative.FullName, act.Activity, act.DateFrom, act.DateTo, act.NoOfHours, act.NoOfDays, act.ModifiedBy, act.DateModified);
+            }
+            #endregion "TransferData"
+            #region "GenerateSpreadsheet"
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ActivityList_" + DateTime.Now.ToShortDateString() + ".xlsx");
+                }
+            }
+            #endregion "GenerateSpreadsheet"
         }
 
         // GET: ActivityTracker/Details/5

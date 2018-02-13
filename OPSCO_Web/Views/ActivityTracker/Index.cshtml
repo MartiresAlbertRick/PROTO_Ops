@@ -7,18 +7,27 @@
 <h3>Activity Tracker</h3>
 <div class="row">
     <div class="col-md-6">
-        @if (ViewBag.CanAdd)
-        {
-            <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ActivityTracker", null)">
-                <i class="fa fa-plus"></i> New Record
-            </a>
-        }
-        else
-        {
-            <a class="btn btn-primary btn-sm disabled" href="@Url.Action("Create", "ActivityTracker", null)">
-                <i class="fa fa-plus"></i> New Record
-            </a>
-        }
+        <div class="btn-group">
+            @if (ViewBag.CanAdd)
+            {
+                <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ActivityTracker", null)">
+                    <i class="fa fa-plus"></i> New Record
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-primary btn-sm disabled" href="@Url.Action("Create", "ActivityTracker", null)">
+                    <i class="fa fa-plus"></i> New Record
+                </a>
+            }
+            <a href="#" class="btn btn-primary btn-sm" onclick="$('#btn_submit').click()">
+                <i class="fa fa-file-excel-o"></i> Export
+            </a>               
+            @using (Html.BeginForm("Export", "ActivityTracker", FormMethod.Post))
+            {
+                <input type="submit" hidden id="btn_submit" />
+            }
+        </div>
     </div>
     <div class="col-md-6">
         <div class="input-group">
