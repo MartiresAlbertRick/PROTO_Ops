@@ -124,6 +124,34 @@ namespace OPSCO_Web.Controllers
             #endregion "GenerateSpreadsheet"
         }
 
+        [HttpPost]
+        public JsonResult TeamAutoComplete(string prefix)
+        {
+            var teams = (from obj in db.Teams
+                         where obj.TeamName.StartsWith(prefix)
+                         select new { label = obj.TeamName, val = obj.TeamId  }).ToList();
+            return Json(teams);
+        }
+
+        [HttpPost]
+        public JsonResult RepresentativeAutoComplete(string prefix)
+        {
+
+            var reps = (from obj in db.Representatives
+                        where obj.FirstName.StartsWith(prefix) || obj.LastName.StartsWith(prefix)
+                        select new { label = obj.FirstName + " " + obj.LastName, val = obj.RepId });
+            return Json(reps);
+        }
+
+        [HttpPost]
+        public JsonResult ActivityAutoComplete(string prefix)
+        {
+            var activities = (from obj in db.activities
+                              where obj.Text.StartsWith(prefix)
+                              select new { label = obj.Text, val = obj.Value});
+            return Json(activities);
+        }
+
         // GET: ActivityTracker/Details/5
         public ActionResult Details(long? id)
         {

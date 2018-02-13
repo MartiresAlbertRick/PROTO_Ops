@@ -6,7 +6,6 @@
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 <script src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-
 <h3>NPT</h3>
 @using (Html.BeginForm())
 {
@@ -61,7 +60,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.TimeSpent, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
-            @Html.EditorFor(model => model.TimeSpent, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled", id="txt_timespent" } })
+            @Html.EditorFor(model => model.TimeSpent, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled", id="txt_timespent", placeholder = "min" } })
             @Html.ValidationMessageFor(model => model.TimeSpent, "", new { @class = "text-danger" })
         </div>
     </div>
