@@ -120,19 +120,27 @@ namespace OPSCO_Web.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult GetPdf()
         {
-            var converter = new HtmlToPdf(); ;
+            long repId;
+            int month, year;
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
+
+            HtmlToPdf converter = new HtmlToPdf();
             var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardView" + 
                 "?teamId=" + Session["IS_Team"].ToString() +
                 "&repId=" + Session["IS_Rep"].ToString() + 
                 "&month=" + Session["IS_Month"].ToString() + 
                 "&year=" + Session["IS_Year"].ToString());
-            doc.Save(System.Web.HttpContext.Current.Response, true, "test.pdf");
-            //doc.Close();
+            byte[] pdf = doc.Save();
+            doc.Close();
 
-            return doc;
+            FileResult fileResult = new FileContentResult(pdf, "application/pdf");
+            fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            return fileResult;
         }
 
         public PartialViewResult ScorecardBase()
