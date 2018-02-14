@@ -156,7 +156,7 @@ namespace OPSCO_Web.Controllers
                 "&month=" + Session["IS_Month"].ToString() + 
                 "&year=" + Session["IS_Year"].ToString());
 
-            System.Web.HttpContext.Current.Server.ScriptTimeout = 300;
+            
 
             byte[] pdf = doc.Save();
             doc.Close();
