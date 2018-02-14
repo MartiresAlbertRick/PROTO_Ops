@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
@@ -120,6 +121,25 @@ namespace OPSCO_Web.Controllers
             return View();
         }
 
+        public ActionResult ScorecardViewHidden(long? teamId, long? repId, int? month, int? year)
+        {
+            OSC_Team oSC_Team = db.Teams.Find((long)teamId);
+            if (oSC_Team == null) return HttpNotFound();
+            OSC_Representative oSC_Representative = db.Representatives.Find((long)repId);
+            if (oSC_Representative == null) return HttpNotFound();
+            oSC_Representative.FullName = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+            ViewBag.Title = oSC_Representative.FullName;
+            ViewBag.Team = oSC_Team.TeamName;
+            ViewBag.Representative = oSC_Representative.FullName;
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString((int)month)).First().Text;
+            ViewBag.Year = year;
+            Session["IS_Team"] = teamId;
+            Session["IS_Rep"] = repId;
+            Session["IS_Month"] = month;
+            Session["IS_Year"] = year;
+            return View();
+        }
+
         public ActionResult GetPdf()
         {
             long repId;
@@ -130,11 +150,14 @@ namespace OPSCO_Web.Controllers
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
 
             HtmlToPdf converter = new HtmlToPdf();
-            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardView" + 
+            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardViewHidden" + 
                 "?teamId=" + Session["IS_Team"].ToString() +
                 "&repId=" + Session["IS_Rep"].ToString() + 
                 "&month=" + Session["IS_Month"].ToString() + 
                 "&year=" + Session["IS_Year"].ToString());
+
+            System.Web.HttpContext.Current.Server.ScriptTimeout = 300;
+
             byte[] pdf = doc.Save();
             doc.Close();
 
@@ -171,20 +194,52 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
+        #region "ProductivityChart"
         public PartialViewResult ScorecardProductivityChart()
         {
             return PartialView();
         }
+
+        public JsonResult JsonProductivityChart()
+        {
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+
+            var worktypes = db.GetIndividualWorkTypes(teamId, repId, month, year);
+            return Json(worktypes, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "ProductivityChart"
+
+        #region "NptChart"
+        public PartialViewResult ScorecardNptChart()
+        {
+            return PartialView();
+        }
+
+        public JsonResult JsonNptChart()
+        {
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+
+            var npts = db.GetIndividualNPT(teamId, repId, month, year);
+            return Json(npts, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "NptChart"
 
         public PartialViewResult ScorecardHighlights()
         {
             return PartialView();
         }
 
-        public PartialViewResult ScorecardNptChart()
-        {
-            return PartialView();
-        }
+        
 
         //public ActionResult ExportPDF()
         //{

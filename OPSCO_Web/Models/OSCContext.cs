@@ -23,7 +23,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_Manager> Managers { get; set; }
         public DbSet<OSC_ActivityTracker> ActivityTrackers { get; set; }
         public DbSet<OSC_ManualEntry> ManualEntries { get; set; }
-        public DbSet<OSC_CustomizeScorecard> CustomizeScorecards {get; set;}
+        public DbSet<OSC_CustomizeScorecard> CustomizeScorecards { get; set; }
         public DbSet<OSC_WorkType> WorkTypes { get; set; }
         public DbSet<OSC_WorkStatus> Statuses { get; set; }
         public DbSet<OSC_BusinessArea> BusinessAreas { get; set; }
@@ -127,7 +127,7 @@ namespace OPSCO_Web.Models
                 {
                     long depId = (long)Teams.Find((long)teamId).DepartmentId;
                     mg = ManageGroups.Where(m => m.Type == "DEPT" && m.EntityId == depId && m.ManagerId == managerId).FirstOrDefault();
-                    if (mg != null) return true; 
+                    if (mg != null) return true;
                 }
                 else
                 {
@@ -209,6 +209,67 @@ namespace OPSCO_Web.Models
             }
             return true;
         }
+
+        public List<IndividualWorkTypes> GetIndividualWorkTypes(long teamId, long repId, int month, int year)
+        {
+            List<IndividualWorkTypes> result = new List<IndividualWorkTypes>();
+            var s = (from list in BIP
+                     where list.TeamId == teamId &&
+                            list.RepId == repId &&
+                            list.Month == month &&
+                            list.Year == year
+                     select new IndividualWorkTypes
+                     {
+                         WorkType = list.WorkType,
+                         Count = (int)list.Count
+                     });
+            foreach (IndividualWorkTypes item in s)
+            {
+                if (result.Any(t => t.WorkType == item.WorkType))
+                {
+                    IndividualWorkTypes obj = result.Where(t => t.WorkType == item.WorkType).FirstOrDefault();
+                    result.Remove(obj);
+                    obj.Count += item.Count;
+                    result.Add(obj);
+                }
+                else
+                {
+                    result.Add(item);
+                }
+            }
+            return result.OrderBy(t => t.WorkType).ToList();
+        }
+
+        public List<IndividualNPT> GetIndividualNPT(long teamId, long repId, int month, int year)
+        {
+            List<IndividualNPT> result = new List<IndividualNPT>();
+            var s = (from list in NPT
+                     where list.TeamId == teamId &&
+                            list.RepId == repId &&
+                            list.Month == month &&
+                            list.Year == year
+                     select new IndividualNPT
+                     {
+                         Category = list.TypeOfActivity,
+                         TimeSpent = (double)list.TimeSpent
+                     });
+
+            foreach (IndividualNPT item in s)
+            {
+                if (result.Any(t => t.Category == item.Category))
+                {
+                    IndividualNPT obj = result.Where(t => t.Category == item.Category).FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += item.TimeSpent;
+                    result.Add(obj);
+                }
+                else
+                {
+                    result.Add(item);
+                }
+            }
+            return result.OrderBy(t => t.Category).ToList();
+        }
         #endregion "InitializeLists"
 
         #region "DateTimeFormatting"
@@ -260,14 +321,7 @@ namespace OPSCO_Web.Models
         public long RepId { get; set; }
     }
 
-    public class Import
-    {
-        [Key]
-        public int ImportId { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
-    }
-
+    #region "OSCdbEntities"
     [MetadataType(typeof(OSC_Department.Metadata))]
     public partial class OSC_Department
     {
@@ -554,4 +608,29 @@ namespace OPSCO_Web.Models
             public string GroupType { get; set; }
         }
     }
+    #endregion "OSCdbEntities"
+
+    #region "ViewModel"
+    public class IndividualWorkTypes
+    {
+        [Display(Name = "Worktype")]
+        public string WorkType { get; set; }
+        public int Count { get; set; }
+    }
+
+    public class IndividualNPT
+    {
+        public string Category { get; set; }
+        [Display(Name = "Time Spent")]
+        public double TimeSpent { get; set; }
+    }
+
+    public class Import
+    {
+        [Key]
+        public int ImportId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+    }
+    #endregion "ViewModel"
 }
