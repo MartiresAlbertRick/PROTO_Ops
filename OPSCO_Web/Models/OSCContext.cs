@@ -34,6 +34,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_TeamGroupIds> TeamGroupIds { get; set; }
         public DbSet<OSC_TeamNptCategory> TeamNptCategories { get; set; }
         public DbSet<OSC_ManageGroup> ManageGroups { get; set; }
+        public DbSet<OSC_TeamWorkItem> TeamWorkItems { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
         public DbSet<OSC_ImportBIQual> BIQ { get; set; }
@@ -219,6 +220,12 @@ namespace OPSCO_Web.Models
             {
                 result.Add(GetIndividualScorecard(teamId, repId, i, year));
             }
+            IndividualScorecard total = new IndividualScorecard()
+            {
+                Month = 13,
+                MonthName = "Total"
+            };
+            result.Add(total);
             return result.OrderBy(t => t.Month).ToList();
         }
 
@@ -238,14 +245,145 @@ namespace OPSCO_Web.Models
                          Year = (int)list.Year,
                          Highlights = (string)list.Comments
                      }).FirstOrDefault();
+            result.rep = Representatives.Find(repId);
+            result.rep.Location = Locations.Find(result.rep.LocationId);
+            result.rep.CoreRole = CoreRoles.Find(result.rep.CoreRoleId);
             result.MonthName = months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text;
             result.individualBIProd = GetIndividualProd(teamId, repId, month, year);
-            result.ProductivityRating = 0;
-            result.QualityRating = 0;
+            result.individualBIQual = GetIndividualQual(teamId, repId, month, year);
+            result.individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year);
+            result.individualActivities = GetIndividualActivities(teamId, repId, month, year);
+            result.HoursWorked = (result.individualBIProd.ProcessingHours /
+                                        (((result.individualActivities.Attendance_Hours + result.individualActivities.Overtime_Hours)
+                                        - result.individualActivities.TimeOff_Hours) - result.individualActivities.Holiday_Hours));
+            if (result.HoursWorked > 0) { result.HoursWorked = result.HoursWorked; }
+            else { result.HoursWorked = 0; }
+            result.ProductivityRating = (result.individualBIProd.ProcessingHours /
+                                        (((result.individualActivities.Attendance_Hours + result.individualActivities.Overtime_Hours)
+                                        - result.individualActivities.TimeOff_Hours) - result.individualActivities.Holiday_Hours));
+            if (result.ProductivityRating > 0)
+            {
+                result.ProductivityRating = result.ProductivityRating * 100;
+                double multiplier = Math.Pow(10, 2);
+                result.ProductivityRating = Math.Ceiling(result.ProductivityRating * multiplier) / multiplier;
+            }
+            else { result.ProductivityRating = 0; }
+            result.AverageTalkTime = (long)result.individualAIQ.ACDTalkTime / (long)result.individualAIQ.TotalACDCalls;
+            result.AverageWrapUpDuration = (long)result.individualAIQ.ACDWrapUpTime / (long)result.individualAIQ.TotalACDCalls;
+            result.AverageAuxTime = (long)result.individualAIQ.Aux / (long)result.individualAIQ.TotalACDCalls;
             result.TotalUtilization = 0;
             result.Efficiency = 0;
             return result;
         }
+
+        public IndividualActivities GetIndividualActivities(long teamId, long repId, int month, int year)
+        {
+            IndividualActivities result = new IndividualActivities();
+            var x = (from list in ActivityTrackers
+                     where list.Activity == "Attendance" &&
+                            list.TeamId == teamId &&
+                            list.RepId == repId &&
+                            list.Month == month &&
+                            list.Year == year
+                     select new IndividualActivities
+                     {
+                         TeamId = list.TeamId,
+                         RepId = list.RepId,
+                         Month = list.Month,
+                         Year = list.Year,
+                         Attendance_Days = (double)list.NoOfDays,
+                         Attendance_Hours = (double)list.NoOfHours
+                     }).FirstOrDefault();
+            if (x != null)
+            { 
+                result = x;
+            }
+            else
+            {
+                result.TeamId = teamId;
+                result.RepId = repId;
+                result.Month = month;
+                result.Year = year;
+                result.Attendance_Days = 0;
+                result.Attendance_Hours = 0;
+            }
+            var y = (from list in ActivityTrackers
+                         where list.Activity == "Holiday" &&
+                                list.TeamId == teamId &&
+                                list.RepId == repId &&
+                                list.Month == month &&
+                                list.Year == year
+                         select new IndividualActivities
+                         {
+                             TeamId = list.TeamId,
+                             RepId = list.RepId,
+                             Month = list.Month,
+                             Year = list.Year,
+                             Holiday_Days = (double)list.NoOfDays,
+                             Holiday_Hours = (double)list.NoOfHours
+                         });
+                result.Holiday_Days = 0;
+                result.Holiday_Hours = 0;
+            if (y != null)
+            { 
+                foreach (IndividualActivities item in y)
+                {
+                    result.Holiday_Days += item.Holiday_Days;
+                    result.Holiday_Hours += item.Holiday_Hours;
+                }
+            }
+            var z = (from list in ActivityTrackers
+                         where list.Activity == "Overtime" &&
+                                list.TeamId == teamId &&
+                                list.RepId == repId &&
+                                list.Month == month &&
+                                list.Year == year
+                         select new IndividualActivities
+                         {
+                             TeamId = list.TeamId,
+                             RepId = list.RepId,
+                             Month = list.Month,
+                             Year = list.Year,
+                             Overtime_Days = (double)list.NoOfDays,
+                             Overtime_Hours = (double)list.NoOfHours
+                         });
+                result.Overtime_Days = 0;
+                result.Overtime_Hours = 0;
+            if (z!=null)
+            { 
+                foreach (IndividualActivities item in z)
+                {
+                    result.Overtime_Days += item.Overtime_Days;
+                    result.Overtime_Hours += item.Overtime_Hours;
+                }
+            }
+            var a = (from list in ActivityTrackers
+                         where list.Activity == "Time-off" &&
+                                list.TeamId == teamId &&
+                                list.RepId == repId &&
+                                list.Month == month &&
+                                list.Year == year
+                         select new IndividualActivities
+                         {
+                             TeamId = list.TeamId,
+                             RepId = list.RepId,
+                             Month = list.Month,
+                             Year = list.Year,
+                             TimeOff_Days = (double)list.NoOfDays,
+                             TimeOff_Hours = (double)list.NoOfHours
+                         });
+                result.TimeOff_Days = 0;
+                result.TimeOff_Hours = 0;
+            if (a != null) { 
+                foreach (IndividualActivities item in z)
+                {
+                    result.TimeOff_Days += item.TimeOff_Days;
+                    result.TimeOff_Hours += item.TimeOff_Hours;
+                }
+            }
+            return result;
+        }
+
         public IndividualBIProd GetIndividualProd(long teamId, long repId, int month, int year)
         {
             IndividualBIProd result = new IndividualBIProd();
@@ -253,6 +391,73 @@ namespace OPSCO_Web.Models
                      where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
                      select new IndividualBIProd { TeamId = (long)list.TeamId, RepId = (long)list.RepId, Count = (int)list.Count, Month = (int)list.Month, Year = (int)list.Year });
             foreach (IndividualBIProd item in x) { if (result != null) result.Count += item.Count; else result = item; }
+            List<IndividualBIProdTimings> individualBiProdTimings = GetIndividualBIProdTimings(teamId, repId, month, year);
+            foreach (IndividualBIProdTimings item in individualBiProdTimings)
+            {
+                result.ProcessingHours += item.ProcessingMinutes;
+            }
+            result.ProcessingHours = result.ProcessingHours / 60;
+            double multiplier = Math.Pow(10, 2);
+            result.ProcessingHours = Math.Ceiling(result.ProcessingHours * multiplier) / multiplier;
+            return result;
+        }
+
+        public IndividualBIQual GetIndividualQual(long teamId, long repId, int month, int year)
+        {
+            IndividualBIQual result = new IndividualBIQual();
+            var x = (from list in BIQ
+                     where list.TeamId == teamId && list.Repid == repId && list.Month == month && list.Year == year
+                     select new IndividualBIQual { TeamId = (long)list.TeamId, RepId = (long)list.Repid, FailCount = (int)list.Count4, ReviewCount = (int)list.Count3, Month = (int)list.Month, Year = (int)list.Year });
+                foreach (IndividualBIQual item in x)
+                {
+                    if (result != null)
+                    {
+                        result.FailCount += item.FailCount;
+                        result.ReviewCount += item.ReviewCount;
+                    }
+                    else result = item;
+                }
+            if (result.ReviewCount > 0)
+            {
+                if (result.FailCount > 0) result.QualityRating = (((double)result.ReviewCount - (double)result.FailCount) / (double)result.ReviewCount) * 100;
+                else result.QualityRating = ((result.ReviewCount - result.FailCount) / (result.ReviewCount - result.FailCount)) * 100;
+                double multiplier = Math.Pow(10, 2);
+                result.QualityRating = Math.Ceiling(result.QualityRating * multiplier) / multiplier;
+            }
+            else
+            {
+                result.QualityRating = 0;
+            }
+            
+            return result;
+        }
+
+        public OSC_ImportAIQ GetIndividualAIQ(long teamId, long repId, int month, int year)
+        {
+            OSC_ImportAIQ result = new OSC_ImportAIQ();
+            var x = (from list in AIQ
+                     where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select list).FirstOrDefault();
+            result = x;
+            return result;
+        }
+
+        public IndividualNonProcessing GetIndividualNonProcessing(long teamId, long repId, int month, int year)
+        {
+            IndividualNonProcessing result = new IndividualNonProcessing();
+            var x = (from list in NPT
+                     where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select new IndividualNonProcessing { TeamId = (long)list.TeamId, RepId = (long)list.RepId, NPTHours = (double)list.TimeSpent, Month = (int)list.Month, Year = (int)list.Year });
+            foreach (IndividualNonProcessing item in x)
+            {
+                if (result != null)
+                {
+                    result.NPTHours += (item.NPTHours / 60);
+                }
+                else result = item;
+            }
+            double multiplier = Math.Pow(10, 2);
+            result.NPTHours = Math.Ceiling(result.NPTHours * multiplier) / multiplier;
             return result;
         }
 
@@ -295,6 +500,71 @@ namespace OPSCO_Web.Models
             return result.OrderBy(t => t.Category).ToList();
         }
 
+        public List<IndividualBIProdTimings> GetIndividualBIProdTimings(long teamId, long repId, int month, int year)
+        {
+            List<IndividualBIProdTimings> result = new List<IndividualBIProdTimings>();
+            var x = (from list in BIP
+                     where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select new IndividualBIProdTimings
+                     {
+                        TeamId = (long)list.TeamId,
+                        RepId = (long)list.RepId,
+                        Month = (int)list.Month,
+                        Year = (int)list.Year,
+                        BusinessArea = (string)list.BusinessArea,
+                        WorkType = (string)list.WorkType,
+                        Status = (string)list.Status,
+                        Count = (int)list.Count
+                     });
+            foreach (IndividualBIProdTimings item in x)
+            {
+                if (result.Any(t => t.BusinessArea == item.BusinessArea && t.WorkType == item.WorkType && t.Status == item.Status))
+                {
+                    IndividualBIProdTimings obj = result.Where(t => t.BusinessArea == item.BusinessArea && t.WorkType == item.WorkType && t.Status == item.Status).FirstOrDefault();
+                    result.Remove(obj);
+                    obj.Count += item.Count;
+                    result.Add(obj);
+                }
+                else result.Add(item);
+            }
+            List<OSC_TeamWorkItem> twiList = GetTeamWorkItems(teamId, year);
+            foreach (IndividualBIProdTimings item in result)
+            {
+                OSC_TeamWorkItem teamWorkItem = twiList.Where(t => t.BusinessAreaCode == item.BusinessArea && t.WorkTypeCode == item.WorkType && t.StatusCode == item.Status).FirstOrDefault();
+                double minutes = 0;
+                if (teamWorkItem != null)
+                { 
+                    switch (item.Month)
+                    {
+                        case 1: minutes = (double)teamWorkItem.January; break;
+                        case 2: minutes = (double)teamWorkItem.February; break;
+                        case 3: minutes = (double)teamWorkItem.March; break;
+                        case 4: minutes = (double)teamWorkItem.April; break;
+                        case 5: minutes = (double)teamWorkItem.May; break;
+                        case 6: minutes = (double)teamWorkItem.June; break;
+                        case 7: minutes = (double)teamWorkItem.July; break;
+                        case 8: minutes = (double)teamWorkItem.August; break;
+                        case 9: minutes = (double)teamWorkItem.September; break;
+                        case 10: minutes = (double)teamWorkItem.October; break;
+                        case 11: minutes = (double)teamWorkItem.November; break;
+                        case 12: minutes = (double)teamWorkItem.December; break;
+                    }
+                }
+                item.ProcessingMinutes = item.Count * minutes;
+                double multiplier = Math.Pow(10, 2);
+                item.ProcessingMinutes = Math.Ceiling(item.ProcessingMinutes * multiplier) / multiplier;
+            }
+            return result.OrderBy(t=>t.BusinessArea).ThenBy(t=>t.WorkType).ThenBy(t=>t.Status).ToList();
+        }
+
+        public List<OSC_TeamWorkItem> GetTeamWorkItems(long teamId, int year)
+        {
+            List<OSC_TeamWorkItem> result = (from list in TeamWorkItems
+                                             where list.TeamId == teamId &&
+                                                    list.Year == year
+                                             select list).ToList();
+            return result;
+        }
         #endregion "InitializeLists"
 
         #region "DateTimeFormatting"
@@ -623,6 +893,53 @@ namespace OPSCO_Web.Models
             public string GroupType { get; set; }
         }
     }
+
+    [MetadataType(typeof(OSC_ImportAIQ.Metadata))]
+    public partial class OSC_ImportAIQ
+    {
+        sealed class Metadata
+        {
+            [Key]
+            public long AIQReportId { get; set; }
+            public Nullable<long> RepId { get; set; }
+            public string Agent { get; set; }
+            [Display(Name="Interval Staffed Duration")]
+            public Nullable<long> IntervalStaffedDuration { get; set; }
+            [Display(Name="Total Perc Service time")]
+            public Nullable<double> TotalPercServiceTime { get; set; }
+            [Display(Name ="Total ACD Calls")]
+            public Nullable<int> TotalACDCalls { get; set; }
+            /**/
+            public Nullable<int> ExtInCalls { get; set; }
+            /**/
+            public Nullable<long> ExtInAvgActiveDur { get; set; }
+            [Display(Name = "Outbound Calls")]
+            public Nullable<int> ExtOutCalls { get; set; }
+            /**/
+            public Nullable<long> AvgExtOutActiveDur { get; set; }
+            [Display(Name = "Wrap Up Duration")]
+            public Nullable<long> ACDWrapUpTime { get; set; }
+            [Display(Name = "ACD Talk Time")]
+            public Nullable<long> ACDTalkTime { get; set; }
+            [Display(Name = "ACD Ring Time")]
+            public Nullable<long> ACDRingTime { get; set; }
+            [Display(Name = "Aux")]
+            public Nullable<long> Aux { get; set; }
+            [Display(Name ="Average Hold Time")]
+            public Nullable<long> AvgHoldDur { get; set; }
+            [Display(Name ="Interval Idle Duration")]
+            public Nullable<long> IntervalIdleDur { get; set; }
+            public Nullable<int> Transfers { get; set; }
+            [Display(Name = "Held Contacts")]
+            public Nullable<int> HeldContacts { get; set; }
+            public Nullable<int> Redirects { get; set; }
+            public Nullable<long> TeamId { get; set; }
+            public Nullable<int> Month { get; set; }
+            public Nullable<int> Year { get; set; }
+            public Nullable<System.DateTime> DateUploaded { get; set; }
+            public string UploadedBy { get; set; }
+        }
+    }
     #endregion "OSCdbEntities"
 
     #region "ViewModel"
@@ -636,22 +953,93 @@ namespace OPSCO_Web.Models
         public string Highlights { get; set; }
         [Display(Name = "Rate of Production")]
         public double ProductivityRating { get; set; }
-        [Display(Name = "Processing Quality")]
-        public double QualityRating { get; set; }
         [Display(Name = "Total Utilization")]
         public double TotalUtilization { get; set; }
+        [Display(Name = "Available Base Hours")]
+        public double HoursWorked { get; set; }
         public double Efficiency { get; set; }
+        [Display(Name = "Average Talk Time")]
+        public double AverageTalkTime { get; set; }
+        [Display(Name = "Average Wrap Up Duration")]
+        public double AverageWrapUpDuration { get; set; }
+        [Display(Name = "Average Aux Time")]
+        public double AverageAuxTime { get; set; }
+        public virtual IndividualActivities individualActivities { get; set; }
         public virtual IndividualBIProd individualBIProd { get; set; }
+        public virtual IndividualBIQual individualBIQual { get; set; }
+        public virtual OSC_ImportAIQ individualAIQ { get; set; }
+        public virtual IndividualNonProcessing individualNonProcessing { get; set; }
+        public virtual OSC_Representative rep { get; set; }
+
     }
 
     public class IndividualBIProd
     {
         public long TeamId { get; set; }
         public long RepId { get; set; }
-        [Display(Name = "Total Transactions")]
-        public int Count { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        [Display(Name = "Total Transactions")]
+        public int Count { get; set; }
+        [Display(Name = "Processing Time")]
+        public double ProcessingHours { get; set; }
+    }
+
+    public class IndividualBIProdTimings
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public string BusinessArea { get; set; }
+        public string WorkType { get; set; }
+        public string Status { get; set; }
+        public int Count { get; set; }
+        public double ProcessingMinutes { get; set; }
+    }
+
+    public class IndividualBIQual
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        [Display(Name = "Review Count")]
+        public int ReviewCount { get; set; }
+        [Display(Name = "Fail Count")]
+        public int FailCount { get; set; }
+        [Display(Name = "Processing Quality")]
+        public double QualityRating { get; set; }
+    }
+
+    public class IndividualNonProcessing
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        [Display(Name = "NPT Hours")]
+        public double NPTHours { get; set; }
+    }
+
+    public class IndividualActivities
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        [Display(Name = "Attendance")]
+        public double Attendance_Days { get; set; }
+        public double Attendance_Hours { get; set; }
+        [Display(Name = "Holidays")]
+        public double Holiday_Days { get; set; }
+        public double Holiday_Hours { get; set; }
+        public double Overtime_Days { get; set; }
+        [Display(Name = "Overtime")]
+        public double Overtime_Hours { get; set; }
+        [Display(Name = "Time-Off")]
+        public double TimeOff_Days { get; set; }
+        public double TimeOff_Hours { get; set; }
     }
 
     public class IndividualWorkTypes
