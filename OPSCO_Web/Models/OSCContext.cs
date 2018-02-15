@@ -40,6 +40,8 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_ImportAIQ> AIQ { get; set; }
         public DbSet<OSC_ImportTA> TA { get; set; }
         public DbSet<OSC_ImportNPT> NPT { get; set; }
+
+        public DbSet<OSC_IndividualScorecard_Current> IndividualScorecards { get; set; }
         #endregion "DBSets"
 
         #region "StaticLists"
@@ -210,19 +212,55 @@ namespace OPSCO_Web.Models
             return true;
         }
 
-        public List<IndividualWorkTypes> GetIndividualWorkTypes(long teamId, long repId, int month, int year)
+        public List<IndividualScorecard> GetIndividualScorecardFull(long teamId, long repId, int month, int year)
         {
-            List<IndividualWorkTypes> result = new List<IndividualWorkTypes>();
-            var s = (from list in BIP
+            List<IndividualScorecard> result = new List<IndividualScorecard>();
+            for (int i = 1; i <= month; i++)
+            {
+                result.Add(GetIndividualScorecard(teamId, repId, i, year));
+            }
+            return result.OrderBy(t => t.Month).ToList();
+        }
+
+        public IndividualScorecard GetIndividualScorecard(long teamId, long repId, int month, int year)
+        {
+            IndividualScorecard result = new IndividualScorecard();
+            result = (from list in IndividualScorecards
                      where list.TeamId == teamId &&
                             list.RepId == repId &&
                             list.Month == month &&
                             list.Year == year
-                     select new IndividualWorkTypes
+                     select new IndividualScorecard
                      {
-                         WorkType = list.WorkType,
-                         Count = (int)list.Count
-                     });
+                         TeamId = (long)list.TeamId,
+                         RepId = (long)list.RepId,
+                         Month = (int) list.Month,
+                         Year = (int)list.Year,
+                         Highlights = (string)list.Comments
+                     }).FirstOrDefault();
+            result.MonthName = months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text;
+            result.individualBIProd = GetIndividualProd(teamId, repId, month, year);
+            result.ProductivityRating = 0;
+            result.QualityRating = 0;
+            result.TotalUtilization = 0;
+            result.Efficiency = 0;
+            return result;
+        }
+        public IndividualBIProd GetIndividualProd(long teamId, long repId, int month, int year)
+        {
+            IndividualBIProd result = new IndividualBIProd();
+            var x = (from list in BIP
+                     where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select new IndividualBIProd { TeamId = (long)list.TeamId, RepId = (long)list.RepId, Count = (int)list.Count, Month = (int)list.Month, Year = (int)list.Year });
+            foreach (IndividualBIProd item in x) { if (result != null) result.Count += item.Count; else result = item; }
+            return result;
+        }
+
+        public List<IndividualWorkTypes> GetIndividualWorkTypes(long teamId, long repId, int month, int year)
+        {
+            List<IndividualWorkTypes> result = new List<IndividualWorkTypes>();
+            var s = (from list in BIP where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select new IndividualWorkTypes { WorkType = list.WorkType, Count = (int)list.Count });
             foreach (IndividualWorkTypes item in s)
             {
                 if (result.Any(t => t.WorkType == item.WorkType))
@@ -232,10 +270,7 @@ namespace OPSCO_Web.Models
                     obj.Count += item.Count;
                     result.Add(obj);
                 }
-                else
-                {
-                    result.Add(item);
-                }
+                else result.Add(item);
             }
             return result.OrderBy(t => t.WorkType).ToList();
         }
@@ -243,16 +278,8 @@ namespace OPSCO_Web.Models
         public List<IndividualNPT> GetIndividualNPT(long teamId, long repId, int month, int year)
         {
             List<IndividualNPT> result = new List<IndividualNPT>();
-            var s = (from list in NPT
-                     where list.TeamId == teamId &&
-                            list.RepId == repId &&
-                            list.Month == month &&
-                            list.Year == year
-                     select new IndividualNPT
-                     {
-                         Category = list.TypeOfActivity,
-                         TimeSpent = (double)list.TimeSpent
-                     });
+            var s = (from list in NPT where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select new IndividualNPT { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
 
             foreach (IndividualNPT item in s)
             {
@@ -263,13 +290,11 @@ namespace OPSCO_Web.Models
                     obj.TimeSpent += item.TimeSpent;
                     result.Add(obj);
                 }
-                else
-                {
-                    result.Add(item);
-                }
+                else result.Add(item);
             }
             return result.OrderBy(t => t.Category).ToList();
         }
+
         #endregion "InitializeLists"
 
         #region "DateTimeFormatting"
@@ -309,16 +334,6 @@ namespace OPSCO_Web.Models
         #region "BTSS"
         public BTSS_AppFacade appFacade = new BTSS_AppFacade();
         #endregion "BTSS"
-    }
-
-    public class IndividualScorecard
-    {
-        [Key]
-        public int IndividualScorecardId { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
-        public long TeamId { get; set; }
-        public long RepId { get; set; }
     }
 
     #region "OSCdbEntities"
@@ -611,6 +626,34 @@ namespace OPSCO_Web.Models
     #endregion "OSCdbEntities"
 
     #region "ViewModel"
+    public class IndividualScorecard
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        public int Month { get; set; }
+        public string MonthName { get; set; }
+        public int Year { get; set; }
+        public string Highlights { get; set; }
+        [Display(Name = "Rate of Production")]
+        public double ProductivityRating { get; set; }
+        [Display(Name = "Processing Quality")]
+        public double QualityRating { get; set; }
+        [Display(Name = "Total Utilization")]
+        public double TotalUtilization { get; set; }
+        public double Efficiency { get; set; }
+        public virtual IndividualBIProd individualBIProd { get; set; }
+    }
+
+    public class IndividualBIProd
+    {
+        public long TeamId { get; set; }
+        public long RepId { get; set; }
+        [Display(Name = "Total Transactions")]
+        public int Count { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+    }
+
     public class IndividualWorkTypes
     {
         [Display(Name = "Worktype")]

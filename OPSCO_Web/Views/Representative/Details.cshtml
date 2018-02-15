@@ -13,7 +13,7 @@
                     <i class="fa fa-chevron-left"></i> Back to List
                 </a>
                 @if (ViewBag.CanEdit)
-                { 
+                {
                     <a href="@Url.Action("Edit", "Representative", new { id = Model.RepId } )" class="btn btn-default btn-sm">
                         <i class="fa fa-edit"></i> Edit
                     </a>
@@ -28,6 +28,7 @@
         </div>
     </div>
     <br />
+    Error: could not load StatsSection. File is not available in the server.
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -119,7 +120,7 @@
             @Html.DisplayFor(model => model.WorkHours)
         </dd>
         @if (Session["role"].ToString() == "Admin")
-        { 
+        {
             <dt>
                 @Html.DisplayNameFor(model => model.IsActive)
             </dt>

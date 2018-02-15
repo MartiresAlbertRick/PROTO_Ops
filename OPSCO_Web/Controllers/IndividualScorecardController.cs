@@ -150,13 +150,11 @@ namespace OPSCO_Web.Controllers
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
 
             HtmlToPdf converter = new HtmlToPdf();
-            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardViewHidden" + 
+            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardView" + 
                 "?teamId=" + Session["IS_Team"].ToString() +
                 "&repId=" + Session["IS_Rep"].ToString() + 
                 "&month=" + Session["IS_Month"].ToString() + 
                 "&year=" + Session["IS_Year"].ToString());
-
-            
 
             byte[] pdf = doc.Save();
             doc.Close();
@@ -191,7 +189,14 @@ namespace OPSCO_Web.Controllers
 
         public PartialViewResult ScorecardMainTable()
         {
-            return PartialView();
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            List<IndividualScorecard> list = db.GetIndividualScorecardFull(teamId, repId, month, year);
+            return PartialView(list);
         }
 
         #region "ProductivityChart"
@@ -234,16 +239,18 @@ namespace OPSCO_Web.Controllers
         }
         #endregion "NptChart"
 
+        #region "Highlights"
         public PartialViewResult ScorecardHighlights()
         {
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            ViewBag.Highlights = db.GetIndividualScorecard(teamId, repId, month, year).Highlights;
             return PartialView();
         }
-
-        
-
-        //public ActionResult ExportPDF()
-        //{
-
-        //}
+        #endregion "Highlights"
     }
 }

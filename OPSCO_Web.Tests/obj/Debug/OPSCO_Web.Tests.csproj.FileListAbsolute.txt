@@ -184,3 +184,14 @@ C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSCO_
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSCO_Web.Tests.csproj.CoreCompileInputs.cache
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSCO_Web.Tests.dll
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web.Tests\obj\Debug\OPSCO_Web.Tests.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\ClosedXML.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\Select.HtmlToPdf.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\ExcelNumberFormat.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\FastMember.Signed.dll
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\ClosedXML.pdb
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\ClosedXML.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\Select.HtmlToPdf.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\ExcelNumberFormat.xml
+C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web.Tests\bin\Debug\Select.Html.dep

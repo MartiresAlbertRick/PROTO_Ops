@@ -60,7 +60,7 @@ namespace OPSCO_Web.Controllers
                                 TeamIds.Add(obj.TeamId);
                     }
                     teams = (from t in db.Teams
-                            where TeamIds.Contains(t.TeamId) && t.IsActive == true
+                            where TeamIds.Contains(t.TeamId) && t.IsActive
                             select t);
                     break;
             }
