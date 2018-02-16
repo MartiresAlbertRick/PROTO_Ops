@@ -62,7 +62,7 @@ namespace OPSCO_Web.Controllers
                                 TeamIds.Add((long)npt.TeamId);
                     }
                     npts = (from n in db.NPT
-                            where n.Source == "Manual" && TeamIds.Contains((long)n.TeamId) && n.IsActive == true
+                            where n.Source == "Manual" && TeamIds.Contains((long)n.TeamId) && n.IsActive
                             select n);
                     break;
                 case "Staff":

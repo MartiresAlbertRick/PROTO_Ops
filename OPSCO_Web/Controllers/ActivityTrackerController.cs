@@ -62,7 +62,7 @@ namespace OPSCO_Web.Controllers
                                 TeamIds.Add(obj.TeamId);
                     }
                     acts = (from a in db.ActivityTrackers
-                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId)
+                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId) && a.IsActive
                             select a);
                     break;
                 case "Staff":

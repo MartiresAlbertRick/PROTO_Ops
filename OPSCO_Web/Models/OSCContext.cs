@@ -251,6 +251,7 @@ namespace OPSCO_Web.Models
             result.MonthName = months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text;
             result.individualBIProd = GetIndividualProd(teamId, repId, month, year);
             result.individualBIQual = GetIndividualQual(teamId, repId, month, year);
+            result.individualAIQ = GetIndividualAIQ(teamId, repId, month, year);
             result.individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year);
             result.individualActivities = GetIndividualActivities(teamId, repId, month, year);
             result.HoursWorked = GetHoursWorked(result.individualActivities.Attendance_Hours,result.individualActivities.Overtime_Hours,result.individualActivities.TimeOff_Hours,result.individualActivities.Holiday_Hours);
@@ -325,13 +326,34 @@ namespace OPSCO_Web.Models
         { return ((Attendance + Overtime) - TimeOff) - Holiday; }
 
         public double GetAverageTalkTime(long ACDTalkTime, int TotalACDCalls)
-        { return ACDTalkTime / TotalACDCalls; }
+        {
+            double result = 0;
+            if (TotalACDCalls != 0)
+            {
+                result = ACDTalkTime / TotalACDCalls;
+            }
+            return result;
+        }
 
         public double GetAverageWrapUpDuration(long ACDWrapUpTime, int TotalACDCalls)
-        { return ACDWrapUpTime / TotalACDCalls; }
+        {
+            double result = 0;
+            if (TotalACDCalls != 0)
+            {
+                result = ACDWrapUpTime / TotalACDCalls;
+            }
+            return result;
+        }
 
         public double GetAverageAuxTime(long Aux, int TotalACDCalls)
-        { return Aux / TotalACDCalls; }
+        {
+            double result = 0;
+            if (TotalACDCalls != 0)
+            {
+                result = Aux / TotalACDCalls;
+            }
+            return result;
+        }
 
         
 
@@ -505,7 +527,37 @@ namespace OPSCO_Web.Models
             var x = (from list in AIQ
                      where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
                      select list).FirstOrDefault();
-            result = x;
+            if (x != null)
+            {
+                result = x;
+            }
+            else
+            {
+                result = new OSC_ImportAIQ()
+                {
+                    TeamId = teamId,
+                    RepId = repId,
+                    Month = month,
+                    Year = year,
+                    IntervalStaffedDuration = 0,
+                    TotalPercServiceTime = 0,
+                    TotalACDCalls = 0,
+                    ExtInCalls = 0,
+                    ExtInAvgActiveDur = 0,
+                    ExtOutCalls = 0,
+                    AvgExtOutActiveDur = 0,
+                    ACDWrapUpTime = 0,
+                    ACDTalkTime = 0, 
+                    ACDRingTime = 0,
+                    Aux = 0,
+                    AvgHoldDur = 0,
+                    IntervalIdleDur = 0,
+                    Transfers = 0,
+                    HeldContacts = 0,
+                    Redirects = 0
+                };
+            }
+            
             return result;
         }
 

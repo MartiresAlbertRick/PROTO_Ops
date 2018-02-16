@@ -8,6 +8,7 @@ using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
 using SelectPdf;
 using Microsoft.Office.Interop.Word;
+using word = Microsoft.Office.Interop.Word;
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -162,6 +163,33 @@ namespace OPSCO_Web.Controllers
 
             FileResult fileResult = new FileContentResult(pdf, "application/pdf");
             fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            return fileResult;
+        }
+
+        public ActionResult GetWord()
+        {
+            long repId;
+            int month, year;
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
+
+
+            Application app = new word.Application();
+            string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.doc");
+            Document doc = app.Documents.Open(templateFileName);
+            string exportPath = Server.MapPath("~/Export");
+            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
+            doc.SaveAs2(fileName, word.WdSaveFormat.wdFormatPDF);
+            doc.Close();
+            app.Quit();
+
+            var mimeType = "application/pdf";
+            var pdf = System.IO.File.ReadAllBytes(fileName);
+            FileResult fileResult = new FileContentResult(pdf, mimeType);            
+            fileResult.FileDownloadName = "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
             return fileResult;
         }
 
