@@ -222,9 +222,15 @@ namespace OPSCO_Web.Models
             }
             IndividualScorecard total = new IndividualScorecard()
             {
-                Month = 13,
-                MonthName = "Total"
+                Month = 13, MonthName = "Total", TeamId = teamId, RepId = repId, Year = year, AverageAuxTime = 0, AverageHandleTime = 0, AverageTalkTime = 0, AverageWrapUpDuration = 0,
+                Efficiency = 0, Highlights = "", HoursWorked = 0, SupportLineUtilization = 0, TotalUtilization=0, ProductivityRating=0, individualActivities = GetIndividualActivities(teamId, repId, 13, year),
+                individualAIQ = GetIndividualAIQ(teamId, repId, 13, year), individualBIProd = GetIndividualProd(teamId, repId, 13, year), rep = Representatives.Find(repId),
+                individualNonProcessing = GetIndividualNonProcessing(teamId, repId, 13, year), individualBIQual = GetIndividualQual(teamId, repId, 13, year)
             };
+            //foreach (IndividualScorecard item in result)
+            //{
+                
+            ///}
             result.Add(total);
             return result.OrderBy(t => t.Month).ToList();
         }
@@ -245,24 +251,56 @@ namespace OPSCO_Web.Models
                          Year = (int)list.Year,
                          Highlights = (string)list.Comments
                      }).FirstOrDefault();
-            result.rep = Representatives.Find(repId);
-            result.rep.Location = Locations.Find(result.rep.LocationId);
-            result.rep.CoreRole = CoreRoles.Find(result.rep.CoreRoleId);
-            result.MonthName = months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text;
-            result.individualBIProd = GetIndividualProd(teamId, repId, month, year);
-            result.individualBIQual = GetIndividualQual(teamId, repId, month, year);
-            result.individualAIQ = GetIndividualAIQ(teamId, repId, month, year);
-            result.individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year);
-            result.individualActivities = GetIndividualActivities(teamId, repId, month, year);
-            result.HoursWorked = GetHoursWorked(result.individualActivities.Attendance_Hours,result.individualActivities.Overtime_Hours,result.individualActivities.TimeOff_Hours,result.individualActivities.Holiday_Hours);
-            result.ProductivityRating = GetProductivityRating(result.individualBIProd.ProcessingHours, result.HoursWorked);
-            result.AverageTalkTime = GetAverageTalkTime((long)result.individualAIQ.ACDTalkTime, (int)result.individualAIQ.TotalACDCalls);
-            result.AverageWrapUpDuration = GetAverageWrapUpDuration((long)result.individualAIQ.ACDWrapUpTime, (int)result.individualAIQ.TotalACDCalls);
-            result.AverageAuxTime = GetAverageAuxTime((long)result.individualAIQ.Aux, (int)result.individualAIQ.TotalACDCalls);
-            result.TotalUtilization = GetTotalUtilization(result.individualBIProd.ProcessingHours, (long)result.individualAIQ.ACDTalkTime, result.individualNonProcessing.NPTHours, result.HoursWorked);
-            result.Efficiency = GetEfficiency(result.individualBIProd.ProcessingHours, result.HoursWorked, result.individualNonProcessing.NPTHours, (long)result.individualAIQ.ACDTalkTime);
-            result.AverageHandleTime = GetAverageHandleTime((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.ACDWrapUpTime, (long)result.individualAIQ.AvgHoldDur, (int)result.individualAIQ.HeldContacts, (int)result.individualAIQ.TotalACDCalls);
-            result.SupportLineUtilization = GetSupportLineUtilization((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.IntervalIdleDur, (long)result.individualAIQ.ACDWrapUpTime, (double)result.HoursWorked, (double)result.individualBIProd.ProcessingHours, (double)result.individualNonProcessing.NPTHours);
+            if (result != null)
+            {
+                result.rep = Representatives.Find(repId);
+                result.rep.Location = Locations.Find(result.rep.LocationId);
+                result.rep.CoreRole = CoreRoles.Find(result.rep.CoreRoleId);
+                result.MonthName = months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text;
+                result.individualBIProd = GetIndividualProd(teamId, repId, month, year);
+                result.individualBIQual = GetIndividualQual(teamId, repId, month, year);
+                result.individualAIQ = GetIndividualAIQ(teamId, repId, month, year);
+                result.individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year);
+                result.individualActivities = GetIndividualActivities(teamId, repId, month, year);
+                //individualManualEntry
+                result.HoursWorked = GetHoursWorked(result.individualActivities.Attendance_Hours, result.individualActivities.Overtime_Hours, result.individualActivities.TimeOff_Hours, result.individualActivities.Holiday_Hours);
+                result.ProductivityRating = GetProductivityRating(result.individualBIProd.ProcessingHours, result.HoursWorked);
+                result.AverageTalkTime = GetAverageTalkTime((long)result.individualAIQ.ACDTalkTime, (int)result.individualAIQ.TotalACDCalls);
+                result.AverageWrapUpDuration = GetAverageWrapUpDuration((long)result.individualAIQ.ACDWrapUpTime, (int)result.individualAIQ.TotalACDCalls);
+                result.AverageAuxTime = GetAverageAuxTime((long)result.individualAIQ.Aux, (int)result.individualAIQ.TotalACDCalls);
+                result.TotalUtilization = GetTotalUtilization(result.individualBIProd.ProcessingHours, (long)result.individualAIQ.ACDTalkTime, result.individualNonProcessing.NPTHours, result.HoursWorked);
+                result.Efficiency = GetEfficiency(result.individualBIProd.ProcessingHours, result.HoursWorked, result.individualNonProcessing.NPTHours, (long)result.individualAIQ.ACDTalkTime);
+                result.AverageHandleTime = GetAverageHandleTime((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.ACDWrapUpTime, (long)result.individualAIQ.AvgHoldDur, (int)result.individualAIQ.HeldContacts, (int)result.individualAIQ.TotalACDCalls);
+                result.SupportLineUtilization = GetSupportLineUtilization((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.IntervalIdleDur, (long)result.individualAIQ.ACDWrapUpTime, (double)result.HoursWorked, (double)result.individualBIProd.ProcessingHours, (double)result.individualNonProcessing.NPTHours);
+            }
+            else
+            {
+                
+                result = new IndividualScorecard()
+                {
+                    Month = month,
+                    MonthName = months.Where(m => m.Value == Convert.ToString(month)).First().Text,
+                    TeamId = teamId,
+                    RepId = repId,
+                    Year = year,
+                    AverageAuxTime = 0,
+                    AverageHandleTime = 0,
+                    AverageTalkTime = 0,
+                    AverageWrapUpDuration = 0,
+                    Efficiency = 0,
+                    Highlights = "",
+                    HoursWorked = 0,
+                    SupportLineUtilization = 0,
+                    TotalUtilization = 0,
+                    ProductivityRating = 0,
+                    individualActivities = GetIndividualActivities(teamId, repId, month, year),
+                    individualAIQ = GetIndividualAIQ(teamId, repId, month, year),
+                    individualBIProd = GetIndividualProd(teamId, repId, month, year),
+                    rep = Representatives.Find(repId),
+                    individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year),
+                    individualBIQual = GetIndividualQual(teamId, repId, month, year)
+                };
+            }
             return result;
         }
 
@@ -285,10 +323,14 @@ namespace OPSCO_Web.Models
             double TotalUtilization = 0;
             TotalUtilization = ACDTalkTime / 3600;
             TotalUtilization = ProcessingHours + TotalUtilization + NPTHours;
-            TotalUtilization = TotalUtilization / HoursWorked;
-            TotalUtilization = TotalUtilization * 100;
-            double multiplier = Math.Pow(10, 2);
-            TotalUtilization = Math.Ceiling(TotalUtilization * multiplier) / multiplier;
+            if (HoursWorked > 0)
+            {
+                TotalUtilization = TotalUtilization / HoursWorked;
+                TotalUtilization = TotalUtilization * 100;
+                double multiplier = Math.Pow(10, 2);
+                TotalUtilization = Math.Ceiling(TotalUtilization * multiplier) / multiplier;
+            }
+            else { TotalUtilization = 0; }
             return TotalUtilization;
         }
 
@@ -297,10 +339,14 @@ namespace OPSCO_Web.Models
             double Efficiency = 0;
             Efficiency = ACDTalkTime / 3600;
             Efficiency = (HoursWorked - NPTHours) - Efficiency;
-            Efficiency = ProcessingHours / Efficiency;
-            Efficiency = Efficiency * 100;
-            double multiplier = Math.Pow(10, 2);
-            Efficiency = Math.Ceiling(Efficiency * multiplier) / multiplier;
+            if (Efficiency > 0)
+            {
+                Efficiency = ProcessingHours / Efficiency;
+                Efficiency = Efficiency * 100;
+                double multiplier = Math.Pow(10, 2);
+                Efficiency = Math.Ceiling(Efficiency * multiplier) / multiplier;
+            }
+            else { Efficiency = 0; }
             return Efficiency;
         }
 
@@ -359,7 +405,7 @@ namespace OPSCO_Web.Models
 
         public IndividualActivities GetIndividualActivities(long teamId, long repId, int month, int year)
         {
-            IndividualActivities result = new IndividualActivities();
+            IndividualActivities result = new IndividualActivities() { Attendance_Days = 0, Attendance_Hours=0, Overtime_Days = 0, Overtime_Hours = 0, Holiday_Days = 0, Holiday_Hours = 0, TimeOff_Days = 0, TimeOff_Hours = 0 };
             var x = (from list in ActivityTrackers
                      where list.Activity == "Attendance" &&
                             list.TeamId == teamId &&
@@ -497,6 +543,8 @@ namespace OPSCO_Web.Models
             var x = (from list in BIQ
                      where list.TeamId == teamId && list.Repid == repId && list.Month == month && list.Year == year
                      select new IndividualBIQual { TeamId = (long)list.TeamId, RepId = (long)list.Repid, FailCount = (int)list.Count4, ReviewCount = (int)list.Count3, Month = (int)list.Month, Year = (int)list.Year });
+            if (x != null)
+            {
                 foreach (IndividualBIQual item in x)
                 {
                     if (result != null)
@@ -506,18 +554,24 @@ namespace OPSCO_Web.Models
                     }
                     else result = item;
                 }
-            if (result.ReviewCount > 0)
-            {
-                if (result.FailCount > 0) result.QualityRating = (((double)result.ReviewCount - (double)result.FailCount) / (double)result.ReviewCount) * 100;
-                else result.QualityRating = ((result.ReviewCount - result.FailCount) / (result.ReviewCount - result.FailCount)) * 100;
-                double multiplier = Math.Pow(10, 2);
-                result.QualityRating = Math.Ceiling(result.QualityRating * multiplier) / multiplier;
+                if (result.ReviewCount > 0)
+                {
+                    if (result.FailCount > 0) result.QualityRating = (((double)result.ReviewCount - (double)result.FailCount) / (double)result.ReviewCount) * 100;
+                    else result.QualityRating = ((result.ReviewCount - result.FailCount) / (result.ReviewCount - result.FailCount)) * 100;
+                    double multiplier = Math.Pow(10, 2);
+                    result.QualityRating = Math.Ceiling(result.QualityRating * multiplier) / multiplier;
+                }
+                else
+                {
+                    result.QualityRating = 0;
+                }
             }
             else
             {
-                result.QualityRating = 0;
+                result = new IndividualBIQual() {
+                    TeamId = teamId, RepId = repId, Month = month, Year = year, FailCount = 0, ReviewCount = 0, QualityRating = 0
+                };
             }
-            
             return result;
         }
 
@@ -567,16 +621,25 @@ namespace OPSCO_Web.Models
             var x = (from list in NPT
                      where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
                      select new IndividualNonProcessing { TeamId = (long)list.TeamId, RepId = (long)list.RepId, NPTHours = (double)list.TimeSpent, Month = (int)list.Month, Year = (int)list.Year });
-            foreach (IndividualNonProcessing item in x)
+            if (x != null)
             {
-                if (result != null)
+                foreach (IndividualNonProcessing item in x)
                 {
-                    result.NPTHours += (item.NPTHours / 60);
+                    if (result != null)
+                    {
+                        result.NPTHours += (item.NPTHours / 60);
+                    }
+                    else result = item;
                 }
-                else result = item;
+                double multiplier = Math.Pow(10, 2);
+                result.NPTHours = Math.Ceiling(result.NPTHours * multiplier) / multiplier;
             }
-            double multiplier = Math.Pow(10, 2);
-            result.NPTHours = Math.Ceiling(result.NPTHours * multiplier) / multiplier;
+            else
+            {
+                result = new IndividualNonProcessing() {
+                    TeamId = teamId, RepId = repId, Month = month, Year = year, NPTHours = 0
+                };
+            }
             return result;
         }
 

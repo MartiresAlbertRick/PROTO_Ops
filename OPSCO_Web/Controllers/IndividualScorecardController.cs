@@ -168,24 +168,91 @@ namespace OPSCO_Web.Controllers
 
         public ActionResult GetWord()
         {
-            long repId;
+            long teamId, repId;
             int month, year;
+            teamId = (long)Session["IS_Team"];
             repId = (long)Session["IS_Rep"];
             month = (int)Session["IS_Month"];
             year = (int)Session["IS_Year"];
+            OSC_Team oSC_Team = db.Teams.Find(teamId);
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
-
-
+            
             Application app = new word.Application();
             string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.doc");
             Document doc = app.Documents.Open(templateFileName);
             string exportPath = Server.MapPath("~/Export");
-            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".doc";
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
+            doc.SaveAs(fileName);
+            doc.Activate();
+
+            #region "CoverValues"
+            if (doc.Bookmarks.Exists("TeamName"))
+            {
+                doc.Bookmarks["TeamName"].Range.Text = oSC_Team.TeamName;
+            }
+            if (doc.Bookmarks.Exists("RepName"))
+            {
+                doc.Bookmarks["RepName"].Range.Text = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+            }
+            if (doc.Bookmarks.Exists("Month"))
+            {
+                doc.Bookmarks["Month"].Range.Text = db.months.Where(m => m.Value == Convert.ToString((int)month)).First().Text;
+            }
+            if (doc.Bookmarks.Exists("Year"))
+            {
+                doc.Bookmarks["Year"].Range.Text = year.ToString();
+            }
+            #endregion "CoverValues"
+
+            #region "Table"
+            List<IndividualScorecard> list = new List<IndividualScorecard>();
+            list = db.GetIndividualScorecardFull(teamId, repId, month, year);
+            int noOfRows = list.Count();
+            int noOfCols = 10;
+            if (doc.Bookmarks.Exists("Table"))
+            {
+                doc.Bookmarks["Table"].Range.GoTo();
+            }
+            word.Table table = doc.Tables[1];
+            for (int i = 1; i <= noOfCols - 1; i++)
+            {
+                table.Columns.Add(table.Columns[1]);
+            }
+            table.Rows[1].Cells[1].Range.Text = "Month";
+            table.Rows[1].Cells[2].Range.Text = "Attendance";
+            table.Rows[1].Cells[3].Range.Text = "Overtime";
+            table.Rows[1].Cells[4].Range.Text = "NPT Hours";
+            table.Rows[1].Cells[5].Range.Text = "Processing Time";
+            table.Rows[1].Cells[6].Range.Text = "Total Transactions";
+            table.Rows[1].Cells[7].Range.Text = "Rate of Production";
+            table.Rows[1].Cells[8].Range.Text = "Processing Quality";
+            table.Rows[1].Cells[9].Range.Text = "Total Utilization";
+            table.Rows[1].Cells[10].Range.Text = "Efficiency";
+
+            for (int i = 1; i <= list.Count - 1; i++)
+            {
+                table.Rows.Add(table.Rows[2]);
+            }
+            for (int i = 1; i <= list.Count; i++)
+            {
+                table.Rows[i + 1].Cells[1].Range.Text = list[i - 1].MonthName;
+                table.Rows[i + 1].Cells[2].Range.Text = list[i - 1].individualActivities.Attendance_Days.ToString();
+                table.Rows[i + 1].Cells[3].Range.Text = list[i - 1].individualActivities.Overtime_Hours.ToString();
+                table.Rows[i + 1].Cells[4].Range.Text = list[i - 1].individualNonProcessing.NPTHours.ToString();
+                table.Rows[i + 1].Cells[5].Range.Text = list[i - 1].individualBIProd.ProcessingHours.ToString();
+                table.Rows[i + 1].Cells[6].Range.Text = list[i - 1].individualBIProd.Count.ToString();
+                table.Rows[i + 1].Cells[7].Range.Text = list[i - 1].ProductivityRating.ToString() + "%";
+                table.Rows[i + 1].Cells[8].Range.Text = list[i - 1].individualBIQual.QualityRating.ToString() + "%";
+                table.Rows[i + 1].Cells[9].Range.Text = list[i - 1].TotalUtilization.ToString() + "%";
+                table.Rows[i + 1].Cells[10].Range.Text = list[i - 1].Efficiency.ToString() + "%";
+            }
+            #endregion "Table"
+
+            fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
             doc.SaveAs2(fileName, word.WdSaveFormat.wdFormatPDF);
             doc.Close();
             app.Quit();
-
             var mimeType = "application/pdf";
             var pdf = System.IO.File.ReadAllBytes(fileName);
             FileResult fileResult = new FileContentResult(pdf, mimeType);            
