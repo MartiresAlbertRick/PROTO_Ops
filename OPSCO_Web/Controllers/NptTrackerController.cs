@@ -91,6 +91,12 @@ namespace OPSCO_Web.Controllers
             #region "Initialize"
             db.InitializeNpts();
             #endregion "Initialize"
+            #region "BTSS"
+            string role;
+            string user_name;
+            role = Session["role"].ToString();
+            user_name = Session["logon_user"].ToString();
+            #endregion "BTSS"
             #region "TransferData"
             DataTable dt = new DataTable("NPT");
             dt.Columns.AddRange(new DataColumn[8] {
@@ -106,6 +112,31 @@ namespace OPSCO_Web.Controllers
             var npts = (from n in db.NPT
                         where n.Source == "Manual"
                         select n);
+            List<long> TeamIds = new List<long>();
+            switch (role)
+            {
+                case "Manager":
+                case "Team Leader":
+                case "Department Analyst":
+                    foreach (OSC_ImportNPT npt in npts)
+                    {
+                        if (db.IsManaged(npt.TeamId, user_name, role))
+                            if (!TeamIds.Contains((long)npt.TeamId))
+                                TeamIds.Add((long)npt.TeamId);
+                    }
+                    npts = (from n in db.NPT
+                            where n.Source == "Manual" && TeamIds.Contains((long)n.TeamId) && n.IsActive
+                            select n);
+                    break;
+                case "Staff":
+                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    long repId;
+                    repId = 0;
+                    if (oSC_Representative != null)
+                    { repId = oSC_Representative.RepId; }
+                    npts = npts.Where(n => n.RepId == repId && n.IsActive);
+                    break;
+            }
             foreach (var npt in npts)
             {
                 dt.Rows.Add(npt.Team.TeamName, npt.Representative.FullName, npt.TypeOfActivity, npt.Activity, npt.DateOfActivity, npt.TimeSpent, npt.UploadedBy, npt.DateUploaded);
@@ -124,6 +155,7 @@ namespace OPSCO_Web.Controllers
             #endregion "GenerateSpreadsheet"
         }
 
+        #region "AutoComplete"
         [HttpPost]
         public JsonResult TeamAutoComplete(string prefix)
         {
@@ -142,6 +174,7 @@ namespace OPSCO_Web.Controllers
                         select new { label = obj.FirstName + " " + obj.LastName, val = obj.RepId });
             return Json(reps);
         }
+        #endregion "AutoComplete"
 
         // GET: NptTracker/Details/5
         public ActionResult Details(long? id)

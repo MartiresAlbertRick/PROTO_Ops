@@ -62,7 +62,7 @@ namespace OPSCO_Web.Controllers
                                 TeamIds.Add(obj.TeamId);
                     }
                     acts = (from a in db.ActivityTrackers
-                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId) && a.IsActive == true
+                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId)
                             select a);
                     break;
                 case "Staff":
@@ -90,6 +90,12 @@ namespace OPSCO_Web.Controllers
             #region "Initialize"
             db.InitializeActivities();
             #endregion "Initialize"
+            #region "BTSS"
+            string role;
+            string user_name;
+            role = Session["role"].ToString();
+            user_name = Session["logon_user"].ToString();
+            #endregion "BTSS"
             #region "TransferData"
             DataTable dt = new DataTable("Activities");
             dt.Columns.AddRange(new DataColumn[9] {
@@ -106,7 +112,32 @@ namespace OPSCO_Web.Controllers
             var acts = (from a in db.ActivityTrackers
                         where a.Activity != "Attendance"
                         select a);
-            foreach(var act in acts)
+            List<long> TeamIds = new List<long>();
+            switch (role)
+            {
+                case "Manager":
+                case "Team Leader":
+                case "Department Analyst":
+                    foreach (OSC_ActivityTracker obj in acts)
+                    {
+                        if (db.IsManaged(obj.TeamId, user_name, role))
+                            if (!TeamIds.Contains(obj.TeamId))
+                                TeamIds.Add(obj.TeamId);
+                    }
+                    acts = (from a in db.ActivityTrackers
+                            where a.Activity != "Attendance" && TeamIds.Contains(a.TeamId) && a.IsActive
+                            select a);
+                    break;
+                case "Staff":
+                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    long repId;
+                    repId = 0;
+                    if (oSC_Representative != null)
+                    { repId = oSC_Representative.RepId; }
+                    acts = acts.Where(a => a.RepId == repId && a.IsActive);
+                    break;
+            }
+            foreach (var act in acts)
             {
                 dt.Rows.Add(act.Team.TeamName, act.Representative.FullName, act.Activity, act.DateFrom, act.DateTo, act.NoOfHours, act.NoOfDays, act.ModifiedBy, act.DateModified);
             }
@@ -124,6 +155,7 @@ namespace OPSCO_Web.Controllers
             #endregion "GenerateSpreadsheet"
         }
 
+        #region "AutoComplete"
         [HttpPost]
         public JsonResult TeamAutoComplete(string prefix)
         {
@@ -151,6 +183,7 @@ namespace OPSCO_Web.Controllers
                               select new { label = obj.Text, val = obj.Value});
             return Json(activities);
         }
+        #endregion "AutoComplete"
 
         // GET: ActivityTracker/Details/5
         public ActionResult Details(long? id)

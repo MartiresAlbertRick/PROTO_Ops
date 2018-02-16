@@ -395,3 +395,14 @@ C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\ExcelNumbe
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.HtmlToPdf.dll
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.HtmlToPdf.xml
 C:\Users\martiab\Documents\Projects\OperationsScorecard\OPSCO_Web\bin\Select.Html.dep
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\ClosedXML.dll
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\DocumentFormat.OpenXml.dll
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\ExcelNumberFormat.dll
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\FastMember.Signed.dll
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\Select.HtmlToPdf.dll
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\ClosedXML.pdb
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\ClosedXML.xml
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\DocumentFormat.OpenXml.xml
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\ExcelNumberFormat.xml
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\Select.HtmlToPdf.xml
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\Select.Html.dep
