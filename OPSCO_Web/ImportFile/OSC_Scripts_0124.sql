@@ -32,3 +32,19 @@ go
 alter table OSC_ImportNPT
 add primary key (NPTReportId)
 go
+
+alter table OSC_ImportBIProd
+add primary key (BIPReportId)
+go
+
+alter table OSC_ImportBIQual
+add primary key (BIQReportId)
+go
+
+alter table OSC_ImportTA
+add primary key (TAReportId)
+go
+
+alter table OSC_ImportAIQ
+add primary key (AIQReportId)
+go

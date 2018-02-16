@@ -394,7 +394,7 @@
     <Content Include="Models\OSCModel.edmx.diagram">
       <DependentUpon>OSCModel.edmx</DependentUpon>
     </Content>
-    <Content Include="ImportFile\ScorecardTemplate.doc" />
+    <Content Include="ImportFile\ScorecardTemplate.docx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Models\OSCModel.Context.tt">

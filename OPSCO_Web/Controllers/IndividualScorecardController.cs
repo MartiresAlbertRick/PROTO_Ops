@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 using SelectPdf;
 using Microsoft.Office.Interop.Word;
 using word = Microsoft.Office.Interop.Word;
+using xl = Microsoft.Office.Interop.Excel;
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -178,10 +179,10 @@ namespace OPSCO_Web.Controllers
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
             
             Application app = new word.Application();
-            string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.doc");
+            string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.docx");
             Document doc = app.Documents.Open(templateFileName);
-            string exportPath = Server.MapPath("~/Export");
-            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".doc";
+            string exportPath = Server.MapPath("~/Export/" + user_name);
+            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".docx";
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             doc.SaveAs(fileName);
             doc.Activate();
@@ -210,10 +211,6 @@ namespace OPSCO_Web.Controllers
             list = db.GetIndividualScorecardFull(teamId, repId, month, year);
             int noOfRows = list.Count();
             int noOfCols = 10;
-            if (doc.Bookmarks.Exists("Table"))
-            {
-                doc.Bookmarks["Table"].Range.GoTo();
-            }
             word.Table table = doc.Tables[1];
             for (int i = 1; i <= noOfCols - 1; i++)
             {
@@ -249,14 +246,24 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "Table"
 
-            fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            xl.Application _excelApp = new xl.Application();
+            xl.Workbook workbook = _excelApp.Workbooks.Add();
+            string excelFileName = Server.MapPath("~/Export/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".xlsx");
+            workbook.SaveAs(excelFileName);
+            workbook.Close();
+            _excelApp.Quit();
+            
+
+            string pdfFileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
             doc.SaveAs2(fileName, word.WdSaveFormat.wdFormatPDF);
             doc.Close();
             app.Quit();
             var mimeType = "application/pdf";
-            var pdf = System.IO.File.ReadAllBytes(fileName);
+            var pdf = System.IO.File.ReadAllBytes(pdfFileName);
             FileResult fileResult = new FileContentResult(pdf, mimeType);            
-            fileResult.FileDownloadName = "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            System.IO.File.Delete(fileName);
+            System.IO.File.Delete(excelFileName);
             return fileResult;
         }
 

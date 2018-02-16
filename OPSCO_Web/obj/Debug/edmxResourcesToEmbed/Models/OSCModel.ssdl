@@ -59,8 +59,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
     <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportAIQ">
     <Key>
       <PropertyRef Name="AIQReportId" />
@@ -90,8 +88,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportAIQ' does not have a prima
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportBIProd">
     <Key>
       <PropertyRef Name="BIPReportId" />
@@ -113,8 +109,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIProd' does not have a pr
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportBIQual">
     <Key>
       <PropertyRef Name="BIQReportId" />
@@ -161,8 +155,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQual' does not have a pr
     <Property Name="SubCategoryId" Type="bigint" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ImportTA">
     <Key>
       <PropertyRef Name="TAReportId" />
@@ -437,7 +429,11 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
@@ -458,117 +454,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_CustomizeScorecard].[Month] AS [Month], 
     [OSC_CustomizeScorecard].[Year] AS [Year]
     FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ImportAIQ].[AIQReportId] AS [AIQReportId], 
-    [OSC_ImportAIQ].[RepId] AS [RepId], 
-    [OSC_ImportAIQ].[Agent] AS [Agent], 
-    [OSC_ImportAIQ].[IntervalStaffedDuration] AS [IntervalStaffedDuration], 
-    [OSC_ImportAIQ].[TotalPercServiceTime] AS [TotalPercServiceTime], 
-    [OSC_ImportAIQ].[TotalACDCalls] AS [TotalACDCalls], 
-    [OSC_ImportAIQ].[ExtInCalls] AS [ExtInCalls], 
-    [OSC_ImportAIQ].[ExtInAvgActiveDur] AS [ExtInAvgActiveDur], 
-    [OSC_ImportAIQ].[ExtOutCalls] AS [ExtOutCalls], 
-    [OSC_ImportAIQ].[AvgExtOutActiveDur] AS [AvgExtOutActiveDur], 
-    [OSC_ImportAIQ].[ACDWrapUpTime] AS [ACDWrapUpTime], 
-    [OSC_ImportAIQ].[ACDTalkTime] AS [ACDTalkTime], 
-    [OSC_ImportAIQ].[ACDRingTime] AS [ACDRingTime], 
-    [OSC_ImportAIQ].[Aux] AS [Aux], 
-    [OSC_ImportAIQ].[AvgHoldDur] AS [AvgHoldDur], 
-    [OSC_ImportAIQ].[IntervalIdleDur] AS [IntervalIdleDur], 
-    [OSC_ImportAIQ].[Transfers] AS [Transfers], 
-    [OSC_ImportAIQ].[HeldContacts] AS [HeldContacts], 
-    [OSC_ImportAIQ].[Redirects] AS [Redirects], 
-    [OSC_ImportAIQ].[TeamId] AS [TeamId], 
-    [OSC_ImportAIQ].[Month] AS [Month], 
-    [OSC_ImportAIQ].[Year] AS [Year], 
-    [OSC_ImportAIQ].[DateUploaded] AS [DateUploaded], 
-    [OSC_ImportAIQ].[UploadedBy] AS [UploadedBy]
-    FROM [dbo].[OSC_ImportAIQ] AS [OSC_ImportAIQ]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ImportBIProd].[BIPReportId] AS [BIPReportId], 
-    [OSC_ImportBIProd].[RepId] AS [RepId], 
-    [OSC_ImportBIProd].[Group] AS [Group], 
-    [OSC_ImportBIProd].[UserIdName] AS [UserIdName], 
-    [OSC_ImportBIProd].[BusinessArea] AS [BusinessArea], 
-    [OSC_ImportBIProd].[WorkType] AS [WorkType], 
-    [OSC_ImportBIProd].[Status] AS [Status], 
-    [OSC_ImportBIProd].[Count] AS [Count], 
-    [OSC_ImportBIProd].[Date1] AS [Date1], 
-    [OSC_ImportBIProd].[Date2] AS [Date2], 
-    [OSC_ImportBIProd].[Rating] AS [Rating], 
-    [OSC_ImportBIProd].[TeamId] AS [TeamId], 
-    [OSC_ImportBIProd].[Month] AS [Month], 
-    [OSC_ImportBIProd].[Year] AS [Year], 
-    [OSC_ImportBIProd].[DateUploaded] AS [DateUploaded], 
-    [OSC_ImportBIProd].[UploadedBy] AS [UploadedBy]
-    FROM [dbo].[OSC_ImportBIProd] AS [OSC_ImportBIProd]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ImportBIQual].[BIQReportId] AS [BIQReportId], 
-    [OSC_ImportBIQual].[Repid] AS [Repid], 
-    [OSC_ImportBIQual].[Group] AS [Group], 
-    [OSC_ImportBIQual].[UserIdName] AS [UserIdName], 
-    [OSC_ImportBIQual].[BusinessArea] AS [BusinessArea], 
-    [OSC_ImportBIQual].[Field1] AS [Field1], 
-    [OSC_ImportBIQual].[Field2] AS [Field2], 
-    [OSC_ImportBIQual].[Count1] AS [Count1], 
-    [OSC_ImportBIQual].[Count2] AS [Count2], 
-    [OSC_ImportBIQual].[Count3] AS [Count3], 
-    [OSC_ImportBIQual].[Count4] AS [Count4], 
-    [OSC_ImportBIQual].[ErrorPoints] AS [ErrorPoints], 
-    [OSC_ImportBIQual].[Rating] AS [Rating], 
-    [OSC_ImportBIQual].[TeamId] AS [TeamId], 
-    [OSC_ImportBIQual].[Month] AS [Month], 
-    [OSC_ImportBIQual].[Year] AS [Year], 
-    [OSC_ImportBIQual].[DateUploaded] AS [DateUploaded], 
-    [OSC_ImportBIQual].[UploadedBy] AS [UploadedBy]
-    FROM [dbo].[OSC_ImportBIQual] AS [OSC_ImportBIQual]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ImportTA].[TAReportId] AS [TAReportId], 
-    [OSC_ImportTA].[RepId] AS [RepId], 
-    [OSC_ImportTA].[AssignedId] AS [AssignedId], 
-    [OSC_ImportTA].[Group] AS [Group], 
-    [OSC_ImportTA].[FirstName] AS [FirstName], 
-    [OSC_ImportTA].[MiddleInt] AS [MiddleInt], 
-    [OSC_ImportTA].[LastName] AS [LastName], 
-    [OSC_ImportTA].[CreateDateTime] AS [CreateDateTime], 
-    [OSC_ImportTA].[BusinessArea] AS [BusinessArea], 
-    [OSC_ImportTA].[WorkType] AS [WorkType], 
-    [OSC_ImportTA].[Status] AS [Status], 
-    [OSC_ImportTA].[Queue] AS [Queue], 
-    [OSC_ImportTA].[Suspended] AS [Suspended], 
-    [OSC_ImportTA].[SuspendDate] AS [SuspendDate], 
-    [OSC_ImportTA].[UnsuspendDate] AS [UnsuspendDate], 
-    [OSC_ImportTA].[LastStatusUpdate] AS [LastStatusUpdate], 
-    [OSC_ImportTA].[Account] AS [Account], 
-    [OSC_ImportTA].[GAC] AS [GAC], 
-    [OSC_ImportTA].[Assoc] AS [Assoc], 
-    [OSC_ImportTA].[Certificate] AS [Certificate], 
-    [OSC_ImportTA].[CheckAmount] AS [CheckAmount], 
-    [OSC_ImportTA].[First_Name] AS [First_Name], 
-    [OSC_ImportTA].[Last_Name] AS [Last_Name], 
-    [OSC_ImportTA].[CustomerNo] AS [CustomerNo], 
-    [OSC_ImportTA].[ProductType] AS [ProductType], 
-    [OSC_ImportTA].[AdminSystem] AS [AdminSystem], 
-    [OSC_ImportTA].[CheckAmountTotal] AS [CheckAmountTotal], 
-    [OSC_ImportTA].[UCIVendorMatchDate] AS [UCIVendorMatchDate], 
-    [OSC_ImportTA].[ReasonCodeForAdv] AS [ReasonCodeForAdv], 
-    [OSC_ImportTA].[ReasonDescription] AS [ReasonDescription], 
-    [OSC_ImportTA].[TinSourceType] AS [TinSourceType], 
-    [OSC_ImportTA].[SSBusinessUnit] AS [SSBusinessUnit], 
-    [OSC_ImportTA].[TeamId] AS [TeamId], 
-    [OSC_ImportTA].[Month] AS [Month], 
-    [OSC_ImportTA].[Year] AS [Year], 
-    [OSC_ImportTA].[DateUploaded] AS [DateUploaded], 
-    [OSC_ImportTA].[UploadedBy] AS [UploadedBy]
-    FROM [dbo].[OSC_ImportTA] AS [OSC_ImportTA]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
