@@ -253,28 +253,87 @@ namespace OPSCO_Web.Models
             result.individualBIQual = GetIndividualQual(teamId, repId, month, year);
             result.individualNonProcessing = GetIndividualNonProcessing(teamId, repId, month, year);
             result.individualActivities = GetIndividualActivities(teamId, repId, month, year);
-            result.HoursWorked = (result.individualBIProd.ProcessingHours /
-                                        (((result.individualActivities.Attendance_Hours + result.individualActivities.Overtime_Hours)
-                                        - result.individualActivities.TimeOff_Hours) - result.individualActivities.Holiday_Hours));
-            if (result.HoursWorked > 0) { result.HoursWorked = result.HoursWorked; }
-            else { result.HoursWorked = 0; }
-            result.ProductivityRating = (result.individualBIProd.ProcessingHours /
-                                        (((result.individualActivities.Attendance_Hours + result.individualActivities.Overtime_Hours)
-                                        - result.individualActivities.TimeOff_Hours) - result.individualActivities.Holiday_Hours));
-            if (result.ProductivityRating > 0)
-            {
-                result.ProductivityRating = result.ProductivityRating * 100;
-                double multiplier = Math.Pow(10, 2);
-                result.ProductivityRating = Math.Ceiling(result.ProductivityRating * multiplier) / multiplier;
-            }
-            else { result.ProductivityRating = 0; }
-            result.AverageTalkTime = (long)result.individualAIQ.ACDTalkTime / (long)result.individualAIQ.TotalACDCalls;
-            result.AverageWrapUpDuration = (long)result.individualAIQ.ACDWrapUpTime / (long)result.individualAIQ.TotalACDCalls;
-            result.AverageAuxTime = (long)result.individualAIQ.Aux / (long)result.individualAIQ.TotalACDCalls;
-            result.TotalUtilization = 0;
-            result.Efficiency = 0;
+            result.HoursWorked = GetHoursWorked(result.individualActivities.Attendance_Hours,result.individualActivities.Overtime_Hours,result.individualActivities.TimeOff_Hours,result.individualActivities.Holiday_Hours);
+            result.ProductivityRating = GetProductivityRating(result.individualBIProd.ProcessingHours, result.HoursWorked);
+            result.AverageTalkTime = GetAverageTalkTime((long)result.individualAIQ.ACDTalkTime, (int)result.individualAIQ.TotalACDCalls);
+            result.AverageWrapUpDuration = GetAverageWrapUpDuration((long)result.individualAIQ.ACDWrapUpTime, (int)result.individualAIQ.TotalACDCalls);
+            result.AverageAuxTime = GetAverageAuxTime((long)result.individualAIQ.Aux, (int)result.individualAIQ.TotalACDCalls);
+            result.TotalUtilization = GetTotalUtilization(result.individualBIProd.ProcessingHours, (long)result.individualAIQ.ACDTalkTime, result.individualNonProcessing.NPTHours, result.HoursWorked);
+            result.Efficiency = GetEfficiency(result.individualBIProd.ProcessingHours, result.HoursWorked, result.individualNonProcessing.NPTHours, (long)result.individualAIQ.ACDTalkTime);
+            result.AverageHandleTime = GetAverageHandleTime((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.ACDWrapUpTime, (long)result.individualAIQ.AvgHoldDur, (int)result.individualAIQ.HeldContacts, (int)result.individualAIQ.TotalACDCalls);
+            result.SupportLineUtilization = GetSupportLineUtilization((long)result.individualAIQ.ACDTalkTime, (long)result.individualAIQ.IntervalIdleDur, (long)result.individualAIQ.ACDWrapUpTime, (double)result.HoursWorked, (double)result.individualBIProd.ProcessingHours, (double)result.individualNonProcessing.NPTHours);
             return result;
         }
+
+        public double GetProductivityRating(double ProcessingHours, double HoursWorked)
+        {
+            double ProductivityRating = 0;
+            ProductivityRating = ProcessingHours / HoursWorked;
+            if (ProductivityRating > 0)
+            {
+                ProductivityRating = ProductivityRating * 100;
+                double multiplier = Math.Pow(10, 2);
+                ProductivityRating = Math.Ceiling(ProductivityRating * multiplier) / multiplier;
+            }
+            else { ProductivityRating = 0; }
+            return ProductivityRating;
+        }
+
+        public double GetTotalUtilization(double ProcessingHours, long ACDTalkTime, double NPTHours, double HoursWorked)
+        {
+            double TotalUtilization = 0;
+            TotalUtilization = ACDTalkTime / 3600;
+            TotalUtilization = ProcessingHours + TotalUtilization + NPTHours;
+            TotalUtilization = TotalUtilization / HoursWorked;
+            TotalUtilization = TotalUtilization * 100;
+            double multiplier = Math.Pow(10, 2);
+            TotalUtilization = Math.Ceiling(TotalUtilization * multiplier) / multiplier;
+            return TotalUtilization;
+        }
+
+        public double GetEfficiency(double ProcessingHours, double HoursWorked, double NPTHours, long ACDTalkTime)
+        {
+            double Efficiency = 0;
+            Efficiency = ACDTalkTime / 3600;
+            Efficiency = (HoursWorked - NPTHours) - Efficiency;
+            Efficiency = ProcessingHours / Efficiency;
+            Efficiency = Efficiency * 100;
+            double multiplier = Math.Pow(10, 2);
+            Efficiency = Math.Ceiling(Efficiency * multiplier) / multiplier;
+            return Efficiency;
+        }
+
+        public double GetAverageHandleTime(long ACDTalkTime, long ACDWrapUpTime, long AvgHoldDur, int HeldContacts, int TotalACDCalls)
+        {
+            double AverageHandleTime = 0;
+            AverageHandleTime = AvgHoldDur * HeldContacts;
+            AverageHandleTime = ACDTalkTime + ACDWrapUpTime + AverageHandleTime;
+            AverageHandleTime = AverageHandleTime / TotalACDCalls;
+            return AverageHandleTime;
+        }
+
+        public double GetSupportLineUtilization(long ACDTalkTime, long IntervalIdleDur, long ACDWrapUpTime, double HoursWorked, double ProcessingHours, double NPTHours)
+        {
+            double SupportLineUtilization = 0;
+            SupportLineUtilization = (ACDTalkTime / 3600) + (IntervalIdleDur / 3600) + (ACDWrapUpTime / 3600);
+            SupportLineUtilization = SupportLineUtilization / (HoursWorked - ProcessingHours) - NPTHours;
+            SupportLineUtilization = SupportLineUtilization * 100;
+            return SupportLineUtilization;
+        }
+
+        public double GetHoursWorked(double Attendance, double Overtime, double TimeOff, double Holiday)
+        { return ((Attendance + Overtime) - TimeOff) - Holiday; }
+
+        public double GetAverageTalkTime(long ACDTalkTime, int TotalACDCalls)
+        { return ACDTalkTime / TotalACDCalls; }
+
+        public double GetAverageWrapUpDuration(long ACDWrapUpTime, int TotalACDCalls)
+        { return ACDWrapUpTime / TotalACDCalls; }
+
+        public double GetAverageAuxTime(long Aux, int TotalACDCalls)
+        { return Aux / TotalACDCalls; }
+
+        
 
         public IndividualActivities GetIndividualActivities(long teamId, long repId, int month, int year)
         {
@@ -381,6 +440,14 @@ namespace OPSCO_Web.Models
                     result.TimeOff_Hours += item.TimeOff_Hours;
                 }
             }
+            return result;
+        }
+
+        public OSC_ManualEntry GetIndividualManualEntry(long teamId, long repId, int month, int year)
+        {
+            OSC_ManualEntry result = (from list in ManualEntries
+                     where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
+                     select list).FirstOrDefault();
             return result;
         }
 
@@ -787,13 +854,13 @@ namespace OPSCO_Web.Models
             public long EntryId { get; set; }
             public long TeamId { get; set; }
             public long RepId { get; set; }
-            [Display(Name = " Gain/Loss Occurances")]
+            [Display(Name = "Gain/Loss Occurances")]
             public decimal GainLossOccurances { get; set; }
-            [Display(Name = " Gain/Loss Amount")]
+            [Display(Name = "Gain/Loss Amount")]
             public double GainLossAmount { get; set; }
-            [Display(Name = " Call Management Score")]
+            [Display(Name = "Call Management Score")]
             public double CallManagementScore { get; set; }
-            [Display(Name = " Project Responsibility")]
+            [Display(Name = "Project Responsibility")]
             public string ProjectResponsibility { get; set; }
             [Display(Name = "Schedule Adherence")]
             public double ScheduleAdherence { get; set; }
@@ -964,7 +1031,12 @@ namespace OPSCO_Web.Models
         public double AverageWrapUpDuration { get; set; }
         [Display(Name = "Average Aux Time")]
         public double AverageAuxTime { get; set; }
+        [Display(Name = "Average Handle Time")]
+        public double AverageHandleTime { get; set; }
+        [Display(Name = "Support Line Utilization")]
+        public double SupportLineUtilization { get; set; }
         public virtual IndividualActivities individualActivities { get; set; }
+        public virtual OSC_ManualEntry individualManualEntries { get; set; }
         public virtual IndividualBIProd individualBIProd { get; set; }
         public virtual IndividualBIQual individualBIQual { get; set; }
         public virtual OSC_ImportAIQ individualAIQ { get; set; }

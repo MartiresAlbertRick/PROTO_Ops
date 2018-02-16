@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
 using SelectPdf;
+using Microsoft.Office.Interop.Word;
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
