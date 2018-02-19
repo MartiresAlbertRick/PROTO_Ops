@@ -181,7 +181,7 @@ namespace OPSCO_Web.Controllers
             Application app = new word.Application();
             string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.docx");
             Document doc = app.Documents.Open(templateFileName);
-            string exportPath = Server.MapPath("~/Export/" + user_name);
+            string exportPath = Server.MapPath("~/Export");
             string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".docx";
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             doc.SaveAs(fileName);
@@ -255,7 +255,7 @@ namespace OPSCO_Web.Controllers
             
 
             string pdfFileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
-            doc.SaveAs2(fileName, word.WdSaveFormat.wdFormatPDF);
+            doc.SaveAs2(pdfFileName, word.WdSaveFormat.wdFormatPDF);
             doc.Close();
             app.Quit();
             var mimeType = "application/pdf";
