@@ -17,7 +17,7 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: Representative
-        public ActionResult Index(int? page, int? pageSize, string searchString)
+        public ActionResult Index(int? page, int? pageSize, string searchByRep, string searchByTeam, string searchByRole, string searchByLocation)
         {
             #region "InitializeRepresentatives"
             db.InitializeRepresentatives();
@@ -75,12 +75,139 @@ namespace OPSCO_Web.Controllers
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
-            if (!String.IsNullOrEmpty(searchString)) reps = reps.Where(r => r.FirstName.Contains(searchString) || r.LastName.Contains(searchString));
+            if (searchByRep != null || searchByTeam != null || searchByRole != null || searchByLocation != null)
+            {
+                //Session["RepFilter"] = true;
+                List<long> TeamIdResult = new List<long>();
+                TeamIdResult = null;
+                if (!String.IsNullOrEmpty(searchByTeam))
+                {
+                    TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam select list.TeamId).ToList();
+                    if (role != "Admin")
+                    {
+                        TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam && list.IsActive select list.TeamId).ToList();
+                    }
+                }
+                List<int> RoleIdResult = new List<int>();
+                RoleIdResult = null;
+                if (!String.IsNullOrEmpty(searchByRole))
+                {
+                    RoleIdResult = (from list in db.CoreRoles where list.CoreRole == searchByRole select list.CoreRoleId).ToList();
+                }
+                List<int> LocationIdResult = new List<int>();
+                LocationIdResult = null;
+                if (!String.IsNullOrEmpty(searchByLocation))
+                {
+                    LocationIdResult = (from list in db.Locations where list.Location == searchByLocation select list.LocationId).ToList();
+                }
+
+                if (searchByRep != "")
+                {
+                    reps = reps.Where(t => t.FirstName + " " + t.LastName == searchByRep);
+                }
+                if (searchByTeam != "")
+                {
+                    reps = reps.Where(t => TeamIdResult.Contains((long)t.TeamId));
+                }
+                if (searchByRole != "")
+                {
+                    reps = reps.Where(t => RoleIdResult.Contains((int)t.CoreRoleId));
+                }
+                if (searchByLocation != "")
+                {
+                    reps = reps.Where(t => LocationIdResult.Contains((int)t.LocationId));
+                }
+                if (role != "Admin")
+                {
+                    reps = reps.Where(t => t.IsActive);
+                }
+            }
             #endregion "Table"
+            #region "ViewBagFilters"
+            if (searchByRep != null)
+            {
+                //Session["RepFilter_Rep"] = searchByRep;
+                ViewBag.Representative = searchByRep;
+            }
+            else
+            {
+                //Session["RepFilter_Rep"] = "";
+                ViewBag.Representative = "";
+            }
+            if (searchByTeam != null)
+            {
+                //Session["RepFilter_Team"] = searchByTeam;
+                ViewBag.Team = searchByTeam;
+            }
+            else
+            {
+                //Session["RepFilter_Team"] = "";
+                ViewBag.Team = "";
+            }
+            if (searchByRole != null)
+            {
+                //Session["RepFilter_Role"] = searchByRole;
+                ViewBag.CoreRole = searchByRole;
+            }
+            else
+            {
+                //Session["RepFilter_Role"] = "";
+                ViewBag.CoreRole = "";
+            }
+            if (searchByLocation != null)
+            {
+                //Session["RepFilter_Location"] = searchByLocation;
+                ViewBag.Location = searchByLocation;
+            }
+            else
+            {
+                //Session["RepFilter_Location"] = "";
+                ViewBag.Location = "";
+            }
+            #endregion"ViewBagFilters"
             #region "Return"
             return View(reps.OrderBy(r => r.TeamId).ThenBy(r => r.FirstName).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
         }
+
+        #region "AutoComplete"
+        [HttpPost]
+        public JsonResult RepresentativeAutoComplete(string prefix)
+        {
+
+            var reps = (from obj in db.Representatives
+                        where obj.FirstName.StartsWith(prefix) || obj.LastName.StartsWith(prefix)
+                        select new { label = obj.FirstName + " " + obj.LastName, val = obj.RepId });
+            return Json(reps);
+        }
+
+        [HttpPost]
+        public JsonResult TeamAutoComplete(string prefix)
+        {
+            var teams = (from obj in db.Teams
+                         where obj.TeamName.StartsWith(prefix)
+                         select new { label = obj.TeamName, val = obj.TeamId }).ToList();
+            return Json(teams);
+        }
+
+        [HttpPost]
+        public JsonResult LocationAutoComplete(string prefix)
+        {
+            var locations = (from obj in db.Locations
+                             where obj.Location.StartsWith(prefix)
+                             select new { label = obj.Location, val = obj.LocationId }).ToList();
+            return Json(locations);
+        }
+
+        [HttpPost]
+        public JsonResult CoreRoleAutoComplete(string prefix)
+        {
+            var coreRoles = (from obj in db.CoreRoles
+                             where obj.CoreRole.StartsWith(prefix)
+                             select new { label = obj.CoreRole, val = obj.CoreRoleId }).ToList();
+            return Json(coreRoles);
+        }
+        #endregion "AutoComplete"
 
         // GET: Representative/Details/5
         public ActionResult Details(long? id)

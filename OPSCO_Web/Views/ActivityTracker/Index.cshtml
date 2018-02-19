@@ -30,9 +30,14 @@
         </div>
     </div>
     <div class="col-md-6">
-        <a href="#" id="btn_filter" class="btn btn-default btn-sm pull-right" title="Filter On">
-            <i class="fa fa-eye"></i>
-        </a>
+        <div class="btn-group pull-right">
+            <a href="#" id="btn_filter" class="btn btn-default btn-sm" title="Filter On">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a href="@Url.Action("Index", "ActivityTracker", null)" id="btn_refresh" class="btn btn-default btn-sm" title="Refresh List">
+                <i class="fa fa-refresh"></i>
+            </a>
+        </div>
     </div>
 </div>
 <br />
@@ -62,19 +67,19 @@
         </tr>
         <tr id="row_filter" class="hidden">
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Activity" id="txt_search_1"/>
+                <input type="text" class="form-control input-sm" placeholder="Activity" id="txt_search_1" value="@ViewBag.Activity"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2"/>
+                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2" value="@ViewBag.Team"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_3"/>
+                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_3" value="@ViewBag.Representative"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Date From" id="txt_search_4"/>
+                <input type="text" class="form-control input-sm" placeholder="Date From" id="txt_search_4" value="@ViewBag.DateFrom"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Date To" id="txt_search_5"/>
+                <input type="text" class="form-control input-sm" placeholder="Date To" id="txt_search_5" value="@ViewBag.DateTo"/>
             </td>
             @if (Session["role"].ToString() == "Admin")
             {
@@ -82,7 +87,11 @@
                     &nbsp;
                 </td>
             }
-            <td>&nbsp;</td>
+            <td>
+                <a id="btn_search" class="btn btn-default btn-sm" title="Find">
+                    <i class="fa fa-search"></i>
+                </a>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -254,19 +263,17 @@
         $('#txt_search_4').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
         $('#txt_search_5').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
         $('#pagesizelist').change(function () {
-            var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
-            window.location.href = url;
+            $('#btn_search').click();
         });
-        //$('#search').keypress(function (e) {
-        //    if (e.which == 13) {
-        //        var url = '@Url.Action("Index")?searchString=' + $(this).val() + '&pageSize=' + $('#pagesizelist').val();
-        //        window.location.href = url;
-        //    }
-        //});
-        //$('#cmd_search').click(function () {
-        //    var url = '@Url.Action("Index")?searchString=' + $('#search').val() + '&pageSize=' + $('#pagesizelist').val();
-        //    window.location.href = url;
-        //});
+        $('#btn_search').click(function () {
+            var url = '@Url.Action("Index")?searchByActivity=' + $('#txt_search_1').val() +
+                                        '&searchByTeam=' + $('#txt_search_2').val() +
+                                        '&searchByRep=' + $('#txt_search_3').val() +
+                                        '&searchByDateFrom=' + $('#txt_search_4').val() +
+                                        '&searchByDateTo=' + $('#txt_search_5').val() +
+                                        '&pageSize=' + $('#pagesizelist').val();
+            window.location.href = url;
+        })
         var clicked = false;
         $('#btn_filter').click(function () {
             clicked = !clicked;
@@ -288,10 +295,6 @@
                 $('#btn_filter i').addClass('fa-eye');
                 $('#btn_filter').prop('title', 'Filter On');
             }
-        });
-
-        $('#txt_search_1').on('focusout', function() {
-            //alert('hello');
         });
     });
 </script>

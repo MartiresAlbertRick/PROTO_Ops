@@ -19,7 +19,7 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: ActivityTracker
-        public ActionResult Index(int? page, int? pageSize, string searchString)
+        public ActionResult Index(int? page, int? pageSize, string searchByActivity, string searchByTeam, string searchByRep, string searchByDateFrom, string searchByDateTo)
         {
             #region "Initialize"
             db.InitializeActivities();
@@ -78,8 +78,109 @@ namespace OPSCO_Web.Controllers
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
-            if (!String.IsNullOrEmpty(searchString)) acts = acts.Where(a => a.Activity.Contains(searchString));
+            if (searchByActivity != null || searchByTeam != null || searchByRep != null || searchByDateFrom != null || searchByDateTo != null)
+            {
+                Session["ActivityFilter"] = true;
+                List<long> TeamIdResult = new List<long>();
+                TeamIdResult = null;
+                if (!String.IsNullOrEmpty(searchByTeam))
+                {
+                    TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam select list.TeamId).ToList();
+                    if (role != "Admin")
+                    {
+                        TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam && list.IsActive select list.TeamId).ToList();
+                    }
+                }
+                List<long> RepIdResult = new List<long>();
+                if (!String.IsNullOrEmpty(searchByRep))
+                {
+                    RepIdResult = (from list in db.Representatives where list.FirstName + " " + list.LastName == searchByRep select list.RepId).ToList();
+                    if (role != "Admin")
+                    {
+                        RepIdResult = (from list in db.Representatives where (list.FirstName + " " + list.LastName == searchByRep) && list.IsActive select list.RepId).ToList();
+                    }
+                }
+
+                if (searchByActivity != "")
+                {
+                    acts = acts.Where(t => t.Activity == searchByActivity);
+                }
+                if (searchByTeam != "")
+                {
+                    acts = acts.Where(t => TeamIdResult.Contains((long)t.TeamId));
+                }
+                if (searchByRep != "")
+                {
+                    acts = acts.Where(t => RepIdResult.Contains((long)t.RepId));
+                }
+                if (searchByDateFrom != "")
+                {
+                    var dt = Convert.ToDateTime(searchByDateFrom);
+                    acts = acts.Where(t => dt == t.DateFrom);
+                }
+                if (searchByDateTo != "")
+                {
+                    var dt = Convert.ToDateTime(searchByDateTo);
+                    acts = acts.Where(t => dt == t.DateTo);
+                }
+                if (role != "Admin")
+                {
+                    acts = acts.Where(t => t.IsActive);
+                }
+            }
             #endregion "Table"
+            #region "ViewBagFilters"
+            if (searchByActivity != null)
+            {
+                Session["ActivityFilter_Activity"] = searchByActivity;
+                ViewBag.Activity = searchByActivity;
+            }
+            else
+            {
+                Session["ActivityFilter_Activity"] = "";
+                ViewBag.Activity = "";
+            }
+            if (searchByTeam != null)
+            {
+                Session["ActivityFilter_Team"] = searchByTeam;
+                ViewBag.Team = searchByTeam;
+            }
+            else
+            {
+                Session["ActivityFilter_Team"] = "";
+                ViewBag.Team = "";
+            }
+            if (searchByRep != null)
+            {
+                Session["ActivityFilter_Rep"] = searchByRep;
+                ViewBag.Representative = searchByRep;
+            }
+            else
+            {
+                Session["ActivityFilter_Rep"] = "";
+                ViewBag.Representative = "";
+            }
+            if (searchByDateFrom != null)
+            {
+                Session["ActivityFilter_DateFrom"] = searchByDateFrom;
+                ViewBag.DateFrom = searchByDateFrom;
+            }
+            else
+            {
+                Session["ActivityFilter_DateFrom"] = "";
+                ViewBag.DateFrom = "";
+            }
+            if (searchByDateTo != null)
+            {
+                Session["ActivityFilter_DateTo"] = searchByDateTo;
+                ViewBag.DateTo = searchByDateTo;
+            }
+            else
+            {
+                Session["ActivityFilter_DateTo"] = "";
+                ViewBag.DateTo = "";
+            }
+            #endregion"ViewBagFilters"
             #region "Return"
             return View(acts.OrderByDescending(a => a.Year).ThenByDescending(a => a.Month).ThenByDescending(a => a.TeamId).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
@@ -136,6 +237,61 @@ namespace OPSCO_Web.Controllers
                     { repId = oSC_Representative.RepId; }
                     acts = acts.Where(a => a.RepId == repId && a.IsActive);
                     break;
+            }
+            string searchByActivity = "", searchByTeam = "", searchByRep = "", searchByDateFrom = "", searchByDateTo = "";
+            if ((bool)Session["ActivityFilter"])
+            {
+                searchByActivity = (string)Session["ActivityFilter_Activity"];
+                searchByTeam = (string)Session["ActivityFilter_Team"];
+                searchByRep = (string)Session["ActivityFilter_Rep"];
+                searchByDateFrom = (string)Session["ActivityFilter_DateFrom"];
+                searchByDateTo = (string)Session["ActivityFilter_DateTo"];
+            }
+            List<long> TeamIdResult = new List<long>();
+            TeamIdResult = null;
+            if (!String.IsNullOrEmpty(searchByTeam))
+            {
+                TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam select list.TeamId).ToList();
+                if (role != "Admin")
+                {
+                    TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam && list.IsActive select list.TeamId).ToList();
+                }
+            }
+            List<long> RepIdResult = new List<long>();
+            if (!String.IsNullOrEmpty(searchByRep))
+            {
+                RepIdResult = (from list in db.Representatives where list.FirstName + " " + list.LastName == searchByRep select list.RepId).ToList();
+                if (role != "Admin")
+                {
+                    RepIdResult = (from list in db.Representatives where (list.FirstName + " " + list.LastName == searchByRep) && list.IsActive select list.RepId).ToList();
+                }
+            }
+
+            if (searchByActivity != "")
+            {
+                acts = acts.Where(t => t.Activity == searchByActivity);
+            }
+            if (searchByTeam != "")
+            {
+                acts = acts.Where(t => TeamIdResult.Contains((long)t.TeamId));
+            }
+            if (searchByRep != "")
+            {
+                acts = acts.Where(t => RepIdResult.Contains((long)t.RepId));
+            }
+            if (searchByDateFrom != "")
+            {
+                var df = Convert.ToDateTime(searchByDateFrom);
+                acts = acts.Where(t => df == t.DateFrom);
+            }
+            if (searchByDateTo != "")
+            {
+                var df = Convert.ToDateTime(searchByDateTo);
+                acts = acts.Where(t => df == t.DateTo);
+            }
+            if (role != "Admin")
+            {
+                acts = acts.Where(t => t.IsActive);
             }
             foreach (var act in acts)
             {

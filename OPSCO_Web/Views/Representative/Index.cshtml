@@ -21,20 +21,20 @@
         }
     </div>
     <div class="col-md-6">
-        <div class="input-group">
-            @Html.TextBox("SearchString", null, new { @class = "form-control input-sm", id = "search", @placeholder = "Search keyword + Enter..." })
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default btn-sm" id="cmd_search" title="Find">
-                    <span class="fa fa-search"></span>
-                </button>
-            </span>
+        <div class="btn-group pull-right">
+            <a href="#" id="btn_filter" class="btn btn-default btn-sm" title="Filter On">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a href="@Url.Action("Index", "Representative", null)" id="btn_refresh" class="btn btn-default btn-sm" title="Refresh List">
+                <i class="fa fa-refresh"></i>
+            </a>
         </div>
     </div>
 </div>
 <br />
 <table id="table" class="table coverbg table-striped table-hover table-condensed input-sm">
     <thead>
-        <tr>
+        <tr id="row_header">
             <th>
                 @Html.DisplayNameFor(model => model.First().FullName)
             </th>
@@ -52,6 +52,31 @@
                 <th>@Html.DisplayNameFor(model => model.First().IsActive)</th>
             }
             <th>&nbsp;</th>
+        </tr>
+        <tr id="row_filter" class="hidden">
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_1" value="@ViewBag.Representative"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2" value="@ViewBag.Team"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Core Role" id="txt_search_3" value="@ViewBag.CoreRole"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Location" id="txt_search_4" value="@ViewBag.Location"/>
+            </td>
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <td>
+                    &nbsp;
+                </td>
+            }
+            <td>
+                <a id="btn_search" class="btn btn-default btn-sm" title="Find">
+                    <i class="fa fa-search"></i>
+                </a>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -137,20 +162,145 @@
 </div>
 
 <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
+<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
 <script>
+    $("#txt_search_1").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/Representative/RepresentativeAutoComplete/',
+                data: "{ 'prefix': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            //$("#hfCustomer").val(i.item.val);
+        },
+        minLength: 1
+    });
+    $("#txt_search_2").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/Representative/TeamAutoComplete/',
+                data: "{ 'prefix': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            //$("#hfCustomer").val(i.item.val);
+        },
+        minLength: 1
+    });
+    $("#txt_search_3").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/Representative/CoreRoleAutoComplete/',
+                data: "{ 'prefix': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            //$("#hfCustomer").val(i.item.val);
+        },
+        minLength: 1
+    });
+    $("#txt_search_4").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/Representative/LocationAutoComplete/',
+                data: "{ 'prefix': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            //$("#hfCustomer").val(i.item.val);
+        },
+        minLength: 1
+    });
     $('#pagesizelist').change(function () {
-        var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
+        $('#btn_search').click();
+    });
+    $('#btn_search').click(function () {
+        var url = '@Url.Action("Index")?searchByRep=' + $('#txt_search_1').val() +
+                                        '&searchByTeam=' + $('#txt_search_2').val() +
+                                        '&searchByRole=' + $('#txt_search_3').val() +
+                                        '&searchByLocation=' + $('#txt_search_4').val() +
+                                        '&pageSize=' + $('#pagesizelist').val();
         window.location.href = url;
     });
-    $('#search').keypress(function (e) {
-        if (e.which == 13) {
-            var url = '@Url.Action("Index")?searchString=' + $(this).val() + '&pageSize=' + $('#pagesizelist').val();
-            window.location.href = url;
+    var clicked = false;
+    $('#btn_filter').click(function () {
+        clicked = !clicked;
+        if (clicked == true) {
+            $('#row_header').addClass('hidden');
+            $('#row_filter').removeClass('hidden');
+            $('#btn_filter i').removeClass('fa');
+            $('#btn_filter i').removeClass('fa-eye');
+            $('#btn_filter i').addClass('fa');
+            $('#btn_filter i').addClass('fa-eye-slash');
+            $('#btn_filter').prop('title', 'Filter Off');
         }
-    });
-    $('#cmd_search').click(function () {
-        var url = '@Url.Action("Index")?searchString=' + $('#search').val() + '&pageSize=' + $('#pagesizelist').val();
-        window.location.href = url;
+        else {
+            $('#row_filter').addClass('hidden');
+            $('#row_header').removeClass('hidden');
+            $('#btn_filter i').removeClass('fa');
+            $('#btn_filter i').removeClass('fa-eye-slash');
+            $('#btn_filter i').addClass('fa');
+            $('#btn_filter i').addClass('fa-eye');
+            $('#btn_filter').prop('title', 'Filter On');
+        }
     });
 </script>

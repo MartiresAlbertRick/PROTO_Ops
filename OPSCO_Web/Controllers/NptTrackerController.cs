@@ -19,7 +19,7 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: NptTracker
-        public ActionResult Index(int? page, int? pageSize, string searchByTeam)
+        public ActionResult Index(int? page, int? pageSize, string searchByCategory, string searchByTeam, string searchByRep, string searchByDate, string searchByTimeSpent)
         {
             #region "Initialize"
             db.InitializeNpts();
@@ -78,20 +78,98 @@ namespace OPSCO_Web.Controllers
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
-            if (!String.IsNullOrEmpty(searchByTeam))
+            if (searchByCategory != null || searchByTeam != null || searchByRep != null || searchByDate != null || searchByTimeSpent != null)
             {
+                Session["NptFilter"] = true;
                 List<long> TeamIdResult = new List<long>();
-                TeamIdResult = (from list in db.Teams where list.TeamName.Contains(searchByTeam) select list.TeamId).ToList();
+                TeamIdResult = null;
+                if (!String.IsNullOrEmpty(searchByTeam))
+                {
+                    TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam select list.TeamId).ToList();
+                    if (role != "Admin")
+                    {
+                        TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam && list.IsActive select list.TeamId).ToList();
+                    }
+                }
+                List<long> RepIdResult = new List<long>();
+                if (!String.IsNullOrEmpty(searchByRep))
+                {
+                    RepIdResult = (from list in db.Representatives where list.FirstName + " " + list.LastName == searchByRep select list.RepId).ToList();
+                    if (role != "Admin")
+                    {
+                        RepIdResult = (from list in db.Representatives where (list.FirstName + " " + list.LastName == searchByRep) && list.IsActive select list.RepId).ToList();
+                    }
+                }
+
+                if (searchByCategory != "")
+                {
+                    npts = npts.Where(t => t.TypeOfActivity == searchByCategory);
+                }
+                if (searchByTeam != "")
+                {
+                    npts = npts.Where(t => TeamIdResult.Contains((long)t.TeamId));
+                }
+                if (searchByRep != "")
+                {
+                    npts = npts.Where(t => RepIdResult.Contains((long)t.RepId));
+                }
+                if (searchByDate != "")
+                {
+                    var dt = Convert.ToDateTime(searchByDate);
+                    npts = npts.Where(t => dt == t.DateOfActivity);
+                }
+                if (searchByTimeSpent != "")
+                {
+                    npts = npts.Where(t => Convert.ToDouble(searchByTimeSpent) == t.TimeSpent);
+                }
                 if (role != "Admin")
                 {
-                    npts = npts.Where(n => TeamIdResult.Contains((long)n.TeamId) && n.IsActive);
-                }
-                else
-                { 
-                    npts = npts.Where(n => TeamIdResult.Contains((long)n.TeamId));
+                    npts = npts.Where(t => t.IsActive);
                 }
             }
             #endregion "Table"
+            #region "ViewBagFilters"
+            if (searchByCategory != null) {
+                Session["NptFilter_Category"] = searchByCategory;
+                ViewBag.Category = searchByCategory;
+            }
+            else {
+                Session["NptFilter_Category"] = "";
+                ViewBag.Category = "";
+            }
+            if (searchByTeam != null) {
+                Session["NptFilter_Team"] = searchByTeam;
+                ViewBag.Team = searchByTeam;
+            }
+            else {
+                Session["NptFilter_Team"] = "";
+                ViewBag.Team = "";
+            }
+            if (searchByRep != null) {
+                Session["NptFilter_Rep"] = searchByRep;
+                ViewBag.Representative = searchByRep;
+            }
+            else {
+                Session["NptFilter_Rep"] = "";
+                ViewBag.Representative = "";
+            }
+            if (searchByDate != null) {
+                Session["NptFilter_DoA"] = searchByDate;
+                ViewBag.DateOfActivity = searchByDate;
+            }
+            else {
+                Session["NptFilter_DoA"] = "";
+                ViewBag.DateOfActivity = "";
+            }
+            if (searchByTimeSpent != null) {
+                Session["NptFilter_TimeSpent"] = searchByTimeSpent;
+                ViewBag.TimeSpent = searchByTimeSpent;
+            }
+            else {
+                Session["NptFilter_TimeSpent"] = "";
+                ViewBag.TimeSpent = "";
+            }
+            #endregion"ViewBagFilters"
             #region "Return"
             return View(npts.OrderByDescending(n => n.DateOfActivity).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
@@ -149,6 +227,60 @@ namespace OPSCO_Web.Controllers
                     npts = npts.Where(n => n.RepId == repId && n.IsActive);
                     break;
             }
+            string searchByCategory = "", searchByTeam = "", searchByRep = "", searchByDate = "", searchByTimeSpent ="";
+            if ((bool)Session["NptFilter"])
+            {
+                searchByCategory = (string)Session["NptFilter_Category"];
+                searchByTeam = (string)Session["NptFilter_Team"];
+                searchByRep = (string)Session["NptFilter_Rep"];
+                searchByDate = (string)Session["NptFilter_DoA"];
+                searchByTimeSpent = (string)Session["NptFilter_TimeSpent"];
+            }
+            List<long> TeamIdResult = new List<long>();
+            TeamIdResult = null;
+            if (!String.IsNullOrEmpty(searchByTeam))
+            {
+                TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam select list.TeamId).ToList();
+                if (role != "Admin")
+                {
+                    TeamIdResult = (from list in db.Teams where list.TeamName == searchByTeam && list.IsActive select list.TeamId).ToList();
+                }
+            }
+            List<long> RepIdResult = new List<long>();
+            if (!String.IsNullOrEmpty(searchByRep))
+            {
+                RepIdResult = (from list in db.Representatives where list.FirstName + " " + list.LastName == searchByRep select list.RepId).ToList();
+                if (role != "Admin")
+                {
+                    RepIdResult = (from list in db.Representatives where (list.FirstName + " " + list.LastName == searchByRep) && list.IsActive select list.RepId).ToList();
+                }
+            }
+
+            if (searchByCategory != "")
+            {
+                npts = npts.Where(t => t.TypeOfActivity == searchByCategory);
+            }
+            if (searchByTeam != "")
+            {
+                npts = npts.Where(t => TeamIdResult.Contains((long)t.TeamId));
+            }
+            if (searchByRep != "")
+            {
+                npts = npts.Where(t => RepIdResult.Contains((long)t.RepId));
+            }
+            if (searchByDate != "")
+            {
+                var doa = Convert.ToDateTime(searchByDate);
+                npts = npts.Where(t => doa == t.DateOfActivity);
+            }
+            if (searchByTimeSpent != "")
+            {
+                npts = npts.Where(t => Convert.ToDouble(searchByTimeSpent) == t.TimeSpent);
+            }
+            if (role != "Admin")
+            {
+                npts = npts.Where(t => t.IsActive);
+            }
             foreach (var npt in npts)
             {
                 dt.Rows.Add(npt.Team.TeamName, npt.Representative.FullName, npt.TypeOfActivity, npt.Activity, npt.DateOfActivity, npt.TimeSpent, npt.UploadedBy, npt.DateUploaded);
@@ -168,6 +300,15 @@ namespace OPSCO_Web.Controllers
         }
 
         #region "AutoComplete"
+        [HttpPost]
+        public JsonResult NptCategoriesAutoComplete(string prefix)
+        {
+            var nptCategories = (from obj in db.NptCategories
+                                 where obj.CategoryDesc.StartsWith(prefix)
+                                 select new { label = obj.CategoryDesc, val = obj.CategoryDesc }).ToList();
+            return Json(nptCategories);
+        }
+
         [HttpPost]
         public JsonResult TeamAutoComplete(string prefix)
         {

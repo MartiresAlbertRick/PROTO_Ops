@@ -30,11 +30,11 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="btn-group">
-            <a href="#" id="btn_filter" class="btn btn-default btn-sm pull-right" title="Filter On">
+        <div class="btn-group pull-right">
+            <a href="#" id="btn_filter" class="btn btn-default btn-sm" title="Filter On">
                 <i class="fa fa-eye"></i>
             </a>
-            <a href="@Url.Action("Index", "NptTracker", null)" id="btn_refresh" class="btn btn-default btn-sm pull-right" title="Refresh List">
+            <a href="@Url.Action("Index", "NptTracker", null)" id="btn_refresh" class="btn btn-default btn-sm" title="Refresh List">
                 <i class="fa fa-refresh"></i>
             </a>
         </div>
@@ -67,19 +67,19 @@
         </tr>
         <tr id="row_filter" class="hidden">
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Category" id="txt_search_1"/>
+                <input type="text" class="form-control input-sm" placeholder="Category" id="txt_search_1" value="@ViewBag.Category"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2"/>
+                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2" value="@ViewBag.Team"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_3"/>
+                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_3" value="@ViewBag.Representative"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Date of Activity" id="txt_search_4"/>
+                <input type="text" class="form-control input-sm" placeholder="Date of Activity" id="txt_search_4" value="@ViewBag.DateOfActivity"/>
             </td>
             <td>
-                <input type="text" class="form-control input-sm" placeholder="Time Spent" id="txt_search_5"/>
+                <input type="text" class="form-control input-sm" placeholder="Time Spent" id="txt_search_5" value="@ViewBag.TimeSpent"/>
             </td>
             @if (Session["role"].ToString() == "Admin")
             {
@@ -87,7 +87,11 @@
                     &nbsp;
                 </td>
             }
-            <td>&nbsp;</td>
+            <td>
+                <a id="btn_search" class="btn btn-default btn-sm" title="Find">
+                    <i class="fa fa-search"></i>
+                </a>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -179,6 +183,32 @@
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
 <script>
+    $("#txt_search_1").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/NptTracker/NptCategoriesAutoComplete/',
+                data: "{ 'prefix': '" + request.term + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            //$("#hfCustomer").val(i.item.val);
+        },
+        minLength: 1
+    });
     $("#txt_search_2").autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -233,21 +263,17 @@
     });
     $('#txt_search_4').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
     $('#pagesizelist').change(function () {
-        var url = '@Url.Action("Index")?pageSize=' + $(this).val();// + '&searchString=' + $('#search').val();
+        $('#btn_search').click();
+    });
+    $('#btn_search').click(function () {
+        var url = '@Url.Action("Index")?searchByCategory=' + $('#txt_search_1').val() +
+                                        '&searchByTeam=' + $('#txt_search_2').val() +
+                                        '&searchByRep=' + $('#txt_search_3').val() +
+                                        '&searchByDate=' + $('#txt_search_4').val() +
+                                        '&searchByTimeSpent=' + $('#txt_search_5').val() +
+                                        '&pageSize=' + $('#pagesizelist').val();
         window.location.href = url;
     });
-    $('#txt_search_2').keypress(function (e) {
-        if (e.which == 13) {
-            txt_search_2($(this).val());
-        }
-    });
-    $('#txt_search_2').focusout(function () {
-        txt_search_2($(this).val());
-    });
-    function txt_search_2(searchString2) {
-        var url = '@Url.Action("Index")?searchByTeam=' + searchString2 + '&pageSize=' + $('#pagesizelist').val();
-            window.location.href = url;
-    }
     var clicked = false;
     $('#btn_filter').click(function () {
         clicked = !clicked;

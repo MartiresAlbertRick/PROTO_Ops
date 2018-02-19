@@ -43,3 +43,19 @@ https://code.msdn.microsoft.com/Chart-in-MVC-using-Chartjs-5806c814
 //26 Average Handle Time
     ([ACDTalkTime] + [ACDWrapUpTime] + ([AvgHoldDur] * [HeldContacts]))
             /[TotalACDCalls]
+
+
+
+ if (role != "Admin") {
+    npts = npts.Where(n => (searchByCategory != "" &&
+        n.TypeOfActivity.StartsWith(searchByCategory)) ||
+        (TeamIdResult != null &&
+            TeamIdResult.Contains((long)n.TeamId)) &&
+        n.IsActive);
+}
+else {
+    npts = npts.Where(n => (searchByCategory != "" &&
+        n.TypeOfActivity.StartsWith(searchByCategory)) ||
+        (TeamIdResult != null &&
+            TeamIdResult.Contains((long)n.TeamId)));
+}
