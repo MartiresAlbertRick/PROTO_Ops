@@ -30,9 +30,14 @@
         </div>
     </div>
     <div class="col-md-6">
-        <a href="#" id="btn_filter" class="btn btn-default btn-sm pull-right" title="Filter On">
-            <i class="fa fa-eye"></i>
-        </a>
+        <div class="btn-group">
+            <a href="#" id="btn_filter" class="btn btn-default btn-sm pull-right" title="Filter On">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a href="@Url.Action("Index", "NptTracker", null)" id="btn_refresh" class="btn btn-default btn-sm pull-right" title="Refresh List">
+                <i class="fa fa-refresh"></i>
+            </a>
+        </div>
     </div>
 </div>
 <br />
@@ -228,19 +233,21 @@
     });
     $('#txt_search_4').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
     $('#pagesizelist').change(function () {
-        var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
+        var url = '@Url.Action("Index")?pageSize=' + $(this).val();// + '&searchString=' + $('#search').val();
         window.location.href = url;
     });
-    //$('#search').keypress(function (e) {
-    //    if (e.which == 13) {
-    //        var url = '@Url.Action("Index")?searchString=' + $(this).val() + '&pageSize=' + $('#pagesizelist').val();
-    //        window.location.href = url;
-    //    }
-    //});
-    //$('#cmd_search').click(function () {
-    //    var url = '@Url.Action("Index")?searchString=' + $('#search').val() + '&pageSize=' + $('#pagesizelist').val();
-    //    window.location.href = url;
-    //});
+    $('#txt_search_2').keypress(function (e) {
+        if (e.which == 13) {
+            txt_search_2($(this).val());
+        }
+    });
+    $('#txt_search_2').focusout(function () {
+        txt_search_2($(this).val());
+    });
+    function txt_search_2(searchString2) {
+        var url = '@Url.Action("Index")?searchByTeam=' + searchString2 + '&pageSize=' + $('#pagesizelist').val();
+            window.location.href = url;
+    }
     var clicked = false;
     $('#btn_filter').click(function () {
         clicked = !clicked;

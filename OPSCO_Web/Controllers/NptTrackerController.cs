@@ -19,7 +19,7 @@ namespace OPSCO_Web.Controllers
         private OSCContext db = new OSCContext();
 
         // GET: NptTracker
-        public ActionResult Index(int? page, int? pageSize, string searchString)
+        public ActionResult Index(int? page, int? pageSize, string searchByTeam)
         {
             #region "Initialize"
             db.InitializeNpts();
@@ -78,7 +78,19 @@ namespace OPSCO_Web.Controllers
             #region "Table"
             int? defaultPageSize = 10;
             if (pageSize != null) defaultPageSize = pageSize;
-            if (!String.IsNullOrEmpty(searchString)) npts = npts.Where(n => n.DateOfActivity.ToString().Contains(searchString) || n.TypeOfActivity.Contains(searchString));
+            if (!String.IsNullOrEmpty(searchByTeam))
+            {
+                List<long> TeamIdResult = new List<long>();
+                TeamIdResult = (from list in db.Teams where list.TeamName.Contains(searchByTeam) select list.TeamId).ToList();
+                if (role != "Admin")
+                {
+                    npts = npts.Where(n => TeamIdResult.Contains((long)n.TeamId) && n.IsActive);
+                }
+                else
+                { 
+                    npts = npts.Where(n => TeamIdResult.Contains((long)n.TeamId));
+                }
+            }
             #endregion "Table"
             #region "Return"
             return View(npts.OrderByDescending(n => n.DateOfActivity).ToPagedList(page ?? 1, (int)defaultPageSize));
