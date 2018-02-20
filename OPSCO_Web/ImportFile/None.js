@@ -59,3 +59,11 @@ else {
         (TeamIdResult != null &&
             TeamIdResult.Contains((long)n.TeamId)));
 }
+
+
+
+ //image to server
+ https://stackoverflow.com/questions/47991240/saving-canvas-image-to-server-asp-net-mvc
+ http://www.dotnetfunda.com/articles/show/2665/saving-html-5-canvas-as-image-in-aspnet-mvc
+ https://www.codeproject.com/Questions/479762/howplustoplussavepluscanvasplusimageplustoplusserv
+ https://forums.asp.net/t/2006929.aspx?send+canvas+image+to+controller
