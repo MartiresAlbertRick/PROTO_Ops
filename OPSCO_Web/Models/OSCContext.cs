@@ -924,6 +924,7 @@ namespace OPSCO_Web.Models
             [Display(Name = "Active Flag")]
             public bool IsActive { get; set; }
         }
+        public virtual ICollection<OSC_ManageGroup> Groups { get; set; }
     }
 
     [MetadataType(typeof(OSC_ActivityTracker.Metadata))]
