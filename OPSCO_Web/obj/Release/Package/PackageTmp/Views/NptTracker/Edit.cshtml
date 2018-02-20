@@ -68,19 +68,23 @@
     <div class="form-group">
         @Html.LabelFor(model => model.TimeSpent, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
-            @Html.EditorFor(model => model.TimeSpent, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
+            @Html.EditorFor(model => model.TimeSpent, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled", placeholder = "min" } })
             @Html.ValidationMessageFor(model => model.TimeSpent, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-        <div class="col-md-4">
-            <div class="checkbox">
-                @Html.CheckBoxFor(model => model.IsActive, new { disabled = true, @checked = true })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+    @if (Session["role"].ToString() == "Admin")
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
@@ -96,5 +100,8 @@
 $(function () {
     validate($('#submit'));
     $('#txt_doa').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+    $('#txt_doa').change(function () {
+        $(this).focusout();
+    });
 });
 </script>

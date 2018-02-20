@@ -7,9 +7,18 @@
 <h3>Manual Entry</h3>
 <div class="row">
     <div class="col-md-6">
-        <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ManualEntry", null)">
-            <i class="fa fa-plus"></i> New Record
-        </a>
+        @if (ViewBag.CanAdd)
+        {
+            <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ManualEntry", null)">
+                <i class="fa fa-plus"></i> New Record
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-primary btn-sm disabled" href="@Url.Action("Create", "ManualEntry", null)">
+                <i class="fa fa-plus"></i> New Record
+            </a>
+        }
     </div>
     <div class="col-md-6">
         <div class="input-group">
@@ -23,7 +32,7 @@
     </div>
 </div>
 <br />
-<table id="table" class="table coverbg table-striped table-hover input-sm">
+<table id="table" class="table coverbg table-striped table-hover table-condensed input-sm">
     <thead>
         <tr>
             <th>
@@ -35,6 +44,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.First().Representative.FullName)
             </th>
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <th>@Html.DisplayNameFor(model => model.First().IsActive)</th>
+            }
             <th>&nbsp;</th>
         </tr>
     </thead>
@@ -55,12 +68,30 @@
             </td>
             <td>
                 <div class="btn-group">
-                    <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.EntryId })" title="Edit Record">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.EntryId })" title="Delete Record">
-                        <i class="fa fa-trash"></i>
-                    </a>
+                    @if (ViewBag.CanEdit)
+                    {
+                        <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.EntryId })" title="Edit Record">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default btn-xs disabled" href="@Url.Action("Edit", new { id = item.EntryId })" title="Edit Record">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    }
+                    @if (ViewBag.CanDelete)
+                    {
+                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.EntryId })" title="Delete Record">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger btn-xs disabled" href="@Url.Action("Delete", new { id = item.EntryId })" title="Delete Record">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    }
                 </div>
             </td>
         </tr>

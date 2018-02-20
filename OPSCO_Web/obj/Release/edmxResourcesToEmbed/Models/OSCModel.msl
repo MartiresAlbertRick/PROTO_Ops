@@ -304,30 +304,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="OSC_ImportNPT">
-      <EntityTypeMapping TypeName="OSCModel.OSC_ImportNPT">
-        <MappingFragment StoreEntitySet="OSC_ImportNPT">
-          <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
-          <ScalarProperty Name="RepId" ColumnName="RepId" />
-          <ScalarProperty Name="Activity" ColumnName="Activity" />
-          <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
-          <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
-          <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-          <ScalarProperty Name="Path" ColumnName="Path" />
-          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-          <ScalarProperty Name="Month" ColumnName="Month" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="OSC_ImportTA">
       <EntityTypeMapping TypeName="OSCModel.OSC_ImportTA">
         <MappingFragment StoreEntitySet="OSC_ImportTA">
@@ -430,6 +406,30 @@
           <ScalarProperty Name="GroupType" ColumnName="GroupType" />
           <ScalarProperty Name="GroupId" ColumnName="GroupId" />
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportNPT">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportNPT">
+        <MappingFragment StoreEntitySet="OSC_ImportNPT">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
+          <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
+          <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

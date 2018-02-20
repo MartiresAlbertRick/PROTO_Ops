@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OPSCO_Web.Models.IndividualScorecard>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table coverbg table-bordered table-condensed table-striped input-sm">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Month)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualActivities.Attendance_Days)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualActivities.Overtime_Hours)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualNonProcessing.NPTHours)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualBIProd.ProcessingHours)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualBIProd.Count)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProductivityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualBIQual.QualityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.TotalUtilization)</th>
+                    <th>@Html.DisplayNameFor(model => model.Efficiency)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MonthName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualActivities.Attendance_Days)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualActivities.Overtime_Hours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualNonProcessing.NPTHours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualBIProd.ProcessingHours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualBIProd.Count)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductivityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualBIQual.QualityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalUtilization)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.Efficiency)%</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

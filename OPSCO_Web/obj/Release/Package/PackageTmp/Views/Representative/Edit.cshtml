@@ -1,5 +1,4 @@
 ﻿@model OPSCO_Web.Models.OSC_Representative
-
 @{
     ViewBag.Title = "Edit";
 }
@@ -127,15 +126,19 @@
             @Html.ValidationMessageFor(model => model.WorkHours, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-        <div class="col-md-4">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { disabled = true } })
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+    @if (Session["role"].ToString() == "Admin")
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+                
+                        @Html.EditorFor(model => model.IsActive)
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">

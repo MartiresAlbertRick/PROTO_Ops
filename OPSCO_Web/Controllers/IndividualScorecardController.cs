@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
@@ -10,6 +9,8 @@ using SelectPdf;
 using Microsoft.Office.Interop.Word;
 using word = Microsoft.Office.Interop.Word;
 using xl = Microsoft.Office.Interop.Excel;
+using office = Microsoft.Office.Core;
+using System.IO;
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -246,6 +247,14 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "Table"
 
+            #region "Highlights"
+            IndividualScorecard ind = db.GetIndividualScorecard(teamId, repId, month, year);
+            if (doc.Bookmarks.Exists("Highlights"))
+            {
+                doc.Bookmarks["Highlights"].Range.Text = ind.Highlights;
+            }
+            #endregion "Highlights"
+
             xl.Application _excelApp = new xl.Application();
             xl.Workbook workbook = _excelApp.Workbooks.Add();
             string excelFileName = Server.MapPath("~/Export/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".xlsx");
@@ -301,6 +310,32 @@ namespace OPSCO_Web.Controllers
             List<IndividualScorecard> list = db.GetIndividualScorecardFull(teamId, repId, month, year);
             return PartialView(list);
         }
+
+        #region "UploadImages"
+        public ActionResult UploadProductivity(string imageData)
+        {
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            OSC_Team oSC_Team = db.Teams.Find(teamId);
+            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
+            string exportPath = Server.MapPath("~/Export");
+            string fileNameWitPath = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + "_prodchart.png";
+            using (FileStream fs = new FileStream(fileNameWitPath, FileMode.Create))
+            {
+                using (BinaryWriter bw = new BinaryWriter(fs))
+                {
+                    byte[] data = Convert.FromBase64String(imageData);//convert from base64
+                    bw.Write(data);
+                    bw.Close();
+                }
+            }
+            return null;
+        }
+        #endregion "UploadImages"
 
         #region "ProductivityChart"
         public PartialViewResult ScorecardProductivityChart()

@@ -39,6 +39,7 @@ namespace OPSCO_Web.Controllers
                                           HttpPostedFileBase ta,
                                           HttpPostedFileBase npt)
         {
+            string logon_user = Session["logon_user"].ToString();
             ViewBag.Months = db.months;
             ViewBag.Years = db.years;
             #region "BIP"
@@ -54,49 +55,16 @@ namespace OPSCO_Web.Controllers
                     string path = Server.MapPath("~/ImportFile/" + fname);
                     if (System.IO.File.Exists(path)) System.IO.File.Delete(path); 
                     bip.SaveAs(path);
-                    #region "EXCEL"
-                    Excel.Application application = new Excel.Application();
-                    Excel.Workbook workbook = application.Workbooks.Open(path);
-                    Excel.Worksheet worksheet = workbook.ActiveSheet;
-                    Excel.Range range = worksheet.UsedRange;
-                    List<OSC_ImportBIProd> list = new List<OSC_ImportBIProd>();
-                    for (int row = 2; row <= range.Rows.Count; row++)
+                    ImportFiles i = new ImportFiles();
+                    int result1 = i.ImportBIProd(path, import, DateTime.Now, logon_user);
+                    if (result1 == 1)
                     {
-                        OSC_ImportBIProd obj = new OSC_ImportBIProd();
-                        obj.Group = ((Excel.Range)range.Cells[row, 1]).Text;
-                        obj.UserIdName = ((Excel.Range)range.Cells[row, 2]).Text;
-                        obj.BusinessArea = ((Excel.Range)range.Cells[row, 3]).Text;
-                        obj.WorkType = ((Excel.Range)range.Cells[row, 4]).Text;
-                        obj.Status = ((Excel.Range)range.Cells[row, 5]).Text;
-                        obj.Count = Convert.ToInt32(((Excel.Range)range.Cells[row, 6]).Text);
-                        obj.Date1 = ((Excel.Range)range.Cells[row, 7]).Text;
-                        obj.Date2 = ((Excel.Range)range.Cells[row, 8]).Text;
-                        obj.Rating = Convert.ToDouble(((Excel.Range)range.Cells[row, 9]).Text);
-                        obj.Month = import.Month;
-                        obj.Year = import.Year;
-                        obj.DateUploaded = DateTime.Now;
-                        obj.UploadedBy = User.Identity.Name;
-                        list.Add(obj);
-                    }
-                    foreach (OSC_ImportBIProd obj in list)
-                    {
-                        obj.RepId = db.Representatives.Where(r => (r.BIUserId == obj.UserIdName) &&
-                                                                (r.TeamId == db.GetTeamIdByGroupId(obj.Group, "BI").TeamId)).FirstOrDefault().RepId;
-                        obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
-                        db.BIP.Add(obj);
-                    }
-                    try
-                    {
-                        db.SaveChanges();
                         ViewBag.MessageBIP = "Success";
-                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        ViewBag.ErrorBIP = "Error: " + ex.Message.ToString();
-                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                        ViewBag.ErrorBIP = "Failed";
                     }
-                    #endregion "EXCEL"
                 }
                 else
                 {
@@ -117,51 +85,16 @@ namespace OPSCO_Web.Controllers
                     string path = Server.MapPath("~/ImportFile/" + fname);
                     if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                     biq.SaveAs(path);
-                    #region "EXCEL"
-                    Excel.Application application = new Excel.Application();
-                    Excel.Workbook workbook = application.Workbooks.Open(path);
-                    Excel.Worksheet worksheet = workbook.ActiveSheet;
-                    Excel.Range range = worksheet.UsedRange;
-                    List<OSC_ImportBIQual> list = new List<OSC_ImportBIQual>();
-                    for (int row = 2; row <= range.Rows.Count; row++)
+                    ImportFiles i = new ImportFiles();
+                    int result2 = i.ImportBIQual(path, import, DateTime.Now, logon_user);
+                    if (result2 == 1)
                     {
-                        OSC_ImportBIQual obj = new OSC_ImportBIQual();
-                        obj.Group = ((Excel.Range)range.Cells[row, 1]).Text;
-                        obj.UserIdName = ((Excel.Range)range.Cells[row, 2]).Text;
-                        obj.BusinessArea = ((Excel.Range)range.Cells[row, 3]).Text;
-                        obj.Field1 = ((Excel.Range)range.Cells[row, 4]).Text;
-                        obj.Field2 = ((Excel.Range)range.Cells[row, 5]).Text;
-                        obj.Count1 = Convert.ToInt64(((Excel.Range)range.Cells[row, 6]).Text);
-                        obj.Count2 = Convert.ToInt64(((Excel.Range)range.Cells[row, 7]).Text);
-                        obj.Count3 = Convert.ToInt64(((Excel.Range)range.Cells[row, 8]).Text);
-                        obj.Count4 = Convert.ToInt64(((Excel.Range)range.Cells[row, 9]).Text);
-                        obj.ErrorPoints = Convert.ToDouble(((Excel.Range)range.Cells[row, 10]).Text);
-                        obj.Rating = Convert.ToDouble(((Excel.Range)range.Cells[row, 11]).Text);
-                        obj.Month = import.Month;
-                        obj.Year = import.Year;
-                        obj.DateUploaded = DateTime.Now;
-                        obj.UploadedBy = User.Identity.Name;
-                        list.Add(obj);
+                        ViewBag.MessageBIQ = "Success";
                     }
-                    foreach (OSC_ImportBIQual obj in list)
+                    else
                     {
-                        obj.Repid = db.Representatives.Where(r => (r.BIUserId == obj.UserIdName) &&
-                                                                (r.TeamId == db.GetTeamIdByGroupId(obj.Group, "BI").TeamId)).FirstOrDefault().RepId;
-                        obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
-                        db.BIQ.Add(obj);
+                        ViewBag.ErrorBIQ = "Failed";
                     }
-                    try
-                    {
-                        db.SaveChanges();
-                        ViewBag.MessageBIP = "Success";
-                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.ErrorBIP = "Error: " + ex.Message.ToString();
-                        if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-                    }
-                    #endregion "EXCEL"
                 }
                 else
                 {

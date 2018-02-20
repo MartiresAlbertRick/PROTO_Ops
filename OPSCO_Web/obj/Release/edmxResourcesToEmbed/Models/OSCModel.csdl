@@ -284,29 +284,6 @@
     <Property Name="DateUploaded" Type="DateTime" Precision="3" />
     <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="OSC_ImportNPT">
-    <Key>
-      <PropertyRef Name="NPTReportId" />
-    </Key>
-    <Property Name="NPTReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RepId" Type="Int64" />
-    <Property Name="Activity" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="DateOfActivity" Type="DateTime" Precision="0" />
-    <Property Name="TimeSpent" Type="Double" />
-    <Property Name="TypeOfActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="ItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="TeamId" Type="Int64" />
-    <Property Name="Month" Type="Int32" />
-    <Property Name="Year" Type="Int32" />
-    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="CategoryId" Type="Int64" />
-    <Property Name="SubCategoryId" Type="Int64" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-  </EntityType>
   <EntityType Name="OSC_ImportTA">
     <Key>
       <PropertyRef Name="TAReportId" />
@@ -423,13 +400,13 @@
     <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" />
     <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
     <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
-    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" />
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
     <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
     <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
     <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
+    <EntitySet Name="OSC_ImportNPT" EntityType="OSCModel.OSC_ImportNPT" />
   </EntityContainer>
   <EntityType Name="OSC_TeamGroupIds">
     <Key>
@@ -440,5 +417,28 @@
     <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_ImportNPT">
+    <Key>
+      <PropertyRef Name="NPTReportId" />
+    </Key>
+    <Property Name="NPTReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RepId" Type="Int64" />
+    <Property Name="Activity" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfActivity" Type="DateTime" Precision="0" />
+    <Property Name="TimeSpent" Type="Double" />
+    <Property Name="TypeOfActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int64" />
+    <Property Name="SubCategoryId" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

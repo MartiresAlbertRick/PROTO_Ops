@@ -67,3 +67,17 @@ else {
  http://www.dotnetfunda.com/articles/show/2665/saving-html-5-canvas-as-image-in-aspnet-mvc
  https://www.codeproject.com/Questions/479762/howplustoplussavepluscanvasplusimageplustoplusserv
  https://forums.asp.net/t/2006929.aspx?send+canvas+image+to+controller
+
+
+//var img = canvas.toDataURL("image/png")
+                        //var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                        //$.ajax({
+                        //    type: 'POST',
+                        //    url: '/IndividualScorecard/UploadProductivity/',
+                        //    data: '{"imageData" : "' + img + '"}',
+                        //    contentType: 'application/json; charset=utf-8',
+                        //    dataType: 'json',
+                        //    success: function (msg) { },
+                        //    error: function (response) { alert(response.responseText); },
+                        //    failure: function (response) { alert(response.responseText); }
+                        //});

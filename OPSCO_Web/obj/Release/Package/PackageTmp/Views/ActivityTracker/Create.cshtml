@@ -1,5 +1,4 @@
 ﻿@model OPSCO_Web.Models.OSC_ActivityTracker
-
 @{
     ViewBag.Title = "New Record";
 }
@@ -8,12 +7,10 @@
 <script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/Site.js"></script>
 <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-
 <h3>Activity</h3>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
     <h4>New Record</h4>
     <hr />
@@ -105,9 +102,11 @@
         });
         $('#txt_dtfrom').change(function () {
             calculate();
+            $(this).focusout();
         });
         $('#txt_dtto').change(function () {
             calculate();
+            $(this).focusout();
         });
 
         function calculate() {

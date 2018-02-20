@@ -1,4 +1,4 @@
-﻿<div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
+﻿<div id="prodChart" class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
     <h4>Productivity Chart</h4>
     <hr />
     <div class="row">
@@ -12,9 +12,8 @@
         </div>
     </div>
 </div>
-
 <script>
-    $(function () { 
+    $(function () {
         $.ajax({
             type: "GET",
             url: "/IndividualScorecard/JsonProductivityChart/",
@@ -32,8 +31,8 @@
                 var chtCanvas = $('#pieChart1').get(0).getContext('2d');
                 var options = {
                     segmentShowStroke: false,
-                    animateRotate: false,
-                    animateScale: false,
+                    animateRotate: true,
+                    animateScale: true,
                     percentageInnerCutout: 60,
                     tooltipTemplate: "<%= label %> - <%= value %>",
                     legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\">" +
@@ -44,6 +43,17 @@
                 }
                 var newChart = new Chart(chtCanvas).Pie(arr, options);
                 $('#js-legend1').html(newChart.generateLegend());
+                var element = $('#prodChart');
+                html2canvas(element, {
+                    onrendered: function (canvas) {
+
+                        var a = document.createElement('a');
+                        a.href = canvas.toDataURL("image/png", "image/octet-stream");
+                        a.download = "a";
+                        a.click();
+
+                    }
+                });
             },
             error: function (response) {
                 alert(response.responseText);

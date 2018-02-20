@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="~/Content/Table.css" />
     <link rel="stylesheet" href="~/Content/Callout.css" />
     <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+        <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/html2canvas.js"></script>
     <script type="text/javascript" src="~/Scripts/Site.js"></script>
     <script type="text/javascript" src="~/Scripts/Chart.js"></script>
     <style>
+
         html, body {
             font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
             background-color: #ecf0f5;
@@ -26,9 +28,9 @@
             margin-bottom: 20px;
         }
 
-        .coverpage h4 {
-            margin-left: 280px;
-        }
+            .coverpage h4 {
+                margin-left: 280px;
+            }
 
         /*chart*/
         .chart-legend {
@@ -37,16 +39,16 @@
             columns: 220px 3;
         }
 
-        .chart-legend ul li {
-            list-style: none;
-        }
+            .chart-legend ul li {
+                list-style: none;
+            }
 
-        .chart-legend ul li span {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            margin-right: 20px;
-        }
+                .chart-legend ul li span {
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    margin-right: 20px;
+                }
     </style>
 </head>
 <body>
@@ -67,6 +69,7 @@
             <a href="@Url.Action("GetWord", "IndividualScorecard")" id="btn_export" class="btn btn-primary btn-sm navbar-btn" click="$('#submit').click()">
                 <i class="fa fa-file-pdf-o"></i> Export to PDF
             </a>
+            @*<a id="btn_convert">Convert</a>*@
         </div>
     </nav>
 </body>

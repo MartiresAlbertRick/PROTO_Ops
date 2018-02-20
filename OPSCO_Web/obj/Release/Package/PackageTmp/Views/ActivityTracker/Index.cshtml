@@ -7,26 +7,43 @@
 <h3>Activity Tracker</h3>
 <div class="row">
     <div class="col-md-6">
-        
-        <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ActivityTracker", null)">
-            <i class="fa fa-plus"></i> New Record
-        </a>
+        <div class="btn-group">
+            @if (ViewBag.CanAdd)
+            {
+                <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "ActivityTracker", null)">
+                    <i class="fa fa-plus"></i> New Record
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-primary btn-sm disabled" href="@Url.Action("Create", "ActivityTracker", null)">
+                    <i class="fa fa-plus"></i> New Record
+                </a>
+            }
+            <a href="#" class="btn btn-primary btn-sm" onclick="$('#btn_submit').click()">
+                <i class="fa fa-file-excel-o"></i> Export
+            </a>               
+            @using (Html.BeginForm("Export", "ActivityTracker", FormMethod.Post))
+            {
+                <input type="submit" hidden id="btn_submit" />
+            }
+        </div>
     </div>
     <div class="col-md-6">
-        <div class="input-group">
-            @Html.TextBox("SearchString", null, new { @class = "form-control input-sm", id = "search", @placeholder = "Search keyword + Enter..." })
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default btn-sm" id="cmd_search" title="Find">
-                    <span class="fa fa-search"></span>
-                </button>
-            </span>
+        <div class="btn-group pull-right">
+            <a href="#" id="btn_filter" class="btn btn-default btn-sm" title="Filter On">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a href="@Url.Action("Index", "ActivityTracker", null)" id="btn_refresh" class="btn btn-default btn-sm" title="Refresh List">
+                <i class="fa fa-refresh"></i>
+            </a>
         </div>
     </div>
 </div>
 <br />
-<table id="table" class="table coverbg table-striped table-hover input-sm">
+<table id="table" class="table coverbg table-striped table-hover table-condensed input-sm">
     <thead>
-        <tr>
+        <tr id="row_header">
             <th>
                 @Html.DisplayNameFor(model => model.First().Activity)
             </th>
@@ -42,7 +59,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.First().DateTo)
             </th>
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <th>@Html.DisplayNameFor(model => model.First().IsActive)</th>
+            }
             <th>&nbsp;</th>
+        </tr>
+        <tr id="row_filter" class="hidden">
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Activity" id="txt_search_1" value="@ViewBag.Activity"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Team" id="txt_search_2" value="@ViewBag.Team"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Representative" id="txt_search_3" value="@ViewBag.Representative"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Date From" id="txt_search_4" value="@ViewBag.DateFrom"/>
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" placeholder="Date To" id="txt_search_5" value="@ViewBag.DateTo"/>
+            </td>
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <td>
+                    &nbsp;
+                </td>
+            }
+            <td>
+                <a id="btn_search" class="btn btn-default btn-sm" title="Find">
+                    <i class="fa fa-search"></i>
+                </a>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -66,6 +115,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateTo)
             </td>
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+            }
             <td>
                 <div class="btn-group">
                     @if (ViewBag.CanEdit)
@@ -82,13 +137,13 @@
                     }
                     @if (ViewBag.CanDelete)
                     {
-                        <a class="btn btn-danger btn-xs" href="@Url.Action("Disable", new { id = item.ActivityId })" title="Delete Record">
+                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.ActivityId })" title="Delete Record">
                             <i class="fa fa-trash"></i>
                         </a>
                     }
                     else
                     {
-                        <a class="btn btn-danger btn-xs disabled" href="@Url.Action("Disable", new { id = item.ActivityId })" title="Delete Record">
+                        <a class="btn btn-danger btn-xs disabled" href="@Url.Action("Delete", new { id = item.ActivityId })" title="Delete Record">
                             <i class="fa fa-trash"></i>
                         </a>
                     }
@@ -126,18 +181,120 @@
 <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="~/Scripts/Site.js"></script>
 <script>
-    $('#pagesizelist').change(function () {
-        var url = '@Url.Action("Index")?pageSize=' + $(this).val() + '&searchString=' + $('#search').val();
-        window.location.href = url;
-    });
-    $('#search').keypress(function (e) {
-        if (e.which == 13) {
-            var url = '@Url.Action("Index")?searchString=' + $(this).val() + '&pageSize=' + $('#pagesizelist').val();
+    $(function () {
+        $("#txt_search_1").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/ActivityTracker/ActivityAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                //$("#hfCustomer").val(i.item.val);
+            },
+            minLength: 1
+        });
+        $("#txt_search_2").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/ActivityTracker/TeamAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                //$("#hfCustomer").val(i.item.val);
+            },
+            minLength: 1
+        });
+        $("#txt_search_3").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/ActivityTracker/RepresentativeAutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                //$("#hfCustomer").val(i.item.val);
+            },
+            minLength: 1
+        });
+        $('#txt_search_4').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+        $('#txt_search_5').datepicker({ format: 'mm/dd/yy', showAnim: 'drop' });
+        $('#pagesizelist').change(function () {
+            $('#btn_search').click();
+        });
+        $('#btn_search').click(function () {
+            var url = '@Url.Action("Index")?searchByActivity=' + $('#txt_search_1').val() +
+                                        '&searchByTeam=' + $('#txt_search_2').val() +
+                                        '&searchByRep=' + $('#txt_search_3').val() +
+                                        '&searchByDateFrom=' + $('#txt_search_4').val() +
+                                        '&searchByDateTo=' + $('#txt_search_5').val() +
+                                        '&pageSize=' + $('#pagesizelist').val();
             window.location.href = url;
-        }
-    });
-    $('#cmd_search').click(function () {
-        var url = '@Url.Action("Index")?searchString=' + $('#search').val() + '&pageSize=' + $('#pagesizelist').val();
-        window.location.href = url;
+        })
+        var clicked = false;
+        $('#btn_filter').click(function () {
+            clicked = !clicked;
+            if (clicked == true) {
+                $('#row_header').addClass('hidden');
+                $('#row_filter').removeClass('hidden');
+                $('#btn_filter i').removeClass('fa');
+                $('#btn_filter i').removeClass('fa-eye');
+                $('#btn_filter i').addClass('fa');
+                $('#btn_filter i').addClass('fa-eye-slash');
+                $('#btn_filter').prop('title', 'Filter Off');
+            }
+            else {
+                $('#row_filter').addClass('hidden');
+                $('#row_header').removeClass('hidden');
+                $('#btn_filter i').removeClass('fa');
+                $('#btn_filter i').removeClass('fa-eye-slash');
+                $('#btn_filter i').addClass('fa');
+                $('#btn_filter i').addClass('fa-eye');
+                $('#btn_filter').prop('title', 'Filter On');
+            }
+        });
     });
 </script>
