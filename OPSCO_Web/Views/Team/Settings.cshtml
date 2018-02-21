@@ -43,10 +43,11 @@
             @Html.Action("GroupIdSection", "Team", new { id = Model.TeamId })
         </div>
         <div class="tab-pane fade" id="tab_timings">
-            Error: could not load TimingsSection. File is not available in the server.
+            @Html.Action("TimingsSection", "Team", new { id = Model.TeamId })
         </div>
         <div class="tab-pane fade" id="tab_nptcategories">
-            Error: could not load NptCategoriesSection. File is not available in the server.
+            Error: could not load NptCategorySection. File is not available in the server.
+            @*@Html.Action("NptCategorySection", "Team", new { id = Model.TeamId })*@
         </div>
         <div class="tab-pane fade" id="tab_customscorecard">
             Error: could not load CustomizeScorecardSection. File is not available in the server.

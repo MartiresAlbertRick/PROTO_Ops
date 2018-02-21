@@ -345,7 +345,7 @@ namespace OPSCO_Web.Controllers
             Session["TeamId"] = id;
             return PartialView();
         }
-
+        
         public JsonResult GetTeamGroupIds()
         {
             long teamId = 0;

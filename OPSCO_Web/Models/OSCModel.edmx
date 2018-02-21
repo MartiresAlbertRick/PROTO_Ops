@@ -221,13 +221,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
           <Property Name="Location" Type="nvarchar" MaxLength="100" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_ManageGroup">
           <Key>
-            <PropertyRef Name="ManagerId" />
-            <PropertyRef Name="EntityId" />
-            <PropertyRef Name="Type" />
             <PropertyRef Name="MGId" />
           </Key>
           <Property Name="ManagerId" Type="bigint" Nullable="false" />
@@ -331,11 +326,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
           <Property Name="BIUserGroup" Type="nvarchar" MaxLength="50" />
           <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_TeamGroupIds">
           <Key>
-            <PropertyRef Name="TeamId" />
             <PropertyRef Name="TGIId" />
           </Key>
           <Property Name="TeamId" Type="bigint" Nullable="false" />
@@ -353,8 +345,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="CategoryId" Type="bigint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
             <PropertyRef Name="WorkItemNo" />
@@ -441,11 +431,14 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
@@ -460,14 +453,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_CustomizeScorecard].[Year] AS [Year]
     FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_ManageGroup].[ManagerId] AS [ManagerId], 
-    [OSC_ManageGroup].[EntityId] AS [EntityId], 
-    [OSC_ManageGroup].[Type] AS [Type], 
-    [OSC_ManageGroup].[MGId] AS [MGId]
-    FROM [dbo].[OSC_ManageGroup] AS [OSC_ManageGroup]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [OSC_ScorecardField].[FieldId] AS [FieldId], 
@@ -476,41 +461,11 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_ScorecardField].[IsActive] AS [IsActive]
     FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_TeamGroupIds].[TeamId] AS [TeamId], 
-    [OSC_TeamGroupIds].[GroupId] AS [GroupId], 
-    [OSC_TeamGroupIds].[GroupType] AS [GroupType], 
-    [OSC_TeamGroupIds].[TGIId] AS [TGIId]
-    FROM [dbo].[OSC_TeamGroupIds] AS [OSC_TeamGroupIds]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
     [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
     FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_TeamWorkItem].[WorkItemNo] AS [WorkItemNo], 
-    [OSC_TeamWorkItem].[TeamId] AS [TeamId], 
-    [OSC_TeamWorkItem].[BusinessAreaCode] AS [BusinessAreaCode], 
-    [OSC_TeamWorkItem].[WorkTypeCode] AS [WorkTypeCode], 
-    [OSC_TeamWorkItem].[StatusCode] AS [StatusCode], 
-    [OSC_TeamWorkItem].[January] AS [January], 
-    [OSC_TeamWorkItem].[February] AS [February], 
-    [OSC_TeamWorkItem].[March] AS [March], 
-    [OSC_TeamWorkItem].[April] AS [April], 
-    [OSC_TeamWorkItem].[May] AS [May], 
-    [OSC_TeamWorkItem].[June] AS [June], 
-    [OSC_TeamWorkItem].[July] AS [July], 
-    [OSC_TeamWorkItem].[August] AS [August], 
-    [OSC_TeamWorkItem].[September] AS [September], 
-    [OSC_TeamWorkItem].[October] AS [October], 
-    [OSC_TeamWorkItem].[November] AS [November], 
-    [OSC_TeamWorkItem].[December] AS [December], 
-    [OSC_TeamWorkItem].[Year] AS [Year]
-    FROM [dbo].[OSC_TeamWorkItem] AS [OSC_TeamWorkItem]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -843,18 +798,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <Property Name="DateUploaded" Type="DateTime" Precision="3" />
           <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="OSC_ManageGroup">
-          <Key>
-            <PropertyRef Name="ManagerId" />
-            <PropertyRef Name="EntityId" />
-            <PropertyRef Name="Type" />
-            <PropertyRef Name="MGId" />
-          </Key>
-          <Property Name="ManagerId" Type="Int64" Nullable="false" />
-          <Property Name="EntityId" Type="Int64" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="OSC_ScorecardField">
           <Key>
             <PropertyRef Name="FieldId" />
@@ -872,29 +815,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           </Key>
           <Property Name="TeamId" Type="Int64" Nullable="false" />
           <Property Name="CategoryId" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OSC_TeamWorkItem">
-          <Key>
-            <PropertyRef Name="WorkItemNo" />
-          </Key>
-          <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="January" Type="Double" />
-          <Property Name="February" Type="Double" />
-          <Property Name="March" Type="Double" />
-          <Property Name="April" Type="Double" />
-          <Property Name="May" Type="Double" />
-          <Property Name="June" Type="Double" />
-          <Property Name="July" Type="Double" />
-          <Property Name="August" Type="Double" />
-          <Property Name="September" Type="Double" />
-          <Property Name="October" Type="Double" />
-          <Property Name="November" Type="Double" />
-          <Property Name="December" Type="Double" />
-          <Property Name="Year" Type="Int32" />
         </EntityType>
         <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
@@ -918,23 +838,13 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
           <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
           <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
-          <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
           <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
           <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
-          <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
-          <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
           <EntitySet Name="OSC_ImportNPT" EntityType="OSCModel.OSC_ImportNPT" />
+          <EntitySet Name="OSC_ManageGroup" EntityType="OSCModel.OSC_ManageGroup" />
+          <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
+          <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
         </EntityContainer>
-        <EntityType Name="OSC_TeamGroupIds">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="TGIId" />
-          </Key>
-          <Property Name="TeamId" Type="Int64" Nullable="false" />
-          <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="OSC_ImportNPT">
           <Key>
             <PropertyRef Name="NPTReportId" />
@@ -957,6 +867,47 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
           <Property Name="CategoryId" Type="Int64" />
           <Property Name="SubCategoryId" Type="Int64" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OSC_ManageGroup">
+          <Key>
+            <PropertyRef Name="MGId" />
+          </Key>
+          <Property Name="ManagerId" Type="Int64" Nullable="false" />
+          <Property Name="EntityId" Type="Int64" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="OSC_TeamGroupIds">
+          <Key>
+            <PropertyRef Name="TGIId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="OSC_TeamWorkItem">
+          <Key>
+            <PropertyRef Name="WorkItemNo" />
+          </Key>
+          <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="January" Type="Double" />
+          <Property Name="February" Type="Double" />
+          <Property Name="March" Type="Double" />
+          <Property Name="April" Type="Double" />
+          <Property Name="May" Type="Double" />
+          <Property Name="June" Type="Double" />
+          <Property Name="July" Type="Double" />
+          <Property Name="August" Type="Double" />
+          <Property Name="September" Type="Double" />
+          <Property Name="October" Type="Double" />
+          <Property Name="November" Type="Double" />
+          <Property Name="December" Type="Double" />
+          <Property Name="Year" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1310,16 +1261,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ManageGroup">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
-              <MappingFragment StoreEntitySet="OSC_ManageGroup">
-                <ScalarProperty Name="MGId" ColumnName="MGId" />
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OSC_ScorecardField">
             <EntityTypeMapping TypeName="OSCModel.OSC_ScorecardField">
               <MappingFragment StoreEntitySet="OSC_ScorecardField">
@@ -1335,40 +1276,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
               <MappingFragment StoreEntitySet="OSC_TeamNptCategory">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamWorkItem">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
-              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
-                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
-                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="March" ColumnName="March" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamGroupIds">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
-              <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
-                <ScalarProperty Name="TGIId" ColumnName="TGIId" />
-                <ScalarProperty Name="GroupType" ColumnName="GroupType" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1393,6 +1300,50 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
                 <ScalarProperty Name="Activity" ColumnName="Activity" />
                 <ScalarProperty Name="RepId" ColumnName="RepId" />
                 <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ManageGroup">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
+              <MappingFragment StoreEntitySet="OSC_ManageGroup">
+                <ScalarProperty Name="MGId" ColumnName="MGId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamGroupIds">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
+              <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
+                <ScalarProperty Name="TGIId" ColumnName="TGIId" />
+                <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamWorkItem">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
+              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="March" ColumnName="March" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -159,3 +159,13 @@ input:checked + .slider:before {
 }
 /*switch*/
 
+.gridview .col-md-1,
+.gridview .col-md-2,
+.gridview .col-md-3,
+.gridview .col-md-4,
+.gridview .col-md-5,
+.gridview .col-md-6 
+.gridview .col-md-7{
+    padding-left: 1px;
+    padding-right: 1px;
+}

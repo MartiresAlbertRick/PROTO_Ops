@@ -43,17 +43,6 @@
                 }
                 var newChart = new Chart(chtCanvas).Pie(arr, options);
                 $('#js-legend1').html(newChart.generateLegend());
-                var element = $('#prodChart');
-                html2canvas(element, {
-                    onrendered: function (canvas) {
-
-                        var a = document.createElement('a');
-                        a.href = canvas.toDataURL("image/png", "image/octet-stream");
-                        a.download = "a";
-                        a.click();
-
-                    }
-                });
             },
             error: function (response) {
                 alert(response.responseText);
