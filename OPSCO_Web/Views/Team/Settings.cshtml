@@ -40,8 +40,7 @@
     </div>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="tab_groupids">
-            Error: could not load GroupIdSection. File is not available in the server.
-            @*@Html.Action("_GroupIdSection", new { id = Model.TeamId })*@
+            @Html.Action("GroupIdSection", "Team", new { id = Model.TeamId })
         </div>
         <div class="tab-pane fade" id="tab_timings">
             Error: could not load TimingsSection. File is not available in the server.

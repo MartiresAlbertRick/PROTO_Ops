@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="panel panel-primary">
+        <div id="panel_groups" class="panel-body">
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        loadData();
+    });
+    function loadData() {
+        var rowString = '<div class="col-md-12"><div class="row">$tgiId | $teamId | $groupId | $groupType</div></div>';
+        $.ajax({
+            url: '/Team/GetTeamGroupIds/',
+            dataType: "json",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    rowString = rowString.replace('$tgiId', item.TGIId);
+                    rowString = rowString.replace('$teamId', item.TeamId);
+                    rowString = rowString.replace('$groupId', item.GroupId);
+                    rowString = rowString.replace('$groupType', item.GroupType);
+                    $('#panel_groups').append(rowString);
+                });
+                
+                //alert();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

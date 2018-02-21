@@ -5,11 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.Web.Script.Serialization;
-using SelectPdf;
 using Microsoft.Office.Interop.Word;
 using word = Microsoft.Office.Interop.Word;
 using xl = Microsoft.Office.Interop.Excel;
-using office = Microsoft.Office.Core;
 using System.IO;
 namespace OPSCO_Web.Controllers
 {
@@ -144,32 +142,9 @@ namespace OPSCO_Web.Controllers
             return View();
         }
 
-        public ActionResult GetPdf()
-        {
-            long repId;
-            int month, year;
-            repId = (long)Session["IS_Rep"];
-            month = (int)Session["IS_Month"];
-            year = (int)Session["IS_Year"];
-            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
-
-            HtmlToPdf converter = new HtmlToPdf();
-            var doc = converter.ConvertUrl("http://localhost:61845/IndividualScorecard/ScorecardView" + 
-                "?teamId=" + Session["IS_Team"].ToString() +
-                "&repId=" + Session["IS_Rep"].ToString() + 
-                "&month=" + Session["IS_Month"].ToString() + 
-                "&year=" + Session["IS_Year"].ToString());
-
-            byte[] pdf = doc.Save();
-            doc.Close();
-
-            FileResult fileResult = new FileContentResult(pdf, "application/pdf");
-            fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
-            return fileResult;
-        }
-
         public ActionResult GetWord()
         {
+            string logon_user = (string)Session["logon_user"];
             long teamId, repId;
             int month, year;
             teamId = (long)Session["IS_Team"];
@@ -180,10 +155,10 @@ namespace OPSCO_Web.Controllers
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
             
             Application app = new word.Application();
-            string templateFileName = Server.MapPath("~/ImportFile/ScorecardTemplate.docx");
+            string templateFileName = Server.MapPath("~/Templates/ScorecardTemplate.docx");
             Document doc = app.Documents.Open(templateFileName);
             string exportPath = Server.MapPath("~/Export");
-            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".docx";
+            string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".docx";
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             doc.SaveAs(fileName);
             doc.Activate();
@@ -255,24 +230,23 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "Highlights"
 
-            xl.Application _excelApp = new xl.Application();
-            xl.Workbook workbook = _excelApp.Workbooks.Add();
-            string excelFileName = Server.MapPath("~/Export/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".xlsx");
-            workbook.SaveAs(excelFileName);
-            workbook.Close();
-            _excelApp.Quit();
-            
+            #region "ProdChart"
 
-            string pdfFileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            #endregion "ProdChart"
+
+            #region "NPTChart"
+
+            #endregion "NPTChart"
+
+            string pdfFileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".pdf";
             doc.SaveAs2(pdfFileName, word.WdSaveFormat.wdFormatPDF);
             doc.Close();
             app.Quit();
             var mimeType = "application/pdf";
             var pdf = System.IO.File.ReadAllBytes(pdfFileName);
             FileResult fileResult = new FileContentResult(pdf, mimeType);            
-            fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + "_" + year.ToString() + ".pdf";
+            fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".pdf";
             System.IO.File.Delete(fileName);
-            System.IO.File.Delete(excelFileName);
             return fileResult;
         }
 

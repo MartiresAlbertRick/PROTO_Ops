@@ -109,19 +109,11 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="Select.HtmlToPdf, Version=17.3.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
-      <HintPath>..\packages\Select.HtmlToPdf.17.3.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -401,7 +393,8 @@
     <Content Include="Models\OSCModel.edmx.diagram">
       <DependentUpon>OSCModel.edmx</DependentUpon>
     </Content>
-    <Content Include="ImportFile\ScorecardTemplate.docx" />
+    <Content Include="Templates\ProductivityChart.html" />
+    <Content Include="Templates\ScorecardTemplate.docx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Models\OSCModel.Context.tt">
@@ -508,9 +501,7 @@
     <Content Include="Views\NptTracker\Edit.cshtml" />
     <Content Include="Views\NptTracker\Index.cshtml" />
     <Content Include="Views\Shared\SideNav.cshtml" />
-    <Content Include="Views\Shared\_GroupIdRow.cshtml" />
     <Content Include="Views\Team\Settings.cshtml" />
-    <Content Include="Views\Shared\_GroupIdSection.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardView.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardBase.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardCover.cshtml" />
@@ -522,6 +513,8 @@
     <Content Include="Views\IndividualScorecard\ScorecardProgressBars.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardBarCharts.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardViewHidden.cshtml" />
+    <Content Include="Views\Team\GroupIdSection.cshtml" />
+    <Content Include="Views\Team\TimingsSection.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

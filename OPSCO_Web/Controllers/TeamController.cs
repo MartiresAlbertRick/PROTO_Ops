@@ -339,28 +339,27 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Team);
         }
 
-        [HttpPost]
-        public PartialViewResult _SaveGroupId([Bind(Include = "TeamId,GroupId,GroupType")]OSC_TeamGroupIds oSC_TeamGroupIds, long? teamId)
-        {
-            oSC_TeamGroupIds.TeamId = (long)teamId;
-            db.TeamGroupIds.Add(oSC_TeamGroupIds);
-            db.SaveChanges();
-            ViewBag.TeamId = teamId;
-            ViewBag.GroupTypes = db.userGroupType;
-            return PartialView("_GroupIdSection", db.TeamGroupIds.Where(t => t.TeamId == teamId));
-        }
-
-        public PartialViewResult _GroupIdSection(long? id)
+        public PartialViewResult GroupIdSection(long? id)
         {
             ViewBag.TeamId = id;
-            ViewBag.GroupTypes = db.userGroupType;
-            return PartialView(db.TeamGroupIds.Where(t => t.TeamId == id));
+            Session["TeamId"] = id;
+            return PartialView();
         }
 
-        public PartialViewResult _GroupIdRow(OSC_TeamGroupIds oSC_TeamGroupIds)
+        public JsonResult GetTeamGroupIds()
         {
-            ViewBag.GroupTypes = db.userGroupType;
-            return PartialView("_GroupIdRow", oSC_TeamGroupIds);
+            long teamId = 0;
+            if (Session["TeamId"].ToString() != null || Session["TeamId"].ToString() != "") teamId = (long)Session["TeamId"];
+
+            var teamGroupIds = (from list in db.TeamGroupIds.Where(t => t.TeamId == teamId) select list).ToList();
+            return Json(teamGroupIds, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult TimingsSection(long? id)
+        {
+            ViewBag.TeamId = id;
+            Session["TeamId"] = id;
+            return PartialView();
         }
 
         protected override void Dispose(bool disposing)
