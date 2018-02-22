@@ -348,16 +348,13 @@ namespace OPSCO_Web.Controllers
         public PartialViewResult GroupIdSection(long? id)
         {
             ViewBag.TeamId = id;
-            Session["TeamId"] = id;
             return PartialView();
         }
         
-        public JsonResult GetTeamGroupIds()
+        public JsonResult GetTeamGroupIds(long? id)
         {
-            long teamId = 0;
-            if (Session["TeamId"].ToString() != null || Session["TeamId"].ToString() != "") teamId = (long)Session["TeamId"];
-
-            var teamGroupIds = (from list in db.TeamGroupIds.Where(t => t.TeamId == teamId) select list).ToList();
+            if (id == null) return Json(null);
+            var teamGroupIds = (from list in db.TeamGroupIds.Where(t => t.TeamId == id) select list).ToList();
             return Json(teamGroupIds, JsonRequestBehavior.AllowGet);
         }
         #endregion "GroupIdSection"
@@ -365,9 +362,57 @@ namespace OPSCO_Web.Controllers
         public PartialViewResult TimingsSection(long? id)
         {
             ViewBag.TeamId = id;
-            Session["TeamId"] = id;
             return PartialView();
         }
+
+        #region "NptCategorySection"
+        public PartialViewResult NptCategorySection(long? id)
+        {
+            ViewBag.TeamId = id;
+            return PartialView();
+        }
+
+        public JsonResult GetNptCategories(long? id)
+        {
+            if (id == null) return Json(null);
+            List<long> catId = (from list in db.TeamNptCategories where list.TeamId == (long)id select list.CategoryId).ToList();
+            var nptCategories = (from list in db.NptCategories where (!catId.Contains(list.CategoryId) && list.IsActive) select list);
+            return Json(nptCategories, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTeamNptCategories(long? id)
+        {
+            if (id == null) return Json(null);
+            List<long> catId = (from list in db.TeamNptCategories where list.TeamId == (long)id select list.CategoryId).ToList();
+            var nptCategories = (from list in db.NptCategories where (catId.Contains(list.CategoryId) && list.IsActive) select list);
+            return Json(nptCategories, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion "NptCategorySection"
+
+        #region "CustomizeScorecardSection"
+        public PartialViewResult CustomizeScorecardSection(long? id)
+        {
+            ViewBag.TeamId = id;
+            return PartialView();
+        }
+
+        public JsonResult GetScorecardFields(long? id)
+        {
+            if (id == null) return Json(null);
+            List<int> viewId = (from list in db.CustomizeScorecards.OrderBy( t => t.Order) where list.TeamId == (long)id select list.FieldId).ToList();
+            var scorecardFields = (from list in db.ScorecardFields.OrderBy( t => t.IsCore).ThenBy( t => t.FieldId) where (!viewId.Contains(list.FieldId)) && (bool)list.IsActive select list);
+            return Json(scorecardFields, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetScorecardView(long? id)
+        {
+            if (id == null) return Json(null);
+            List<int> viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id select list.FieldId).ToList();
+            var scorecardFields = (from list in db.ScorecardFields.OrderBy( t => viewId.Contains(t.FieldId)) where (viewId.Contains(list.FieldId)) && (bool)list.IsActive select list);
+            return Json(scorecardFields, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "CustomizeScorecardSection"
 
         #region "Dispose"
         protected override void Dispose(bool disposing)

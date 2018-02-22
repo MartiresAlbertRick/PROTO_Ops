@@ -40,17 +40,16 @@
     </div>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="tab_groupids">
-            @Html.Action("GroupIdSection", "Team", new { id = Model.TeamId })
+            @*@Html.Action("GroupIdSection", "Team", new { id = Model.TeamId })*@
         </div>
         <div class="tab-pane fade" id="tab_timings">
-            @Html.Action("TimingsSection", "Team", new { id = Model.TeamId })
+            @*@Html.Action("TimingsSection", "Team", new { id = Model.TeamId })*@
         </div>
         <div class="tab-pane fade" id="tab_nptcategories">
-            Error: could not load NptCategorySection. File is not available in the server.
-            @*@Html.Action("NptCategorySection", "Team", new { id = Model.TeamId })*@
+            @Html.Action("NptCategorySection", "Team", new { id = Model.TeamId })
         </div>
         <div class="tab-pane fade" id="tab_customscorecard">
-            Error: could not load CustomizeScorecardSection. File is not available in the server.
+            @Html.Action("CustomizeScorecardSection", "Team", new { id = Model.TeamId })
         </div>
     </div>
 </div>

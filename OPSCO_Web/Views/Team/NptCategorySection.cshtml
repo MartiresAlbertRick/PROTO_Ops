@@ -32,3 +32,52 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        getNptCategories();
+        getTeamNptCategories();
+    });
+    function getNptCategories() {
+        $('#nptCategory').html('');
+        $.ajax({
+            url: '/Team/GetNptCategories/',
+            data: '{ id : ' + @ViewBag.TeamId +'}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#nptCategory').append(item.CategoryId + ' | ' + item.CategoryDesc + '<br />');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function getTeamNptCategories() {
+        $('#teamNptCategory').html('');
+        $.ajax({
+            url: '/Team/GetTeamNptCategories/',
+            data: '{ id : ' + @ViewBag.TeamId +'}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#teamNptCategory').append(item.CategoryId + ' | ' + item.CategoryDesc + '<br />');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

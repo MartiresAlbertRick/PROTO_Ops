@@ -35,6 +35,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_TeamNptCategory> TeamNptCategories { get; set; }
         public DbSet<OSC_ManageGroup> ManageGroups { get; set; }
         public DbSet<OSC_TeamWorkItem> TeamWorkItems { get; set; }
+        public DbSet<OSC_ScorecardField> ScorecardFields { get; set; }
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
         public DbSet<OSC_ImportBIQual> BIQ { get; set; }

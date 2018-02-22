@@ -381,39 +381,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <Property Name="WorkTypeDescription" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="set_group">
-    <Key>
-      <PropertyRef Name="grp_id" />
-    </Key>
-    <Property Name="grp_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="grp_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="grp_desc" Type="nvarchar" MaxLength="255" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
-  <EntityType Name="set_module">
-    <Key>
-      <PropertyRef Name="mod_id" />
-    </Key>
-    <Property Name="mod_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="mod_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="mod_desc" Type="nvarchar" MaxLength="255" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
-  <EntityType Name="set_user">
-    <Key>
-      <PropertyRef Name="user_id" />
-    </Key>
-    <Property Name="user_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="user_name" Type="nvarchar" MaxLength="25" />
-    <Property Name="user_last_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="user_first_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="user_middle_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="can_PROD" Type="bit" />
-    <Property Name="can_UAT" Type="bit" />
-    <Property Name="can_PEER" Type="bit" />
-    <Property Name="can_DEV" Type="bit" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
   <EntityContainer Name="OSCModelStoreContainer">
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
@@ -436,9 +403,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_module" EntityType="Self.set_module" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_user" EntityType="Self.set_user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
