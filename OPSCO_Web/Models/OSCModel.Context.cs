@@ -46,8 +46,8 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
         public virtual DbSet<OSC_WorkStatus> OSC_WorkStatus { get; set; }
         public virtual DbSet<OSC_WorkType> OSC_WorkType { get; set; }
-        public virtual DbSet<OSC_CustomizeScorecard> OSC_CustomizeScorecard { get; set; }
-        public virtual DbSet<OSC_ScorecardField> OSC_ScorecardField { get; set; }
         public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
+        public virtual DbSet<OSC_ScorecardField> OSC_ScorecardField { get; set; }
+        public virtual DbSet<OSC_CustomizeScorecard> OSC_CustomizeScorecard { get; set; }
     }
 }

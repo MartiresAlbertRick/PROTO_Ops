@@ -357,14 +357,107 @@ namespace OPSCO_Web.Controllers
             var teamGroupIds = (from list in db.TeamGroupIds.Where(t => t.TeamId == id) select list).ToList();
             return Json(teamGroupIds, JsonRequestBehavior.AllowGet);
         }
-        #endregion "GroupIdSection"
 
+        public JsonResult SaveGroupIds(long? id, List<OSC_TeamGroupIds> objects)
+        {
+            object s = new { message = "Success" };
+            if (id == null) return Json(null);
+            List<OSC_TeamGroupIds> list = db.TeamGroupIds.AsNoTracking().Where(t => t.TeamId == id).ToList();
+            foreach (OSC_TeamGroupIds obj in list)
+            {
+                if (objects.Where(t=>t.TGIId==obj.TGIId && t.TGIId != 0).FirstOrDefault() == null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        OSC_TeamGroupIds oSC_TeamGroupIds = db.TeamGroupIds.Find(obj.TGIId);
+                        db.TeamGroupIds.Remove(oSC_TeamGroupIds);
+                        db.SaveChanges();
+                    }
+                }   
+            }
+            foreach (OSC_TeamGroupIds obj in objects)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (obj.TGIId == 0)
+                    {
+                        db.TeamGroupIds.Add(obj);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.Entry(obj).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "GroupIdSection"
+        #region "TimingsSection"
         public PartialViewResult TimingsSection(long? id)
         {
             ViewBag.TeamId = id;
+            ViewBag.Years = db.years;
+            ViewBag.BusinessAreas = db.BusinessAreas;
+            ViewBag.WorkTypes = db.WorkTypes;
+            ViewBag.Status = db.Statuses;
             return PartialView();
         }
+        public JsonResult GetTimings(long? id, int? year)
+        {
+            if (id == null) return Json(null);
+            if (year == null || year == 0 || year.ToString() == "") return Json(null);
+            var timings = (from list in db.TeamWorkItems where list.TeamId == (long)id && list.Year == (int)year select list).ToList();
+            if (timings.Count == 0 || timings == null) timings = (from list in db.TeamWorkItems where list.TeamId == (long)id && list.Year == ((int)year - 1) select list).ToList();
+            if (timings.Count == 0 || timings == null) timings = (from list in db.TeamWorkItems where list.TeamId == (long)id && list.Year == ((int)year + 1) select list).ToList();
+            return Json(timings, JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult SaveTimings(long? id, List<OSC_TeamWorkItem> objects)
+        {
+            object s = new { message = "Success" };
+            if (id == null) return Json(null);
+            List<OSC_TeamWorkItem> list = db.TeamWorkItems.AsNoTracking().Where(t => t.TeamId == id).ToList();
+            foreach (OSC_TeamWorkItem obj in list)
+            {
+                if (objects.Where(t => t.WorkItemNo == obj.WorkItemNo && t.WorkItemNo != 0).FirstOrDefault() == null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        OSC_TeamWorkItem oSC_TeamWorkItem = db.TeamWorkItems.Find(obj.WorkItemNo);
+                        db.TeamWorkItems.Remove(oSC_TeamWorkItem);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            foreach (OSC_TeamWorkItem obj in objects)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (obj.WorkItemNo == 0)
+                    {
+                        db.TeamWorkItems.Add(obj);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        if (list.Where(t => t.WorkItemNo == obj.WorkItemNo && t.Year == obj.Year).FirstOrDefault() == null)
+                        {
+                            db.Entry(obj).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            db.TeamWorkItems.Add(obj);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "TimingsSection"
         #region "NptCategorySection"
         public PartialViewResult NptCategorySection(long? id)
         {
@@ -388,32 +481,141 @@ namespace OPSCO_Web.Controllers
             return Json(nptCategories, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SaveCategories(long? id, List<OSC_TeamNptCategory> objects)
+        {
+            object s = new { message = "Success" };
+            if (id == null) return Json(null);
+            var list = db.TeamNptCategories.Where(t => t.TeamId == id).ToList();
+            foreach (OSC_TeamNptCategory obj in list)
+            {
+                if (ModelState.IsValid)
+                { 
+                    db.TeamNptCategories.Remove(obj);
+                    db.SaveChanges();
+                }
+            }
+            foreach (OSC_TeamNptCategory obj in objects)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.TeamNptCategories.Add(obj);
+                    db.SaveChanges();
+                }
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
         #endregion "NptCategorySection"
-
         #region "CustomizeScorecardSection"
         public PartialViewResult CustomizeScorecardSection(long? id)
         {
             ViewBag.TeamId = id;
+            ViewBag.Years = db.years;
+            ViewBag.Months = db.months;
+            ViewBag.Scorecards = db.scorecardOptions;
             return PartialView();
         }
 
-        public JsonResult GetScorecardFields(long? id)
+        public JsonResult GetScorecardFields(long? id, int? month, int? year, string view)
         {
             if (id == null) return Json(null);
-            List<int> viewId = (from list in db.CustomizeScorecards.OrderBy( t => t.Order) where list.TeamId == (long)id select list.FieldId).ToList();
-            var scorecardFields = (from list in db.ScorecardFields.OrderBy( t => t.IsCore).ThenBy( t => t.FieldId) where (!viewId.Contains(list.FieldId)) && (bool)list.IsActive select list);
+            if (month == null || month == 0 || month.ToString() == "") return Json(null);
+            if (year == null || year == 0 || year.ToString() == "") return Json(null);
+            if (view == "") return Json(null);
+            List<int> viewId = new List<int>();
+            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
+            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType=="view select list.FieldId).ToList();
+            if (viewId == null || viewId.Count == 0)
+            {
+                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
+                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
+                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType=view select list.FieldId).ToList();
+                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType=view select list.FieldId).ToList();
+            }
+            List<OSC_ScorecardField> scorecardFields = new List<OSC_ScorecardField>();
+            if (viewId == null || viewId.Count == 0)
+            {
+                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore == false && t.ScorecardType == view))
+                foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore == false))
+                {
+                    scorecardFields.Add(item);
+                }
+            }
+            else
+            {
+                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => !viewId.Contains(t.FieldId) && (bool)t.IsActive && t.ScorecardType == view))
+                foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => !viewId.Contains(t.FieldId) && (bool)t.IsActive))
+                {
+                    scorecardFields.Add(item);
+                }
+            }
             return Json(scorecardFields, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetScorecardView(long? id)
+        public JsonResult GetScorecardView(long? id, int? month, int? year, string view)
         {
             if (id == null) return Json(null);
-            List<int> viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id select list.FieldId).ToList();
-            var scorecardFields = (from list in db.ScorecardFields.OrderBy( t => viewId.Contains(t.FieldId)) where (viewId.Contains(list.FieldId)) && (bool)list.IsActive select list);
+            if (month == null || month == 0 || month.ToString() == "") return Json(null);
+            if (year == null || year == 0 || year.ToString() == "") return Json(null);
+            if (view == "") return Json(null);
+            List<int> viewId = new List<int>();
+            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
+            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType=="view select list.FieldId).ToList();
+            if (viewId == null || viewId.Count == 0)
+            {
+                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
+                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
+                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType=view select list.FieldId).ToList();
+                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType=view select list.FieldId).ToList();
+            }
+            List<OSC_ScorecardField> scorecardFields = new List<OSC_ScorecardField>();
+            if (viewId == null || viewId.Count == 0)
+            {
+                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore && t.ScorecardType==view))
+                foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore))
+                {
+                    scorecardFields.Add(item);
+                }
+            }
+            else
+            {
+                foreach (int i in viewId)
+                {
+                    OSC_ScorecardField item = db.ScorecardFields.Find(i);
+                    //if ((bool)item.IsActive && t.ScorecardType==view)
+                    if ((bool)item.IsActive)
+                    {
+                        scorecardFields.Add(item);
+                    }
+                }
+            }
             return Json(scorecardFields, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveScorecardView(long? id, int? month, int? year, string view, List<OSC_CustomizeScorecard> objects)
+        {
+            object s = new { message = "Success" };
+            if (id == null) return Json(null);
+            var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month).ToList();
+            //var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month && t.ScorecardView==view).ToList();
+            foreach (OSC_CustomizeScorecard obj in list)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.CustomizeScorecards.Remove(obj);
+                    db.SaveChanges();
+                }
+            }
+            foreach (OSC_CustomizeScorecard obj in objects)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.CustomizeScorecards.Add(obj);
+                    db.SaveChanges();
+                }
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
         }
         #endregion "CustomizeScorecardSection"
-
         #region "Dispose"
         protected override void Dispose(bool disposing)
         {

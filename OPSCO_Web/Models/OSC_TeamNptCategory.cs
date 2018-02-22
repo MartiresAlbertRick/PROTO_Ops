@@ -16,5 +16,6 @@ namespace OPSCO_Web.Models
     {
         public long TeamId { get; set; }
         public long CategoryId { get; set; }
+        public long TNCId { get; set; }
     }
 }

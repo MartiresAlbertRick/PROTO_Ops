@@ -25,8 +25,40 @@ alter table OSC_TeamGroupIds
 add TGIId bigint identity(1,1) not null
 go
 
+alter table OSC_TeamGroupIds
+add primary key (TGIId)
+go
+
+alter table OSC_CustomizeScorecard
+add CSId bigint identity(1,1) not null
+go
+
+alter table OSC_CustomizeScorecard
+add primary key (CSId)
+go
+
+alter table OSC_ScorecardField
+add primary key (FieldId)
+go
+
+alter table OSC_TeamNptCategory
+add TNCId bigint identity(1,1) not null
+go
+
+alter table OSC_TeamNptCategory
+add primary key (TNCId)
+go
+
 alter table OSC_ManageGroup
 add MGId bigint identity(1,1) not null
+go
+
+alter table OSC_ManageGroup
+add primary key (MGId)
+go
+
+alter table OSC_TeamWorkItem
+add primary key (WorkItemNo)
 go
 
 alter table OSC_ImportNPT

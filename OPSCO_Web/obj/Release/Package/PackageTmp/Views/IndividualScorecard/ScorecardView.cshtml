@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="~/Content/Table.css" />
     <link rel="stylesheet" href="~/Content/Callout.css" />
     <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
     <script type="text/javascript" src="~/Scripts/html2canvas.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
     <script type="text/javascript" src="~/Scripts/Site.js"></script>
     <script type="text/javascript" src="~/Scripts/Chart.js"></script>
     <style>
@@ -50,22 +50,6 @@
                     margin-right: 20px;
                 }
     </style>
-    <script>
-        $(function () {
-            $('#btn_convert').click(function () {
-                html2canvas($('#prodChart'), {
-                    onrendered: function (canvas) {
-
-                        var a = document.createElement('a');
-                        a.href = canvas.toDataURL("image/png", "image/octet-stream");
-                        a.download = chartFileName;
-                        a.click();
-
-                    }
-                });
-            });
-        })
-    </script>
 </head>
 <body>
     <div class="container-fluid">
@@ -85,7 +69,7 @@
             <a href="@Url.Action("GetWord", "IndividualScorecard")" id="btn_export" class="btn btn-primary btn-sm navbar-btn" click="$('#submit').click()">
                 <i class="fa fa-file-pdf-o"></i> Export to PDF
             </a>
-            <a id="btn_convert">Convert</a>
+            @*<a id="btn_convert">Convert</a>*@
         </div>
     </nav>
 </body>

@@ -38,18 +38,16 @@
     <Property Name="Percentage" Type="float" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_CustomizeScorecard">
     <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="FieldId" />
+      <PropertyRef Name="CSId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="FieldId" Type="int" Nullable="false" />
     <Property Name="Order" Type="int" />
     <Property Name="Month" Type="int" />
     <Property Name="Year" Type="int" />
+    <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_Department">
     <Key>
@@ -298,12 +296,9 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
     <Property Name="IsCurrent" Type="bit" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ScorecardField">
     <Key>
       <PropertyRef Name="FieldId" />
-      <PropertyRef Name="FieldName" />
     </Key>
     <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FieldName" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -330,15 +325,13 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
     <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
     <Property Name="TGIId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamNptCategory">
     <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="TNCId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="CategoryId" Type="bigint" Nullable="false" />
+    <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
@@ -385,6 +378,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" Schema="dbo" store:Type="Tables" />
@@ -398,33 +392,12 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
-    [OSC_CustomizeScorecard].[FieldId] AS [FieldId], 
-    [OSC_CustomizeScorecard].[Order] AS [Order], 
-    [OSC_CustomizeScorecard].[Month] AS [Month], 
-    [OSC_CustomizeScorecard].[Year] AS [Year]
-    FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ScorecardField].[FieldId] AS [FieldId], 
-    [OSC_ScorecardField].[FieldName] AS [FieldName], 
-    [OSC_ScorecardField].[IsCore] AS [IsCore], 
-    [OSC_ScorecardField].[IsActive] AS [IsActive]
-    FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
-    [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
-    FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
-    </EntitySet>
   </EntityContainer>
 </Schema>

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="OSCEntities-Web.config Connection String" description="OSCEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.OSCModel.csdl|res://*/Models.OSCModel.ssdl|res://*/Models.OSCModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=JHJHST59\JHS1D;initial catalog=dbbtOSCp1;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\GitHub\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OSCEntities']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\Project2\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OSCEntities']/@connectionString" />
   </parameter>
   <parameter name="oscdb-Web.config Connection String" description="oscdb Connection String used in web.config by the application to access the database." defaultValue="Data Source=JHJHST59\JHS1D;Initial Catalog=dbbtOSCp1;Trusted_Connection=YES;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\GitHub\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='oscdb']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\Project2\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='oscdb']/@connectionString" />
   </parameter>
   <parameter name="OPSCO_Web.Models.OSCContext-Web.config Connection String" description="OPSCO_Web.Models.OSCContext Connection String used in web.config by the application to access the database." defaultValue="OPSCO_Web.Models.OSCContext_ConnectionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\GitHub\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OPSCO_Web.Models.OSCContext']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\Project2\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OPSCO_Web.Models.OSCContext']/@connectionString" />
   </parameter>
 </parameters>

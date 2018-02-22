@@ -1,4 +1,32 @@
-﻿<div class="row">
+﻿<style>
+    /*sortable jquery*/
+    #nptCategory, #teamNptCategory {
+        border: 1px solid #eee;
+        width: 380px;
+        min-height: 330px;
+        list-style-type: none;
+        display: block;
+        margin: 0;
+        padding: 5px 0 0 0;
+        float: left;
+        margin-right: 10px;
+        direction: ltr;
+        max-height: 330px;
+        overflow: auto;
+        background-color: white;
+    }
+
+    #nptCategory li, #teamNptCategory li {
+        margin: 0 5px 5px 5px;
+        padding: 5px;
+        width: 350px;
+    }
+
+    .ui-state-disabled {
+        opacity: 100;
+    }
+</style>
+<div class="row">
     <div class="panel panel-primary">
         <div id="panel_timings" class="panel-body">
             <div class="container-fluid">
@@ -15,31 +43,45 @@
             </div>
             <div class="col-md-6">
                 <label>NPT Categories</label>
-                <div class="panel panel-info" style="max-height: 330px; overflow-y: auto;">
-                    <div class="panel-body" id="nptCategory">
-                        <!--container 1-->
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <ul class="connectedSortable input-sm" id="nptCategory">
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <label>Team NPT Categories</label>
-                <div class="panel panel-info" style="max-height: 330px; overflow-y: auto;">
-                    <div class="panel-body" id="teamNptCategory">
-                        <!--container 2-->
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <ul class="connectedSortable input-sm" id="teamNptCategory">
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
 <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 <script>
     $(function () {
+        $('#nptCategory').empty();
+        $('#nptCategory, #teamNptCategory').sortable({
+            connectWith: '.connectedSortable',
+            cancel: '.ui-state-disabled',
+            items: 'li:not(.ui-state-disabled)'
+        }).disableSelection();
         getNptCategories();
         getTeamNptCategories();
+        $('#btn_save_category').click(function () {
+            saveCategories();
+        });
     });
     function getNptCategories() {
-        $('#nptCategory').html('');
+        $('#nptCategory').empty();
+        $('#teamNptCategory').empty();
         $.ajax({
             url: '/Team/GetNptCategories/',
             data: '{ id : ' + @ViewBag.TeamId +'}',
@@ -48,7 +90,7 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.each(data, function (index, item) {
-                    $('#nptCategory').append(item.CategoryId + ' | ' + item.CategoryDesc + '<br />');
+                    $('#nptCategory').append('<li id="' + item.CategoryId + '" class="ui-state-default"><a href="#" title="' + item.CategoryDesc + '">' + item.CategoryDesc + '</a></li>');
                 });
             },
             error: function (response) {
@@ -60,7 +102,7 @@
         });
     }
     function getTeamNptCategories() {
-        $('#teamNptCategory').html('');
+        $('#teamNptCategory').empty();
         $.ajax({
             url: '/Team/GetTeamNptCategories/',
             data: '{ id : ' + @ViewBag.TeamId +'}',
@@ -69,8 +111,33 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.each(data, function (index, item) {
-                    $('#teamNptCategory').append(item.CategoryId + ' | ' + item.CategoryDesc + '<br />');
+                    $('#teamNptCategory').append('<li id="' + item.CategoryId  + '" class="ui-state-default"><a href="#" title="' + item.CategoryDesc + '">' + item.CategoryDesc + '</a></li>');
                 });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function saveCategories() {
+        var categories = []
+        $('#teamNptCategory li').each(function (index, item) {
+            var id = $(item).prop('id');
+            var item = { TeamId: @ViewBag.TeamId, CategoryId: id}
+            categories.push(item);
+        });
+        $.ajax({
+            url: '/Team/SaveCategories/',
+            data: '{ id : ' + @ViewBag.TeamId + ', objects : ' + JSON.stringify(categories) + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                getNptCategories();
+                getTeamNptCategories();
             },
             error: function (response) {
                 alert(response.responseText);

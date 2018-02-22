@@ -67,6 +67,11 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "2018", Value = "2018" },
             new SelectListItem { Text = "2017", Value = "2017" }
         };
+        public List<SelectListItem> scorecardOptions = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "Individual Scorecard", Value = "IndividualScorecard" },
+            new SelectListItem { Text = "Team Scorecard", Value = "TeamScorecard" }
+        };
         public List<SelectListItem> activities = new List<SelectListItem>()
         {
             new SelectListItem { Text = "Time-off", Value = "Time-off" },

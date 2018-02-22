@@ -346,35 +346,6 @@
     <Property Name="WorkTypeDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
-  <EntityType Name="OSC_CustomizeScorecard">
-    <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="FieldId" />
-    </Key>
-    <Property Name="TeamId" Type="Int64" Nullable="false" />
-    <Property Name="FieldId" Type="Int32" Nullable="false" />
-    <Property Name="Order" Type="Int32" />
-    <Property Name="Month" Type="Int32" />
-    <Property Name="Year" Type="Int32" />
-  </EntityType>
-  <EntityType Name="OSC_ScorecardField">
-    <Key>
-      <PropertyRef Name="FieldId" />
-      <PropertyRef Name="FieldName" />
-    </Key>
-    <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FieldName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="IsCore" Type="Boolean" />
-    <Property Name="IsActive" Type="Boolean" />
-  </EntityType>
-  <EntityType Name="OSC_TeamNptCategory">
-    <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="CategoryId" />
-    </Key>
-    <Property Name="TeamId" Type="Int64" Nullable="false" />
-    <Property Name="CategoryId" Type="Int64" Nullable="false" />
-  </EntityType>
   <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" />
@@ -397,8 +368,36 @@
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
-    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" />
-    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
-    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
+    <EntitySet Name="OSC_ScorecardField" EntityType="OSCModel.OSC_ScorecardField" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="OSCModel.OSC_CustomizeScorecard" />
   </EntityContainer>
+  <EntityType Name="OSC_TeamNptCategory">
+    <Key>
+      <PropertyRef Name="TNCId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="CategoryId" Type="Int64" Nullable="false" />
+    <Property Name="TNCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_ScorecardField">
+    <Key>
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FieldName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsCore" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OSC_CustomizeScorecard">
+    <Key>
+      <PropertyRef Name="CSId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="FieldId" Type="Int32" Nullable="false" />
+    <Property Name="Order" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
 </Schema>

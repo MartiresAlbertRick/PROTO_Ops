@@ -38,18 +38,16 @@
     <Property Name="Percentage" Type="float" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_CustomizeScorecard">
     <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="FieldId" />
+      <PropertyRef Name="CSId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="FieldId" Type="int" Nullable="false" />
     <Property Name="Order" Type="int" />
     <Property Name="Month" Type="int" />
     <Property Name="Year" Type="int" />
+    <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_Department">
     <Key>
@@ -216,13 +214,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
     <Property Name="Location" Type="nvarchar" MaxLength="100" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ManageGroup">
     <Key>
-      <PropertyRef Name="ManagerId" />
-      <PropertyRef Name="EntityId" />
-      <PropertyRef Name="Type" />
       <PropertyRef Name="MGId" />
     </Key>
     <Property Name="ManagerId" Type="bigint" Nullable="false" />
@@ -303,12 +296,9 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a pri
     <Property Name="IsCurrent" Type="bit" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ScorecardField">
     <Key>
       <PropertyRef Name="FieldId" />
-      <PropertyRef Name="FieldName" />
     </Key>
     <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FieldName" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -326,11 +316,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
     <Property Name="BIUserGroup" Type="nvarchar" MaxLength="50" />
     <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamGroupIds">
     <Key>
-      <PropertyRef Name="TeamId" />
       <PropertyRef Name="TGIId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
@@ -338,18 +325,14 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a pr
     <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
     <Property Name="TGIId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamNptCategory">
     <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="TNCId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="CategoryId" Type="bigint" Nullable="false" />
+    <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
       <PropertyRef Name="WorkItemNo" />
@@ -391,43 +374,11 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <Property Name="WorkTypeDescription" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="set_group">
-    <Key>
-      <PropertyRef Name="grp_id" />
-    </Key>
-    <Property Name="grp_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="grp_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="grp_desc" Type="nvarchar" MaxLength="255" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
-  <EntityType Name="set_module">
-    <Key>
-      <PropertyRef Name="mod_id" />
-    </Key>
-    <Property Name="mod_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="mod_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="mod_desc" Type="nvarchar" MaxLength="255" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
-  <EntityType Name="set_user">
-    <Key>
-      <PropertyRef Name="user_id" />
-    </Key>
-    <Property Name="user_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="user_name" Type="nvarchar" MaxLength="25" />
-    <Property Name="user_last_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="user_first_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="user_middle_name" Type="nvarchar" MaxLength="50" />
-    <Property Name="can_PROD" Type="bit" />
-    <Property Name="can_UAT" Type="bit" />
-    <Property Name="can_PEER" Type="bit" />
-    <Property Name="can_DEV" Type="bit" />
-    <Property Name="created_date" Type="datetime" />
-  </EntityType>
   <EntityContainer Name="OSCModelStoreContainer">
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" Schema="dbo" store:Type="Tables" />
@@ -436,76 +387,17 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_module" EntityType="Self.set_module" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="set_user" EntityType="Self.set_user" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
-    [OSC_CustomizeScorecard].[FieldId] AS [FieldId], 
-    [OSC_CustomizeScorecard].[Order] AS [Order], 
-    [OSC_CustomizeScorecard].[Month] AS [Month], 
-    [OSC_CustomizeScorecard].[Year] AS [Year]
-    FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ManageGroup].[ManagerId] AS [ManagerId], 
-    [OSC_ManageGroup].[EntityId] AS [EntityId], 
-    [OSC_ManageGroup].[Type] AS [Type], 
-    [OSC_ManageGroup].[MGId] AS [MGId]
-    FROM [dbo].[OSC_ManageGroup] AS [OSC_ManageGroup]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ScorecardField].[FieldId] AS [FieldId], 
-    [OSC_ScorecardField].[FieldName] AS [FieldName], 
-    [OSC_ScorecardField].[IsCore] AS [IsCore], 
-    [OSC_ScorecardField].[IsActive] AS [IsActive]
-    FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamGroupIds].[TeamId] AS [TeamId], 
-    [OSC_TeamGroupIds].[GroupId] AS [GroupId], 
-    [OSC_TeamGroupIds].[GroupType] AS [GroupType], 
-    [OSC_TeamGroupIds].[TGIId] AS [TGIId]
-    FROM [dbo].[OSC_TeamGroupIds] AS [OSC_TeamGroupIds]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
-    [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
-    FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamWorkItem].[WorkItemNo] AS [WorkItemNo], 
-    [OSC_TeamWorkItem].[TeamId] AS [TeamId], 
-    [OSC_TeamWorkItem].[BusinessAreaCode] AS [BusinessAreaCode], 
-    [OSC_TeamWorkItem].[WorkTypeCode] AS [WorkTypeCode], 
-    [OSC_TeamWorkItem].[StatusCode] AS [StatusCode], 
-    [OSC_TeamWorkItem].[January] AS [January], 
-    [OSC_TeamWorkItem].[February] AS [February], 
-    [OSC_TeamWorkItem].[March] AS [March], 
-    [OSC_TeamWorkItem].[April] AS [April], 
-    [OSC_TeamWorkItem].[May] AS [May], 
-    [OSC_TeamWorkItem].[June] AS [June], 
-    [OSC_TeamWorkItem].[July] AS [July], 
-    [OSC_TeamWorkItem].[August] AS [August], 
-    [OSC_TeamWorkItem].[September] AS [September], 
-    [OSC_TeamWorkItem].[October] AS [October], 
-    [OSC_TeamWorkItem].[November] AS [November], 
-    [OSC_TeamWorkItem].[December] AS [December], 
-    [OSC_TeamWorkItem].[Year] AS [Year]
-    FROM [dbo].[OSC_TeamWorkItem] AS [OSC_TeamWorkItem]</DefiningQuery>
-    </EntitySet>
   </EntityContainer>
 </Schema>

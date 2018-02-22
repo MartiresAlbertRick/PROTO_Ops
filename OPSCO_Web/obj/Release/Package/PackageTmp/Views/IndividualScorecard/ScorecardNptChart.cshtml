@@ -32,8 +32,8 @@
                 var chtCanvas = $('#pieChart2').get(0).getContext('2d');
                 var options = {
                     segmentShowStroke: false,
-                    animateRotate: false,
-                    animateScale: false,
+                    animateRotate: true,
+                    animateScale: true,
                     percentageInnerCutout: 60,
                     tooltipTemplate: "<%= label %> - <%= value %>",
                     legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\">" +

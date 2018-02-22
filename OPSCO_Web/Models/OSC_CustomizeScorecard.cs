@@ -19,5 +19,6 @@ namespace OPSCO_Web.Models
         public Nullable<int> Order { get; set; }
         public Nullable<int> Month { get; set; }
         public Nullable<int> Year { get; set; }
+        public long CSId { get; set; }
     }
 }

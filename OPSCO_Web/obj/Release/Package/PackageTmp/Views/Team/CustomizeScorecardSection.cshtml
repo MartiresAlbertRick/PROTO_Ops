@@ -1,0 +1,219 @@
+﻿<style>
+    /*sortable jquery*/
+    #scorecardFields, #scorecardView {
+        border: 1px solid #eee;
+        width: 380px;
+        min-height: 330px;
+        list-style-type: none;
+        display: block;
+        margin: 0;
+        padding: 5px 0 0 0;
+        float: left;
+        margin-right: 10px;
+        direction: ltr;
+        max-height: 330px;
+        overflow: auto;
+        background-color: white;
+    }
+
+    #scorecardFields li, #scorecardView li {
+        margin: 0 5px 5px 5px;
+        padding: 5px;
+        width: 350px;
+    }
+
+    .ui-state-disabled {
+        opacity: 100;
+    }
+
+    .ui-state-default.sel-core {
+        background-color: #dff0d8;
+    }
+
+    .ui-state-default.sel-non-core {
+        background-color: #faf2cc;
+    }
+</style>
+<div class="row">
+    <div class="panel panel-primary">
+        <div id="panel_timings" class="panel-body">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a id="btn_save_view" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                             <div class="col-md-4 pull-right">
+                                <select class="form-control input-sm" id="cmb_year_custom">
+                                    <option value="0">--Select Year--</option>
+                                    @foreach (var x in ViewBag.Years)
+                                    {
+                                        <option value="@x.Value">@x.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 pull-right">
+                                <select class="form-control input-sm" id="cmb_month_custom">
+                                    <option value="0">--Select Month--</option>
+                                    @foreach (var x in ViewBag.Months)
+                                    {
+                                        <option value="@x.Value">@x.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 pull-right">
+                                <select class="form-control input-sm" id="cmb_view_custom">
+                                    <option value="0">--Select View--</option>
+                                    @foreach (var x in ViewBag.Scorecards)
+                                    {
+                                        <option value="@x.Value">@x.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="col-md-6">
+                <label>Scorecard Fields</label>
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <ul class="connectedSortable input-sm" id="scorecardFields"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>Scorecard View</label>
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <ul class="connectedSortable input-sm" id="scorecardView"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        $('#scorecardFields, #scorecardView').sortable({
+            connectWith: '.connectedSortable',
+            cancel: '.ui-state-disabled',
+            items: 'li:not(.ui-state-disabled)'
+        }).disableSelection();
+        $('#cmb_year_custom').change(function () {
+            get();
+        });
+        $('#cmb_month_custom').change(function () {
+            get();
+        });
+        $('#cmb_view_custom').change(function () {
+            get();
+        });
+        $('#btn_save_view').click(function () {
+            saveScorecardView();
+        });
+    });
+    function get() {
+        if ($('#cmb_view_custom').val() != 0 && $('#cmb_month_custom').val() != 0 && $('#cmb_year_custom').val() != 0) {
+            getScorecardFields();
+            getScorecardView();
+        }
+    }
+    function getScorecardFields() {
+        $('#scorecardFields').html('');
+        $.ajax({
+            url: '/Team/GetScorecardFields/',
+            data: '{ id : ' + @ViewBag.TeamId +', month : ' + $('#cmb_month_custom').val() + ', year : ' + $('#cmb_year_custom').val() + ', view : "' + $('#cmb_view_custom').val() +'"}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    var core = '';
+                    if (item.IsCore) {
+                        core = ' sel-core';
+                    }
+                    else {
+                        core = ' sel-non-core';
+                    }
+                    $('#scorecardFields').append('<li id="' + item.FieldId + '" class="ui-state-default' + core + '"><a href="#" title="' + item.FieldName + '">' + item.FieldName + '</a></li>');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function getScorecardView() {
+        $('#scorecardView').html('');
+        $.ajax({
+            url: '/Team/GetScorecardView/',
+            data: '{ id : ' + @ViewBag.TeamId +', month : ' + $('#cmb_month_custom').val() + ', year : ' + $('#cmb_year_custom').val() + ', view : "' + $('#cmb_view_custom').val() +'"}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    var core = '';
+                    if (item.FieldName == 'Month') {
+                        core = core + ' ui-state-disabled';
+                    }
+                    if (item.IsCore) {
+                        core = core + ' sel-core';
+                    }
+                    else {
+                        core = core + ' sel-non-core';
+                    }
+                    $('#scorecardView').append('<li id="' + item.FieldId + '" class="ui-state-default' + core + '"><a href="#" title="' + item.FieldName + '">' + item.FieldName + '</a></li>');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function saveScorecardView() {
+        var categories = []
+        var i = 0;
+        $('#scorecardView li').each(function (index, item) {
+            i = i + 1;
+            var id = $(item).prop('id');
+            var item = {
+                TeamId: @ViewBag.TeamId, 
+                FieldId: id,
+                Order: i,
+                Month: $('#cmb_month_custom').val(),
+                Year: $('#cmb_year_custom').val()
+            }
+            //ScorecardType: $('#cmb_view_custom').val()
+            categories.push(item);
+        });
+        $.ajax({
+            url: '/Team/SaveScorecardView/',
+            data: '{ id : ' + @ViewBag.TeamId +', month : ' + $('#cmb_month_custom').val() + ', year : ' + $('#cmb_year_custom').val() + ', view : "' + $('#cmb_view_custom').val() + '", objects: ' + JSON.stringify(categories) + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                get();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

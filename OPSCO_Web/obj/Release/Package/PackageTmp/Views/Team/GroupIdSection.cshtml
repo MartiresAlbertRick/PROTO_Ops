@@ -1,0 +1,124 @@
+﻿<div class="row">
+    <div class="panel panel-primary">
+        <div id="panel_groups" class="panel-body">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group">
+                                <a id="btn_save_group" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                                <a id="btn_add_group" href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container-fluid" id="group_container" style="max-height: 350px; overflow-y: auto;">
+                <!--container-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        getTeamGroupIds();
+        $('#btn_save_group').click(function () {
+            saveGroupIds(); 
+        });
+        $('#btn_add_group').click(function () {
+            addGroupId();
+        });
+    });
+    function getTeamGroupIds() {
+        var rowString = '<div id="$rowId" class="form-group user_group"><div class="row"><div class="col-md-12">' +
+            '<input id="tgId_$rowId" type="hidden" value="$tgiId" />' +
+            '<input id="teamId_$rowId" type="hidden" value="$teamId" />' +
+            '<div class="col-md-2"><select id="grouptype_$rowId" class="form-control input-sm grouptype" type="text">' +
+            '<option value="BI">BI</option><option value="AIQ">AIQ</option><select /></div>' +
+            '<div class="col-md-3"><input id="groupId_$rowId" class="form-control input-sm" type="text" value="$groupId" /></div>' +
+            '<div class="col-md-1"><a href="#" class="btn btn-danger btn-sm" onclick="deleteGroupId($rowId);" title="delete"><i class="fa fa-trash"></i></a></div>'
+            '</div></div></div>';
+        $('#group_container').html('');
+        $.ajax({
+            url: '/Team/GetTeamGroupIds/',
+            data: '{ id : ' + @ViewBag.TeamId + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    var row = rowString;
+                    row = row.replace('$rowId', item.TGIId);
+                    row = row.replace('$rowId', item.TGIId);
+                    row = row.replace('$rowId', item.TGIId);
+                    row = row.replace('$tgiId', item.TGIId);
+                    row = row.replace('$teamId', item.TeamId);
+                    row = row.replace('$groupId', item.GroupId);
+                    row = row.replace('$rowId', item.TGIId);
+                    row = row.replace('$rowId', item.TGIId);
+                    row = row.replace('$rowId', item.TGIId);
+                    //row = row.replace('$groupType', item.GroupType);
+                    $('#group_container').append(row);
+                    $('select.grouptype').last().val(item.GroupType);
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    var randId = 300000;
+    function addGroupId() {
+        var rowId = "s_" + randId;
+        randId = randId + 1;
+        var rowString = '<div id="' + randId + '" class="form-group user_group"><div class="row"><div class="col-md-12">' +
+            '<input id="tgId_' + randId + '" type="hidden" value="0" />' +
+            '<input id="teamId_ ' + randId + '" type="hidden" value="' + @ViewBag.TeamId + '" />' +
+            '<div class="col-md-2"><select id="grouptype_' + randId + '" class="form-control input-sm" type="text">' +
+            '<option value="BI">BI</option><option value="AIQ">AIQ</option><select /></div>' +
+            '<div class="col-md-3"><input id="groupId_' + randId + '"  class="form-control input-sm" type="text" placeholder="Group Id" /></div>' +
+            '<div class="col-md-1"><a href="#" class="btn btn-danger btn-sm" onclick="deleteGroupId(' + randId +');" title="Delete"><i class="fa fa-trash"></i></a></div>'
+            '</div></div></div>';
+        $('#group_container').append(rowString);
+    }
+
+    function deleteGroupId(id) {
+        $('#' + id).remove();
+    }
+
+    function saveGroupIds() {
+        var groups = [];
+        $('.user_group').each(function (index, item) {
+            var s = $(item).prop("id");
+            var item = {
+                TGIId: $('#tgId_' + s).val(),
+                TeamId: @ViewBag.TeamId,
+                GroupId: $('#groupId_' + s).val(),
+                GroupType: $('#grouptype_' + s).val()
+            }
+            groups.push(item);
+        });
+        
+        $.ajax({
+            url: '/Team/SaveGroupIds/',
+            data: '{ id : ' + @ViewBag.TeamId + ', objects : ' + JSON.stringify(groups) + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                getTeamGroupIds();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

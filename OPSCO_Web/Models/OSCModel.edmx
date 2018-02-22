@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="OSC_ActivityTracker">
           <Key>
             <PropertyRef Name="ActivityId" />
@@ -43,18 +43,16 @@
           <Property Name="Percentage" Type="float" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_CustomizeScorecard">
           <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="FieldId" />
+            <PropertyRef Name="CSId" />
           </Key>
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="FieldId" Type="int" Nullable="false" />
           <Property Name="Order" Type="int" />
           <Property Name="Month" Type="int" />
           <Property Name="Year" Type="int" />
+          <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="OSC_Department">
           <Key>
@@ -303,12 +301,9 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
           <Property Name="IsCurrent" Type="bit" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_ScorecardField">
           <Key>
             <PropertyRef Name="FieldId" />
-            <PropertyRef Name="FieldName" />
           </Key>
           <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FieldName" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -335,15 +330,13 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
           <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
           <Property Name="TGIId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OSC_TeamNptCategory">
           <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="TNCId" />
           </Key>
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
@@ -390,6 +383,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" Schema="dbo" store:Type="Tables" />
@@ -403,37 +397,15 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
-    [OSC_CustomizeScorecard].[FieldId] AS [FieldId], 
-    [OSC_CustomizeScorecard].[Order] AS [Order], 
-    [OSC_CustomizeScorecard].[Month] AS [Month], 
-    [OSC_CustomizeScorecard].[Year] AS [Year]
-    FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_ScorecardField].[FieldId] AS [FieldId], 
-    [OSC_ScorecardField].[FieldName] AS [FieldName], 
-    [OSC_ScorecardField].[IsCore] AS [IsCore], 
-    [OSC_ScorecardField].[IsActive] AS [IsActive]
-    FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
-    [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
-    FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OSCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -783,35 +755,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="WorkTypeDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="OSC_CustomizeScorecard">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="FieldId" />
-          </Key>
-          <Property Name="TeamId" Type="Int64" Nullable="false" />
-          <Property Name="FieldId" Type="Int32" Nullable="false" />
-          <Property Name="Order" Type="Int32" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-        </EntityType>
-        <EntityType Name="OSC_ScorecardField">
-          <Key>
-            <PropertyRef Name="FieldId" />
-            <PropertyRef Name="FieldName" />
-          </Key>
-          <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FieldName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsCore" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="OSC_TeamNptCategory">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="CategoryId" />
-          </Key>
-          <Property Name="TeamId" Type="Int64" Nullable="false" />
-          <Property Name="CategoryId" Type="Int64" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
           <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" />
@@ -834,10 +777,38 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
-          <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" />
-          <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
-          <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
+          <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
+          <EntitySet Name="OSC_ScorecardField" EntityType="OSCModel.OSC_ScorecardField" />
+          <EntitySet Name="OSC_CustomizeScorecard" EntityType="OSCModel.OSC_CustomizeScorecard" />
         </EntityContainer>
+        <EntityType Name="OSC_TeamNptCategory">
+          <Key>
+            <PropertyRef Name="TNCId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="TNCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="OSC_ScorecardField">
+          <Key>
+            <PropertyRef Name="FieldId" />
+          </Key>
+          <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsCore" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OSC_CustomizeScorecard">
+          <Key>
+            <PropertyRef Name="CSId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="FieldId" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1211,32 +1182,34 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_CustomizeScorecard">
-            <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
-              <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+          <EntitySetMapping Name="OSC_TeamNptCategory">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamNptCategory">
+              <MappingFragment StoreEntitySet="OSC_TeamNptCategory">
+                <ScalarProperty Name="TNCId" ColumnName="TNCId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="FieldId" ColumnName="FieldId" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OSC_ScorecardField">
             <EntityTypeMapping TypeName="OSCModel.OSC_ScorecardField">
               <MappingFragment StoreEntitySet="OSC_ScorecardField">
-                <ScalarProperty Name="FieldId" ColumnName="FieldId" />
-                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
-                <ScalarProperty Name="IsCore" ColumnName="IsCore" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsCore" ColumnName="IsCore" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="FieldId" ColumnName="FieldId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamNptCategory">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamNptCategory">
-              <MappingFragment StoreEntitySet="OSC_TeamNptCategory">
+          <EntitySetMapping Name="OSC_CustomizeScorecard">
+            <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
+              <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+                <ScalarProperty Name="CSId" ColumnName="CSId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="FieldId" ColumnName="FieldId" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
