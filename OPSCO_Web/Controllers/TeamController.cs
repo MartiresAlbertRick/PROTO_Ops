@@ -14,8 +14,9 @@ namespace OPSCO_Web.Controllers
 {
     public class TeamController : Controller
     {
+        #region "ContextInitializer"
         private OSCContext db = new OSCContext();
-
+        #endregion "ContextInitializer"
         #region "Index"
         // GET: Team
         public ActionResult Index(int? page, int? pageSize, string searchString)
@@ -337,10 +338,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_Team oSC_Team = db.Teams.Find(id);
             oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
-            if (oSC_Team == null)
-            {
-                return HttpNotFound();
-            }
+            if (oSC_Team == null) return HttpNotFound();
             return View(oSC_Team);
         }
         #endregion "Settings"

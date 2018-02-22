@@ -1,0 +1,83 @@
+﻿<div class="row">
+    <div class="panel panel-primary">
+        <div id="panel_timings" class="panel-body">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group">
+                                <a id="btn_save_groups" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container-fluid" id="group_container" style="max-height: 350px; overflow-y: auto;">
+                <!--container-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        getManagerGroups();
+        $('#btn_save_groups').click(function () {
+            //saveGroups();
+        });
+    });
+    function getManagerGroups() {
+        $('#group_container').html('');
+        $.ajax({
+            url: '/Manager/GetManagerGroups/',
+            data: '{ id : ' + @ViewBag.ManagerId + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    var row = item.ManagerId + ' | ' + item.EntityId + ' | ' + item.Type;
+                    $('#group_container').append(row + '<br />');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+    function saveGroups() {
+        var groups = [];
+        $('.user_group').each(function (index, item) {
+            var s = $(item).prop("id");
+            var item = {
+                TGIId: $('#tgId_' + s).val(),
+                //TeamId: @ViewBag.TeamId,
+                GroupId: $('#groupId_' + s).val(),
+                GroupType: $('#grouptype_' + s).val()
+            }
+            groups.push(item);
+        });
+
+        $.ajax({
+            url: '/Team/SaveGroupIds/',
+            data: '{ id : ' + @ViewBag.TeamId + ', objects : ' + JSON.stringify(groups) + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                getTeamGroupIds();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

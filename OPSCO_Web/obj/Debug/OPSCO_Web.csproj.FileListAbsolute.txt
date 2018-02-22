@@ -640,3 +640,4 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.WebH
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache

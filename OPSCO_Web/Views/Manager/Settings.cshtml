@@ -1,0 +1,52 @@
+﻿@model OPSCO_Web.Models.OSC_Manager
+@{
+    ViewBag.Title = "Settings";
+}
+<h3>Settings</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group">
+            <a href="@Url.Action("Index", "Manager", null)" class="btn btn-default btn-sm">
+                <i class="fa fa-chevron-left"></i> Back to List
+            </a>
+            <a href="@Url.Action("Details", "Manager", new { id = Model.ManagerId} )" class="btn btn-default btn-sm">
+                <i class="fa fa-info-circle"></i> Back to Details
+            </a>
+            <a href="@Url.Action("Edit", "Manager", new { id = Model.ManagerId } )" class="btn btn-default btn-sm">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <ul class="nav nav-pills btn-xs">
+        <li role="presentation" class="active">
+            <a href="#tab_groups" aria-controls="tab_groups" role="tab" data-toggle="tab">Groups</a>
+        </li>
+        @*<li role="presentation">
+                <a href="#tab_timings" aria-controls="tab_timings" role="tab" data-toggle="tab">Timings</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab_nptcategories" aria-controls="tab_nptcategories" role="tab" data-toggle="tab">NPT Categories</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab_customscorecard" aria-controls="tab_customscorecard" role="tab" data-toggle="tab">Customize Scorecard</a>
+            </li>*@
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab_groups">
+            @Html.Action("GroupsSection", "Manager", new { id = Model.ManagerId })
+        </div>
+        @*<div class="tab-pane fade" id="tab_timings">
+            @Html.Action("TimingsSection", "Team", new { id = Model.TeamId })
+        </div>
+        <div class="tab-pane fade" id="tab_nptcategories">
+            @Html.Action("NptCategorySection", "Team", new { id = Model.TeamId })
+        </div>
+        <div class="tab-pane fade" id="tab_customscorecard">
+            @Html.Action("CustomizeScorecardSection", "Team", new { id = Model.TeamId })
+        </div>*@
+    </div>
+</div>

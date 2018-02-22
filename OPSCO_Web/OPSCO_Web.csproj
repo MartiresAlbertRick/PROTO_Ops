@@ -511,6 +511,8 @@
     <Content Include="Views\Team\NptCategorySection.cshtml" />
     <Content Include="Templates\ChartTemplatesNpt.xlsx" />
     <Content Include="Templates\ChartTemplatesProd.xlsx" />
+    <Content Include="Views\Manager\Settings.cshtml" />
+    <Content Include="Views\Manager\GroupsSection.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />
