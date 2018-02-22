@@ -16,6 +16,7 @@ namespace OPSCO_Web.Controllers
     {
         private OSCContext db = new OSCContext();
 
+        #region "Index"
         // GET: Team
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
@@ -73,9 +74,9 @@ namespace OPSCO_Web.Controllers
             #region "Return"
             return View(teams.OrderBy(t => t.DepartmentId).ThenBy(t => t.TeamName).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
-
         }
-
+        #endregion "Index"
+        #region "Details"
         // GET: Team/Details/5
         public ActionResult Details(long? id)
         {
@@ -108,7 +109,8 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Team);
             #endregion "Return"
         }
-
+        #endregion "Details"
+        #region "TeamMethodCreate"
         // GET: Team/Create
         public ActionResult Create()
         {
@@ -176,7 +178,8 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Team);
             #endregion "Return"
         }
-
+        #endregion "TeamMethodCreate"
+        #region "TeamMethodEdit"
         // GET: Team/Edit/5
         public ActionResult Edit(long? id)
         {
@@ -250,7 +253,8 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Team);
             #endregion "Return"
         }
-
+        #endregion "TeamMethodEdit"
+        #region "TeamMethodDelete"
         // GET: Team/Delete/5
         public ActionResult Delete(long? id)
         {
@@ -326,7 +330,8 @@ namespace OPSCO_Web.Controllers
             //db.SaveChanges();
             //return RedirectToAction("Index");
         }
-
+        #endregion "TeamMethodDelete"
+        #region "Settings"
         public ActionResult Settings(long? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -338,7 +343,8 @@ namespace OPSCO_Web.Controllers
             }
             return View(oSC_Team);
         }
-
+        #endregion "Settings"
+        #region "GroupIdSection"
         public PartialViewResult GroupIdSection(long? id)
         {
             ViewBag.TeamId = id;
@@ -354,6 +360,7 @@ namespace OPSCO_Web.Controllers
             var teamGroupIds = (from list in db.TeamGroupIds.Where(t => t.TeamId == teamId) select list).ToList();
             return Json(teamGroupIds, JsonRequestBehavior.AllowGet);
         }
+        #endregion "GroupIdSection"
 
         public PartialViewResult TimingsSection(long? id)
         {
@@ -362,6 +369,7 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
+        #region "Dispose"
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -370,5 +378,6 @@ namespace OPSCO_Web.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion "Dispose"
     }
 }

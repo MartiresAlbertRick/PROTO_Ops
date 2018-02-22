@@ -326,18 +326,6 @@
     <Property Name="DateUploaded" Type="DateTime" Precision="3" />
     <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="OSC_ManageGroup">
-    <Key>
-      <PropertyRef Name="ManagerId" />
-      <PropertyRef Name="EntityId" />
-      <PropertyRef Name="Type" />
-      <PropertyRef Name="MGId" />
-    </Key>
-    <Property Name="ManagerId" Type="Int64" Nullable="false" />
-    <Property Name="EntityId" Type="Int64" Nullable="false" />
-    <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
   <EntityType Name="OSC_ScorecardField">
     <Key>
       <PropertyRef Name="FieldId" />
@@ -355,29 +343,6 @@
     </Key>
     <Property Name="TeamId" Type="Int64" Nullable="false" />
     <Property Name="CategoryId" Type="Int64" Nullable="false" />
-  </EntityType>
-  <EntityType Name="OSC_TeamWorkItem">
-    <Key>
-      <PropertyRef Name="WorkItemNo" />
-    </Key>
-    <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TeamId" Type="Int64" />
-    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="January" Type="Double" />
-    <Property Name="February" Type="Double" />
-    <Property Name="March" Type="Double" />
-    <Property Name="April" Type="Double" />
-    <Property Name="May" Type="Double" />
-    <Property Name="June" Type="Double" />
-    <Property Name="July" Type="Double" />
-    <Property Name="August" Type="Double" />
-    <Property Name="September" Type="Double" />
-    <Property Name="October" Type="Double" />
-    <Property Name="November" Type="Double" />
-    <Property Name="December" Type="Double" />
-    <Property Name="Year" Type="Int32" />
   </EntityType>
   <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
@@ -401,23 +366,13 @@
     <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
     <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
-    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
     <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
-    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
-    <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
     <EntitySet Name="OSC_ImportNPT" EntityType="OSCModel.OSC_ImportNPT" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="OSCModel.OSC_ManageGroup" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
   </EntityContainer>
-  <EntityType Name="OSC_TeamGroupIds">
-    <Key>
-      <PropertyRef Name="TeamId" />
-      <PropertyRef Name="TGIId" />
-    </Key>
-    <Property Name="TeamId" Type="Int64" Nullable="false" />
-    <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
   <EntityType Name="OSC_ImportNPT">
     <Key>
       <PropertyRef Name="NPTReportId" />
@@ -440,5 +395,46 @@
     <Property Name="CategoryId" Type="Int64" />
     <Property Name="SubCategoryId" Type="Int64" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ManageGroup">
+    <Key>
+      <PropertyRef Name="MGId" />
+    </Key>
+    <Property Name="ManagerId" Type="Int64" Nullable="false" />
+    <Property Name="EntityId" Type="Int64" Nullable="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_TeamGroupIds">
+    <Key>
+      <PropertyRef Name="TGIId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_TeamWorkItem">
+    <Key>
+      <PropertyRef Name="WorkItemNo" />
+    </Key>
+    <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="January" Type="Double" />
+    <Property Name="February" Type="Double" />
+    <Property Name="March" Type="Double" />
+    <Property Name="April" Type="Double" />
+    <Property Name="May" Type="Double" />
+    <Property Name="June" Type="Double" />
+    <Property Name="July" Type="Double" />
+    <Property Name="August" Type="Double" />
+    <Property Name="September" Type="Double" />
+    <Property Name="October" Type="Double" />
+    <Property Name="November" Type="Double" />
+    <Property Name="December" Type="Double" />
+    <Property Name="Year" Type="Int32" />
   </EntityType>
 </Schema>

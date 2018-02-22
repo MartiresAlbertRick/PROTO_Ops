@@ -216,13 +216,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_CustomizeScorecard' does not hav
     <Property Name="Location" Type="nvarchar" MaxLength="100" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ManageGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_ManageGroup">
     <Key>
-      <PropertyRef Name="ManagerId" />
-      <PropertyRef Name="EntityId" />
-      <PropertyRef Name="Type" />
       <PropertyRef Name="MGId" />
     </Key>
     <Property Name="ManagerId" Type="bigint" Nullable="false" />
@@ -326,11 +321,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ScorecardField' does not have a 
     <Property Name="BIUserGroup" Type="nvarchar" MaxLength="50" />
     <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamGroupIds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamGroupIds">
     <Key>
-      <PropertyRef Name="TeamId" />
       <PropertyRef Name="TGIId" />
     </Key>
     <Property Name="TeamId" Type="bigint" Nullable="false" />
@@ -348,8 +340,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="CategoryId" Type="bigint" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
       <PropertyRef Name="WorkItemNo" />
@@ -436,11 +426,14 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
@@ -455,14 +448,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_CustomizeScorecard].[Year] AS [Year]
     FROM [dbo].[OSC_CustomizeScorecard] AS [OSC_CustomizeScorecard]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_ManageGroup].[ManagerId] AS [ManagerId], 
-    [OSC_ManageGroup].[EntityId] AS [EntityId], 
-    [OSC_ManageGroup].[Type] AS [Type], 
-    [OSC_ManageGroup].[MGId] AS [MGId]
-    FROM [dbo].[OSC_ManageGroup] AS [OSC_ManageGroup]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [OSC_ScorecardField].[FieldId] AS [FieldId], 
@@ -471,41 +456,11 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamWorkItem' does not have a pr
     [OSC_ScorecardField].[IsActive] AS [IsActive]
     FROM [dbo].[OSC_ScorecardField] AS [OSC_ScorecardField]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamGroupIds].[TeamId] AS [TeamId], 
-    [OSC_TeamGroupIds].[GroupId] AS [GroupId], 
-    [OSC_TeamGroupIds].[GroupType] AS [GroupType], 
-    [OSC_TeamGroupIds].[TGIId] AS [TGIId]
-    FROM [dbo].[OSC_TeamGroupIds] AS [OSC_TeamGroupIds]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [OSC_TeamNptCategory].[TeamId] AS [TeamId], 
     [OSC_TeamNptCategory].[CategoryId] AS [CategoryId]
     FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [OSC_TeamWorkItem].[WorkItemNo] AS [WorkItemNo], 
-    [OSC_TeamWorkItem].[TeamId] AS [TeamId], 
-    [OSC_TeamWorkItem].[BusinessAreaCode] AS [BusinessAreaCode], 
-    [OSC_TeamWorkItem].[WorkTypeCode] AS [WorkTypeCode], 
-    [OSC_TeamWorkItem].[StatusCode] AS [StatusCode], 
-    [OSC_TeamWorkItem].[January] AS [January], 
-    [OSC_TeamWorkItem].[February] AS [February], 
-    [OSC_TeamWorkItem].[March] AS [March], 
-    [OSC_TeamWorkItem].[April] AS [April], 
-    [OSC_TeamWorkItem].[May] AS [May], 
-    [OSC_TeamWorkItem].[June] AS [June], 
-    [OSC_TeamWorkItem].[July] AS [July], 
-    [OSC_TeamWorkItem].[August] AS [August], 
-    [OSC_TeamWorkItem].[September] AS [September], 
-    [OSC_TeamWorkItem].[October] AS [October], 
-    [OSC_TeamWorkItem].[November] AS [November], 
-    [OSC_TeamWorkItem].[December] AS [December], 
-    [OSC_TeamWorkItem].[Year] AS [Year]
-    FROM [dbo].[OSC_TeamWorkItem] AS [OSC_TeamWorkItem]</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

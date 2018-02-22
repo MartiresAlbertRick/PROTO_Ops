@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="OSC_ActivityTracker">
           <Key>
             <PropertyRef Name="ActivityId" />
@@ -386,39 +386,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="WorkTypeDescription" Type="nvarchar" MaxLength="255" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="set_group">
-          <Key>
-            <PropertyRef Name="grp_id" />
-          </Key>
-          <Property Name="grp_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="grp_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="grp_desc" Type="nvarchar" MaxLength="255" />
-          <Property Name="created_date" Type="datetime" />
-        </EntityType>
-        <EntityType Name="set_module">
-          <Key>
-            <PropertyRef Name="mod_id" />
-          </Key>
-          <Property Name="mod_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="mod_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="mod_desc" Type="nvarchar" MaxLength="255" />
-          <Property Name="created_date" Type="datetime" />
-        </EntityType>
-        <EntityType Name="set_user">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="user_name" Type="nvarchar" MaxLength="25" />
-          <Property Name="user_last_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="user_first_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="user_middle_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="can_PROD" Type="bit" />
-          <Property Name="can_UAT" Type="bit" />
-          <Property Name="can_PEER" Type="bit" />
-          <Property Name="can_DEV" Type="bit" />
-          <Property Name="created_date" Type="datetime" />
-        </EntityType>
         <EntityContainer Name="OSCModelStoreContainer">
           <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
@@ -441,9 +408,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="set_group" EntityType="Self.set_group" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="set_module" EntityType="Self.set_module" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="set_user" EntityType="Self.set_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [OSC_CustomizeScorecard].[TeamId] AS [TeamId], 
@@ -468,7 +432,8 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     FROM [dbo].[OSC_TeamNptCategory] AS [OSC_TeamNptCategory]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OSCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -518,6 +483,144 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="OSC_ImportAIQ">
+          <Key>
+            <PropertyRef Name="AIQReportId" />
+          </Key>
+          <Property Name="AIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepId" Type="Int64" />
+          <Property Name="Agent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IntervalStaffedDuration" Type="Int64" />
+          <Property Name="TotalPercServiceTime" Type="Double" />
+          <Property Name="TotalACDCalls" Type="Int32" />
+          <Property Name="ExtInCalls" Type="Int32" />
+          <Property Name="ExtInAvgActiveDur" Type="Int64" />
+          <Property Name="ExtOutCalls" Type="Int32" />
+          <Property Name="AvgExtOutActiveDur" Type="Int64" />
+          <Property Name="ACDWrapUpTime" Type="Int64" />
+          <Property Name="ACDTalkTime" Type="Int64" />
+          <Property Name="ACDRingTime" Type="Int64" />
+          <Property Name="Aux" Type="Int64" />
+          <Property Name="AvgHoldDur" Type="Int64" />
+          <Property Name="IntervalIdleDur" Type="Int64" />
+          <Property Name="Transfers" Type="Int32" />
+          <Property Name="HeldContacts" Type="Int32" />
+          <Property Name="Redirects" Type="Int32" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OSC_ImportBIProd">
+          <Key>
+            <PropertyRef Name="BIPReportId" />
+          </Key>
+          <Property Name="BIPReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepId" Type="Int64" />
+          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Date1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Double" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OSC_ImportBIQual">
+          <Key>
+            <PropertyRef Name="BIQReportId" />
+          </Key>
+          <Property Name="BIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Repid" Type="Int64" />
+          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Field1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Field2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count1" Type="Int64" />
+          <Property Name="Count2" Type="Int64" />
+          <Property Name="Count3" Type="Int64" />
+          <Property Name="Count4" Type="Int64" />
+          <Property Name="ErrorPoints" Type="Double" />
+          <Property Name="Rating" Type="Double" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OSC_ImportNPT">
+          <Key>
+            <PropertyRef Name="NPTReportId" />
+          </Key>
+          <Property Name="NPTReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepId" Type="Int64" />
+          <Property Name="Activity" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfActivity" Type="DateTime" Precision="0" />
+          <Property Name="TimeSpent" Type="Double" />
+          <Property Name="TypeOfActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int64" />
+          <Property Name="SubCategoryId" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OSC_ImportTA">
+          <Key>
+            <PropertyRef Name="TAReportId" />
+          </Key>
+          <Property Name="TAReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepId" Type="Int64" />
+          <Property Name="AssignedId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleInt" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Queue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Suspended" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="SuspendDate" Type="DateTime" Precision="3" />
+          <Property Name="UnsuspendDate" Type="DateTime" Precision="3" />
+          <Property Name="LastStatusUpdate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GAC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Assoc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Certificate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CheckAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdminSystem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckAmountTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="UCIVendorMatchDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReasonCodeForAdv" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ReasonDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TinSourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SSBusinessUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="OSC_IndividualScorecard_Current">
           <Key>
             <PropertyRef Name="IndividualScorecardId" />
@@ -536,6 +639,15 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OSC_ManageGroup">
+          <Key>
+            <PropertyRef Name="MGId" />
+          </Key>
+          <Property Name="ManagerId" Type="Int64" Nullable="false" />
+          <Property Name="EntityId" Type="Int64" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="OSC_Manager">
           <Key>
@@ -621,262 +733,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="BIUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AIQUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="OSC_WorkStatus">
-          <Key>
-            <PropertyRef Name="StatusCode" />
-          </Key>
-          <Property Name="StatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StatusDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OSC_WorkType">
-          <Key>
-            <PropertyRef Name="WorkTypeCode" />
-          </Key>
-          <Property Name="WorkTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WorkTypeDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="set_group">
-          <Key>
-            <PropertyRef Name="grp_id" />
-          </Key>
-          <Property Name="grp_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="grp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="grp_desc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="set_module">
-          <Key>
-            <PropertyRef Name="mod_id" />
-          </Key>
-          <Property Name="mod_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="mod_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="mod_desc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="set_user">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="user_name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="user_last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="user_first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="user_middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="can_PROD" Type="Boolean" />
-          <Property Name="can_UAT" Type="Boolean" />
-          <Property Name="can_PEER" Type="Boolean" />
-          <Property Name="can_DEV" Type="Boolean" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="OSC_CustomizeScorecard">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="FieldId" />
-          </Key>
-          <Property Name="TeamId" Type="Int64" Nullable="false" />
-          <Property Name="FieldId" Type="Int32" Nullable="false" />
-          <Property Name="Order" Type="Int32" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-        </EntityType>
-        <EntityType Name="OSC_ImportAIQ">
-          <Key>
-            <PropertyRef Name="AIQReportId" />
-          </Key>
-          <Property Name="AIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RepId" Type="Int64" />
-          <Property Name="Agent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IntervalStaffedDuration" Type="Int64" />
-          <Property Name="TotalPercServiceTime" Type="Double" />
-          <Property Name="TotalACDCalls" Type="Int32" />
-          <Property Name="ExtInCalls" Type="Int32" />
-          <Property Name="ExtInAvgActiveDur" Type="Int64" />
-          <Property Name="ExtOutCalls" Type="Int32" />
-          <Property Name="AvgExtOutActiveDur" Type="Int64" />
-          <Property Name="ACDWrapUpTime" Type="Int64" />
-          <Property Name="ACDTalkTime" Type="Int64" />
-          <Property Name="ACDRingTime" Type="Int64" />
-          <Property Name="Aux" Type="Int64" />
-          <Property Name="AvgHoldDur" Type="Int64" />
-          <Property Name="IntervalIdleDur" Type="Int64" />
-          <Property Name="Transfers" Type="Int32" />
-          <Property Name="HeldContacts" Type="Int32" />
-          <Property Name="Redirects" Type="Int32" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OSC_ImportBIProd">
-          <Key>
-            <PropertyRef Name="BIPReportId" />
-          </Key>
-          <Property Name="BIPReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RepId" Type="Int64" />
-          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="Date1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Date2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Rating" Type="Double" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OSC_ImportBIQual">
-          <Key>
-            <PropertyRef Name="BIQReportId" />
-          </Key>
-          <Property Name="BIQReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Repid" Type="Int64" />
-          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserIdName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Field1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Field2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Count1" Type="Int64" />
-          <Property Name="Count2" Type="Int64" />
-          <Property Name="Count3" Type="Int64" />
-          <Property Name="Count4" Type="Int64" />
-          <Property Name="ErrorPoints" Type="Double" />
-          <Property Name="Rating" Type="Double" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OSC_ImportTA">
-          <Key>
-            <PropertyRef Name="TAReportId" />
-          </Key>
-          <Property Name="TAReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RepId" Type="Int64" />
-          <Property Name="AssignedId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleInt" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
-          <Property Name="BusinessArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WorkType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Queue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Suspended" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="SuspendDate" Type="DateTime" Precision="3" />
-          <Property Name="UnsuspendDate" Type="DateTime" Precision="3" />
-          <Property Name="LastStatusUpdate" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GAC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Assoc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Certificate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CheckAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AdminSystem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CheckAmountTotal" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="UCIVendorMatchDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReasonCodeForAdv" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ReasonDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TinSourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SSBusinessUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OSC_ScorecardField">
-          <Key>
-            <PropertyRef Name="FieldId" />
-            <PropertyRef Name="FieldName" />
-          </Key>
-          <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FieldName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsCore" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="OSC_TeamNptCategory">
-          <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="CategoryId" />
-          </Key>
-          <Property Name="TeamId" Type="Int64" Nullable="false" />
-          <Property Name="CategoryId" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
-          <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" />
-          <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" />
-          <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" />
-          <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" />
-          <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" />
-          <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" />
-          <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" />
-          <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" />
-          <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" />
-          <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" />
-          <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
-          <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
-          <EntitySet Name="set_group" EntityType="Self.set_group" />
-          <EntitySet Name="set_module" EntityType="Self.set_module" />
-          <EntitySet Name="set_user" EntityType="Self.set_user" />
-          <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" />
-          <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" />
-          <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
-          <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
-          <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
-          <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
-          <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
-          <EntitySet Name="OSC_ImportNPT" EntityType="OSCModel.OSC_ImportNPT" />
-          <EntitySet Name="OSC_ManageGroup" EntityType="OSCModel.OSC_ManageGroup" />
-          <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
-          <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
-        </EntityContainer>
-        <EntityType Name="OSC_ImportNPT">
-          <Key>
-            <PropertyRef Name="NPTReportId" />
-          </Key>
-          <Property Name="NPTReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RepId" Type="Int64" />
-          <Property Name="Activity" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfActivity" Type="DateTime" Precision="0" />
-          <Property Name="TimeSpent" Type="Double" />
-          <Property Name="TypeOfActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ItemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Source" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryId" Type="Int64" />
-          <Property Name="SubCategoryId" Type="Int64" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OSC_ManageGroup">
-          <Key>
-            <PropertyRef Name="MGId" />
-          </Key>
-          <Property Name="ManagerId" Type="Int64" Nullable="false" />
-          <Property Name="EntityId" Type="Int64" Nullable="false" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="OSC_TeamGroupIds">
           <Key>
             <PropertyRef Name="TGIId" />
@@ -909,6 +765,79 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
           <Property Name="December" Type="Double" />
           <Property Name="Year" Type="Int32" />
         </EntityType>
+        <EntityType Name="OSC_WorkStatus">
+          <Key>
+            <PropertyRef Name="StatusCode" />
+          </Key>
+          <Property Name="StatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OSC_WorkType">
+          <Key>
+            <PropertyRef Name="WorkTypeCode" />
+          </Key>
+          <Property Name="WorkTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkTypeDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OSC_CustomizeScorecard">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="FieldId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="FieldId" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OSC_ScorecardField">
+          <Key>
+            <PropertyRef Name="FieldId" />
+            <PropertyRef Name="FieldName" />
+          </Key>
+          <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsCore" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OSC_TeamNptCategory">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="OSCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" />
+          <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" />
+          <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" />
+          <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" />
+          <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" />
+          <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" />
+          <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" />
+          <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" />
+          <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
+          <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" />
+          <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" />
+          <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
+          <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" />
+          <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" />
+          <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" />
+          <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" />
+          <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" />
+          <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" />
+          <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
+          <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
+          <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
+          <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" />
+          <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" />
+          <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -965,6 +894,149 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ImportAIQ">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ImportAIQ">
+              <MappingFragment StoreEntitySet="OSC_ImportAIQ">
+                <ScalarProperty Name="AIQReportId" ColumnName="AIQReportId" />
+                <ScalarProperty Name="RepId" ColumnName="RepId" />
+                <ScalarProperty Name="Agent" ColumnName="Agent" />
+                <ScalarProperty Name="IntervalStaffedDuration" ColumnName="IntervalStaffedDuration" />
+                <ScalarProperty Name="TotalPercServiceTime" ColumnName="TotalPercServiceTime" />
+                <ScalarProperty Name="TotalACDCalls" ColumnName="TotalACDCalls" />
+                <ScalarProperty Name="ExtInCalls" ColumnName="ExtInCalls" />
+                <ScalarProperty Name="ExtInAvgActiveDur" ColumnName="ExtInAvgActiveDur" />
+                <ScalarProperty Name="ExtOutCalls" ColumnName="ExtOutCalls" />
+                <ScalarProperty Name="AvgExtOutActiveDur" ColumnName="AvgExtOutActiveDur" />
+                <ScalarProperty Name="ACDWrapUpTime" ColumnName="ACDWrapUpTime" />
+                <ScalarProperty Name="ACDTalkTime" ColumnName="ACDTalkTime" />
+                <ScalarProperty Name="ACDRingTime" ColumnName="ACDRingTime" />
+                <ScalarProperty Name="Aux" ColumnName="Aux" />
+                <ScalarProperty Name="AvgHoldDur" ColumnName="AvgHoldDur" />
+                <ScalarProperty Name="IntervalIdleDur" ColumnName="IntervalIdleDur" />
+                <ScalarProperty Name="Transfers" ColumnName="Transfers" />
+                <ScalarProperty Name="HeldContacts" ColumnName="HeldContacts" />
+                <ScalarProperty Name="Redirects" ColumnName="Redirects" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ImportBIProd">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIProd">
+              <MappingFragment StoreEntitySet="OSC_ImportBIProd">
+                <ScalarProperty Name="BIPReportId" ColumnName="BIPReportId" />
+                <ScalarProperty Name="RepId" ColumnName="RepId" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
+                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+                <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Date1" ColumnName="Date1" />
+                <ScalarProperty Name="Date2" ColumnName="Date2" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ImportBIQual">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIQual">
+              <MappingFragment StoreEntitySet="OSC_ImportBIQual">
+                <ScalarProperty Name="BIQReportId" ColumnName="BIQReportId" />
+                <ScalarProperty Name="Repid" ColumnName="Repid" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
+                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+                <ScalarProperty Name="Field1" ColumnName="Field1" />
+                <ScalarProperty Name="Field2" ColumnName="Field2" />
+                <ScalarProperty Name="Count1" ColumnName="Count1" />
+                <ScalarProperty Name="Count2" ColumnName="Count2" />
+                <ScalarProperty Name="Count3" ColumnName="Count3" />
+                <ScalarProperty Name="Count4" ColumnName="Count4" />
+                <ScalarProperty Name="ErrorPoints" ColumnName="ErrorPoints" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ImportNPT">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ImportNPT">
+              <MappingFragment StoreEntitySet="OSC_ImportNPT">
+                <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
+                <ScalarProperty Name="RepId" ColumnName="RepId" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
+                <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
+                <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ImportTA">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ImportTA">
+              <MappingFragment StoreEntitySet="OSC_ImportTA">
+                <ScalarProperty Name="TAReportId" ColumnName="TAReportId" />
+                <ScalarProperty Name="RepId" ColumnName="RepId" />
+                <ScalarProperty Name="AssignedId" ColumnName="AssignedId" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleInt" ColumnName="MiddleInt" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+                <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Queue" ColumnName="Queue" />
+                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+                <ScalarProperty Name="SuspendDate" ColumnName="SuspendDate" />
+                <ScalarProperty Name="UnsuspendDate" ColumnName="UnsuspendDate" />
+                <ScalarProperty Name="LastStatusUpdate" ColumnName="LastStatusUpdate" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="GAC" ColumnName="GAC" />
+                <ScalarProperty Name="Assoc" ColumnName="Assoc" />
+                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
+                <ScalarProperty Name="CheckAmount" ColumnName="CheckAmount" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="AdminSystem" ColumnName="AdminSystem" />
+                <ScalarProperty Name="CheckAmountTotal" ColumnName="CheckAmountTotal" />
+                <ScalarProperty Name="UCIVendorMatchDate" ColumnName="UCIVendorMatchDate" />
+                <ScalarProperty Name="ReasonCodeForAdv" ColumnName="ReasonCodeForAdv" />
+                <ScalarProperty Name="ReasonDescription" ColumnName="ReasonDescription" />
+                <ScalarProperty Name="TinSourceType" ColumnName="TinSourceType" />
+                <ScalarProperty Name="SSBusinessUnit" ColumnName="SSBusinessUnit" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="OSC_IndividualScorecard_Current">
             <EntityTypeMapping TypeName="OSCModel.OSC_IndividualScorecard_Current">
               <MappingFragment StoreEntitySet="OSC_IndividualScorecard_Current">
@@ -983,6 +1055,16 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_ManageGroup">
+            <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
+              <MappingFragment StoreEntitySet="OSC_ManageGroup">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MGId" ColumnName="MGId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1075,6 +1157,40 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamGroupIds">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
+              <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+                <ScalarProperty Name="TGIId" ColumnName="TGIId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamWorkItem">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
+              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
+                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="OSC_WorkStatus">
             <EntityTypeMapping TypeName="OSCModel.OSC_WorkStatus">
               <MappingFragment StoreEntitySet="OSC_WorkStatus">
@@ -1095,42 +1211,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="set_group">
-            <EntityTypeMapping TypeName="OSCModel.set_group">
-              <MappingFragment StoreEntitySet="set_group">
-                <ScalarProperty Name="grp_id" ColumnName="grp_id" />
-                <ScalarProperty Name="grp_name" ColumnName="grp_name" />
-                <ScalarProperty Name="grp_desc" ColumnName="grp_desc" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="set_module">
-            <EntityTypeMapping TypeName="OSCModel.set_module">
-              <MappingFragment StoreEntitySet="set_module">
-                <ScalarProperty Name="mod_id" ColumnName="mod_id" />
-                <ScalarProperty Name="mod_name" ColumnName="mod_name" />
-                <ScalarProperty Name="mod_desc" ColumnName="mod_desc" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="set_user">
-            <EntityTypeMapping TypeName="OSCModel.set_user">
-              <MappingFragment StoreEntitySet="set_user">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
-                <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
-                <ScalarProperty Name="user_middle_name" ColumnName="user_middle_name" />
-                <ScalarProperty Name="can_PROD" ColumnName="can_PROD" />
-                <ScalarProperty Name="can_UAT" ColumnName="can_UAT" />
-                <ScalarProperty Name="can_PEER" ColumnName="can_PEER" />
-                <ScalarProperty Name="can_DEV" ColumnName="can_DEV" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OSC_CustomizeScorecard">
             <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
               <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
@@ -1139,125 +1219,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ImportAIQ">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ImportAIQ">
-              <MappingFragment StoreEntitySet="OSC_ImportAIQ">
-                <ScalarProperty Name="AIQReportId" ColumnName="AIQReportId" />
-                <ScalarProperty Name="RepId" ColumnName="RepId" />
-                <ScalarProperty Name="Agent" ColumnName="Agent" />
-                <ScalarProperty Name="IntervalStaffedDuration" ColumnName="IntervalStaffedDuration" />
-                <ScalarProperty Name="TotalPercServiceTime" ColumnName="TotalPercServiceTime" />
-                <ScalarProperty Name="TotalACDCalls" ColumnName="TotalACDCalls" />
-                <ScalarProperty Name="ExtInCalls" ColumnName="ExtInCalls" />
-                <ScalarProperty Name="ExtInAvgActiveDur" ColumnName="ExtInAvgActiveDur" />
-                <ScalarProperty Name="ExtOutCalls" ColumnName="ExtOutCalls" />
-                <ScalarProperty Name="AvgExtOutActiveDur" ColumnName="AvgExtOutActiveDur" />
-                <ScalarProperty Name="ACDWrapUpTime" ColumnName="ACDWrapUpTime" />
-                <ScalarProperty Name="ACDTalkTime" ColumnName="ACDTalkTime" />
-                <ScalarProperty Name="ACDRingTime" ColumnName="ACDRingTime" />
-                <ScalarProperty Name="Aux" ColumnName="Aux" />
-                <ScalarProperty Name="AvgHoldDur" ColumnName="AvgHoldDur" />
-                <ScalarProperty Name="IntervalIdleDur" ColumnName="IntervalIdleDur" />
-                <ScalarProperty Name="Transfers" ColumnName="Transfers" />
-                <ScalarProperty Name="HeldContacts" ColumnName="HeldContacts" />
-                <ScalarProperty Name="Redirects" ColumnName="Redirects" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ImportBIProd">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIProd">
-              <MappingFragment StoreEntitySet="OSC_ImportBIProd">
-                <ScalarProperty Name="BIPReportId" ColumnName="BIPReportId" />
-                <ScalarProperty Name="RepId" ColumnName="RepId" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
-                <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
-                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
-                <ScalarProperty Name="WorkType" ColumnName="WorkType" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Date1" ColumnName="Date1" />
-                <ScalarProperty Name="Date2" ColumnName="Date2" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ImportBIQual">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIQual">
-              <MappingFragment StoreEntitySet="OSC_ImportBIQual">
-                <ScalarProperty Name="BIQReportId" ColumnName="BIQReportId" />
-                <ScalarProperty Name="Repid" ColumnName="Repid" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
-                <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
-                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
-                <ScalarProperty Name="Field1" ColumnName="Field1" />
-                <ScalarProperty Name="Field2" ColumnName="Field2" />
-                <ScalarProperty Name="Count1" ColumnName="Count1" />
-                <ScalarProperty Name="Count2" ColumnName="Count2" />
-                <ScalarProperty Name="Count3" ColumnName="Count3" />
-                <ScalarProperty Name="Count4" ColumnName="Count4" />
-                <ScalarProperty Name="ErrorPoints" ColumnName="ErrorPoints" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ImportTA">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ImportTA">
-              <MappingFragment StoreEntitySet="OSC_ImportTA">
-                <ScalarProperty Name="TAReportId" ColumnName="TAReportId" />
-                <ScalarProperty Name="RepId" ColumnName="RepId" />
-                <ScalarProperty Name="AssignedId" ColumnName="AssignedId" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleInt" ColumnName="MiddleInt" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
-                <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
-                <ScalarProperty Name="WorkType" ColumnName="WorkType" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Queue" ColumnName="Queue" />
-                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
-                <ScalarProperty Name="SuspendDate" ColumnName="SuspendDate" />
-                <ScalarProperty Name="UnsuspendDate" ColumnName="UnsuspendDate" />
-                <ScalarProperty Name="LastStatusUpdate" ColumnName="LastStatusUpdate" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="GAC" ColumnName="GAC" />
-                <ScalarProperty Name="Assoc" ColumnName="Assoc" />
-                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
-                <ScalarProperty Name="CheckAmount" ColumnName="CheckAmount" />
-                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
-                <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
-                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
-                <ScalarProperty Name="AdminSystem" ColumnName="AdminSystem" />
-                <ScalarProperty Name="CheckAmountTotal" ColumnName="CheckAmountTotal" />
-                <ScalarProperty Name="UCIVendorMatchDate" ColumnName="UCIVendorMatchDate" />
-                <ScalarProperty Name="ReasonCodeForAdv" ColumnName="ReasonCodeForAdv" />
-                <ScalarProperty Name="ReasonDescription" ColumnName="ReasonDescription" />
-                <ScalarProperty Name="TinSourceType" ColumnName="TinSourceType" />
-                <ScalarProperty Name="SSBusinessUnit" ColumnName="SSBusinessUnit" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1279,74 +1240,6 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ImportNPT">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ImportNPT">
-              <MappingFragment StoreEntitySet="OSC_ImportNPT">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
-                <ScalarProperty Name="TimeSpent" ColumnName="TimeSpent" />
-                <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
-                <ScalarProperty Name="Activity" ColumnName="Activity" />
-                <ScalarProperty Name="RepId" ColumnName="RepId" />
-                <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_ManageGroup">
-            <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
-              <MappingFragment StoreEntitySet="OSC_ManageGroup">
-                <ScalarProperty Name="MGId" ColumnName="MGId" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamGroupIds">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
-              <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
-                <ScalarProperty Name="TGIId" ColumnName="TGIId" />
-                <ScalarProperty Name="GroupType" ColumnName="GroupType" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamWorkItem">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
-              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="March" ColumnName="March" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
-                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1361,7 +1254,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_TeamNptCategory' does not have a
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

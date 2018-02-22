@@ -347,16 +347,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="OSC_ManageGroup">
-      <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
-        <MappingFragment StoreEntitySet="OSC_ManageGroup">
-          <ScalarProperty Name="MGId" ColumnName="MGId" />
-          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="OSC_ScorecardField">
       <EntityTypeMapping TypeName="OSCModel.OSC_ScorecardField">
         <MappingFragment StoreEntitySet="OSC_ScorecardField">
@@ -372,40 +362,6 @@
         <MappingFragment StoreEntitySet="OSC_TeamNptCategory">
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OSC_TeamWorkItem">
-      <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
-        <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
-          <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
-          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-          <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
-          <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
-          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-          <ScalarProperty Name="January" ColumnName="January" />
-          <ScalarProperty Name="February" ColumnName="February" />
-          <ScalarProperty Name="March" ColumnName="March" />
-          <ScalarProperty Name="April" ColumnName="April" />
-          <ScalarProperty Name="May" ColumnName="May" />
-          <ScalarProperty Name="June" ColumnName="June" />
-          <ScalarProperty Name="July" ColumnName="July" />
-          <ScalarProperty Name="August" ColumnName="August" />
-          <ScalarProperty Name="September" ColumnName="September" />
-          <ScalarProperty Name="October" ColumnName="October" />
-          <ScalarProperty Name="November" ColumnName="November" />
-          <ScalarProperty Name="December" ColumnName="December" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OSC_TeamGroupIds">
-      <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
-        <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
-          <ScalarProperty Name="TGIId" ColumnName="TGIId" />
-          <ScalarProperty Name="GroupType" ColumnName="GroupType" />
-          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -430,6 +386,50 @@
           <ScalarProperty Name="Activity" ColumnName="Activity" />
           <ScalarProperty Name="RepId" ColumnName="RepId" />
           <ScalarProperty Name="NPTReportId" ColumnName="NPTReportId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ManageGroup">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ManageGroup">
+        <MappingFragment StoreEntitySet="OSC_ManageGroup">
+          <ScalarProperty Name="MGId" ColumnName="MGId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamGroupIds">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamGroupIds">
+        <MappingFragment StoreEntitySet="OSC_TeamGroupIds">
+          <ScalarProperty Name="TGIId" ColumnName="TGIId" />
+          <ScalarProperty Name="GroupType" ColumnName="GroupType" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamWorkItem">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
+        <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="December" ColumnName="December" />
+          <ScalarProperty Name="November" ColumnName="November" />
+          <ScalarProperty Name="October" ColumnName="October" />
+          <ScalarProperty Name="September" ColumnName="September" />
+          <ScalarProperty Name="August" ColumnName="August" />
+          <ScalarProperty Name="July" ColumnName="July" />
+          <ScalarProperty Name="June" ColumnName="June" />
+          <ScalarProperty Name="May" ColumnName="May" />
+          <ScalarProperty Name="April" ColumnName="April" />
+          <ScalarProperty Name="March" ColumnName="March" />
+          <ScalarProperty Name="February" ColumnName="February" />
+          <ScalarProperty Name="January" ColumnName="January" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+          <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
