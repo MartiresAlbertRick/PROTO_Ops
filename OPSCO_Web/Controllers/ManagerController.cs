@@ -307,7 +307,7 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveGroups(long? id, List<OSC_ManageGroup> objects)
         {
-            object s = new { message = "Success" };
+            object s = new { message = "Successfully saved!" };
             if (id == null) return Json(null);
             List<OSC_ManageGroup> list = db.ManageGroups.AsNoTracking().Where(t => t.ManagerId == id).ToList();
             foreach (OSC_ManageGroup obj in list)

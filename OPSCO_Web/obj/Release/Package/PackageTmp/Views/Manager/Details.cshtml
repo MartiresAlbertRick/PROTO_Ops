@@ -12,6 +12,9 @@
                 <a href="@Url.Action("Index", "Manager", null)" class="btn btn-default btn-sm">
                     <i class="fa fa-chevron-left"></i> Back to List
                 </a>
+                <a href="@Url.Action("Settings", "Manager", new { id = Model.ManagerId} )" class="btn btn-default btn-sm">
+                    <i class="fa fa-cog"></i> Manager Settings
+                </a>
                 <a href="@Url.Action("Edit", "Manager", new { id = Model.ManagerId } )" class="btn btn-default btn-sm">
                     <i class="fa fa-edit"></i> Edit
                 </a>
