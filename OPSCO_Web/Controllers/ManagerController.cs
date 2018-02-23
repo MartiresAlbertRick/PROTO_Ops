@@ -294,6 +294,7 @@ namespace OPSCO_Web.Controllers
         {
             ViewBag.ManagerId = id;
             ViewBag.Departments = db.Departments;
+            ViewBag.Teams = db.Teams;
             return PartialView();
         }
 

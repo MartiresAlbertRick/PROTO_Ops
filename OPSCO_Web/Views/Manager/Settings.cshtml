@@ -25,28 +25,10 @@
         <li role="presentation" class="active">
             <a href="#tab_groups" aria-controls="tab_groups" role="tab" data-toggle="tab">Groups</a>
         </li>
-        @*<li role="presentation">
-                <a href="#tab_timings" aria-controls="tab_timings" role="tab" data-toggle="tab">Timings</a>
-            </li>
-            <li role="presentation">
-                <a href="#tab_nptcategories" aria-controls="tab_nptcategories" role="tab" data-toggle="tab">NPT Categories</a>
-            </li>
-            <li role="presentation">
-                <a href="#tab_customscorecard" aria-controls="tab_customscorecard" role="tab" data-toggle="tab">Customize Scorecard</a>
-            </li>*@
     </ul>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="tab_groups">
             @Html.Action("GroupsSection", "Manager", new { id = Model.ManagerId })
         </div>
-        @*<div class="tab-pane fade" id="tab_timings">
-            @Html.Action("TimingsSection", "Team", new { id = Model.TeamId })
-        </div>
-        <div class="tab-pane fade" id="tab_nptcategories">
-            @Html.Action("NptCategorySection", "Team", new { id = Model.TeamId })
-        </div>
-        <div class="tab-pane fade" id="tab_customscorecard">
-            @Html.Action("CustomizeScorecardSection", "Team", new { id = Model.TeamId })
-        </div>*@
     </div>
 </div>

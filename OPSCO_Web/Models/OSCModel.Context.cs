@@ -36,18 +36,18 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_ImportTA> OSC_ImportTA { get; set; }
         public virtual DbSet<OSC_IndividualScorecard_Current> OSC_IndividualScorecard_Current { get; set; }
         public virtual DbSet<OSC_Location> OSC_Location { get; set; }
-        public virtual DbSet<OSC_ManageGroup> OSC_ManageGroup { get; set; }
         public virtual DbSet<OSC_Manager> OSC_Manager { get; set; }
         public virtual DbSet<OSC_ManualEntry> OSC_ManualEntry { get; set; }
         public virtual DbSet<OSC_NptCategory> OSC_NptCategory { get; set; }
         public virtual DbSet<OSC_Representative> OSC_Representative { get; set; }
         public virtual DbSet<OSC_Team> OSC_Team { get; set; }
-        public virtual DbSet<OSC_TeamGroupIds> OSC_TeamGroupIds { get; set; }
-        public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
         public virtual DbSet<OSC_WorkStatus> OSC_WorkStatus { get; set; }
         public virtual DbSet<OSC_WorkType> OSC_WorkType { get; set; }
-        public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
         public virtual DbSet<OSC_ScorecardField> OSC_ScorecardField { get; set; }
         public virtual DbSet<OSC_CustomizeScorecard> OSC_CustomizeScorecard { get; set; }
+        public virtual DbSet<OSC_ManageGroup> OSC_ManageGroup { get; set; }
+        public virtual DbSet<OSC_TeamGroupIds> OSC_TeamGroupIds { get; set; }
+        public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
+        public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
     }
 }

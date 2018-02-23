@@ -203,15 +203,6 @@
     <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
   </EntityType>
-  <EntityType Name="OSC_ManageGroup">
-    <Key>
-      <PropertyRef Name="MGId" />
-    </Key>
-    <Property Name="ManagerId" Type="Int64" Nullable="false" />
-    <Property Name="EntityId" Type="Int64" Nullable="false" />
-    <Property Name="Type" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
   <EntityType Name="OSC_Manager">
     <Key>
       <PropertyRef Name="ManagerId" />
@@ -296,38 +287,6 @@
     <Property Name="BIUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="AIQUserGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="OSC_TeamGroupIds">
-    <Key>
-      <PropertyRef Name="TGIId" />
-    </Key>
-    <Property Name="TeamId" Type="Int64" Nullable="false" />
-    <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
-  <EntityType Name="OSC_TeamWorkItem">
-    <Key>
-      <PropertyRef Name="WorkItemNo" />
-    </Key>
-    <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TeamId" Type="Int64" />
-    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="January" Type="Double" />
-    <Property Name="February" Type="Double" />
-    <Property Name="March" Type="Double" />
-    <Property Name="April" Type="Double" />
-    <Property Name="May" Type="Double" />
-    <Property Name="June" Type="Double" />
-    <Property Name="July" Type="Double" />
-    <Property Name="August" Type="Double" />
-    <Property Name="September" Type="Double" />
-    <Property Name="October" Type="Double" />
-    <Property Name="November" Type="Double" />
-    <Property Name="December" Type="Double" />
-    <Property Name="Year" Type="Int32" />
-  </EntityType>
   <EntityType Name="OSC_WorkStatus">
     <Key>
       <PropertyRef Name="StatusCode" />
@@ -358,28 +317,20 @@
     <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
     <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" />
     <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" />
-    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" />
     <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" />
     <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" />
     <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" />
     <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" />
     <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" />
-    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" />
-    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" />
-    <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_ScorecardField" EntityType="OSCModel.OSC_ScorecardField" />
     <EntitySet Name="OSC_CustomizeScorecard" EntityType="OSCModel.OSC_CustomizeScorecard" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="OSCModel.OSC_ManageGroup" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
   </EntityContainer>
-  <EntityType Name="OSC_TeamNptCategory">
-    <Key>
-      <PropertyRef Name="TNCId" />
-    </Key>
-    <Property Name="TeamId" Type="Int64" Nullable="false" />
-    <Property Name="CategoryId" Type="Int64" Nullable="false" />
-    <Property Name="TNCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
   <EntityType Name="OSC_ScorecardField">
     <Key>
       <PropertyRef Name="FieldId" />
@@ -399,5 +350,54 @@
     <Property Name="Month" Type="Int32" />
     <Property Name="Year" Type="Int32" />
     <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_ManageGroup">
+    <Key>
+      <PropertyRef Name="MGId" />
+    </Key>
+    <Property Name="ManagerId" Type="Int64" Nullable="false" />
+    <Property Name="EntityId" Type="Int64" Nullable="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="MGId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_TeamGroupIds">
+    <Key>
+      <PropertyRef Name="TGIId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="GroupId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="TGIId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_TeamNptCategory">
+    <Key>
+      <PropertyRef Name="TNCId" />
+    </Key>
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="CategoryId" Type="Int64" Nullable="false" />
+    <Property Name="TNCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSC_TeamWorkItem">
+    <Key>
+      <PropertyRef Name="WorkItemNo" />
+    </Key>
+    <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" />
+    <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="January" Type="Double" />
+    <Property Name="February" Type="Double" />
+    <Property Name="March" Type="Double" />
+    <Property Name="April" Type="Double" />
+    <Property Name="May" Type="Double" />
+    <Property Name="June" Type="Double" />
+    <Property Name="July" Type="Double" />
+    <Property Name="August" Type="Double" />
+    <Property Name="September" Type="Double" />
+    <Property Name="October" Type="Double" />
+    <Property Name="November" Type="Double" />
+    <Property Name="December" Type="Double" />
+    <Property Name="Year" Type="Int32" />
   </EntityType>
 </Schema>

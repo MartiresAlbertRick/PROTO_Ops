@@ -641,3 +641,4 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.cspr
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll
