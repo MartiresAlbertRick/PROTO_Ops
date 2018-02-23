@@ -6,6 +6,7 @@
                         <div class="col-md-12">
                             <div class="btn-group">
                                 <a id="btn_save_groups" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                                <a id="btn_reset_groups" href="#" class="btn btn-primary btn-sm"><i class="fa fa-refresh"></i> Reset</a>
                             </div>
                         </div>
                     </div>
@@ -18,16 +19,36 @@
                     <div class="col-md-4">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <input type="checkbox" />&nbsp;@x.DepartmentName
+                                
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="switch">
+                                                <input class="dept" type="checkbox" id="DEPT@(x.DepartmentId)" value="@x.DepartmentId"/>
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @x.DepartmentName
+                                        </div>
+                                    </div>
+                                
                             </div>
                             <div class="panel-body">
-                                <div style="min-height: 120px; max-height: 120px; overflow-y:auto;">
+                                <div style="min-height: 160px; max-height: 160px; overflow-y:auto;">
                                     @foreach (var y in ViewBag.Teams)
                                     {
                                         if (y.DepartmentId == x.DepartmentId)
                                         {
                                             <div class="col-md-12">
-                                                <input type="checkbox" />&nbsp;@y.TeamName
+                                                <div class="col-md-4">
+                                                    <label class="switch">
+                                                        <input class="DEPT@(x.DepartmentId) team" onchange="uncheckParent($('#TEAM@(y.TeamId)'),$('#DEPT@(x.DepartmentId)'))" type="checkbox" id="TEAM@(y.TeamId)" value="@y.TeamId"/>
+                                                        <div class="slider round"></div>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @y.TeamName
+                                                </div>
                                             </div>
                                         }
                                     }
@@ -42,13 +63,29 @@
 <script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
 <script>
     $(function () {
-        //getManagerGroups();
+        getManagerGroups();
         $('#btn_save_groups').click(function () {
-            //saveGroups();
+            saveGroups();
+        });
+        $('#btn_reset_groups').click(function () {
+            getManagerGroups();
+        });
+        $('input:checkbox').change(function () {
+            var id = $(this).prop('id');
+            var bool = $(this).prop('checked');
+            $('.' + id).prop('checked', bool);
+
+
         });
     });
+    function uncheckParent(chk1, chk2) {
+        var bool = chk1.prop('checked');
+        if (bool == false) {
+            chk2.prop('checked', bool);
+        }
+    }
+
     function getManagerGroups() {
-        $('#group_container').html('');
         $.ajax({
             url: '/Manager/GetManagerGroups/',
             data: '{ id : ' + @ViewBag.ManagerId + '}',
@@ -56,9 +93,10 @@
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                $('input:checkbox').prop('checked', false);
                 $.each(data, function (index, item) {
                     var row = item.ManagerId + ' | ' + item.EntityId + ' | ' + item.Type;
-                    $('#group_container').append(row + '<br />');
+                    $('#' + item.Type + item.EntityId).prop('checked', true);
                 });
             },
             error: function (response) {
@@ -72,25 +110,33 @@
 
     function saveGroups() {
         var groups = [];
-        $('.user_group').each(function (index, item) {
-            var s = $(item).prop("id");
+        $('.dept:checked').each(function (index, item) {
+            var s = $(item).val();
             var item = {
-                TGIId: $('#tgId_' + s).val(),
-                //TeamId: @ViewBag.TeamId,
-                GroupId: $('#groupId_' + s).val(),
-                GroupType: $('#grouptype_' + s).val()
+                Entityid: s,
+                Type: 'DEPT',
+                ManagerId: @ViewBag.ManagerId
+            }
+            groups.push(item);
+        });
+        $('.team:checked').each(function (index, item) {
+            var s = $(item).val();
+            var item = {
+                Entityid: s,
+                Type: 'TEAM',
+                ManagerId: @ViewBag.ManagerId
             }
             groups.push(item);
         });
 
         $.ajax({
-            url: '/Team/SaveGroupIds/',
-            data: '{ id : ' + @ViewBag.TeamId + ', objects : ' + JSON.stringify(groups) + '}',
+            url: '/Manager/SaveGroups/',
+            data: '{ id : ' + @ViewBag.ManagerId + ', objects : ' + JSON.stringify(groups) + '}',
             dataType: "json",
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                getTeamGroupIds();
+                getManagerGroups();
             },
             error: function (response) {
                 alert(response.responseText);
@@ -101,3 +147,4 @@
         });
     }
 </script>
+

@@ -304,6 +304,31 @@ namespace OPSCO_Web.Controllers
             var groups = (from list in db.ManageGroups.Where(t => t.ManagerId == id) select list).ToList();
             return Json(groups, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SaveGroups(long? id, List<OSC_ManageGroup> objects)
+        {
+            object s = new { message = "Success" };
+            if (id == null) return Json(null);
+            List<OSC_ManageGroup> list = db.ManageGroups.AsNoTracking().Where(t => t.ManagerId == id).ToList();
+            foreach (OSC_ManageGroup obj in list)
+            {
+                if (ModelState.IsValid)
+                {
+                    OSC_ManageGroup oSC_ManageGroup = db.ManageGroups.Find(obj.MGId);
+                    db.ManageGroups.Remove(oSC_ManageGroup);
+                    db.SaveChanges();
+                }
+            }
+            foreach (OSC_ManageGroup obj in objects)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.ManageGroups.Add(obj);
+                    db.SaveChanges();
+                }
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
         #endregion "GroupsSection"
         #region "Dispose"
         protected override void Dispose(bool disposing)
