@@ -195,6 +195,7 @@
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                alert(data.message);
                 getTimings();
             },
             error: function (response) {

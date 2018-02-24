@@ -307,25 +307,33 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveGroups(long? id, List<OSC_ManageGroup> objects)
         {
-            object s = new { message = "Successfully saved!" };
-            if (id == null) return Json(null);
-            List<OSC_ManageGroup> list = db.ManageGroups.AsNoTracking().Where(t => t.ManagerId == id).ToList();
-            foreach (OSC_ManageGroup obj in list)
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
             {
-                if (ModelState.IsValid)
+                List<OSC_ManageGroup> list = db.ManageGroups.AsNoTracking().Where(t => t.ManagerId == id).ToList();
+                foreach (OSC_ManageGroup obj in list)
                 {
-                    OSC_ManageGroup oSC_ManageGroup = db.ManageGroups.Find(obj.MGId);
-                    db.ManageGroups.Remove(oSC_ManageGroup);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        OSC_ManageGroup oSC_ManageGroup = db.ManageGroups.Find(obj.MGId);
+                        db.ManageGroups.Remove(oSC_ManageGroup);
+                        db.SaveChanges();
+                    }
                 }
+                foreach (OSC_ManageGroup obj in objects)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.ManageGroups.Add(obj);
+                        db.SaveChanges();
+                    }
+                }
+                s = new { type="success", message = "Successfully saved!" };
             }
-            foreach (OSC_ManageGroup obj in objects)
+            catch (Exception ex)
             {
-                if (ModelState.IsValid)
-                {
-                    db.ManageGroups.Add(obj);
-                    db.SaveChanges();
-                }
+                s = new { type="failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }

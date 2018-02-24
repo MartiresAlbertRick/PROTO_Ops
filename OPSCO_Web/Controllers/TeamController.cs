@@ -358,36 +358,44 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveGroupIds(long? id, List<OSC_TeamGroupIds> objects)
         {
-            object s = new { message = "Success" };
-            if (id == null) return Json(null);
-            List<OSC_TeamGroupIds> list = db.TeamGroupIds.AsNoTracking().Where(t => t.TeamId == id).ToList();
-            foreach (OSC_TeamGroupIds obj in list)
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
             {
-                if (objects.Where(t=>t.TGIId==obj.TGIId && t.TGIId != 0).FirstOrDefault() == null)
+                List<OSC_TeamGroupIds> list = db.TeamGroupIds.AsNoTracking().Where(t => t.TeamId == id).ToList();
+                foreach (OSC_TeamGroupIds obj in list)
+                {
+                    if (objects.Where(t => t.TGIId == obj.TGIId && t.TGIId != 0).FirstOrDefault() == null)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            OSC_TeamGroupIds oSC_TeamGroupIds = db.TeamGroupIds.Find(obj.TGIId);
+                            db.TeamGroupIds.Remove(oSC_TeamGroupIds);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                foreach (OSC_TeamGroupIds obj in objects)
                 {
                     if (ModelState.IsValid)
                     {
-                        OSC_TeamGroupIds oSC_TeamGroupIds = db.TeamGroupIds.Find(obj.TGIId);
-                        db.TeamGroupIds.Remove(oSC_TeamGroupIds);
-                        db.SaveChanges();
-                    }
-                }   
-            }
-            foreach (OSC_TeamGroupIds obj in objects)
-            {
-                if (ModelState.IsValid)
-                {
-                    if (obj.TGIId == 0)
-                    {
-                        db.TeamGroupIds.Add(obj);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        db.Entry(obj).State = EntityState.Modified;
-                        db.SaveChanges();
+                        if (obj.TGIId == 0)
+                        {
+                            db.TeamGroupIds.Add(obj);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            db.Entry(obj).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
                     }
                 }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
@@ -414,44 +422,52 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveTimings(long? id, List<OSC_TeamWorkItem> objects)
         {
-            object s = new { message = "Success" };
-            if (id == null) return Json(null);
-            List<OSC_TeamWorkItem> list = db.TeamWorkItems.AsNoTracking().Where(t => t.TeamId == id).ToList();
-            foreach (OSC_TeamWorkItem obj in list)
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
             {
-                if (objects.Where(t => t.WorkItemNo == obj.WorkItemNo && t.WorkItemNo != 0).FirstOrDefault() == null)
+                List<OSC_TeamWorkItem> list = db.TeamWorkItems.AsNoTracking().Where(t => t.TeamId == id).ToList();
+                foreach (OSC_TeamWorkItem obj in list)
+                {
+                    if (objects.Where(t => t.WorkItemNo == obj.WorkItemNo && t.WorkItemNo != 0).FirstOrDefault() == null)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            OSC_TeamWorkItem oSC_TeamWorkItem = db.TeamWorkItems.Find(obj.WorkItemNo);
+                            db.TeamWorkItems.Remove(oSC_TeamWorkItem);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                foreach (OSC_TeamWorkItem obj in objects)
                 {
                     if (ModelState.IsValid)
                     {
-                        OSC_TeamWorkItem oSC_TeamWorkItem = db.TeamWorkItems.Find(obj.WorkItemNo);
-                        db.TeamWorkItems.Remove(oSC_TeamWorkItem);
-                        db.SaveChanges();
-                    }
-                }
-            }
-            foreach (OSC_TeamWorkItem obj in objects)
-            {
-                if (ModelState.IsValid)
-                {
-                    if (obj.WorkItemNo == 0)
-                    {
-                        db.TeamWorkItems.Add(obj);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        if (list.Where(t => t.WorkItemNo == obj.WorkItemNo && t.Year == obj.Year).FirstOrDefault() == null)
-                        {
-                            db.Entry(obj).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        else
+                        if (obj.WorkItemNo == 0)
                         {
                             db.TeamWorkItems.Add(obj);
                             db.SaveChanges();
                         }
+                        else
+                        {
+                            if (list.Where(t => t.WorkItemNo == obj.WorkItemNo && t.Year == obj.Year).FirstOrDefault() == null)
+                            {
+                                db.Entry(obj).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                db.TeamWorkItems.Add(obj);
+                                db.SaveChanges();
+                            }
+                        }
                     }
                 }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
@@ -481,24 +497,32 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveCategories(long? id, List<OSC_TeamNptCategory> objects)
         {
-            object s = new { message = "Success" };
-            if (id == null) return Json(null);
-            var list = db.TeamNptCategories.Where(t => t.TeamId == id).ToList();
-            foreach (OSC_TeamNptCategory obj in list)
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
             {
-                if (ModelState.IsValid)
-                { 
-                    db.TeamNptCategories.Remove(obj);
-                    db.SaveChanges();
-                }
-            }
-            foreach (OSC_TeamNptCategory obj in objects)
-            {
-                if (ModelState.IsValid)
+                var list = db.TeamNptCategories.Where(t => t.TeamId == id).ToList();
+                foreach (OSC_TeamNptCategory obj in list)
                 {
-                    db.TeamNptCategories.Add(obj);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        db.TeamNptCategories.Remove(obj);
+                        db.SaveChanges();
+                    }
                 }
+                foreach (OSC_TeamNptCategory obj in objects)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.TeamNptCategories.Add(obj);
+                        db.SaveChanges();
+                    }
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
@@ -591,25 +615,33 @@ namespace OPSCO_Web.Controllers
 
         public JsonResult SaveScorecardView(long? id, int? month, int? year, string view, List<OSC_CustomizeScorecard> objects)
         {
-            object s = new { message = "Success" };
-            if (id == null) return Json(null);
-            var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month).ToList();
-            //var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month && t.ScorecardView==view).ToList();
-            foreach (OSC_CustomizeScorecard obj in list)
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
             {
-                if (ModelState.IsValid)
+                var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month).ToList();
+                //var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month && t.ScorecardView==view).ToList();
+                foreach (OSC_CustomizeScorecard obj in list)
                 {
-                    db.CustomizeScorecards.Remove(obj);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        db.CustomizeScorecards.Remove(obj);
+                        db.SaveChanges();
+                    }
                 }
+                foreach (OSC_CustomizeScorecard obj in objects)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.CustomizeScorecards.Add(obj);
+                        db.SaveChanges();
+                    }
+                }
+                s = new { type = "success", message = "Successfully saved!" };
             }
-            foreach (OSC_CustomizeScorecard obj in objects)
+            catch (Exception ex)
             {
-                if (ModelState.IsValid)
-                {
-                    db.CustomizeScorecards.Add(obj);
-                    db.SaveChanges();
-                }
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
