@@ -14,8 +14,10 @@ namespace OPSCO_Web.Controllers
 {
     public class RepresentativeController : Controller
     {
+        #region "ContextInitializer"
         private OSCContext db = new OSCContext();
-
+        #endregion "ContextInitializer"
+        #region "Index"
         // GET: Representative
         public ActionResult Index(int? page, int? pageSize, string searchByRep, string searchByTeam, string searchByRole, string searchByLocation)
         {
@@ -169,7 +171,7 @@ namespace OPSCO_Web.Controllers
             return View(reps.OrderBy(r => r.TeamId).ThenBy(r => r.FirstName).ToPagedList(page ?? 1, (int)defaultPageSize));
             #endregion "Return"
         }
-
+        #endregion "Index"
         #region "AutoComplete"
         [HttpPost]
         public JsonResult RepresentativeAutoComplete(string prefix)
@@ -208,7 +210,7 @@ namespace OPSCO_Web.Controllers
             return Json(coreRoles);
         }
         #endregion "AutoComplete"
-
+        #region "Details"
         // GET: Representative/Details/5
         public ActionResult Details(long? id)
         {
@@ -239,11 +241,16 @@ namespace OPSCO_Web.Controllers
             oSC_Representative.CoreRole = db.CoreRoles.Find(oSC_Representative.CoreRoleId);
             oSC_Representative.Location = db.Locations.Find(oSC_Representative.LocationId);
             #endregion "Method"
+            #region "ViewBag"
+            ViewBag.Years = db.years;
+            ViewBag.Months = db.months;
+            #endregion "ViewBag"
             #region "Return"
             return View(oSC_Representative);
             #endregion "Return"
         }
-
+        #endregion "Details"
+        #region "RepresentativeMethodCreate"
         // GET: Representative/Create
         public ActionResult Create()
         {
@@ -338,7 +345,8 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Representative);
             #endregion "Return"
         }
-
+        #endregion "RepresentativeMethodCreate"
+        #region "RepresentativeMethodEdit"
         // GET: Representative/Edit/5
         public ActionResult Edit(long? id)
         {
@@ -417,7 +425,8 @@ namespace OPSCO_Web.Controllers
             return View(oSC_Representative);
             #endregion "Return"
         }
-
+        #endregion "RepresentativeMethodEdit"
+        #region "RepresentativeMethodDelete"
         // GET: Representative/Delete/5
         public ActionResult Delete(long? id)
         {
@@ -494,7 +503,8 @@ namespace OPSCO_Web.Controllers
             //db.SaveChanges();
             //return RedirectToAction("Index");
         }
-
+        #endregion "RepresentativeMethodDelete"
+        #region "Dispose"
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -503,5 +513,6 @@ namespace OPSCO_Web.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion "Dispose"
     }
 }

@@ -28,105 +28,165 @@
         </div>
     </div>
     <br />
-    Error: could not load StatsSection. File is not available in the server.
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Team.TeamName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Team.TeamName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CoreRole.CoreRole)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CoreRole.CoreRole)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PRDUserId)
-        </dt>
+    <div class="row">
+        <ul class="nav nav-pills btn-xs">
+            <li role="presentation" class="active">
+                <a href="#tab_basic" aria-controls="tab_basic" role="tab" data-toggle="tab">Basic Info</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab_adv" aria-controls="tab_adv" role="tab" data-toggle="tab">Advanced Info</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab_basic">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.FirstName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.MiddleName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.MiddleName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.LastName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Team.TeamName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Team.TeamName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CoreRole.CoreRole)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.CoreRole.CoreRole)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PRDUserId)
+                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PRDUserId)
-        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.PRDUserId)
+                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AIQUserId)
-        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.AIQUserId)
+                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AIQUserId)
-        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.AIQUserId)
+                            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BIUserId)
-        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.BIUserId)
+                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BIUserId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.Location)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location.Location)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OnShoreRep)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OnShoreRep)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneRep)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneRep)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.WorkHours)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.WorkHours)
-        </dd>
-        @if (Session["role"].ToString() == "Admin")
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IsActive)
-            </dd>
-        }
-    </dl>
+                            <dd>
+                                @Html.DisplayFor(model => model.BIUserId)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.StartDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.EndDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Location.Location)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Location.Location)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OnShoreRep)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.OnShoreRep)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PhoneRep)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.PhoneRep)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.WorkHours)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.WorkHours)
+                            </dd>
+                            @if (Session["role"].ToString() == "Admin")
+                            {
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.IsActive)
+                                </dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab_adv">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="btn-group">
+                                                <a id="btn_save_view" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-4 pull-right">
+                                                <select class="form-control input-sm" id="cmb_year_custom">
+                                                    <option value="0">--Select Year--</option>
+                                                    @foreach (var x in ViewBag.Years)
+                                                    {
+                                                        <option value="@x.Value">@x.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 pull-right">
+                                                <select class="form-control input-sm" id="cmb_month_custom">
+                                                    <option value="0">--Select Month--</option>
+                                                    @foreach (var x in ViewBag.Months)
+                                                    {
+                                                        <option value="@x.Value">@x.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="container-fluid" id="advinfo_container" style="max-height: 350px; overflow-y: auto;">
+                            <!--container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
