@@ -20,5 +20,6 @@ namespace OPSCO_Web.Models
         public Nullable<int> Month { get; set; }
         public Nullable<int> Year { get; set; }
         public long CSId { get; set; }
+        public string ScorecardType { get; set; }
     }
 }

@@ -80,3 +80,26 @@ go
 alter table OSC_ImportAIQ
 add primary key (AIQReportId)
 go
+
+alter table OSC_CustomizeScorecard
+add ScorecardType nvarchar(25) null
+go
+
+alter table OSC_Representative
+add IsVPN bit
+go
+
+drop trigger OSC_Representative_After_Update
+go
+
+update OSC_Representative set HasPrevious=0
+go
+
+update OSC_Representative set PreviousId=0
+go
+
+update OSC_Representative set IsCurrent=1
+go
+
+update OSC_Representative set IsVPN=0
+go

@@ -53,6 +53,7 @@
           <Property Name="Month" Type="int" />
           <Property Name="Year" Type="int" />
           <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScorecardType" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="OSC_Department">
           <Key>
@@ -759,6 +760,7 @@
           <Property Name="Month" Type="Int32" />
           <Property Name="Year" Type="Int32" />
           <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScorecardType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OSC_ManageGroup">
           <Key>
@@ -1151,6 +1153,7 @@
           <EntitySetMapping Name="OSC_CustomizeScorecard">
             <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
               <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+                <ScalarProperty Name="ScorecardType" ColumnName="ScorecardType" />
                 <ScalarProperty Name="CSId" ColumnName="CSId" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />

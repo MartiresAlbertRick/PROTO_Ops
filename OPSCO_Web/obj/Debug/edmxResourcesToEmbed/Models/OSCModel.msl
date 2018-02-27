@@ -337,6 +337,7 @@
     <EntitySetMapping Name="OSC_CustomizeScorecard">
       <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
         <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+          <ScalarProperty Name="ScorecardType" ColumnName="ScorecardType" />
           <ScalarProperty Name="CSId" ColumnName="CSId" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Month" ColumnName="Month" />

@@ -523,6 +523,13 @@ C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.xm
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.WebHost.xml
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
+C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.Compression.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\VBCSCompiler.exe
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\ApplicationInsights.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll
@@ -534,13 +541,9 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\csi.exe
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\csi.exe.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\csi.rsp
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.Win32.Primitives.dll
@@ -550,7 +553,6 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.Consol
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.Diagnostics.Process.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.Compression.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.FileSystem.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.FileSystem.Primitives.dll
@@ -573,7 +575,6 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.Xml.XP
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\vbc.exe
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\vbc.exe.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\vbc.rsp
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\VBCSCompiler.exe
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Antlr3.Runtime.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\BTSS_Auth.dll
@@ -637,8 +638,7 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.WebPages.
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Net.Http.Formatting.xml
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.xml
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.WebHost.xml
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache
-C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll

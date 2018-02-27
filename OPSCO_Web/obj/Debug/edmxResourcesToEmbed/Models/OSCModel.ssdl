@@ -48,6 +48,7 @@
     <Property Name="Month" Type="int" />
     <Property Name="Year" Type="int" />
     <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScorecardType" Type="nvarchar" MaxLength="25" />
   </EntityType>
   <EntityType Name="OSC_Department">
     <Key>

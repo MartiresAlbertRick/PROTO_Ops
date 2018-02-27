@@ -350,6 +350,7 @@
     <Property Name="Month" Type="Int32" />
     <Property Name="Year" Type="Int32" />
     <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScorecardType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="OSC_ManageGroup">
     <Key>

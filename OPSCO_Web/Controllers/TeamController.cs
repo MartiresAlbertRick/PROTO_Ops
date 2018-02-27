@@ -546,19 +546,18 @@ namespace OPSCO_Web.Controllers
             if (year == null || year == 0 || year.ToString() == "") return Json(null);
             if (view == "") return Json(null);
             List<int> viewId = new List<int>();
-            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
-            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType=="view select list.FieldId).ToList();
+            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
+            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
             if (viewId == null || viewId.Count == 0)
             {
-                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
-                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
-                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType=view select list.FieldId).ToList();
-                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType=view select list.FieldId).ToList();
+                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
+                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
+                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
+                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType==view select list.FieldId).ToList();
             }
             List<OSC_ScorecardField> scorecardFields = new List<OSC_ScorecardField>();
             if (viewId == null || viewId.Count == 0)
             {
-                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore == false && t.ScorecardType == view))
                 foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore == false))
                 {
                     scorecardFields.Add(item);
@@ -566,7 +565,6 @@ namespace OPSCO_Web.Controllers
             }
             else
             {
-                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => !viewId.Contains(t.FieldId) && (bool)t.IsActive && t.ScorecardType == view))
                 foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => !viewId.Contains(t.FieldId) && (bool)t.IsActive))
                 {
                     scorecardFields.Add(item);
@@ -582,14 +580,14 @@ namespace OPSCO_Web.Controllers
             if (year == null || year == 0 || year.ToString() == "") return Json(null);
             if (view == "") return Json(null);
             List<int> viewId = new List<int>();
-            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
-            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType=="view select list.FieldId).ToList();
+            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
+            viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
             if (viewId == null || viewId.Count == 0)
             {
-                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
-                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
-                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType=view select list.FieldId).ToList();
-                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType=view select list.FieldId).ToList();
+                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
+                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
+                if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
+                else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType==view select list.FieldId).ToList();
             }
             List<OSC_ScorecardField> scorecardFields = new List<OSC_ScorecardField>();
             if (viewId == null || viewId.Count == 0)
