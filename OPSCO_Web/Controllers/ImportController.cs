@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
+using OPSCO_Web.BL;
 
 namespace OPSCO_Web.Controllers
 {
     public class ImportController : Controller
     {
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
 
         // GET: Import
         public ActionResult Index()
@@ -125,19 +127,19 @@ namespace OPSCO_Web.Controllers
                     {
                         OSC_ImportAIQ obj = new OSC_ImportAIQ();
                         obj.Agent = ((Excel.Range)range.Cells[row, 1]).Text;
-                        obj.IntervalStaffedDuration = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 2]).Text);
+                        obj.IntervalStaffedDuration = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 2]).Text);
                         obj.TotalPercServiceTime = Convert.ToDouble(((Excel.Range)range.Cells[row, 3]).Text);
                         obj.TotalACDCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 4]).Text);
                         obj.ExtInCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 5]).Text);
-                        obj.ExtInAvgActiveDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 6]).Text);
+                        obj.ExtInAvgActiveDur = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 6]).Text);
                         obj.ExtOutCalls = Convert.ToInt32(((Excel.Range)range.Cells[row, 7]).Text);
-                        obj.AvgExtOutActiveDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 8]).Text);
-                        obj.ACDWrapUpTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 9]).Text);
-                        obj.ACDTalkTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 10]).Text);
-                        obj.ACDRingTime = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 11]).Text);
-                        obj.Aux = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 12]).Text);
-                        obj.AvgHoldDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 13]).Text);
-                        obj.IntervalIdleDur = db.GetSecondsFormat(((Excel.Range)range.Cells[row, 14]).Text);
+                        obj.AvgExtOutActiveDur = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 8]).Text);
+                        obj.ACDWrapUpTime = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 9]).Text);
+                        obj.ACDTalkTime = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 10]).Text);
+                        obj.ACDRingTime = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 11]).Text);
+                        obj.Aux = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 12]).Text);
+                        obj.AvgHoldDur = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 13]).Text);
+                        obj.IntervalIdleDur = af.GetSecondsFormat(((Excel.Range)range.Cells[row, 14]).Text);
                         obj.Transfers = Convert.ToInt32(((Excel.Range)range.Cells[row, 15]).Text);
                         obj.HeldContacts = Convert.ToInt32(((Excel.Range)range.Cells[row, 16]).Text);
                         obj.Redirects = Convert.ToInt32(((Excel.Range)range.Cells[row, 17]).Text);
@@ -235,7 +237,7 @@ namespace OPSCO_Web.Controllers
                         if (Convert.ToDateTime(obj.CreateDateTime).Month == obj.Month)
                         {
                             obj.RepId = db.Representatives.Where(r => (r.PRDUserId == obj.AssignedId) && ((bool)r.IsCurrent)).FirstOrDefault().RepId;
-                            obj.TeamId = db.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
+                            obj.TeamId = af.GetTeamIdByGroupId(obj.Group, "BI").TeamId;
                             db.TA.Add(obj);
                         }
                     }

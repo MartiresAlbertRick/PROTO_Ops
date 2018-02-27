@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using PagedList;
 using PagedList.Mvc;
 
@@ -16,13 +17,14 @@ namespace OPSCO_Web.Controllers
     {
         #region "ContextInitializer"
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
         #endregion "ContextInitializer"
         #region "Index"
         // GET: Team
         public ActionResult Index(int? page, int? pageSize, string searchString)
         {
             #region "Initialize"
-            db.InitializeTeams();
+            af.InitializeTeams(db);
             #endregion "Initialize"
             #region "BTSS"
             string role;
@@ -32,10 +34,10 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Team");
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Team");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Team");
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Team");
+                ViewBag.CanView = af.CanView(grp_id, "Team");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Team");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Team");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Team");
 
                 if (!ViewBag.CanView) return HttpNotFound();
             }
@@ -57,7 +59,7 @@ namespace OPSCO_Web.Controllers
                 case "Staff":
                     foreach (OSC_Team obj in teams)
                     {
-                        if (db.IsManaged(obj.TeamId, user_name, role))
+                        if (af.IsManaged(obj.TeamId, user_name, role))
                             if (!TeamIds.Contains(obj.TeamId))
                                 TeamIds.Add(obj.TeamId);
                     }
@@ -89,8 +91,8 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Team");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Team");
+                ViewBag.CanView = af.CanView(grp_id, "Team");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Team");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -103,7 +105,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_Team oSC_Team = db.Teams.Find(id);
             if (oSC_Team == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_Team.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_Team.TeamId, user_name, role)) return HttpNotFound();
             oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
             #endregion "Method"
             #region "Return"
@@ -123,7 +125,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Team");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Team");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -155,7 +157,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Team");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Team");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -192,7 +194,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Team");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Team");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -205,7 +207,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
             OSC_Team oSC_Team = db.Teams.Find(id);
             if (oSC_Team == null) return HttpNotFound();
-            oSC_Team.GroupIds = db.GetGroupIds(id);
+            oSC_Team.GroupIds = af.GetGroupIds(id);
             #endregion "Method"
             #region "ViewBagDepartments"
             ViewBag.Departments = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
@@ -230,7 +232,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Team");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Team");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -267,7 +269,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Team");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Team");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
@@ -280,7 +282,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_Team oSC_Team = db.Teams.Find(id);
             if (oSC_Team == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_Team.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_Team.TeamId, user_name, role)) return HttpNotFound();
             oSC_Team.Department = db.Departments.Find(oSC_Team.DepartmentId);
             #endregion "Method"
             #region "Return"
@@ -301,7 +303,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Team");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Team");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using PagedList;
 using PagedList.Mvc;
 using System.IO;
@@ -17,12 +18,13 @@ namespace OPSCO_Web.Controllers
     public class NptTrackerController : Controller
     {
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
 
         // GET: NptTracker
         public ActionResult Index(int? page, int? pageSize, string searchByCategory, string searchByTeam, string searchByRep, string searchByDate, string searchByTimeSpent)
         {
             #region "Initialize"
-            db.InitializeNpts();
+            af.InitializeNpts(db);
             #endregion "Initialize"
             #region "BTSS"
             string role;
@@ -32,10 +34,10 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "NPT Tracker");
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "NPT Tracker");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "NPT Tracker");
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "NPT Tracker");
+                ViewBag.CanView = af.CanView(grp_id, "NPT Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "NPT Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "NPT Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "NPT Tracker");
 
                 if (!ViewBag.CanView) return HttpNotFound();
             }
@@ -57,7 +59,7 @@ namespace OPSCO_Web.Controllers
                 case "Department Analyst":
                     foreach (OSC_ImportNPT npt in npts)
                     {
-                        if (db.IsManaged(npt.TeamId, user_name, role))
+                        if (af.IsManaged(npt.TeamId, user_name, role))
                             if (!TeamIds.Contains((long)npt.TeamId))
                                 TeamIds.Add((long)npt.TeamId);
                     }
@@ -66,7 +68,7 @@ namespace OPSCO_Web.Controllers
                             select n);
                     break;
                 case "Staff":
-                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    OSC_Representative oSC_Representative = af.GetRepresentativeByPRD(user_name);
                     long repId;
                     repId = 0;
                     if (oSC_Representative != null)
@@ -179,7 +181,7 @@ namespace OPSCO_Web.Controllers
         public FileResult Export()
         {
             #region "Initialize"
-            db.InitializeNpts();
+            af.InitializeNpts(db);
             #endregion "Initialize"
             #region "BTSS"
             string role;
@@ -210,7 +212,7 @@ namespace OPSCO_Web.Controllers
                 case "Department Analyst":
                     foreach (OSC_ImportNPT npt in npts)
                     {
-                        if (db.IsManaged(npt.TeamId, user_name, role))
+                        if (af.IsManaged(npt.TeamId, user_name, role))
                             if (!TeamIds.Contains((long)npt.TeamId))
                                 TeamIds.Add((long)npt.TeamId);
                     }
@@ -219,7 +221,7 @@ namespace OPSCO_Web.Controllers
                             select n);
                     break;
                 case "Staff":
-                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    OSC_Representative oSC_Representative = af.GetRepresentativeByPRD(user_name);
                     long repId;
                     repId = 0;
                     if (oSC_Representative != null)
@@ -340,8 +342,8 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "NPT Tracker");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "NPT Tracker");
+                ViewBag.CanView = af.CanView(grp_id, "NPT Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "NPT Tracker");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -354,7 +356,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
             if (oSC_ImportNPT == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_ImportNPT.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_ImportNPT.TeamId, user_name, role)) return HttpNotFound();
             oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
             oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
             oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
@@ -375,7 +377,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "NPT Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "NPT Tracker");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -385,8 +387,8 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "BTSS"
             #region "Initialize"
-            db.InitializeRepresentatives();
-            db.InitializeTeamNptCategories();
+            af.InitializeRepresentatives(db);
+            af.InitializeTeamNptCategories(db);
             #endregion "Initialize"
             #region "ViewBagTeam"
             switch (role)
@@ -400,14 +402,14 @@ namespace OPSCO_Web.Controllers
                     List<long> TeamIds = new List<long>();
                     foreach (OSC_Team team in db.Teams)
                     {
-                        if (db.IsManaged(team.TeamId, user_name, role))
+                        if (af.IsManaged(team.TeamId, user_name, role))
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
                     ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
-                    long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+                    long repTeamId = (long)af.GetRepresentativeByPRD(user_name).TeamId;
                     ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId && t.IsActive), "TeamId", "TeamName");
                     break;
 
@@ -419,7 +421,7 @@ namespace OPSCO_Web.Controllers
             var teamNptCategories = (from t in db.TeamNptCategories select t);
             if (teamId != null)
             {
-                long repId = db.GetRepresentativeByPRD(user_name).RepId;
+                long repId = af.GetRepresentativeByPRD(user_name).RepId;
                 switch (role)
                 {
                     case "Admin":
@@ -464,7 +466,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "NPT Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "NPT Tracker");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -505,7 +507,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "NPT Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "NPT Tracker");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -515,7 +517,7 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "BTSS"
             #region "Initialize"
-            db.InitializeTeamNptCategories();
+            af.InitializeTeamNptCategories(db);
             #endregion "Initialize"
             #region "Method"
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -550,7 +552,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "NPT Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "NPT Tracker");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -591,7 +593,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "NPT Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "NPT Tracker");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
@@ -604,7 +606,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ImportNPT oSC_ImportNPT = db.NPT.Find(id);
             if (oSC_ImportNPT == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_ImportNPT.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_ImportNPT.TeamId, user_name, role)) return HttpNotFound();
             oSC_ImportNPT.Team = db.Teams.Find(oSC_ImportNPT.TeamId);
             oSC_ImportNPT.Representative = db.Representatives.Find(oSC_ImportNPT.RepId);
             oSC_ImportNPT.Representative.FullName = oSC_ImportNPT.Representative.FirstName + " " + oSC_ImportNPT.Representative.LastName;
@@ -627,7 +629,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "NPT Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "NPT Tracker");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)

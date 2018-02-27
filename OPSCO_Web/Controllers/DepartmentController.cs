@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using PagedList;
 using PagedList.Mvc;
 
@@ -15,6 +16,7 @@ namespace OPSCO_Web.Controllers
     public class DepartmentController : Controller
     {
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
 
         // GET: Department
         public ActionResult Index(int? page, int? pageSize, string searchString)
@@ -27,10 +29,10 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Department");
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Department");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Department");
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Department");
+                ViewBag.CanView = af.CanView(grp_id, "Department");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Department");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Department");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Department");
 
                 if (!ViewBag.CanView) return HttpNotFound();
             }
@@ -98,8 +100,8 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Department");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Department");
+                ViewBag.CanView = af.CanView(grp_id, "Department");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Department");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -129,7 +131,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Department");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Department");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -158,7 +160,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Department");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Department");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -194,7 +196,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Department");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Department");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -228,7 +230,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Department");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Department");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -264,7 +266,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Department");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Department");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
@@ -296,7 +298,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Department");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Department");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)

@@ -194,6 +194,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BL\AppFacade.cs" />
     <Compile Include="BL\ImportFiles.cs" />
     <Compile Include="BL\_AbsComDAL.cs" />
     <Compile Include="Controllers\ActivityTrackerController.cs" />

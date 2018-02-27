@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using PagedList;
 using PagedList.Mvc;
 
@@ -16,13 +17,14 @@ namespace OPSCO_Web.Controllers
     {
         #region "ContextInitializer"
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
         #endregion "ContextInitializer"
         #region "Index"
         // GET: Representative
         public ActionResult Index(int? page, int? pageSize, string searchByRep, string searchByTeam, string searchByRole, string searchByLocation)
         {
             #region "InitializeRepresentatives"
-            db.InitializeRepresentatives();
+            af.InitializeRepresentatives(db);
             #endregion "InitializeRepresentatives"
             #region "BTSS"
             string role;
@@ -32,10 +34,10 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Representative");
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Representative");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Representative");
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Representative");
+                ViewBag.CanView = af.CanView(grp_id, "Representative");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Representative");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Representative");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Representative");
 
                 if (!ViewBag.CanView) return HttpNotFound();
             }
@@ -56,7 +58,7 @@ namespace OPSCO_Web.Controllers
                 case "Department Analyst":
                     foreach (OSC_Representative obj in reps)
                     {
-                        if (db.IsManaged(obj.TeamId, user_name, role))
+                        if (af.IsManaged(obj.TeamId, user_name, role))
                             if (!TeamIds.Contains((long)obj.TeamId))
                                 TeamIds.Add((long)obj.TeamId);
                     }
@@ -65,7 +67,7 @@ namespace OPSCO_Web.Controllers
                              select r);
                     break;
                 case "Staff":
-                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    OSC_Representative oSC_Representative = af.GetRepresentativeByPRD(user_name);
                     long repId;
                     repId = 0;
                     if (oSC_Representative != null)
@@ -222,8 +224,8 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Representative");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Representative");
+                ViewBag.CanView = af.CanView(grp_id, "Representative");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Representative");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -236,7 +238,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_Representative oSC_Representative = db.Representatives.Find(id);
             if (oSC_Representative == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_Representative.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_Representative.TeamId, user_name, role)) return HttpNotFound();
             oSC_Representative.Team = db.Teams.Find(oSC_Representative.TeamId);
             oSC_Representative.CoreRole = db.CoreRoles.Find(oSC_Representative.CoreRoleId);
             oSC_Representative.Location = db.Locations.Find(oSC_Representative.LocationId);
@@ -248,6 +250,36 @@ namespace OPSCO_Web.Controllers
             #region "Return"
             return View(oSC_Representative);
             #endregion "Return"
+        }
+
+        public JsonResult GetScorecardDetails(long? repId, long? teamId, int? month, int? year)
+        {
+            if (repId == null || teamId == null || month == null || year == null) return Json(null);
+            var individualScorecard = af.GetIndividualScorecard((long)teamId, (long)repId, (int)month, (int)year);
+            return Json(individualScorecard, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveComment(long? id, string comment)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    OSC_IndividualScorecard_Current oSC_IndividualScorecard_Current = db.IndividualScorecards.Find(id);
+                    oSC_IndividualScorecard_Current.Comments = comment;
+                    db.Entry(oSC_IndividualScorecard_Current).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+
+            return Json(s, JsonRequestBehavior.AllowGet);
         }
         #endregion "Details"
         #region "RepresentativeMethodCreate"
@@ -262,7 +294,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Representative");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Representative");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -283,14 +315,14 @@ namespace OPSCO_Web.Controllers
                     List<long> TeamIds = new List<long>();
                     foreach (OSC_Team team in db.Teams)
                     {
-                        if (db.IsManaged(team.TeamId, user_name, role))
+                        if (af.IsManaged(team.TeamId, user_name, role))
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
                     ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
-                    long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+                    long repTeamId = (long)af.GetRepresentativeByPRD(user_name).TeamId;
                     ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
                     break;
             }
@@ -321,7 +353,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Representative");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Representative");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -358,7 +390,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Representative");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Representative");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -401,7 +433,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Representative");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Representative");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -438,7 +470,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Team");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Team");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
@@ -451,7 +483,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_Representative oSC_Representative = db.Representatives.Find(id);
             if (oSC_Representative == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_Representative.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_Representative.TeamId, user_name, role)) return HttpNotFound();
             oSC_Representative.Team = db.Teams.Find(oSC_Representative.TeamId);
             oSC_Representative.CoreRole = db.CoreRoles.Find(oSC_Representative.CoreRoleId);
             oSC_Representative.Location = db.Locations.Find(oSC_Representative.LocationId);
@@ -474,7 +506,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Representative");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Representative");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)

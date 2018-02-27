@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using System.Web.Script.Serialization;
 using Microsoft.Office.Interop.Word;
 using word = Microsoft.Office.Interop.Word;
@@ -14,6 +15,7 @@ namespace OPSCO_Web.Controllers
     public class IndividualScorecardController : Controller
     {
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
 
         // GET: IndividualScorecard
         public ActionResult Index(long? teamId, int? month, int? year)
@@ -26,7 +28,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Individual Scorecard");
+                ViewBag.CanView = af.CanView(grp_id, "Individual Scorecard");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -37,7 +39,7 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "BTSS"
             #region "Initialize"
-            db.InitializeRepresentatives();
+            af.InitializeRepresentatives(db);
             #endregion "Initialize"
             #region "ViewBagMonths"
             if (month != null) ViewBag.Months = new SelectList(db.months, "Value", "Text", month);
@@ -59,14 +61,14 @@ namespace OPSCO_Web.Controllers
                     List<long> TeamIds = new List<long>();
                     foreach (OSC_Team team in db.Teams)
                     {
-                        if (db.IsManaged(team.TeamId, user_name, role))
+                        if (af.IsManaged(team.TeamId, user_name, role))
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
                     ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
-                    long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+                    long repTeamId = (long)af.GetRepresentativeByPRD(user_name).TeamId;
                     ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId && t.IsActive), "TeamId", "TeamName");
                     break;
 
@@ -77,7 +79,7 @@ namespace OPSCO_Web.Controllers
             var reps = (from r in db.Representatives select r);
             if (teamId != null)
             {
-                long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
+                long repIdd = af.GetRepresentativeByPRD(user_name).RepId;
                 switch (role)
                 {
                     case "Admin":
@@ -184,7 +186,7 @@ namespace OPSCO_Web.Controllers
 
             #region "Table"
             List<IndividualScorecard> list = new List<IndividualScorecard>();
-            list = db.GetIndividualScorecardFull(teamId, repId, month, year);
+            list = af.GetIndividualScorecardFull(teamId, repId, month, year);
             int noOfRows = list.Count();
             int noOfCols = 10;
             word.Table table = doc.Tables[1];
@@ -223,7 +225,7 @@ namespace OPSCO_Web.Controllers
             #endregion "Table"
 
             #region "Highlights"
-            IndividualScorecard ind = db.GetIndividualScorecard(teamId, repId, month, year);
+            IndividualScorecard ind = af.GetIndividualScorecard(teamId, repId, month, year);
             if (doc.Bookmarks.Exists("Highlights"))
             {
                 doc.Bookmarks["Highlights"].Range.Text = ind.Highlights;
@@ -281,7 +283,7 @@ namespace OPSCO_Web.Controllers
             repId = (long)Session["IS_Rep"];
             month = (int)Session["IS_Month"];
             year = (int)Session["IS_Year"];
-            List<IndividualScorecard> list = db.GetIndividualScorecardFull(teamId, repId, month, year);
+            List<IndividualScorecard> list = af.GetIndividualScorecardFull(teamId, repId, month, year);
             return PartialView(list);
         }
 
@@ -326,7 +328,7 @@ namespace OPSCO_Web.Controllers
             month = (int)Session["IS_Month"];
             year = (int)Session["IS_Year"];
 
-            var worktypes = db.GetIndividualWorkTypes(teamId, repId, month, year);
+            var worktypes = af.GetIndividualWorkTypes(teamId, repId, month, year);
             return Json(worktypes, JsonRequestBehavior.AllowGet);
         }
         #endregion "ProductivityChart"
@@ -346,7 +348,7 @@ namespace OPSCO_Web.Controllers
             month = (int)Session["IS_Month"];
             year = (int)Session["IS_Year"];
 
-            var npts = db.GetIndividualNPT(teamId, repId, month, year);
+            var npts = af.GetIndividualNPT(teamId, repId, month, year);
             return Json(npts, JsonRequestBehavior.AllowGet);
         }
         #endregion "NptChart"
@@ -360,7 +362,7 @@ namespace OPSCO_Web.Controllers
             repId = (long)Session["IS_Rep"];
             month = (int)Session["IS_Month"];
             year = (int)Session["IS_Year"];
-            ViewBag.Highlights = db.GetIndividualScorecard(teamId, repId, month, year).Highlights;
+            ViewBag.Highlights = af.GetIndividualScorecard(teamId, repId, month, year).Highlights;
             return PartialView();
         }
         #endregion "Highlights"

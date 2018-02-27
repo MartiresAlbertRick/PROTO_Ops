@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Details";
 }
+<link rel="stylesheet" href="~/Content/Callout.css" />
 <h3>Representative</h3>
 <div>
     <h4>Details</h4>
@@ -152,9 +153,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="col-md-6">
-                                            <div class="btn-group">
-                                                <a id="btn_save_view" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
-                                            </div>
+                                            
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-4 pull-right">
@@ -243,6 +242,10 @@
                                         <div class="tab-pane fade" id="tab_comments">
                                             <div class="bs-callout bs-callout-primary">
                                                 <textarea class="form-control input-sm" rows="10" placeholder="Enter your comments..."></textarea>
+                                                <br />
+                                                <div class="btn-group pull-right">
+                                                    <a id="btn_save_comment" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -255,3 +258,29 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+
+    });
+    function getScorecardDetails() {
+        $.ajax({
+            url: '/Team/GetScorecardDetails/',
+            data: '{ id : ' + @Model.RepId +'}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#teamNptCategory').append('<li id="' + item.CategoryId  + '" class="ui-state-default"><a href="#" title="' + item.CategoryDesc + '">' + item.CategoryDesc + '</a></li>');
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

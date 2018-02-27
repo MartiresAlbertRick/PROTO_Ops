@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                             <div class="col-md-4 pull-right">
+                            <div class="col-md-4 pull-right">
                                 <select class="form-control input-sm" id="cmb_year_custom">
                                     <option value="0">--Select Year--</option>
                                     @foreach (var x in ViewBag.Years)
@@ -125,7 +125,7 @@
         }
     }
     function getScorecardFields() {
-        $('#scorecardFields').html('');
+        $('#scorecardFields').empty();
         $.ajax({
             url: '/Team/GetScorecardFields/',
             data: '{ id : ' + @ViewBag.TeamId +', month : ' + $('#cmb_month_custom').val() + ', year : ' + $('#cmb_year_custom').val() + ', view : "' + $('#cmb_view_custom').val() +'"}',
@@ -153,7 +153,7 @@
         });
     }
     function getScorecardView() {
-        $('#scorecardView').html('');
+        $('#scorecardView').empty();
         $.ajax({
             url: '/Team/GetScorecardView/',
             data: '{ id : ' + @ViewBag.TeamId +', month : ' + $('#cmb_month_custom').val() + ', year : ' + $('#cmb_year_custom').val() + ', view : "' + $('#cmb_view_custom').val() +'"}',
@@ -206,6 +206,7 @@
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                alert(data.message);
                 get();
             },
             error: function (response) {

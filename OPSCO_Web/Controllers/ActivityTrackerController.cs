@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OPSCO_Web.Models;
+using OPSCO_Web.BL;
 using PagedList;
 using PagedList.Mvc;
 using System.IO;
@@ -17,12 +18,13 @@ namespace OPSCO_Web.Controllers
     public class ActivityTrackerController : Controller
     {
         private OSCContext db = new OSCContext();
+        private AppFacade af = new AppFacade();
 
         // GET: ActivityTracker
         public ActionResult Index(int? page, int? pageSize, string searchByActivity, string searchByTeam, string searchByRep, string searchByDateFrom, string searchByDateTo)
         {
             #region "Initialize"
-            db.InitializeActivities();
+            af.InitializeActivities(db);
             #endregion "Initialize"
             #region "BTSS"
             string role;
@@ -32,10 +34,10 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Activity Tracker");
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+                ViewBag.CanView = af.CanView(grp_id, "Activity Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Activity Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Activity Tracker");
 
                 if (!ViewBag.CanView) return HttpNotFound();
             }
@@ -57,7 +59,7 @@ namespace OPSCO_Web.Controllers
                 case "Department Analyst":
                     foreach (OSC_ActivityTracker obj in acts)
                     {
-                        if (db.IsManaged(obj.TeamId, user_name, role))
+                        if (af.IsManaged(obj.TeamId, user_name, role))
                             if (!TeamIds.Contains(obj.TeamId))
                                 TeamIds.Add(obj.TeamId);
                     }
@@ -66,7 +68,7 @@ namespace OPSCO_Web.Controllers
                             select a);
                     break;
                 case "Staff":
-                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    OSC_Representative oSC_Representative = af.GetRepresentativeByPRD(user_name);
                     long repId;
                     repId = 0;
                     if (oSC_Representative != null)
@@ -189,7 +191,7 @@ namespace OPSCO_Web.Controllers
         public FileResult Export()
         {
             #region "Initialize"
-            db.InitializeActivities();
+            af.InitializeActivities(db);
             #endregion "Initialize"
             #region "BTSS"
             string role;
@@ -221,7 +223,7 @@ namespace OPSCO_Web.Controllers
                 case "Department Analyst":
                     foreach (OSC_ActivityTracker obj in acts)
                     {
-                        if (db.IsManaged(obj.TeamId, user_name, role))
+                        if (af.IsManaged(obj.TeamId, user_name, role))
                             if (!TeamIds.Contains(obj.TeamId))
                                 TeamIds.Add(obj.TeamId);
                     }
@@ -230,7 +232,7 @@ namespace OPSCO_Web.Controllers
                             select a);
                     break;
                 case "Staff":
-                    OSC_Representative oSC_Representative = db.GetRepresentativeByPRD(user_name);
+                    OSC_Representative oSC_Representative = af.GetRepresentativeByPRD(user_name);
                     long repId;
                     repId = 0;
                     if (oSC_Representative != null)
@@ -352,8 +354,8 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanView = db.appFacade.CanView(grp_id, "Activity Tracker");
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                ViewBag.CanView = af.CanView(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Activity Tracker");
                 if (!ViewBag.CanView) return HttpNotFound();
             }
             catch (Exception exception)
@@ -366,7 +368,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
@@ -387,7 +389,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Activity Tracker");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -397,7 +399,7 @@ namespace OPSCO_Web.Controllers
             }
             #endregion "BTSS"
             #region "Initialize"
-            db.InitializeRepresentatives();
+            af.InitializeRepresentatives(db);
             #endregion
             #region "ViewBagActivity"
             ViewBag.Activity = db.activities;
@@ -414,14 +416,14 @@ namespace OPSCO_Web.Controllers
                     List<long> TeamIds = new List<long>();
                     foreach (OSC_Team team in db.Teams)
                     {
-                        if (db.IsManaged(team.TeamId, user_name, role))
+                        if (af.IsManaged(team.TeamId, user_name, role))
                             if (!TeamIds.Contains(team.TeamId))
                                 TeamIds.Add(team.TeamId);
                     }
                     ViewBag.Teams = new SelectList(db.Teams.Where(x => TeamIds.Contains(x.TeamId) && x.IsActive), "TeamId", "TeamName");
                     break;
                 case "Staff":
-                    long repTeamId = (long)db.GetRepresentativeByPRD(user_name).TeamId;
+                    long repTeamId = (long)af.GetRepresentativeByPRD(user_name).TeamId;
                     ViewBag.Teams = new SelectList(db.Teams.Where(t => t.TeamId == repTeamId), "TeamId", "TeamName");
                     break;
             }
@@ -431,7 +433,7 @@ namespace OPSCO_Web.Controllers
             var reps = (from r in db.Representatives select r);
             if (teamId != null)
             {
-                long repIdd = db.GetRepresentativeByPRD(user_name).RepId;
+                long repIdd = af.GetRepresentativeByPRD(user_name).RepId;
                 switch (role)
                 {
                     case "Admin":
@@ -476,7 +478,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanAdd = db.appFacade.CanAdd(grp_id, "Activity Tracker");
+                ViewBag.CanAdd = af.CanAdd(grp_id, "Activity Tracker");
                 if (!ViewBag.CanAdd) return HttpNotFound();
             }
             catch (Exception exception)
@@ -516,7 +518,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Activity Tracker");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -532,7 +534,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
@@ -557,7 +559,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanEdit = db.appFacade.CanEdit(grp_id, "Activity Tracker");
+                ViewBag.CanEdit = af.CanEdit(grp_id, "Activity Tracker");
                 if (!ViewBag.CanEdit) return HttpNotFound();
             }
             catch (Exception exception)
@@ -597,7 +599,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Activity Tracker");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
@@ -610,7 +612,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             OSC_ActivityTracker oSC_ActivityTracker = db.ActivityTrackers.Find(id);
             if (oSC_ActivityTracker == null) return HttpNotFound();
-            if (!db.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
+            if (!af.IsManaged(oSC_ActivityTracker.TeamId, user_name, role)) return HttpNotFound();
             oSC_ActivityTracker.Team = db.Teams.Find(oSC_ActivityTracker.TeamId);
             oSC_ActivityTracker.Representative = db.Representatives.Find(oSC_ActivityTracker.RepId);
             oSC_ActivityTracker.Representative.FullName = oSC_ActivityTracker.Representative.FirstName + " " + oSC_ActivityTracker.Representative.LastName;
@@ -633,7 +635,7 @@ namespace OPSCO_Web.Controllers
                 role = Session["role"].ToString();
                 user_name = Session["logon_user"].ToString();
                 string grp_id = Session["grp_id"].ToString();
-                ViewBag.CanDelete = db.appFacade.CanDelete(grp_id, "Activity Tracker");
+                ViewBag.CanDelete = af.CanDelete(grp_id, "Activity Tracker");
                 if (!ViewBag.CanDelete) return HttpNotFound();
             }
             catch (Exception exception)
