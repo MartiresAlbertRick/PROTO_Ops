@@ -292,10 +292,11 @@
     <Property Name="PhoneRep" Type="bit" Nullable="false" />
     <Property Name="WorkHours" Type="float" />
     <Property Name="LocationId" Type="int" />
-    <Property Name="HasPrevious" Type="bit" />
+    <Property Name="HasPrevious" Type="bit" Nullable="false" />
     <Property Name="PreviousId" Type="bigint" />
-    <Property Name="IsCurrent" Type="bit" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsVPN" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_ScorecardField">
     <Key>

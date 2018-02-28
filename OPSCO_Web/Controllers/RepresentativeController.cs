@@ -343,7 +343,7 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RepId,PRDUserId,AIQUserId,BIUserId,WorkdayId,FirstName,MiddleName,LastName,TeamId,CoreRoleId,StartDate,EndDate,Comments,OnShoreRep,PhoneRep,WorkHours,LocationId,HasPrevious,PreviousId,IsCurrent,IsActive")] OSC_Representative oSC_Representative)
+        public ActionResult Create([Bind(Include = "RepId,PRDUserId,AIQUserId,BIUserId,WorkdayId,FirstName,MiddleName,LastName,TeamId,CoreRoleId,StartDate,EndDate,Comments,OnShoreRep,PhoneRep,IsVPN,WorkHours,LocationId,HasPrevious,PreviousId,IsCurrent,IsActive")] OSC_Representative oSC_Representative)
         {
             #region "BTSS"
             string role;
@@ -423,7 +423,7 @@ namespace OPSCO_Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RepId,PRDUserId,AIQUserId,BIUserId,WorkdayId,FirstName,MiddleName,LastName,TeamId,CoreRoleId,StartDate,EndDate,Comments,OnShoreRep,PhoneRep,WorkHours,LocationId,HasPrevious,PreviousId,IsCurrent,IsActive")] OSC_Representative oSC_Representative)
+        public ActionResult Edit([Bind(Include = "RepId,PRDUserId,AIQUserId,BIUserId,WorkdayId,FirstName,MiddleName,LastName,TeamId,CoreRoleId,StartDate,EndDate,Comments,OnShoreRep,PhoneRep,IsVPN,WorkHours,LocationId,HasPrevious,PreviousId,IsCurrent,IsActive")] OSC_Representative oSC_Representative)
         {
             #region "BTSS"
             string role;

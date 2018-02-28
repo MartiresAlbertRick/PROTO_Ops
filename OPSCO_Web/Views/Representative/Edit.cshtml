@@ -83,14 +83,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
-            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control input-sm", id="txt_startdt" } })
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control input-sm", id = "txt_startdt" } })
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control input-sm", id="txt_enddt" } })
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control input-sm", id = "txt_enddt" } })
             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -120,6 +120,15 @@
         </div>
     </div>
     <div class="form-group">
+        @Html.LabelFor(model => model.IsVPN, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsVPN)
+                @Html.ValidationMessageFor(model => model.IsVPN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(model => model.WorkHours, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.WorkHours, new { htmlAttributes = new { @class = "form-control input-sm input-required unfilled" } })
@@ -132,9 +141,9 @@
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
             <div class="col-md-4">
                 <div class="checkbox">
-                
-                        @Html.EditorFor(model => model.IsActive)
-                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

@@ -166,12 +166,14 @@ namespace OPSCO_Web.Models
             [Display(Name = "Work Hours")]
             public double WorkHours { get; set; }
             [Display(Name = "Has Previous")]
-            public Nullable<bool> HasPrevious { get; set; }
+            public bool HasPrevious { get; set; }
             public int LocationId { get; set; }
             [Display(Name = "Previous Id")]
             public Nullable<long> PreviousId { get; set; }
             [Display(Name = "Current Flag")]
-            public Nullable<bool> IsCurrent { get; set; }
+            public bool IsCurrent { get; set; }
+            [Display(Name = "VPN Capable")]
+            public bool IsVPN { get; set; }
             [Display(Name = "Active Flag")]
             public bool IsActive { get; set; }
         }

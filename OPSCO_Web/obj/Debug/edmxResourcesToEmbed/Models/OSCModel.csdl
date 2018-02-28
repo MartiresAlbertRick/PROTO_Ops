@@ -271,10 +271,11 @@
     <Property Name="PhoneRep" Type="Boolean" Nullable="false" />
     <Property Name="WorkHours" Type="Double" />
     <Property Name="LocationId" Type="Int32" />
-    <Property Name="HasPrevious" Type="Boolean" />
+    <Property Name="HasPrevious" Type="Boolean" Nullable="false" />
     <Property Name="PreviousId" Type="Int64" />
-    <Property Name="IsCurrent" Type="Boolean" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsVPN" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_Team">
     <Key>

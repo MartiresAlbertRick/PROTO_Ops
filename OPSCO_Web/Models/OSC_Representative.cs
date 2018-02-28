@@ -31,9 +31,10 @@ namespace OPSCO_Web.Models
         public bool PhoneRep { get; set; }
         public Nullable<double> WorkHours { get; set; }
         public Nullable<int> LocationId { get; set; }
-        public Nullable<bool> HasPrevious { get; set; }
+        public bool HasPrevious { get; set; }
         public Nullable<long> PreviousId { get; set; }
-        public Nullable<bool> IsCurrent { get; set; }
+        public bool IsCurrent { get; set; }
         public bool IsActive { get; set; }
+        public bool IsVPN { get; set; }
     }
 }
