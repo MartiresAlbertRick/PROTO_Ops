@@ -28,6 +28,7 @@
         <EntityTypeShape EntityType="OSCModel.OSC_TeamGroupIds" Width="1.5" PointX="3.375" PointY="14.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamNptCategory" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamWorkItem" Width="1.5" PointX="15.375" PointY="3.75" />
+        <EntityTypeShape EntityType="OSCModel.OSC_TeamScorecard_Current" Width="1.5" PointX="7.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

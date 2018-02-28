@@ -335,6 +335,16 @@
     <Property Name="CategoryId" Type="bigint" Nullable="false" />
     <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <EntityType Name="OSC_TeamScorecard_Current">
+    <Key>
+      <PropertyRef Name="TeamScorecardId" />
+    </Key>
+    <Property Name="TeamScorecardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
       <PropertyRef Name="WorkItemNo" />
@@ -398,6 +408,7 @@
     <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamScorecard_Current" EntityType="Self.OSC_TeamScorecard_Current" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<OPSCO_Web.Models.TeamViewRepList>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table coverbg table-bordered table-condensed table-striped input-sm">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.rep.FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.TotalUtilization)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProductivityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.Efficiency)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualBIQual.QualityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualActivities.Attendance_Days)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualNonProcessing.NPTHours)</th>
+                    <th>@Html.DisplayNameFor(model => model.individualBIQual.QualityReviewRate)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.rep.FirstName + ' ' + item.rep.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalUtilization)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductivityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.Efficiency)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualBIQual.QualityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualActivities.Attendance_Days)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualNonProcessing.NPTHours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.individualBIQual.QualityReviewRate)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

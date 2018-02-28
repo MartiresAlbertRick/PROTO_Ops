@@ -340,6 +340,16 @@
           <Property Name="CategoryId" Type="bigint" Nullable="false" />
           <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="OSC_TeamScorecard_Current">
+          <Key>
+            <PropertyRef Name="TeamScorecardId" />
+          </Key>
+          <Property Name="TeamScorecardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="bigint" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
             <PropertyRef Name="WorkItemNo" />
@@ -403,6 +413,7 @@
           <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_TeamScorecard_Current" EntityType="Self.OSC_TeamScorecard_Current" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
@@ -742,6 +753,7 @@
           <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
           <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
+          <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
         </EntityContainer>
         <EntityType Name="OSC_ScorecardField">
           <Key>
@@ -812,6 +824,16 @@
           <Property Name="November" Type="Double" />
           <Property Name="December" Type="Double" />
           <Property Name="Year" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OSC_TeamScorecard_Current">
+          <Key>
+            <PropertyRef Name="TeamScorecardId" />
+          </Key>
+          <Property Name="TeamScorecardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1216,6 +1238,17 @@
                 <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamScorecard_Current">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecard_Current">
+              <MappingFragment StoreEntitySet="OSC_TeamScorecard_Current">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

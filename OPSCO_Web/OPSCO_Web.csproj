@@ -291,6 +291,9 @@
     <Compile Include="Models\OSC_TeamNptCategory.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OSC_TeamScorecard_Current.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OSC_TeamWorkItem.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
@@ -505,7 +508,6 @@
     <Content Include="Views\IndividualScorecard\ScorecardWorkitemsTable.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardProgressBars.cshtml" />
     <Content Include="Views\IndividualScorecard\ScorecardBarCharts.cshtml" />
-    <Content Include="Views\IndividualScorecard\ScorecardViewHidden.cshtml" />
     <Content Include="Views\Team\GroupIdSection.cshtml" />
     <Content Include="Views\Team\TimingsSection.cshtml" />
     <Content Include="Views\Team\CustomizeScorecardSection.cshtml" />
@@ -514,6 +516,9 @@
     <Content Include="Templates\ChartTemplatesProd.xlsx" />
     <Content Include="Views\Manager\Settings.cshtml" />
     <Content Include="Views\Manager\GroupsSection.cshtml" />
+    <Content Include="Views\TeamScorecard\ScorecardView.cshtml" />
+    <Content Include="Views\TeamScorecard\ScorecardBase.cshtml" />
+    <Content Include="Views\TeamScorecard\IndividualSummary.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

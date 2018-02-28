@@ -331,6 +331,7 @@
     <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
+    <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
   </EntityContainer>
   <EntityType Name="OSC_ScorecardField">
     <Key>
@@ -401,5 +402,15 @@
     <Property Name="November" Type="Double" />
     <Property Name="December" Type="Double" />
     <Property Name="Year" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OSC_TeamScorecard_Current">
+    <Key>
+      <PropertyRef Name="TeamScorecardId" />
+    </Key>
+    <Property Name="TeamScorecardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

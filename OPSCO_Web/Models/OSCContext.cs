@@ -432,8 +432,19 @@ namespace OPSCO_Web.Models
     #endregion "OSCdbEntities"
 
     #region "ViewModel"
+    public class TeamScorecard : IndividualScorecard
+    {
+        public long TeamScorecardId { get; set; }
+    }
+
+    public class TeamViewRepList : IndividualScorecard
+    {
+        
+    }
+
     public class IndividualScorecard
     {
+        public long IndividualScorecardId { get; set; }
         public long TeamId { get; set; }
         public long RepId { get; set; }
         public int Month { get; set; }
@@ -498,12 +509,18 @@ namespace OPSCO_Web.Models
         public long RepId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        [Display(Name = "Status Count")]
+        public int StatusCount { get; set; }
+        [Display(Name = "Select Count")]
+        public int SelectCount { get; set; }
         [Display(Name = "Review Count")]
         public int ReviewCount { get; set; }
         [Display(Name = "Fail Count")]
         public int FailCount { get; set; }
         [Display(Name = "Processing Quality")]
         public double QualityRating { get; set; }
+        [Display(Name = "Quality Review Rate")]
+        public double QualityReviewRate { get; set; }
     }
 
     public class IndividualNonProcessing

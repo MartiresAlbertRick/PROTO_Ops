@@ -118,10 +118,62 @@ alter table OSC_Representative
 alter column IsVPN bit not null
 go
 
+create table OSC_TeamScorecard_Current
+(
+	TeamScorecardId bigint identity(1, 1) not null primary key,
+	TeamId bigint not null,
+	Month int not null,
+	Year int not null,
+	Comments nvarchar(1000) null
+)
+go
+ 
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 4, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 5, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 6, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 7, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 8, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 9, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 10, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 11, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 12, 2017, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2018, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2018, null from OSC_Team
+go
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2018, null from OSC_Team
+go
 
+
+
+
+
+
+
+
+
+
+--remove
 select PRDUserId, Count(*) from OSC_Representative group by PRDUserId having Count(*)>1
 select * from OSC_Representative where PRDUserid='kerinsj'
 update OSC_Representative set HasPrevious = 1, PreviousId=23 where RepId=24
 select * from OSC_Representative where PRDUserid='oxtonsco'
 update OSC_Representative set HasPrevious = 1, PreviousId=25 where RepId=4
 select * from OSC_Team where TeamId=9
+
+select * from OSC_ImportBIQual

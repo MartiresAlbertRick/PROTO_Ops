@@ -49,5 +49,6 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_TeamGroupIds> OSC_TeamGroupIds { get; set; }
         public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
+        public virtual DbSet<OSC_TeamScorecard_Current> OSC_TeamScorecard_Current { get; set; }
     }
 }
