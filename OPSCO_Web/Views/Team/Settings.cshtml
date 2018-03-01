@@ -36,6 +36,9 @@
             <li role="presentation">
                 <a href="#tab_customscorecard" aria-controls="tab_customscorecard" role="tab" data-toggle="tab">Customize Scorecard</a>
             </li>
+            <li role="presentation">
+                <a href="#tab_teamgoal" aria-controls="tab_teamgoal" role="tab" data-toggle="tab">Team Goal</a>
+            </li>
         </ul>
     </div>
     <div class="tab-content">
@@ -50,6 +53,9 @@
         </div>
         <div class="tab-pane fade" id="tab_customscorecard">
             @Html.Action("CustomizeScorecardSection", "Team", new { id = Model.TeamId })
+        </div>
+        <div class="tab-pane fade" id="tab_teamgoal">
+            @Html.Action("TeamGoalSection", "Team", new { id = Model.TeamId })
         </div>
     </div>
 </div>

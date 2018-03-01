@@ -519,6 +519,8 @@
     <Content Include="Views\TeamScorecard\ScorecardView.cshtml" />
     <Content Include="Views\TeamScorecard\ScorecardBase.cshtml" />
     <Content Include="Views\TeamScorecard\IndividualSummary.cshtml" />
+    <Content Include="Views\TeamScorecard\ScorecardCover.cshtml" />
+    <Content Include="Views\Team\TeamGoalSection.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

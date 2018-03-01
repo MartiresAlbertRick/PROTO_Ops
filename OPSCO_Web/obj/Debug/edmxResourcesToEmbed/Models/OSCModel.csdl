@@ -411,6 +411,17 @@
     <Property Name="TeamId" Type="Int64" Nullable="false" />
     <Property Name="Month" Type="Int32" Nullable="false" />
     <Property Name="Year" Type="Int32" Nullable="false" />
-    <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="IndividualSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="TeamSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="WorktypeSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="StatusSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="IsSignedOff" Type="Boolean" Nullable="false" />
+    <Property Name="ManagerSignOff" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="SignOffBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SignOffDate" Type="DateTime" Precision="3" />
+    <Property Name="ProductivityGoal" Type="Double" />
+    <Property Name="QualityGoal" Type="Double" />
+    <Property Name="EfficiencyGoal" Type="Double" />
+    <Property Name="UtilizationGoal" Type="Double" />
   </EntityType>
 </Schema>

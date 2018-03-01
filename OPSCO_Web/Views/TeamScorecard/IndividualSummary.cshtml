@@ -1,34 +1,130 @@
-﻿@model IEnumerable<OPSCO_Web.Models.TeamViewRepList>
+﻿@model IEnumerable<OPSCO_Web.Models.IndividualSummary>
+<h4>Individual Summary @ViewBag.Month-@ViewBag.Year</h4>
 <div class="row">
     <div class="col-md-12">
         <table class="table coverbg table-bordered table-condensed table-striped input-sm">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.rep.FullName)</th>
-                    <th>@Html.DisplayNameFor(model => model.TotalUtilization)</th>
-                    <th>@Html.DisplayNameFor(model => model.ProductivityRating)</th>
-                    <th>@Html.DisplayNameFor(model => model.Efficiency)</th>
-                    <th>@Html.DisplayNameFor(model => model.individualBIQual.QualityRating)</th>
-                    <th>@Html.DisplayNameFor(model => model.individualActivities.Attendance_Days)</th>
-                    <th>@Html.DisplayNameFor(model => model.individualNonProcessing.NPTHours)</th>
-                    <th>@Html.DisplayNameFor(model => model.individualBIQual.QualityReviewRate)</th>
+                    <th>@Html.DisplayNameFor(model => model.UserId)</th>
+                    <th>@Html.DisplayNameFor(model => model.RepName)</th>
+                    <th>@Html.DisplayNameFor(model => model.UtilizationScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProductivityScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.EfficiencyScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.QualityScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.Attendance)</th>
+                    <th>@Html.DisplayNameFor(model => model.NonProcessingTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.QualityReviewRate)</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.rep.FirstName + ' ' + item.rep.LastName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TotalUtilization)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ProductivityRating)%</td>
-                    <td>@Html.DisplayFor(modelItem => item.Efficiency)</td>
-                    <td>@Html.DisplayFor(modelItem => item.individualBIQual.QualityRating)%</td>
-                    <td>@Html.DisplayFor(modelItem => item.individualActivities.Attendance_Days)</td>
-                    <td>@Html.DisplayFor(modelItem => item.individualNonProcessing.NPTHours)</td>
-                    <td>@Html.DisplayFor(modelItem => item.individualBIQual.QualityReviewRate)</td>
-                </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RepName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UtilizationScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.ProductivityScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.EfficiencyScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.QualityScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.Attendance)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NonProcessingTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.QualityReviewRate)%</td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
+    <div class="col-md-12">
+        <p class="pull-right input-sm"><i>Note: Quality Analysts are not included</i></p>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="bs-callout bs-callout-primary">
+            <p>Manager's Comment</p>
+            <textarea rows="5" class="form-control input-sm" placeholder="Enter comment here.."></textarea>
+            <br />
+            <a class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="chart">
+            <canvas id="barChart" style="max-height:300px;"></canvas>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/TeamScorecard/JsonProductivity/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var barChartData =
+                    {
+                        labels: [],
+                        datasets: []
+                    }
+                var dt = {
+                    label: "Productivity",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                };
+                $.each(data, function (index, item) {
+                    barChartData.labels.push(item.Label);
+                    dt.data.push(item.Count);
+                });
+                barChartData.datasets.push(dt);
+                //alert(JSON.stringify(barChartData.datasets));
+                //dt.data.push(item.Count);
+                //barChartData.datasets.push(dt);
+
+                var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                var barChart = new Chart(barChartCanvas);
+                var barChartOptions = {
+                    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                    scaleBeginAtZero: true,
+                    //Boolean - Whether grid lines are shown across the chart
+                    scaleShowGridLines: true,
+                    //String - Colour of the grid lines
+                    scaleGridLineColor: "rgba(0,0,0,.05)",
+                    //Number - Width of the grid lines
+                    scaleGridLineWidth: 1,
+                    //Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowHorizontalLines: true,
+                    //Boolean - Whether to show vertical lines (except Y axis)
+                    scaleShowVerticalLines: true,
+                    //Boolean - If there is a stroke on each bar
+                    barShowStroke: true,
+                    //Number - Pixel width of the bar stroke
+                    barStrokeWidth: 2,
+                    //Number - Spacing between each of the X value sets
+                    barValueSpacing: 5,
+                    //Number - Spacing between data sets within X values
+                    barDatasetSpacing: 1,
+                    //String - A legend template
+                    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+                    //Boolean - whether to make the chart responsive
+                    responsive: true,
+                    maintainAspectRatio: true
+                };
+                barChartOptions.datasetFill = false;
+                barChart.Bar(barChartData, barChartOptions);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    });
+</script>

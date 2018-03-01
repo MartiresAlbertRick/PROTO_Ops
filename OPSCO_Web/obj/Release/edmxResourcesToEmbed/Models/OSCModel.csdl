@@ -271,10 +271,11 @@
     <Property Name="PhoneRep" Type="Boolean" Nullable="false" />
     <Property Name="WorkHours" Type="Double" />
     <Property Name="LocationId" Type="Int32" />
-    <Property Name="HasPrevious" Type="Boolean" />
+    <Property Name="HasPrevious" Type="Boolean" Nullable="false" />
     <Property Name="PreviousId" Type="Int64" />
-    <Property Name="IsCurrent" Type="Boolean" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsVPN" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_Team">
     <Key>
@@ -330,6 +331,7 @@
     <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
     <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
+    <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
   </EntityContainer>
   <EntityType Name="OSC_ScorecardField">
     <Key>
@@ -350,6 +352,7 @@
     <Property Name="Month" Type="Int32" />
     <Property Name="Year" Type="Int32" />
     <Property Name="CSId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScorecardType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="OSC_ManageGroup">
     <Key>
@@ -399,5 +402,22 @@
     <Property Name="November" Type="Double" />
     <Property Name="December" Type="Double" />
     <Property Name="Year" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OSC_TeamScorecard_Current">
+    <Key>
+      <PropertyRef Name="TeamScorecardId" />
+    </Key>
+    <Property Name="TeamScorecardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamId" Type="Int64" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="IndividualSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="TeamSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="WorktypeSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="StatusSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="IsSignedOff" Type="Boolean" Nullable="false" />
+    <Property Name="ManagerSignOff" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="SignOffBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SignOffDate" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

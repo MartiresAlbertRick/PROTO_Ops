@@ -150,16 +150,21 @@ namespace OPSCO_Web.BL
             return individualScorecardClass.GetIndividualWorkTypes(teamId, repId, month, year);
         }
 
-        public List<IndividualNPT> GetIndividualNPT(long teamId, long repId, int month, int year)
+        public List<PieList> GetIndividualNPT(long teamId, long repId, int month, int year)
         {
             return individualScorecardClass.GetIndividualNPT(teamId, repId, month, year);
         }
         #endregion "IndividualScorecardClass"
 
         #region "TeamScorecardClass"
-        public List<TeamViewRepList> GetRepList(long teamId, int month, int year)
+        public List<IndividualSummary> GetIndividualSummary(long teamId, int month, int year)
         {
-            return teamScorecardClass.GetRepList(teamId, month, year);
+            return teamScorecardClass.GetIndividualSummary(teamId, month, year);
+        }
+
+        public List<BarChart> GetProductivity(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetProductivity(teamId, month, year);
         }
         #endregion "TeamScorecardClass"
 
@@ -962,18 +967,18 @@ namespace OPSCO_Web.BL
             return result.OrderBy(t => t.WorkType).ToList();
         }
 
-        public List<IndividualNPT> GetIndividualNPT(long teamId, long repId, int month, int year)
+        public List<PieList> GetIndividualNPT(long teamId, long repId, int month, int year)
         {
-            List<IndividualNPT> result = new List<IndividualNPT>();
+            List<PieList> result = new List<PieList>();
             var s = (from list in db.NPT
                      where list.TeamId == teamId && list.RepId == repId && list.Month == month && list.Year == year
-                     select new IndividualNPT { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
+                     select new PieList { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
 
-            foreach (IndividualNPT item in s)
+            foreach (PieList item in s)
             {
                 if (result.Any(t => t.Category == item.Category))
                 {
-                    IndividualNPT obj = result.Where(t => t.Category == item.Category).FirstOrDefault();
+                    PieList obj = result.Where(t => t.Category == item.Category).FirstOrDefault();
                     result.Remove(obj);
                     obj.TimeSpent += item.TimeSpent;
                     result.Add(obj);
@@ -1055,156 +1060,193 @@ namespace OPSCO_Web.BL
         private OSCContext db = new OSCContext();
         private IndividualScorecardClass isClass = new IndividualScorecardClass();
 
-        public List<TeamViewRepList> GetRepList(long teamId, int month, int year)
+        public List<IndividualSummary> GetIndividualSummary(long teamId, int month, int year)
         {
-            List<TeamViewRepList> result = new List<TeamViewRepList>();
+            List<IndividualSummary> result = new List<IndividualSummary>();
             List<OSC_Representative> reps = (from list in db.Representatives where list.TeamId == teamId && list.IsActive && list.IsCurrent select list).ToList();
             foreach (OSC_Representative rep in reps)
             {
                 IndividualScorecard individualScorecard = isClass.GetIndividualScorecard(teamId, rep.RepId, month, year);
-                TeamViewRepList obj = new TeamViewRepList()
+                IndividualSummary obj = new IndividualSummary()
                 {
-                    TeamId = individualScorecard.TeamId,
-                    RepId = individualScorecard.RepId,
-                    Month = individualScorecard.Month,
-                    Year = individualScorecard.Year,
-                    rep = individualScorecard.rep,
-                    MonthName = individualScorecard.MonthName,
-                    AverageAuxTime = individualScorecard.AverageAuxTime,
-                    AverageHandleTime = individualScorecard.AverageHandleTime,
-                    AverageTalkTime = individualScorecard.AverageTalkTime,
-                    AverageWrapUpDuration = individualScorecard.AverageWrapUpDuration,
-                    HoursWorked = individualScorecard.HoursWorked,
-                    Efficiency = individualScorecard.Efficiency,
-                    ProductivityRating = individualScorecard.ProductivityRating,
-                    SupportLineUtilization = individualScorecard.SupportLineUtilization,
-                    TotalUtilization = individualScorecard.TotalUtilization,
-                    individualActivities = individualScorecard.individualActivities,
-                    individualAIQ = individualScorecard.individualAIQ,
-                    individualBIProd = individualScorecard.individualBIProd,
-                    individualBIQual = individualScorecard.individualBIQual,
-                    individualManualEntries = individualScorecard.individualManualEntries,
-                    individualNonProcessing = individualScorecard.individualNonProcessing
+                    UserId = individualScorecard.rep.BIUserId,
+                    RepName = individualScorecard.rep.FirstName + " " + individualScorecard.rep.LastName,
+                    ProductivityScore = individualScorecard.ProductivityRating,
+                    QualityScore = individualScorecard.individualBIQual.QualityRating,
+                    QualityReviewRate = individualScorecard.individualBIQual.QualityReviewRate,
+                    UtilizationScore = individualScorecard.TotalUtilization,
+                    EfficiencyScore = individualScorecard.Efficiency,
+                    Attendance = individualScorecard.individualActivities.Attendance_Days,
+                    NonProcessingTime = individualScorecard.individualNonProcessing.NPTHours
                 };
                 result.Add(obj);
             }
-            TeamViewRepList total = new TeamViewRepList()
+            IndividualSummary total = new IndividualSummary()
             {
-                TeamId = teamId,
-                Month = 13,
-                Year = year,
-                AverageAuxTime = 0,
-                AverageHandleTime = 0,
-                AverageTalkTime = 0,
-                AverageWrapUpDuration = 0,
-                Efficiency = 0,
-                Highlights = "",
-                HoursWorked = 0,
-                SupportLineUtilization = 0,
-                TotalUtilization = 0,
-                ProductivityRating = 0,
-                individualActivities = isClass.GetIndividualActivities(teamId, 0, 13, year),
-                individualAIQ = isClass.GetIndividualAIQ(teamId, 0, 13, year),
-                individualBIProd = isClass.GetIndividualProd(teamId, 0, 13, year),
-                individualNonProcessing = isClass.GetIndividualNonProcessing(teamId, 0, 13, year),
-                individualBIQual = isClass.GetIndividualQual(teamId, 0, 13, year),
-                individualManualEntries = isClass.GetIndividualManualEntries(teamId, 0, 13, year),
-                rep = { FullName="Total" }
+                UserId = "Total",
+                RepName = "",
+                ProductivityScore = 0,
+                QualityScore = 0,
+                QualityReviewRate = 0,
+                UtilizationScore = 0,
+                EfficiencyScore = 0,
+                Attendance = 0,
+                NonProcessingTime = 0
             };
 
-            foreach (TeamViewRepList item in result)
+            foreach (IndividualSummary item in result)
             {
-                total.AverageAuxTime = total.AverageAuxTime + item.AverageAuxTime; //GetAverage
-                total.AverageHandleTime = total.AverageHandleTime + item.AverageHandleTime; //GetAverage
-                total.AverageTalkTime = total.AverageTalkTime + item.AverageTalkTime; //GetAverage
-                total.AverageWrapUpDuration = total.AverageWrapUpDuration + item.AverageWrapUpDuration; //GetAverage
-                total.Efficiency = total.Efficiency + item.Efficiency; //GetAverage
-                total.ProductivityRating = total.ProductivityRating + item.ProductivityRating; //GetAverage
-                total.SupportLineUtilization = total.SupportLineUtilization + item.SupportLineUtilization; //GetAverage
-                total.TotalUtilization = total.TotalUtilization + item.TotalUtilization; //GetAverage
-                total.HoursWorked = total.HoursWorked + item.HoursWorked;
-                total.individualBIProd.ProcessingHours = total.individualBIProd.ProcessingHours + item.individualBIProd.ProcessingHours;
-                total.individualBIProd.Count = total.individualBIProd.Count + item.individualBIProd.Count;
-                total.individualBIQual.FailCount = total.individualBIQual.FailCount + item.individualBIQual.FailCount;
-                total.individualBIQual.ReviewCount = total.individualBIQual.ReviewCount + item.individualBIQual.ReviewCount;
-                total.individualBIQual.QualityRating = total.individualBIQual.QualityRating + item.individualBIQual.QualityRating; //GetAverage
-                total.individualActivities.Attendance_Days = total.individualActivities.Attendance_Days + item.individualActivities.Attendance_Days;
-                total.individualActivities.Attendance_Hours = total.individualActivities.Attendance_Hours + item.individualActivities.Attendance_Hours;
-                total.individualActivities.Overtime_Days = total.individualActivities.Overtime_Days + item.individualActivities.Overtime_Days;
-                total.individualActivities.Overtime_Hours = total.individualActivities.Overtime_Hours + item.individualActivities.Overtime_Hours;
-                total.individualActivities.TimeOff_Days = total.individualActivities.TimeOff_Days + item.individualActivities.TimeOff_Days;
-                total.individualActivities.TimeOff_Hours = total.individualActivities.TimeOff_Hours + item.individualActivities.TimeOff_Hours;
-                total.individualActivities.Holiday_Days = total.individualActivities.Holiday_Days + item.individualActivities.Holiday_Days;
-                total.individualActivities.Holiday_Hours = total.individualActivities.Holiday_Hours + item.individualActivities.Holiday_Hours;
-                total.individualNonProcessing.NPTHours = total.individualNonProcessing.NPTHours + item.individualNonProcessing.NPTHours;
-                total.individualAIQ.ACDRingTime = total.individualAIQ.ACDRingTime + item.individualAIQ.ACDRingTime;
-                total.individualAIQ.ACDTalkTime = total.individualAIQ.ACDTalkTime + item.individualAIQ.ACDTalkTime;
-                total.individualAIQ.ACDWrapUpTime = total.individualAIQ.ACDWrapUpTime + item.individualAIQ.ACDWrapUpTime;
-                total.individualAIQ.Aux = total.individualAIQ.Aux + item.individualAIQ.Aux;
-                total.individualAIQ.AvgExtOutActiveDur = total.individualAIQ.AvgExtOutActiveDur + item.individualAIQ.AvgExtOutActiveDur;
-                total.individualAIQ.AvgHoldDur = total.individualAIQ.AvgHoldDur + item.individualAIQ.AvgHoldDur;
-                total.individualAIQ.ExtInAvgActiveDur = total.individualAIQ.ExtInAvgActiveDur + item.individualAIQ.ExtInAvgActiveDur;
-                total.individualAIQ.ExtInCalls = total.individualAIQ.ExtInCalls + item.individualAIQ.ExtInCalls;
-                total.individualAIQ.ExtOutCalls = total.individualAIQ.ExtOutCalls + item.individualAIQ.ExtOutCalls;
-                total.individualAIQ.HeldContacts = total.individualAIQ.HeldContacts + item.individualAIQ.HeldContacts;
-                total.individualAIQ.IntervalIdleDur = total.individualAIQ.IntervalIdleDur + item.individualAIQ.IntervalIdleDur;
-                total.individualAIQ.IntervalStaffedDuration = total.individualAIQ.IntervalStaffedDuration + item.individualAIQ.IntervalStaffedDuration;
-                total.individualAIQ.Redirects = total.individualAIQ.Redirects + item.individualAIQ.Redirects;
-                total.individualAIQ.TotalACDCalls = total.individualAIQ.TotalACDCalls + item.individualAIQ.TotalACDCalls;
-                total.individualAIQ.TotalPercServiceTime = total.individualAIQ.TotalPercServiceTime + item.individualAIQ.TotalPercServiceTime;
-                total.individualAIQ.Transfers = total.individualAIQ.Transfers + item.individualAIQ.Transfers;
-                total.individualManualEntries.CallManagementScore = total.individualManualEntries.CallManagementScore + item.individualManualEntries.CallManagementScore; //GetAverage
-                total.individualManualEntries.AdministrativeProcedures = total.individualManualEntries.AdministrativeProcedures + item.individualManualEntries.AdministrativeProcedures; //GetAverage
-                total.individualManualEntries.ActiveProjects = total.individualManualEntries.ActiveProjects + item.individualManualEntries.ActiveProjects;
-                total.individualManualEntries.CallEfficiency = total.individualManualEntries.CallEfficiency + item.individualManualEntries.CallEfficiency; //GetAverage
-                total.individualManualEntries.Commitment = total.individualManualEntries.Commitment + item.individualManualEntries.Commitment; //GetAverage
-                total.individualManualEntries.CompletedProjects = total.individualManualEntries.CompletedProjects + item.individualManualEntries.CompletedProjects;
-                total.individualManualEntries.Compliance = total.individualManualEntries.Compliance + item.individualManualEntries.Compliance; //GetAverage
-                total.individualManualEntries.Engagement = total.individualManualEntries.Engagement + item.individualManualEntries.Engagement; //GetAverage
-                total.individualManualEntries.GainLossAmount = total.individualManualEntries.GainLossAmount + item.individualManualEntries.GainLossAmount;
-                total.individualManualEntries.GainLossOccurances = total.individualManualEntries.GainLossOccurances + item.individualManualEntries.GainLossOccurances;
-                total.individualManualEntries.JHValues = total.individualManualEntries.JHValues + item.individualManualEntries.JHValues; //GetAverage
-                total.individualManualEntries.ProductAccuracy = total.individualManualEntries.ProductAccuracy + item.individualManualEntries.ProductAccuracy; //GetAverage
-                total.individualManualEntries.ScheduleAdherence = total.individualManualEntries.ScheduleAdherence + item.individualManualEntries.ScheduleAdherence; //GetAverage
+                total.ProductivityScore = total.ProductivityScore + item.ProductivityScore;
+                total.QualityScore = total.QualityScore + item.QualityScore;
+                total.QualityReviewRate = total.QualityReviewRate + item.QualityReviewRate;
+                total.UtilizationScore = total.UtilizationScore + item.UtilizationScore;
+                total.EfficiencyScore = total.EfficiencyScore + item.EfficiencyScore;
+                total.Attendance = total.Attendance + item.Attendance;
+                total.NonProcessingTime = total.NonProcessingTime + item.NonProcessingTime;
             }
             double multiplier = Math.Pow(10, 2);
-            total.AverageAuxTime = total.AverageAuxTime / month;
-            total.AverageAuxTime = Math.Ceiling(total.AverageAuxTime * multiplier) / multiplier;
-            total.AverageHandleTime = total.AverageHandleTime / month;
-            total.AverageHandleTime = Math.Ceiling(total.AverageHandleTime * multiplier) / multiplier;
-            total.AverageTalkTime = total.AverageTalkTime / month;
-            total.AverageTalkTime = Math.Ceiling(total.AverageTalkTime * multiplier) / multiplier;
-            total.AverageWrapUpDuration = total.AverageWrapUpDuration / month;
-            total.AverageWrapUpDuration = Math.Ceiling(total.AverageWrapUpDuration * multiplier) / multiplier;
-            total.Efficiency = total.Efficiency / month;
-            total.Efficiency = Math.Ceiling(total.Efficiency * multiplier) / multiplier;
-            total.ProductivityRating = total.ProductivityRating / month;
-            total.ProductivityRating = Math.Ceiling(total.ProductivityRating * multiplier) / multiplier;
-            total.SupportLineUtilization = total.SupportLineUtilization / month;
-            total.SupportLineUtilization = Math.Ceiling(total.SupportLineUtilization * multiplier) / multiplier;
-            total.TotalUtilization = total.TotalUtilization / month;
-            total.TotalUtilization = Math.Ceiling(total.TotalUtilization * multiplier) / multiplier;
-            total.individualBIQual.QualityRating = total.individualBIQual.QualityRating / month;
-            total.individualBIQual.QualityRating = Math.Ceiling(total.individualBIQual.QualityRating * multiplier) / multiplier;
-            total.individualManualEntries.CallManagementScore = total.individualManualEntries.CallManagementScore / month;
-            total.individualManualEntries.CallManagementScore = Math.Ceiling((double)total.individualManualEntries.CallManagementScore * multiplier) / multiplier;
-            total.individualManualEntries.AdministrativeProcedures = total.individualManualEntries.AdministrativeProcedures / month;
-            total.individualManualEntries.AdministrativeProcedures = Math.Ceiling((double)total.individualManualEntries.AdministrativeProcedures * multiplier) / multiplier;
-            total.individualManualEntries.CallEfficiency = total.individualManualEntries.CallEfficiency / month;
-            total.individualManualEntries.CallEfficiency = Math.Ceiling((double)total.individualManualEntries.CallEfficiency * multiplier) / multiplier;
-            total.individualManualEntries.Commitment = total.individualManualEntries.Commitment / month;
-            total.individualManualEntries.Commitment = Math.Ceiling((double)total.individualManualEntries.Commitment * multiplier) / multiplier;
-            total.individualManualEntries.Compliance = total.individualManualEntries.Compliance / month;
-            total.individualManualEntries.Compliance = Math.Ceiling((double)total.individualManualEntries.Compliance * multiplier) / multiplier;
-            total.individualManualEntries.Engagement = total.individualManualEntries.Engagement / month;
-            total.individualManualEntries.Engagement = Math.Ceiling((double)total.individualManualEntries.Engagement * multiplier) / multiplier;
-            total.individualManualEntries.JHValues = total.individualManualEntries.JHValues / month;
-            total.individualManualEntries.JHValues = Math.Ceiling((double)total.individualManualEntries.JHValues * multiplier) / multiplier;
-            total.individualManualEntries.ProductAccuracy = total.individualManualEntries.ProductAccuracy / month;
-            total.individualManualEntries.ProductAccuracy = Math.Ceiling((double)total.individualManualEntries.ProductAccuracy * multiplier) / multiplier;
-            total.individualManualEntries.ScheduleAdherence = total.individualManualEntries.ScheduleAdherence / month;
-            total.individualManualEntries.ScheduleAdherence = Math.Ceiling((double)total.individualManualEntries.ScheduleAdherence * multiplier) / multiplier;
+            total.ProductivityScore = total.ProductivityScore / month;
+            total.ProductivityScore = Math.Ceiling(total.ProductivityScore * multiplier) / multiplier;
+            total.QualityScore = total.QualityScore / month;
+            total.QualityScore = Math.Ceiling(total.QualityScore * multiplier) / multiplier;
+            total.QualityReviewRate = total.QualityReviewRate / month;
+            total.QualityReviewRate = Math.Ceiling(total.QualityReviewRate * multiplier) / multiplier;
+            total.UtilizationScore = total.UtilizationScore / month;
+            total.UtilizationScore = Math.Ceiling(total.UtilizationScore * multiplier) / multiplier;
+            total.EfficiencyScore = total.EfficiencyScore / month;
+            total.EfficiencyScore = Math.Ceiling(total.EfficiencyScore * multiplier) / multiplier;
             result.Add(total);
+            return result;
+        }
+
+        public List<PieList> GetTeamNPT(long teamId, int month, int year)
+        {
+            List<PieList> result = new List<PieList>();
+            var s = (from list in db.NPT
+                     where list.TeamId == teamId && list.Month == month && list.Year == year
+                     select new PieList { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
+            foreach (PieList item in s)
+            {
+                if (result.Any(t => t.Category == item.Category))
+                {
+                    PieList obj = result.Where(t => t.Category == item.Category).FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += item.TimeSpent;
+                    result.Add(obj);
+                }
+                else result.Add(item);
+            }
+            return result.OrderBy(t => t.Category).ToList();
+        }
+
+        public List<PieList> GetTeamTimers(long teamId, int month, int year)
+        {
+            List<PieList> result = new List<PieList>();
+            var s = (from list in db.NPT
+                     where list.TeamId == teamId && list.Month == month && list.Year == year
+                     select new PieList { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
+            foreach (PieList item in s)
+            {
+                if (result.Any(t => t.Category == "Non-Processing Time"))
+                {
+                    PieList obj = result.Where(t => t.Category == "Non-Processing Time").FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += (item.TimeSpent / 60);
+                    result.Add(obj);
+                }
+                else
+                {
+                    PieList obj = new PieList() {
+                        Category = "Non-Processing Time",
+                        TimeSpent = item.TimeSpent / 60 };
+                    result.Add(obj);
+                } 
+            }
+            var reps = (from list in db.Representatives where list.TeamId == teamId && list.IsActive && list.IsCurrent select list).ToList();
+            foreach (OSC_Representative rep in reps)
+            {
+                IndividualScorecard isc = isClass.GetIndividualScorecard(teamId, rep.RepId, month, year);
+                if (result.Any(t => t.Category == "Standard Processing Time"))
+                {
+                    PieList obj = result.Where(t => t.Category == "Standard Processing Time").FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += isc.individualBIProd.ProcessingHours;
+                    result.Add(obj);
+                }
+                else
+                {
+                    PieList obj = new PieList() {
+                        Category = "Standard Processing Time",
+                        TimeSpent = isc.individualBIProd.ProcessingHours };
+                    result.Add(obj);
+                }
+                if (result.Any(t => t.Category == "Phone Time"))
+                {
+                    PieList obj = result.Where(t => t.Category == "Phone Time").FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += ((long)isc.individualAIQ.ACDTalkTime / 3600);
+                    result.Add(obj);
+                }
+                else
+                {
+                    PieList obj = new PieList() {
+                        Category = "Phone Time",
+                        TimeSpent = (long)isc.individualAIQ.ACDTalkTime / 3600 };
+                    result.Add(obj);
+                }
+                if (result.Any(t => t.Category == "Dead Time"))
+                {
+                    PieList obj = result.Where(t => t.Category == "Dead Time").FirstOrDefault();
+                    result.Remove(obj);
+                    obj.TimeSpent += ((long)isc.HoursWorked);
+                    result.Add(obj);
+                }
+                else
+                {
+                    PieList obj = new PieList()
+                    {
+                        Category = "Dead Time",
+                        TimeSpent = isc.HoursWorked
+                    };
+                    result.Add(obj);
+                }
+            }
+            PieList obj1 = result.Where(t => t.Category == "Non-Processing Time").FirstOrDefault();
+            PieList obj2 = result.Where(t => t.Category == "Standard Processing Time").FirstOrDefault();
+            PieList obj3 = result.Where(t => t.Category == "Phone Time").FirstOrDefault();
+            PieList obj4 = result.Where(t => t.Category == "Dead Time").FirstOrDefault();
+            result.Remove(obj4);
+            obj4.TimeSpent = obj4.TimeSpent - (obj1.TimeSpent + obj2.TimeSpent + obj3.TimeSpent);
+            result.Add(obj4);
+            return result.OrderBy(t => t.Category).ToList();
+        }
+
+        //public RootObject GetProductivity(long teamId, int month, int year)
+        //{
+        //    RootObject result = new RootObject();
+        //    List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
+        //    foreach (IndividualSummary item in summary)
+        //    {
+        //        result.labels.Add(item.RepName);
+        //        DataSet ds = new DataSet();
+        //        ds.fillColor = "#d9534f";
+        //        ds.pointColor = "#d9534f";
+        //        ds.strokeColor = "#d9534f";
+        //        ds.data.Add(Convert.ToInt32(item.ProductivityScore));
+        //        result.datasets.Add(ds);
+        //    }
+        //    return result;
+        //}
+
+        public List<BarChart> GetProductivity(long teamId, int month, int year)
+        {
+            List<BarChart> result = new List<BarChart>();
+            List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
+            foreach (IndividualSummary item in summary.Where(t=>t.UserId!="Total" && t.RepName!=""))
+            {
+                BarChart obj = new BarChart() { Label = item.RepName, Count = item.ProductivityScore };
+                result.Add(obj);
+            }
             return result;
         }
     }

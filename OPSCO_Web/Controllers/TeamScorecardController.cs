@@ -89,6 +89,20 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
+        public PartialViewResult ScorecardCover()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            OSC_Team oSC_Team = db.Teams.Find(teamId);
+            ViewBag.Team = oSC_Team.TeamName;
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            return PartialView();
+        }
+
         public PartialViewResult IndividualSummary()
         {
             long teamId;
@@ -96,8 +110,21 @@ namespace OPSCO_Web.Controllers
             teamId = (long)Session["TS_Team"];
             month = (int)Session["TS_Month"];
             year = (int)Session["TS_Year"];
-            List<TeamViewRepList> list = af.GetRepList(teamId, month, year);
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            List<IndividualSummary> list = af.GetIndividualSummary(teamId, month, year);
             return PartialView(list);
+        }
+
+        public JsonResult JsonProductivity()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetProductivity(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
         }
     }
 }

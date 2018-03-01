@@ -86,6 +86,7 @@ add ScorecardType nvarchar(25) null
 go
 
 update OSC_CustomizeScorecard set ScorecardType = 'IndividualScorecard'
+go
 
 alter table OSC_Representative
 add IsVPN bit
@@ -124,39 +125,50 @@ create table OSC_TeamScorecard_Current
 	TeamId bigint not null,
 	Month int not null,
 	Year int not null,
-	Comments nvarchar(1000) null
+	ProductivityGoal float null,
+	QualityGoal float null,
+	EfficiencyGoal float null,
+	UtilizationGoal float null,
+	IndividualSummaryComments nvarchar(1000) null,
+	TeamSummaryComments nvarchar(1000) null,
+	WorktypeSummaryComments nvarchar(1000) null,
+	StatusSummaryComments nvarchar(1000) null,
+	IsSignedOff bit not null,
+	ManagerSignOff nvarchar(1000) null,
+	SignOffBy nvarchar(255) null,
+	SignOffDate datetime null
 )
 go
  
-insert into OSC_TeamScorecard_Current select TeamId, 1, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 2, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 3, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 4, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 4, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 5, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 5, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 6, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 6, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 7, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 7, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 8, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 8, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 9, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 9, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 10, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 10, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 11, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 11, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 12, 2017, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 12, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 1, 2018, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 2, 2018, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 3, 2018, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
 
 
@@ -174,6 +186,9 @@ select * from OSC_Representative where PRDUserid='kerinsj'
 update OSC_Representative set HasPrevious = 1, PreviousId=23 where RepId=24
 select * from OSC_Representative where PRDUserid='oxtonsco'
 update OSC_Representative set HasPrevious = 1, PreviousId=25 where RepId=4
+update OSC_Representative set HasPrevious = 0, PreviousId=0 where RepId=25
+update OSC_Representative set IsCurrent = 1 where RepId=4
+update OSC_Representative set IsCurrent = 0 where RepId=25
 select * from OSC_Team where TeamId=9
 
 select * from OSC_ImportBIQual

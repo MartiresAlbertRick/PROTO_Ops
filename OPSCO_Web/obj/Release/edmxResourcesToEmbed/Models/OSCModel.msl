@@ -268,6 +268,7 @@
     <EntitySetMapping Name="OSC_Representative">
       <EntityTypeMapping TypeName="OSCModel.OSC_Representative">
         <MappingFragment StoreEntitySet="OSC_Representative">
+          <ScalarProperty Name="IsVPN" ColumnName="IsVPN" />
           <ScalarProperty Name="RepId" ColumnName="RepId" />
           <ScalarProperty Name="PRDUserId" ColumnName="PRDUserId" />
           <ScalarProperty Name="AIQUserId" ColumnName="AIQUserId" />
@@ -337,6 +338,7 @@
     <EntitySetMapping Name="OSC_CustomizeScorecard">
       <EntityTypeMapping TypeName="OSCModel.OSC_CustomizeScorecard">
         <MappingFragment StoreEntitySet="OSC_CustomizeScorecard">
+          <ScalarProperty Name="ScorecardType" ColumnName="ScorecardType" />
           <ScalarProperty Name="CSId" ColumnName="CSId" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Month" ColumnName="Month" />
@@ -396,6 +398,24 @@
           <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
           <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamScorecard_Current">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecard_Current">
+        <MappingFragment StoreEntitySet="OSC_TeamScorecard_Current">
+          <ScalarProperty Name="SignOffDate" ColumnName="SignOffDate" />
+          <ScalarProperty Name="SignOffBy" ColumnName="SignOffBy" />
+          <ScalarProperty Name="ManagerSignOff" ColumnName="ManagerSignOff" />
+          <ScalarProperty Name="IsSignedOff" ColumnName="IsSignedOff" />
+          <ScalarProperty Name="StatusSummaryComments" ColumnName="StatusSummaryComments" />
+          <ScalarProperty Name="WorktypeSummaryComments" ColumnName="WorktypeSummaryComments" />
+          <ScalarProperty Name="TeamSummaryComments" ColumnName="TeamSummaryComments" />
+          <ScalarProperty Name="IndividualSummaryComments" ColumnName="IndividualSummaryComments" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

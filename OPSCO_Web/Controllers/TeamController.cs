@@ -546,12 +546,9 @@ namespace OPSCO_Web.Controllers
             if (year == null || year == 0 || year.ToString() == "") return Json(null);
             if (view == "") return Json(null);
             List<int> viewId = new List<int>();
-            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
             viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
             if (viewId == null || viewId.Count == 0)
             {
-                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
-                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
                 if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
                 else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType==view select list.FieldId).ToList();
             }
@@ -580,19 +577,15 @@ namespace OPSCO_Web.Controllers
             if (year == null || year == 0 || year.ToString() == "") return Json(null);
             if (view == "") return Json(null);
             List<int> viewId = new List<int>();
-            //viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year select list.FieldId).ToList();
             viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == (int)month && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
             if (viewId == null || viewId.Count == 0)
             {
-                //if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year select list.FieldId).ToList();
-                //else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) select list.FieldId).ToList();
                 if (month > 1) viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == ((int)month - 1) && list.Year == (int)year && list.ScorecardType==view select list.FieldId).ToList();
                 else viewId = (from list in db.CustomizeScorecards.OrderBy(t => t.Order) where list.TeamId == (long)id && list.Month == 12 && list.Year == ((int)year - 1) && list.ScorecardType==view select list.FieldId).ToList();
             }
             List<OSC_ScorecardField> scorecardFields = new List<OSC_ScorecardField>();
             if (viewId == null || viewId.Count == 0)
             {
-                //foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore && t.ScorecardType==view))
                 foreach (OSC_ScorecardField item in db.ScorecardFields.Where(t => (bool)t.IsActive && (bool)t.IsCore))
                 {
                     scorecardFields.Add(item);
@@ -603,7 +596,6 @@ namespace OPSCO_Web.Controllers
                 foreach (int i in viewId)
                 {
                     OSC_ScorecardField item = db.ScorecardFields.Find(i);
-                    //if ((bool)item.IsActive && t.ScorecardType==view)
                     if ((bool)item.IsActive)
                     {
                         scorecardFields.Add(item);
@@ -619,8 +611,7 @@ namespace OPSCO_Web.Controllers
             if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
             try
             {
-                var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month).ToList();
-                //var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month && t.ScorecardView==view).ToList();
+                var list = db.CustomizeScorecards.Where(t => t.TeamId == (long)id && t.Year == (int)year && t.Month == (int)month && t.ScorecardType == view).ToList();
                 foreach (OSC_CustomizeScorecard obj in list)
                 {
                     if (ModelState.IsValid)
@@ -646,6 +637,44 @@ namespace OPSCO_Web.Controllers
             return Json(s, JsonRequestBehavior.AllowGet);
         }
         #endregion "CustomizeScorecardSection"
+        #region "TeamGoalSection"
+        public PartialViewResult TeamGoalSection(long? id)
+        {
+            ViewBag.TeamId = id;
+            ViewBag.Years = db.years;
+            ViewBag.Months = db.months;
+            ViewBag.Goals = db.TeamScorecards.Where(t => t.TeamId == id).OrderByDescending(t => t.Year).ThenByDescending(t => t.Month).ToList();
+            return PartialView();
+        }
+
+        public JsonResult SaveTeamGoals(long? id, List<OSC_TeamScorecard_Current> objects)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                foreach (OSC_TeamScorecard_Current obj in objects)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(obj.TeamScorecardId);
+                        ts.ProductivityGoal = obj.ProductivityGoal;
+                        ts.QualityGoal = obj.QualityGoal;
+                        ts.EfficiencyGoal = obj.EfficiencyGoal;
+                        ts.UtilizationGoal = obj.UtilizationGoal;
+                        db.Entry(ts).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "TeamGoalSection"
         #region "Dispose"
         protected override void Dispose(bool disposing)
         {

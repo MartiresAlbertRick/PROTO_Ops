@@ -1,0 +1,130 @@
+﻿<div class="row">
+    <div class="panel panel-primary">
+        <div id="panel_groups" class="panel-body">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a id="btn_save_goal" href="#" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Save</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container-fluid" id="goal_container" style="max-height: 350px; overflow-y: auto;">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <label>Year</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Month</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Productivity Goal</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Quality Goal</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Efficiency Goal</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Utilization Goal</label>
+                    </div>
+                </div>
+                @foreach (var x in ViewBag.Goals)
+                {
+                    <div class="col-md-12 goals" id="@(x.TeamScorecardId)">
+                        <input type="hidden" value="@x.TeamScorecardId" />
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" disabled id="cmb_year_@(x.Year)">
+                                <option value="0">--Select Year--</option>
+                                @foreach (var y in ViewBag.Years)
+                                {
+                                    if (x.Year == Convert.ToInt32(y.Value))
+                                    {
+                                        <option selected value="@y.Value">@y.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@y.Value">@y.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control input-sm" disabled id="cmb_month_@(x.Month)">
+                                <option value="0">--Select Month--</option>
+                                @foreach (var m in ViewBag.Months)
+                                {
+                                    if (x.Month == Convert.ToInt32(m.Value))
+                                    {
+                                        <option selected value="@m.Value">@m.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@m.Value">@m.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control input-sm" type="text" value="@x.ProductivityGoal" id="pg_@(x.TeamScorecardId)"/>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control input-sm" type="text" value="@x.QualityGoal" id="qg_@(x.TeamScorecardId)"/>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control input-sm" type="text" value="@x.EfficiencyGoal" id="eg_@(x.TeamScorecardId)"/>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control input-sm" type="text" value="@x.UtilizationGoal" id="ug_@(x.TeamScorecardId)"/>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.2.1.js"></script>
+<script>
+    $(function () {
+        $('#btn_save_goal').click(function () {
+            saveTeamGoals(); 
+        });
+    });
+
+    function saveTeamGoals() {
+        var goals = [];
+        $('.goals').each(function (index, item) {
+            var s = $(item).prop("id");
+            var item = {
+                TeamScorecardId: s,
+                ProductivityGoal: $('#pg_' + s).val(),
+                QualityGoal: $('#qg_' + s).val(),
+                EfficiencyGoal: $('#eg_' + s).val(),
+                UtilizationGoal: $('#ug_' + s).val()
+            }
+            goals.push(item);
+        });
+        
+        $.ajax({
+            url: '/Team/SaveTeamGoals/',
+            data: '{ id : ' + @ViewBag.TeamId + ', objects : ' + JSON.stringify(goals) + '}',
+            dataType: "json",
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                alert(data.message);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

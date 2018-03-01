@@ -44,6 +44,7 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_ImportNPT> NPT { get; set; }
 
         public DbSet<OSC_IndividualScorecard_Current> IndividualScorecards { get; set; }
+        public DbSet<OSC_TeamScorecard_Current> TeamScorecards { get; set; }
         #endregion "DBSets"
 
         #region "StaticLists"
@@ -392,11 +393,11 @@ namespace OPSCO_Web.Models
             public long AIQReportId { get; set; }
             public Nullable<long> RepId { get; set; }
             public string Agent { get; set; }
-            [Display(Name="Interval Staffed Duration")]
+            [Display(Name = "Interval Staffed Duration")]
             public Nullable<long> IntervalStaffedDuration { get; set; }
-            [Display(Name="Total Perc Service time")]
+            [Display(Name = "Total Perc Service time")]
             public Nullable<double> TotalPercServiceTime { get; set; }
-            [Display(Name ="Total ACD Calls")]
+            [Display(Name = "Total ACD Calls")]
             public Nullable<int> TotalACDCalls { get; set; }
             /**/
             public Nullable<int> ExtInCalls { get; set; }
@@ -414,9 +415,9 @@ namespace OPSCO_Web.Models
             public Nullable<long> ACDRingTime { get; set; }
             [Display(Name = "Aux")]
             public Nullable<long> Aux { get; set; }
-            [Display(Name ="Average Hold Time")]
+            [Display(Name = "Average Hold Time")]
             public Nullable<long> AvgHoldDur { get; set; }
-            [Display(Name ="Interval Idle Duration")]
+            [Display(Name = "Interval Idle Duration")]
             public Nullable<long> IntervalIdleDur { get; set; }
             public Nullable<int> Transfers { get; set; }
             [Display(Name = "Held Contacts")]
@@ -432,14 +433,47 @@ namespace OPSCO_Web.Models
     #endregion "OSCdbEntities"
 
     #region "ViewModel"
-    public class TeamScorecard : IndividualScorecard
+    public class TeamScorecard
     {
         public long TeamScorecardId { get; set; }
+        public long TeamId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public double ProductivityGoal { get; set; }
+        public double QualityGoal { get; set; }
+        public double EfficiencyGoal { get; set; }
+        public double UtilizationGoal { get; set; }
+        public string IndividualSummaryComments { get; set; }
+        public string TeamSummaryComments { get; set; }
+        public string WorktypeSummaryComments { get; set; }
+        public string StatusSummaryComments { get; set; }
+        public bool IsSignedOff { get; set; }
+        public string ManagerSignOff { get; set; }
+        public string SignOffBy { get; set; }
+        public DateTime SignOffDate { get; set; }
     }
 
-    public class TeamViewRepList : IndividualScorecard
+    public class IndividualSummary
     {
-        
+        [Display(Name = "User ID")]
+        public string UserId { get; set; }
+        [Display(Name = "Name")]
+        public string RepName { get; set; }
+        [Display(Name = "Utilization Score")]
+        public double UtilizationScore { get; set; }
+        [Display(Name = "Productivity Score")]
+        public double ProductivityScore { get; set; }
+        [Display(Name = "Efficiency Score")]
+        public double EfficiencyScore { get; set; }
+        [Display(Name = "Quality Score")]
+        public double QualityScore { get; set; }
+        [Display(Name = "Attendance")]
+        public double Attendance { get; set; }
+        [Display(Name = "Non-Processing Time")]
+        public double NonProcessingTime { get; set; }
+        [Display(Name = "Quality Review Rate")]
+        public double QualityReviewRate { get; set; }
+
     }
 
     public class IndividualScorecard
@@ -560,11 +594,42 @@ namespace OPSCO_Web.Models
         public int Count { get; set; }
     }
 
-    public class IndividualNPT
+    public class PieList
     {
         public string Category { get; set; }
         [Display(Name = "Time Spent")]
         public double TimeSpent { get; set; }
+    }
+
+    public class BarChart
+    {
+        public string Label { get; set; }
+        public double Count { get; set; }
+    }
+
+    public class RootObject
+    {
+        public RootObject()
+        {
+            labels = new List<string>();
+            datasets = new List<DataSet>();
+        }
+
+        public List<string> labels { get; set; }
+        public List<DataSet> datasets { get; set; }
+    }
+
+    public class DataSet
+    {
+        public DataSet()
+        {
+            data = new List<int>();
+        }
+        public string label { get; set; }
+        public string fillColor { get; set; }
+        public string strokeColor { get; set; }
+        public string pointColor { get; set; }
+        public List<int> data { get; set; }
     }
 
     public class Import

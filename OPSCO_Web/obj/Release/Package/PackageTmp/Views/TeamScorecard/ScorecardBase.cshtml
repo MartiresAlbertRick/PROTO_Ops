@@ -1,0 +1,326 @@
+﻿<div class="col-md-12">
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab_cover">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_tabcont" aria-controls="tab_tabcont" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Action("ScorecardCover")
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_tabcont">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page 
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page 
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <h4>Table of Contents</h4>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                                            Cover Page
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                                            1
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_tabcont" aria-controls="tab_tabcont" role="tab" data-toggle="tab">
+                                            Table of Contents
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_tabcont" aria-controls="tab_tabcont" role="tab" data-toggle="tab">
+                                            2
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                                            Individual Summary
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                                            3
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
+                                            Team Summary
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
+                                            4
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
+                                            Worktype Summary
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
+                                            5
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
+                                            Detailed Worktype Summary
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
+                                            6
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_indsum" aria-controls="tab_signoff" role="tab" data-toggle="tab">
+                                            Manager's Sign-off
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_indsum" aria-controls="tab_signoff" role="tab" data-toggle="tab">
+                                            7
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                                            Appendix
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                                            8
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_indsum">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_tabcont" aria-controls="tab_tabcont" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @Html.Action("IndividualSummary")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_teamsum">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @*@Html.Action("ScorecardCover")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_worksum">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @*@Html.Action("ScorecardCover")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_detworksum">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_signoff" aria-controls="tab_signoff" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @*@Html.Action("ScorecardCover")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_signoff">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Next Page <i class="fa fa-forward"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
+                            Last Page <i class="fa fa-step-forward"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @*@Html.Action("ScorecardCover")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_appendix">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> First Page
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="#tab_signoff" aria-controls="tab_signoff" role="tab" data-toggle="tab">
+                            <i class="fa fa-step-backward"></i> Previous Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @*@Html.Action("ScorecardCover")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,17 @@ namespace OPSCO_Web.Models
         public long TeamId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public string Comments { get; set; }
+        public string IndividualSummaryComments { get; set; }
+        public string TeamSummaryComments { get; set; }
+        public string WorktypeSummaryComments { get; set; }
+        public string StatusSummaryComments { get; set; }
+        public bool IsSignedOff { get; set; }
+        public string ManagerSignOff { get; set; }
+        public string SignOffBy { get; set; }
+        public Nullable<System.DateTime> SignOffDate { get; set; }
+        public Nullable<double> ProductivityGoal { get; set; }
+        public Nullable<double> QualityGoal { get; set; }
+        public Nullable<double> EfficiencyGoal { get; set; }
+        public Nullable<double> UtilizationGoal { get; set; }
     }
 }

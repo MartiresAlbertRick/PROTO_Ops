@@ -348,7 +348,18 @@
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductivityGoal" Type="float" />
+          <Property Name="QualityGoal" Type="float" />
+          <Property Name="EfficiencyGoal" Type="float" />
+          <Property Name="UtilizationGoal" Type="float" />
+          <Property Name="IndividualSummaryComments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TeamSummaryComments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="WorktypeSummaryComments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="StatusSummaryComments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsSignedOff" Type="bit" Nullable="false" />
+          <Property Name="ManagerSignOff" Type="nvarchar" MaxLength="1000" />
+          <Property Name="SignOffBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="SignOffDate" Type="datetime" />
         </EntityType>
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
@@ -833,7 +844,18 @@
           <Property Name="TeamId" Type="Int64" Nullable="false" />
           <Property Name="Month" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IndividualSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TeamSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="WorktypeSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StatusSummaryComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsSignedOff" Type="Boolean" Nullable="false" />
+          <Property Name="ManagerSignOff" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="SignOffBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SignOffDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductivityGoal" Type="Double" />
+          <Property Name="QualityGoal" Type="Double" />
+          <Property Name="EfficiencyGoal" Type="Double" />
+          <Property Name="UtilizationGoal" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1244,7 +1266,18 @@
           <EntitySetMapping Name="OSC_TeamScorecard_Current">
             <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecard_Current">
               <MappingFragment StoreEntitySet="OSC_TeamScorecard_Current">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="UtilizationGoal" ColumnName="UtilizationGoal" />
+                <ScalarProperty Name="EfficiencyGoal" ColumnName="EfficiencyGoal" />
+                <ScalarProperty Name="QualityGoal" ColumnName="QualityGoal" />
+                <ScalarProperty Name="ProductivityGoal" ColumnName="ProductivityGoal" />
+                <ScalarProperty Name="SignOffDate" ColumnName="SignOffDate" />
+                <ScalarProperty Name="SignOffBy" ColumnName="SignOffBy" />
+                <ScalarProperty Name="ManagerSignOff" ColumnName="ManagerSignOff" />
+                <ScalarProperty Name="IsSignedOff" ColumnName="IsSignedOff" />
+                <ScalarProperty Name="StatusSummaryComments" ColumnName="StatusSummaryComments" />
+                <ScalarProperty Name="WorktypeSummaryComments" ColumnName="WorktypeSummaryComments" />
+                <ScalarProperty Name="TeamSummaryComments" ColumnName="TeamSummaryComments" />
+                <ScalarProperty Name="IndividualSummaryComments" ColumnName="IndividualSummaryComments" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />

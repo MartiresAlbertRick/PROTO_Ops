@@ -343,7 +343,18 @@
     <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="Month" Type="int" Nullable="false" />
     <Property Name="Year" Type="int" Nullable="false" />
-    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ProductivityGoal" Type="float" />
+    <Property Name="QualityGoal" Type="float" />
+    <Property Name="EfficiencyGoal" Type="float" />
+    <Property Name="UtilizationGoal" Type="float" />
+    <Property Name="IndividualSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="TeamSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WorktypeSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="StatusSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="IsSignedOff" Type="bit" Nullable="false" />
+    <Property Name="ManagerSignOff" Type="nvarchar" MaxLength="1000" />
+    <Property Name="SignOffBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="SignOffDate" Type="datetime" />
   </EntityType>
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
