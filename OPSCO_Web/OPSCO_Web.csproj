@@ -521,6 +521,12 @@
     <Content Include="Views\TeamScorecard\IndividualSummary.cshtml" />
     <Content Include="Views\TeamScorecard\ScorecardCover.cshtml" />
     <Content Include="Views\Team\TeamGoalSection.cshtml" />
+    <Content Include="Views\TeamScorecard\IndividualSummaryTableSection.cshtml" />
+    <Content Include="Views\TeamScorecard\IndividualSummaryChart.cshtml" />
+    <Content Include="Views\TeamScorecard\IndividualSummaryComment.cshtml" />
+    <Content Include="Views\TeamScorecard\ManagerSignoff.cshtml" />
+    <Content Include="Views\TeamScorecard\TeamSummary.cshtml" />
+    <Content Include="Views\TeamScorecard\TeamSummaryChart.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

@@ -25,12 +25,12 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page 
+                            <i class="fa fa-step-backward"></i> First Page 
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page 
+                            <i class="fa fa-backward"></i> Previous Page 
                         </a>
-                        <a class="btn btn-primary btn-sm" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                        <a class="btn btn-primary btn-sm indsum" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <a href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                                        <a class="indsum" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
                                             Individual Summary
                                         </a>
                                     </div>
@@ -153,10 +153,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_tabcont" aria-controls="tab_tabcont" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
@@ -183,10 +183,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
-                        <a class="btn btn-primary btn-sm" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                        <a class="btn btn-primary btn-sm indsum" href="#tab_indsum" aria-controls="tab_indsum" role="tab" data-toggle="tab">
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
@@ -213,10 +213,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_teamsum" aria-controls="tab_teamsum" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
@@ -243,10 +243,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_worksum" aria-controls="tab_worksum" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_signoff" aria-controls="tab_signoff" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
@@ -273,10 +273,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_detworksum" aria-controls="tab_detworksum" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_appendix" aria-controls="tab_appendix" role="tab" data-toggle="tab">
                             Next Page <i class="fa fa-forward"></i>
@@ -291,8 +291,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-body">
-                            @*@Html.Action("ScorecardCover")*@
+                        <div class="panel-body" id="signoff_body">
+                            @Html.Action("ManagerSignoff")
                         </div>
                     </div>
                 </div>
@@ -303,10 +303,10 @@
                 <div class="col-md-12">
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="#tab_cover" aria-controls="tab_cover" role="tab" data-toggle="tab">
-                            <i class="fa fa-backward"></i> First Page
+                            <i class="fa fa-step-backward"></i> First Page
                         </a>
                         <a class="btn btn-primary btn-sm" href="#tab_signoff" aria-controls="tab_signoff" role="tab" data-toggle="tab">
-                            <i class="fa fa-step-backward"></i> Previous Page
+                            <i class="fa fa-backward"></i> Previous Page
                         </a>
                     </div>
                 </div>

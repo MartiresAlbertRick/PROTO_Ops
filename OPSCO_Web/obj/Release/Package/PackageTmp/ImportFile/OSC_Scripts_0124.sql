@@ -125,6 +125,10 @@ create table OSC_TeamScorecard_Current
 	TeamId bigint not null,
 	Month int not null,
 	Year int not null,
+	ProductivityGoal float null,
+	QualityGoal float null,
+	EfficiencyGoal float null,
+	UtilizationGoal float null,
 	IndividualSummaryComments nvarchar(1000) null,
 	TeamSummaryComments nvarchar(1000) null,
 	WorktypeSummaryComments nvarchar(1000) null,
@@ -136,35 +140,35 @@ create table OSC_TeamScorecard_Current
 )
 go
  
-insert into OSC_TeamScorecard_Current select TeamId, 1, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 2, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 3, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 4, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 4, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 5, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 5, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 6, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 6, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 7, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 7, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 8, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 8, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 9, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 9, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 10, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 10, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 11, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 11, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 12, 2017, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 12, 2017, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 1, 2018, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 1, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 2, 2018, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 2, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
-insert into OSC_TeamScorecard_Current select TeamId, 3, 2018, null, null, null, null, 0, null, null, null from OSC_Team
+insert into OSC_TeamScorecard_Current select TeamId, 3, 2018, 0, 0, 0, 0, null, null, null, null, 0, null, null, null from OSC_Team
 go
 
 

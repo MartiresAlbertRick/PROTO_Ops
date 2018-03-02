@@ -162,9 +162,29 @@ namespace OPSCO_Web.BL
             return teamScorecardClass.GetIndividualSummary(teamId, month, year);
         }
 
-        public List<BarChart> GetProductivity(long teamId, int month, int year)
+        public List<BarChart> GetIndividualProductivity(long teamId, int month, int year)
         {
-            return teamScorecardClass.GetProductivity(teamId, month, year);
+            return teamScorecardClass.GetIndividualProductivity(teamId, month, year);
+        }
+
+        public List<BarChart> GetIndividualQuality(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetIndividualQuality(teamId, month, year);
+        }
+
+        public List<BarChart> GetIndividualEfficiency(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetIndividualEfficiency(teamId, month, year);
+        }
+
+        public List<BarChart> GetIndividualUtilization(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetIndividualUtilization(teamId, month, year);
+        }
+
+        public List<PieList> GetTeamNPT(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetTeamNPT(teamId, month, year);
         }
         #endregion "TeamScorecardClass"
 
@@ -537,9 +557,9 @@ namespace OPSCO_Web.BL
         public double GetProductivityRating(double ProcessingHours, double HoursWorked)
         {
             double ProductivityRating = 0;
-            ProductivityRating = ProcessingHours / HoursWorked;
-            if (ProductivityRating > 0)
+            if (HoursWorked > 0)
             {
+                ProductivityRating = ProcessingHours / HoursWorked;
                 ProductivityRating = ProductivityRating * 100;
                 double multiplier = Math.Pow(10, 2);
                 ProductivityRating = Math.Ceiling(ProductivityRating * multiplier) / multiplier;
@@ -1105,15 +1125,15 @@ namespace OPSCO_Web.BL
                 total.NonProcessingTime = total.NonProcessingTime + item.NonProcessingTime;
             }
             double multiplier = Math.Pow(10, 2);
-            total.ProductivityScore = total.ProductivityScore / month;
+            total.ProductivityScore = total.ProductivityScore / reps.Count;
             total.ProductivityScore = Math.Ceiling(total.ProductivityScore * multiplier) / multiplier;
-            total.QualityScore = total.QualityScore / month;
+            total.QualityScore = total.QualityScore / reps.Count;
             total.QualityScore = Math.Ceiling(total.QualityScore * multiplier) / multiplier;
-            total.QualityReviewRate = total.QualityReviewRate / month;
+            total.QualityReviewRate = total.QualityReviewRate / reps.Count;
             total.QualityReviewRate = Math.Ceiling(total.QualityReviewRate * multiplier) / multiplier;
-            total.UtilizationScore = total.UtilizationScore / month;
+            total.UtilizationScore = total.UtilizationScore / reps.Count;
             total.UtilizationScore = Math.Ceiling(total.UtilizationScore * multiplier) / multiplier;
-            total.EfficiencyScore = total.EfficiencyScore / month;
+            total.EfficiencyScore = total.EfficiencyScore / reps.Count;
             total.EfficiencyScore = Math.Ceiling(total.EfficiencyScore * multiplier) / multiplier;
             result.Add(total);
             return result;
@@ -1221,30 +1241,49 @@ namespace OPSCO_Web.BL
             return result.OrderBy(t => t.Category).ToList();
         }
 
-        //public RootObject GetProductivity(long teamId, int month, int year)
-        //{
-        //    RootObject result = new RootObject();
-        //    List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
-        //    foreach (IndividualSummary item in summary)
-        //    {
-        //        result.labels.Add(item.RepName);
-        //        DataSet ds = new DataSet();
-        //        ds.fillColor = "#d9534f";
-        //        ds.pointColor = "#d9534f";
-        //        ds.strokeColor = "#d9534f";
-        //        ds.data.Add(Convert.ToInt32(item.ProductivityScore));
-        //        result.datasets.Add(ds);
-        //    }
-        //    return result;
-        //}
-
-        public List<BarChart> GetProductivity(long teamId, int month, int year)
+        public List<BarChart> GetIndividualProductivity(long teamId, int month, int year)
         {
             List<BarChart> result = new List<BarChart>();
             List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
             foreach (IndividualSummary item in summary.Where(t=>t.UserId!="Total" && t.RepName!=""))
             {
                 BarChart obj = new BarChart() { Label = item.RepName, Count = item.ProductivityScore };
+                result.Add(obj);
+            }
+            return result;
+        }
+
+        public List<BarChart> GetIndividualQuality(long teamId, int month, int year)
+        {
+            List<BarChart> result = new List<BarChart>();
+            List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
+            foreach (IndividualSummary item in summary.Where(t => t.UserId != "Total" && t.RepName != ""))
+            {
+                BarChart obj = new BarChart() { Label = item.RepName, Count = item.QualityScore };
+                result.Add(obj);
+            }
+            return result;
+        }
+
+        public List<BarChart> GetIndividualEfficiency(long teamId, int month, int year)
+        {
+            List<BarChart> result = new List<BarChart>();
+            List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
+            foreach (IndividualSummary item in summary.Where(t => t.UserId != "Total" && t.RepName != ""))
+            {
+                BarChart obj = new BarChart() { Label = item.RepName, Count = item.EfficiencyScore };
+                result.Add(obj);
+            }
+            return result;
+        }
+
+        public List<BarChart> GetIndividualUtilization(long teamId, int month, int year)
+        {
+            List<BarChart> result = new List<BarChart>();
+            List<IndividualSummary> summary = this.GetIndividualSummary(teamId, month, year);
+            foreach (IndividualSummary item in summary.Where(t => t.UserId != "Total" && t.RepName != ""))
+            {
+                BarChart obj = new BarChart() { Label = item.RepName, Count = item.UtilizationScore };
                 result.Add(obj);
             }
             return result;

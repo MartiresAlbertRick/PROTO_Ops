@@ -404,6 +404,10 @@
     <EntitySetMapping Name="OSC_TeamScorecard_Current">
       <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecard_Current">
         <MappingFragment StoreEntitySet="OSC_TeamScorecard_Current">
+          <ScalarProperty Name="UtilizationGoal" ColumnName="UtilizationGoal" />
+          <ScalarProperty Name="EfficiencyGoal" ColumnName="EfficiencyGoal" />
+          <ScalarProperty Name="QualityGoal" ColumnName="QualityGoal" />
+          <ScalarProperty Name="ProductivityGoal" ColumnName="ProductivityGoal" />
           <ScalarProperty Name="SignOffDate" ColumnName="SignOffDate" />
           <ScalarProperty Name="SignOffBy" ColumnName="SignOffBy" />
           <ScalarProperty Name="ManagerSignOff" ColumnName="ManagerSignOff" />

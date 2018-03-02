@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OPSCO_Web.Models.IndividualSummary>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table coverbg table-bordered table-condensed table-striped input-sm">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.UserId)</th>
+                    <th>@Html.DisplayNameFor(model => model.RepName)</th>
+                    <th>@Html.DisplayNameFor(model => model.UtilizationScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProductivityScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.EfficiencyScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.QualityScore)</th>
+                    <th>@Html.DisplayNameFor(model => model.Attendance)</th>
+                    <th>@Html.DisplayNameFor(model => model.NonProcessingTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.QualityReviewRate)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RepName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UtilizationScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.ProductivityScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.EfficiencyScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.QualityScore)%</td>
+                        <td>@Html.DisplayFor(modelItem => item.Attendance)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NonProcessingTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.QualityReviewRate)%</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

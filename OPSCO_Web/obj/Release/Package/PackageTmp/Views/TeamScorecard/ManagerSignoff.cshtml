@@ -1,0 +1,91 @@
+﻿<h4>Manager's Sign-off @ViewBag.Month-@ViewBag.Year</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="bs-callout bs-callout-primary">
+            @if (ViewBag.IsSignedOff)
+            {
+                <textarea class="form-control input-sm" id="signoff_comment" readonly placeholder="Enter sign-off details here..." rows="6">@ViewBag.ManagerSignOff</textarea>
+            }
+            else
+            {
+                <textarea class="form-control input-sm" id="signoff_comment" placeholder="Enter sign-off details here..." rows="6">@ViewBag.ManagerSignOff</textarea>
+            }
+            <br />
+            <div class="row">
+                <p class="col-md-1 input-sm">Manager</p>
+                <div class="col-md-3">
+                    <input type="text" class="form-control input-sm" readonly value="@ViewBag.SignOffBy" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <p class="col-md-1 input-sm">Date/Time</p>
+                <div class="col-md-3">
+                    <input type="datetime" class="form-control input-sm" readonly value="@ViewBag.SignOffDate" />
+                </div>
+            </div>
+            <br />
+            @if (ViewBag.IsSignedOff)
+            {
+                <a class="btn btn-danger btn-sm" id="btn_cancel_signoff">
+                    <i class="fa fa-stop"></i> Cancel Sign-off
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-primary btn-sm" id="btn_submit_signoff">
+                    <i class="fa fa-save"></i> Sign-off
+                </a>
+            }
+            
+        </div>
+    </div>
+</div>
+<script>
+     $(function () {
+         $('#btn_submit_signoff').click(function () {
+             signOff();
+         });
+         $('#btn_cancel_signoff').click(function () {
+             cancelSignOff();
+        });
+    });
+    function signOff() {
+        $.ajax({
+                url: '/TeamScorecard/SignOff/',
+                data: '{ id : ' + @ViewBag.Id + ', comment : "' + $('#signoff_comment').val() + '"}',
+                dataType: "json",
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    alert(data.message);
+                    $('#signoff_body').load('@Url.Action("ManagerSignoff")');
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+    }
+    function cancelSignOff() {
+         $.ajax({
+                url: '/TeamScorecard/CancelSignOff/',
+                data: '{ id : ' + @ViewBag.Id + '}',
+                dataType: "json",
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    alert(data.message);
+                    $('#signoff_body').load('@Url.Action("ManagerSignoff")');
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+    }
+</script>

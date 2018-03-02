@@ -419,5 +419,9 @@
     <Property Name="ManagerSignOff" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
     <Property Name="SignOffBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="SignOffDate" Type="DateTime" Precision="3" />
+    <Property Name="ProductivityGoal" Type="Double" />
+    <Property Name="QualityGoal" Type="Double" />
+    <Property Name="EfficiencyGoal" Type="Double" />
+    <Property Name="UtilizationGoal" Type="Double" />
   </EntityType>
 </Schema>
