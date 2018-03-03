@@ -527,6 +527,8 @@
     <Content Include="Views\TeamScorecard\ManagerSignoff.cshtml" />
     <Content Include="Views\TeamScorecard\TeamSummary.cshtml" />
     <Content Include="Views\TeamScorecard\TeamSummaryChart.cshtml" />
+    <Content Include="Views\TeamScorecard\WorktypeSummary.cshtml" />
+    <Content Include="Views\TeamScorecard\StatusSummary.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

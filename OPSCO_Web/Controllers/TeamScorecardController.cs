@@ -224,6 +224,114 @@ namespace OPSCO_Web.Controllers
         }
         #endregion "IndividualSummary"
 
+        #region "TeamSummary"
+        public PartialViewResult TeamSummary()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public JsonResult SaveTeamSummaryComment(long? id, string comment)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(id);
+                if (ModelState.IsValid)
+                {
+                    ts.TeamSummaryComments = comment;
+                    db.Entry(ts).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "TeamSummary"
+
+        #region "WorktypeSummary"
+        public PartialViewResult WorktypeSummary()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public JsonResult SaveWorktypeSummaryComment(long? id, string comment)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(id);
+                if (ModelState.IsValid)
+                {
+                    ts.WorktypeSummaryComments = comment;
+                    db.Entry(ts).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "WorktypeSummary"
+
+        #region "StatusSummary"
+        public PartialViewResult StatusSummary()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public JsonResult SaveStatusSummaryComment(long? id, string comment)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(id);
+                if (ModelState.IsValid)
+                {
+                    ts.StatusSummaryComments = comment;
+                    db.Entry(ts).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+        #endregion "StatusSummary"
+
         #region "ManagerSignoff"
         public PartialViewResult ManagerSignoff()
         {
