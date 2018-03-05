@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OPSCO_Web.Models.TeamScorecard>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table coverbg table-bordered table-condensed table-striped input-sm">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Month)</th>
+                    <th>@Html.DisplayNameFor(model => model.Attendance_Days)</th>
+                    <th>@Html.DisplayNameFor(model => model.Overtime_Hours)</th>
+                    <th>@Html.DisplayNameFor(model => model.NPTHours)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProcessingHours)</th>
+                    <th>@Html.DisplayNameFor(model => model.TotalTransactions)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProductivityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.QualityRating)</th>
+                    <th>@Html.DisplayNameFor(model => model.TotalUtilization)</th>
+                    <th>@Html.DisplayNameFor(model => model.Efficiency)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MonthName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Attendance_Days)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Overtime_Hours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NPTHours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProcessingHours)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalTransactions)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductivityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.QualityRating)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalUtilization)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.Efficiency)%</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -234,38 +234,15 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
-        public PartialViewResult TeamSummaryComment()
+        public PartialViewResult TeamSummaryTable()
         {
             long teamId;
             int month, year;
             teamId = (long)Session["TS_Team"];
             month = (int)Session["TS_Month"];
             year = (int)Session["TS_Year"];
-            ViewBag.Id = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamScorecardId;
-            ViewBag.Comment = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamSummaryComments;
-            return PartialView();
-        }
-
-        public JsonResult SaveTeamSummaryComment(long? id, string comment)
-        {
-            object s = new { type = "failed", message = "Saving failed!" };
-            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
-            try
-            {
-                OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(id);
-                if (ModelState.IsValid)
-                {
-                    ts.TeamSummaryComments = comment;
-                    db.Entry(ts).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                s = new { type = "success", message = "Successfully saved!" };
-            }
-            catch (Exception ex)
-            {
-                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
-            }
-            return Json(s, JsonRequestBehavior.AllowGet);
+            List<TeamScorecard> list = af.GetTeamSummaries(teamId, month, year);
+            return PartialView(list);
         }
 
         public PartialViewResult TeamSummaryChart()
@@ -336,6 +313,40 @@ namespace OPSCO_Web.Controllers
             month = (int)Session["TS_Month"];
             year = (int)Session["TS_Year"];
             var s = af.GetTeamTimers(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult TeamSummaryComment()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Id = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamScorecardId;
+            ViewBag.Comment = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamSummaryComments;
+            return PartialView();
+        }
+
+        public JsonResult SaveTeamSummaryComment(long? id, string comment)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                OSC_TeamScorecard_Current ts = db.TeamScorecards.Find(id);
+                if (ModelState.IsValid)
+                {
+                    ts.TeamSummaryComments = comment;
+                    db.Entry(ts).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
         #endregion "TeamSummary"

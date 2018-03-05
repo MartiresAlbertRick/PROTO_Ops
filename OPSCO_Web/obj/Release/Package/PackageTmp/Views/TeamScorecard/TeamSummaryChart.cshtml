@@ -1,5 +1,57 @@
 ﻿<div class="col-md-6">
     <div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
+        <h4>Productivity</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart">
+                    <canvas id="teamProdBarChart" height="400" style="height: 400px; max-height:400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
+        <h4>Quality</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart">
+                    <canvas id="teamQualBarChart" height="400" style="height: 400px; max-height:400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
+        <h4>Efficiency</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart">
+                    <canvas id="teamEffBarChart" height="400" style="height: 400px; max-height:400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
+        <h4>Utilization</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart">
+                    <canvas id="teamUtilBarChart" height="400" style="height: 400px; max-height:400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="bs-callout bs-callout-primary" style="background-color: white; height: 600px;">
         <h4>NPT Chart</h4>
         <hr />
         <div class="row">
@@ -31,8 +83,20 @@
     </div>
 </div>
 <script>
+    var prodBarChartData =
+        { labels: [], datasets: [] }
+    var qualBarChartData =
+        { labels: [], datasets: [] }
+    var effBarChartData =
+        { labels: [], datasets: [] }
+    var utilBarChartData =
+        { labels: [], datasets: [] }
     $(function () {
         $('a[data-toggle="tab"].teamsum').on('shown.bs.tab', function () {
+            jsonTeamProductivity();
+            jsonTeamQuality();
+            jsonTeamEfficiency();
+            jsonTeamUtilization();
             $.ajax({
                 type: "GET",
                 url: "/TeamScorecard/JsonTeamNPT/",
@@ -109,5 +173,312 @@
             });
         });
     });
+    function jsonTeamProductivity() {
+        $.ajax({
+            type: "GET",
+            url: "/TeamScorecard/JsonTeamProductivity/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                prodBarChartData =
+                    {
+                        labels: [],
+                        datasets: []
+                    }
+                var dt = {
+                    label: "Productivity",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                };
+                $.each(data, function (index, item) {
+                    prodBarChartData.labels.push(item.Label);
+                    dt.data.push(item.Count);
+                });
+                var s = data.length;
+                var max = 12 - s;
+                for (i = 0; i < max; i++) {
+                    prodBarChartData.labels.push("-");
+                    dt.data.push(0);
+                }
+                prodBarChartData.datasets.push(dt);
+                renderTeamProductivity();
+                //
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function jsonTeamQuality() {
+        $.ajax({
+            type: "GET",
+            url: "/TeamScorecard/JsonTeamQuality/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                qualBarChartData =
+                    {
+                        labels: [],
+                        datasets: []
+                    }
+                var dt = {
+                    label: "Quality",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                };
+                $.each(data, function (index, item) {
+                    qualBarChartData.labels.push(item.Label);
+                    dt.data.push(item.Count);
+                });
+                var s = data.length;
+                var max = 12 - s;
+                for (i = 0; i < max; i++) {
+                    qualBarChartData.labels.push("-");
+                    dt.data.push(0);
+                }
+                qualBarChartData.datasets.push(dt);
 
+                renderTeamQuality();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function jsonTeamEfficiency() {
+        $.ajax({
+            type: "GET",
+            url: "/TeamScorecard/JsonTeamEfficiency/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                effBarChartData =
+                    {
+                        labels: [],
+                        datasets: []
+                    }
+                var dt = {
+                    label: "Efficiency",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                };
+                $.each(data, function (index, item) {
+                    effBarChartData.labels.push(item.Label);
+                    dt.data.push(item.Count);
+                });
+                var s = data.length;
+                var max = 12 - s;
+                for (i = 0; i < max; i++) {
+                    effBarChartData.labels.push("-");
+                    dt.data.push(0);
+                }
+                effBarChartData.datasets.push(dt);
+
+                renderTeamEfficiency();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function jsonTeamUtilization() {
+        $.ajax({
+            type: "GET",
+            url: "/TeamScorecard/JsonTeamUtilization/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                utilBarChartData =
+                    {
+                        labels: [],
+                        datasets: []
+                    }
+                var dt = {
+                    label: "Utilization",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                };
+                $.each(data, function (index, item) {
+                    utilBarChartData.labels.push(item.Label);
+                    dt.data.push(item.Count);
+                });
+                var s = data.length;
+                var max = 12 - s;
+                for (i = 0; i < max; i++) {
+                    utilBarChartData.labels.push("-");
+                    dt.data.push(0);
+                }
+                utilBarChartData.datasets.push(dt);
+
+                renderTeamUtilization();
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+    function renderTeamProductivity() {
+        var barChartCanvas = $("#teamProdBarChart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas);
+        var barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        };
+        barChartOptions.datasetFill = false;
+        barChart.Bar(prodBarChartData, barChartOptions);
+    }
+    function renderTeamQuality() {
+        var barChartCanvas = $("#teamQualBarChart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas);
+        var barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        };
+        barChartOptions.datasetFill = false;
+        barChart.Bar(qualBarChartData, barChartOptions);
+    }
+    function renderTeamEfficiency() {
+        var barChartCanvas = $("#teamEffBarChart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas);
+        var barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        };
+        barChartOptions.datasetFill = false;
+        barChart.Bar(effBarChartData, barChartOptions);
+    }
+    function renderTeamUtilization() {
+        var barChartCanvas = $("#teamUtilBarChart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas);
+        var barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        };
+        barChartOptions.datasetFill = false;
+        barChart.Bar(utilBarChartData, barChartOptions);
+    }
 </script>

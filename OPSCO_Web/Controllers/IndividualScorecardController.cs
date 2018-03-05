@@ -14,9 +14,12 @@ namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
     {
+        #region "InitializeObjects"
         private OSCContext db = new OSCContext();
         private AppFacade af = new AppFacade();
+        #endregion "InitializeObjects"
 
+        #region "Index"
         // GET: IndividualScorecard
         public ActionResult Index(long? teamId, int? month, int? year)
         {
@@ -105,7 +108,9 @@ namespace OPSCO_Web.Controllers
             return View();
             #endregion "Return"
         }
+        #endregion "Index"
 
+        #region "MainScorecard"
         public ActionResult ScorecardView(long? teamId, long? repId, int? month, int? year)
         {
             OSC_Team oSC_Team = db.Teams.Find((long)teamId);
@@ -129,7 +134,9 @@ namespace OPSCO_Web.Controllers
         {
             return PartialView();
         }
+        #endregion "MainScorecard"
 
+        #region "PDF"
         public ActionResult GetWord()
         {
             string logon_user = (string)Session["logon_user"];
@@ -237,7 +244,9 @@ namespace OPSCO_Web.Controllers
             System.IO.File.Delete(fileName);
             return fileResult;
         }
+        #endregion "PDF"
 
+        #region "Cover"
         public PartialViewResult ScorecardCover()
         {
             long teamId, repId;
@@ -255,7 +264,9 @@ namespace OPSCO_Web.Controllers
             ViewBag.Year = year;
             return PartialView();
         }
+        #endregion "Cover"
 
+        #region "Table"
         public PartialViewResult ScorecardMainTable()
         {
             long teamId, repId;
@@ -267,6 +278,7 @@ namespace OPSCO_Web.Controllers
             List<IndividualScorecard> list = af.GetIndividualScorecardFull(teamId, repId, month, year);
             return PartialView(list);
         }
+        #endregion "Table"
 
         #region "UploadImages"
         public ActionResult UploadProductivity(string imageData)

@@ -1311,6 +1311,7 @@ namespace OPSCO_Web.BL
         {
             TeamScorecard result = this.TeamScorecardInitialize();
             result.Month = month;
+            result.MonthName = db.months.Where(m => m.Value == Convert.ToString(result.Month)).First().Text; ;
             result.Year = year;
             result.TeamId = teamId;
             List<IndividualScorecard> source = new List<IndividualScorecard>();
@@ -1398,11 +1399,12 @@ namespace OPSCO_Web.BL
             List<TeamScorecard> result = new List<TeamScorecard>();
             TeamScorecard total = this.TeamScorecardInitialize();
             total.Month = 13;
+            total.MonthName = "Total";
             total.Year = year;
             total.TeamId = teamId;
             for (int i = 1; i <= month; i++)
             {
-                result.Add(this.GetTeamSummary(teamId, month, year));
+                result.Add(this.GetTeamSummary(teamId, i, year));
             }
             foreach (TeamScorecard obj in result)
             {
@@ -1461,27 +1463,29 @@ namespace OPSCO_Web.BL
                 total.ACDTalkTime = dtFormat.GetTimeFormat(total.Sec_ACDTalkTime + obj.Sec_ACDTalkTime); 
                 total.Sec_ACDTalkTime += Convert.ToInt64(obj.Sec_ACDTalkTime); 
                 total.ACDRingTime = dtFormat.GetTimeFormat(total.Sec_ACDRingTime + obj.Sec_ACDRingTime); 
-                total.Sec_ACDRingTime += Convert.ToInt64(obj.ACDRingTime); 
+                total.Sec_ACDRingTime += Convert.ToInt64(obj.Sec_ACDRingTime); 
                 total.Aux = dtFormat.GetTimeFormat(total.Sec_Aux + obj.Sec_Aux); 
                 total.Sec_Aux += Convert.ToInt64(obj.Sec_Aux);
                 total.AvgHoldDur = dtFormat.GetTimeFormat(total.Sec_AvgHoldDur + obj.Sec_AvgHoldDur);
                 total.Sec_AvgHoldDur += Convert.ToInt64(obj.Sec_AvgHoldDur);
                 total.IntervalIdleDur = dtFormat.GetTimeFormat(total.Sec_IntervalIdleDur + obj.Sec_IntervalIdleDur);
-                total.Sec_IntervalIdleDur += Convert.ToInt64(obj.IntervalIdleDur); 
+                total.Sec_IntervalIdleDur += Convert.ToInt64(obj.Sec_IntervalIdleDur); 
                 total.Transfers += Convert.ToInt32(obj.Transfers); 
                 total.HeldContacts += Convert.ToInt32(obj.HeldContacts); 
                 total.Redirects += Convert.ToInt32(obj.Redirects); 
             }
+            result.Add(total);
             return result;
         }
 
         public List<BarChart> GetTeamProductivity(long teamId, int month, int year)
         {
             List<BarChart> result = new List<BarChart>();
-            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName == "Total").ToList();
+            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName != "Total").ToList();
             foreach (TeamScorecard obj in s)
             {
-                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.Scorecard.ProductivityRating };
+                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.ProductivityRating };
+                result.Add(barChart);
             }
             return result;
         }
@@ -1489,10 +1493,11 @@ namespace OPSCO_Web.BL
         public List<BarChart> GetTeamQuality(long teamId, int month, int year)
         {
             List<BarChart> result = new List<BarChart>();
-            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName == "Total").ToList();
+            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName != "Total").ToList();
             foreach (TeamScorecard obj in s)
             {
-                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.Scorecard.QualityRating };
+                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.QualityRating };
+                result.Add(barChart);
             }
             return result;
         }
@@ -1500,10 +1505,11 @@ namespace OPSCO_Web.BL
         public List<BarChart> GetTeamEfficiency(long teamId, int month, int year)
         {
             List<BarChart> result = new List<BarChart>();
-            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName == "Total").ToList();
+            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName != "Total").ToList();
             foreach (TeamScorecard obj in s)
             {
-                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.Scorecard.Efficiency };
+                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.Efficiency };
+                result.Add(barChart);
             }
             return result;
         }
@@ -1511,10 +1517,11 @@ namespace OPSCO_Web.BL
         public List<BarChart> GetTeamUtilization(long teamId, int month, int year)
         {
             List<BarChart> result = new List<BarChart>();
-            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName == "Total").ToList();
+            var s = this.GetTeamSummaries(teamId, month, year).Where(t => t.MonthName != "Total").ToList();
             foreach (TeamScorecard obj in s)
             {
-                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.Scorecard.TotalUtilization };
+                BarChart barChart = new BarChart() { Label = obj.MonthName, Count = obj.TotalUtilization };
+                result.Add(barChart);
             }
             return result;
         }

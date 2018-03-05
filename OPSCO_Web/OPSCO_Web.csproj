@@ -533,6 +533,7 @@
     <Content Include="Views\TeamScorecard\TeamSummaryComment.cshtml" />
     <Content Include="Views\TeamScorecard\WorktypeSummaryComment.cshtml" />
     <Content Include="Views\TeamScorecard\StatusSummaryComment.cshtml" />
+    <Content Include="Views\TeamScorecard\TeamSummaryTable.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />
