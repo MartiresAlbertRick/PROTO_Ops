@@ -12,9 +12,12 @@ namespace OPSCO_Web.Controllers
 {
     public class TeamScorecardController : Controller
     {
+        #region "InitializeObjects"
         private OSCContext db = new OSCContext();
         private AppFacade af = new AppFacade();
+        #endregion "InitializeObjects"
 
+        #region "Index"
         // GET: TeamScorecard
         public ActionResult Index(long? teamId, int? month, int? year)
         {
@@ -69,9 +72,13 @@ namespace OPSCO_Web.Controllers
 
             }
             #endregion "ViewBagTeams"
+            #region "Return"
             return View();
+            #endregion "Return"
         }
+        #endregion "Index"
 
+        #region "MainScorecard"
         public ActionResult ScorecardView(long? teamId, int? month, int? year)
         {
             OSC_Team oSC_Team = db.Teams.Find((long)teamId);
@@ -104,17 +111,7 @@ namespace OPSCO_Web.Controllers
             ViewBag.Year = year;
             return PartialView();
         }
-
-        public JsonResult JsonTeamNPT()
-        {
-            long teamId;
-            int month, year;
-            teamId = (long)Session["TS_Team"];
-            month = (int)Session["TS_Month"];
-            year = (int)Session["TS_Year"];
-            var s = af.GetTeamNPT(teamId, month, year);
-            return Json(s, JsonRequestBehavior.AllowGet);
-        }
+        #endregion "MainScorecard"
 
         #region "IndividualSummary"
         public PartialViewResult IndividualSummary()
@@ -237,6 +234,18 @@ namespace OPSCO_Web.Controllers
             return PartialView();
         }
 
+        public PartialViewResult TeamSummaryComment()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Id = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamScorecardId;
+            ViewBag.Comment = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamSummaryComments;
+            return PartialView();
+        }
+
         public JsonResult SaveTeamSummaryComment(long? id, string comment)
         {
             object s = new { type = "failed", message = "Saving failed!" };
@@ -258,6 +267,77 @@ namespace OPSCO_Web.Controllers
             }
             return Json(s, JsonRequestBehavior.AllowGet);
         }
+
+        public PartialViewResult TeamSummaryChart()
+        {
+            return PartialView();
+        }
+
+        public JsonResult JsonTeamProductivity()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamProductivity(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonTeamQuality()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamQuality(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonTeamEfficiency()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamEfficiency(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonTeamUtilization()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamUtilizaton(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonTeamNPT()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamNPT(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonTeamTimers()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            var s = af.GetTeamTimers(teamId, month, year);
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
         #endregion "TeamSummary"
 
         #region "WorktypeSummary"
@@ -270,6 +350,18 @@ namespace OPSCO_Web.Controllers
             year = (int)Session["TS_Year"];
             ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
             ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public PartialViewResult WorktypeSummaryComment()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Id = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamScorecardId;
+            ViewBag.Comment = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().WorktypeSummaryComments;
             return PartialView();
         }
 
@@ -306,6 +398,18 @@ namespace OPSCO_Web.Controllers
             year = (int)Session["TS_Year"];
             ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
             ViewBag.Year = year;
+            return PartialView();
+        }
+
+        public PartialViewResult StatusSummaryComment()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Id = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().TeamScorecardId;
+            ViewBag.Comment = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault().StatusSummaryComments;
             return PartialView();
         }
 
@@ -412,5 +516,22 @@ namespace OPSCO_Web.Controllers
             return Json(s, JsonRequestBehavior.AllowGet);
         }
         #endregion "ManagerSignoff"
+
+        #region "Appendix"
+        public PartialViewResult Appendix()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
+            ViewBag.Year = year;
+            OSC_TeamScorecard_Current obj = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault();
+            ViewBag.Id = obj.TeamScorecardId;
+
+            return PartialView();
+        }
+        #endregion "Appendix"
     }
 }

@@ -6,7 +6,4 @@
   <parameter name="oscdb-Web.config Connection String" description="oscdb Connection String used in web.config by the application to access the database." defaultValue="Data Source=JHJHST59\JHS1D;Initial Catalog=dbbtOSCp1;Trusted_Connection=YES;" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\Project2\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='oscdb']/@connectionString" />
   </parameter>
-  <parameter name="OPSCO_Web.Models.OSCContext-Web.config Connection String" description="OPSCO_Web.Models.OSCContext Connection String used in web.config by the application to access the database." defaultValue="OPSCO_Web.Models.OSCContext_ConnectionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\martiab\\Documents\\Project2\\PROTO_Ops\\OPSCO_Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OPSCO_Web.Models.OSCContext']/@connectionString" />
-  </parameter>
 </parameters>

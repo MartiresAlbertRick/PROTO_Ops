@@ -11,6 +11,7 @@ using BTSS_Auth;
 
 namespace OPSCO_Web.Models
 {
+    #region "OSCContext"
     public class OSCContext : DbContext
     {
         public OSCContext() : base("name=OSCEntities")
@@ -92,6 +93,7 @@ namespace OPSCO_Web.Models
         };
         #endregion "StaticLists"
     }
+    #endregion "OSCContext"
 
     #region "OSCdbEntities"
     [MetadataType(typeof(OSC_Department.Metadata))]
@@ -433,11 +435,137 @@ namespace OPSCO_Web.Models
     #endregion "OSCdbEntities"
 
     #region "ViewModel"
-    public class TeamScorecard
+
+    #region "Scorecard"
+    public class Scorecard
+    {
+        [Display(Name = "Available Base Hours")]
+        public double HoursWorked { get; set; }
+        [Display(Name = "Rate of Production")]
+        public double ProductivityRating { get; set; }
+        [Display(Name = "Total Utilization")]
+        public double TotalUtilization { get; set; }
+        public double Efficiency { get; set; }
+        [Display(Name = "Average Talk Time")]
+        public double AverageTalkTime { get; set; }
+        [Display(Name = "Average Wrap Up Duration")]
+        public double AverageWrapUpDuration { get; set; }
+        [Display(Name = "Average Aux Time")]
+        public double AverageAuxTime { get; set; }
+        [Display(Name = "Average Handle Time")]
+        public double AverageHandleTime { get; set; }
+        [Display(Name = "Support Line Utilization")]
+        public double SupportLineUtilization { get; set; }
+        //Activity
+        [Display(Name = "Attendance")]
+        public double Attendance_Days { get; set; }
+        public double Attendance_Hours { get; set; }
+        [Display(Name = "Holidays")]
+        public double Holiday_Days { get; set; }
+        public double Holiday_Hours { get; set; }
+        public double Overtime_Days { get; set; }
+        [Display(Name = "Overtime")]
+        public double Overtime_Hours { get; set; }
+        [Display(Name = "Time-Off")]
+        public double TimeOff_Days { get; set; }
+        public double TimeOff_Hours { get; set; }
+        //NPT
+        [Display(Name = "NPT Hours")]
+        public double NPTHours { get; set; }
+        //BI Qual
+        [Display(Name = "Status Count")]
+        public int StatusCount { get; set; }
+        [Display(Name = "Select Count")]
+        public int SelectCount { get; set; }
+        [Display(Name = "Review Count")]
+        public int ReviewCount { get; set; }
+        [Display(Name = "Fail Count")]
+        public int FailCount { get; set; }
+        [Display(Name = "Processing Quality")]
+        public double QualityRating { get; set; }
+        [Display(Name = "Quality Review Rate")]
+        public double QualityReviewRate { get; set; }
+        //BI Prod
+        [Display(Name = "Total Transactions")]
+        public int TotalTransactions { get; set; }
+        [Display(Name = "Processing Time")]
+        public double ProcessingHours { get; set; }
+        //Manual Entries
+        [Display(Name = "Gain/Loss Occurances")]
+        public decimal GainLossOccurances { get; set; }
+        [Display(Name = "Gain/Loss Amount")]
+        public double GainLossAmount { get; set; }
+        [Display(Name = "Call Management Score")]
+        public double CallManagementScore { get; set; }
+        [Display(Name = "Project Responsibility")]
+        public string ProjectResponsibility { get; set; }
+        [Display(Name = "Schedule Adherence")]
+        public double ScheduleAdherence { get; set; }
+        public double Compliance { get; set; }
+        [Display(Name = "Product Accuracy")]
+        public double ProductAccuracy { get; set; }
+        public double Commitment { get; set; }
+        [Display(Name = "JH Values")]
+        public double JHValues { get; set; }
+        [Display(Name = "Call Efficiency")]
+        public double CallEfficiency { get; set; }
+        public double Engagement { get; set; }
+        [Display(Name = "Administrative Procedures")]
+        public double AdministrativeProcedures { get; set; }
+        [Display(Name = "Active Projects")]
+        public int ActiveProjects { get; set; }
+        [Display(Name = "Completed Projects")]
+        public int CompletedProjects { get; set; }
+        //AIQ
+        [Display(Name = "Interval Staffed Duration")]
+        public string IntervalStaffedDuration { get; set; } //hh:mm:ss
+        public long Sec_IntervalStaffedDuration { get; set; } //ssssss
+        [Display(Name = "Total Perc Service time")]
+        public double TotalPercServiceTime { get; set; }
+        [Display(Name = "Total ACD Calls")]
+        public int TotalACDCalls { get; set; }
+        /**/
+        public int ExtInCalls { get; set; }
+        /**/
+        public string ExtInAvgActiveDur { get; set; } //hh:mm:ss
+        public long Sec_ExtInAvgActiveDur { get; set; } //ssssss
+        [Display(Name = "Outbound Calls")]
+        public int ExtOutCalls { get; set; }
+        /**/
+        public string AvgExtOutActiveDur { get; set; } //hh:mm:ss
+        public long Sec_AvgExtOutActiveDur { get; set; } //ssssss
+        [Display(Name = "Wrap Up Duration")]
+        public string ACDWrapUpTime { get; set; } //hh:mm:ss
+        public long Sec_ACDWrapUpTime { get; set; } //ssssss
+        [Display(Name = "ACD Talk Time")]
+        public string ACDTalkTime { get; set; } //hh:mm:ss
+        public long Sec_ACDTalkTime { get; set; } //ssssss
+        [Display(Name = "ACD Ring Time")]
+        public string ACDRingTime { get; set; } //hh:mm:ss
+        public long Sec_ACDRingTime { get; set; } //ssssss
+        [Display(Name = "Aux")]
+        public string Aux { get; set; } //hh:mm:ss
+        public long Sec_Aux { get; set; } //ssssss
+        [Display(Name = "Average Hold Time")]
+        public string AvgHoldDur { get; set; } //hh:mm:ss
+        public long Sec_AvgHoldDur { get; set; } //ssssss
+        [Display(Name = "Interval Idle Duration")]
+        public string IntervalIdleDur { get; set; } //hh:mm:ss
+        public long Sec_IntervalIdleDur { get; set; } //ssssss
+        public int Transfers { get; set; }
+        [Display(Name = "Held Contacts")]
+        public int HeldContacts { get; set; }
+        public int Redirects { get; set; }
+    }
+    #endregion "Scorecard"
+
+    #region "TeamScorecard"
+    public class TeamScorecard : Scorecard
     {
         public long TeamScorecardId { get; set; }
         public long TeamId { get; set; }
         public int Month { get; set; }
+        public string MonthName { get; set; }
         public int Year { get; set; }
         public double ProductivityGoal { get; set; }
         public double QualityGoal { get; set; }
@@ -451,7 +579,15 @@ namespace OPSCO_Web.Models
         public string ManagerSignOff { get; set; }
         public string SignOffBy { get; set; }
         public DateTime SignOffDate { get; set; }
+        public TeamHealth TeamHealth { get; set; }
+        public Scorecard Scorecard { get; set; }
     }
+
+    public class TeamHealth
+    {
+        public string Health { get; set; }
+        public double Score { get; set; }
+    }    
 
     public class IndividualSummary
     {
@@ -475,7 +611,9 @@ namespace OPSCO_Web.Models
         public double QualityReviewRate { get; set; }
 
     }
+    #endregion "TeamScorecard"
 
+    #region "IndividualScorecard"
     public class IndividualScorecard
     {
         public long IndividualScorecardId { get; set; }
@@ -511,7 +649,9 @@ namespace OPSCO_Web.Models
         public virtual OSC_Representative rep { get; set; }
 
     }
+    #endregion "IndividualScorecard"
 
+    #region "IndividualVariables"
     public class IndividualBIProd
     {
         public long TeamId { get; set; }
@@ -593,7 +733,9 @@ namespace OPSCO_Web.Models
         public string WorkType { get; set; }
         public int Count { get; set; }
     }
+    #endregion "IndividualVariables"
 
+    #region "ChartModels"
     public class PieList
     {
         public string Category { get; set; }
@@ -606,32 +748,9 @@ namespace OPSCO_Web.Models
         public string Label { get; set; }
         public double Count { get; set; }
     }
+    #endregion "ChartModels"
 
-    public class RootObject
-    {
-        public RootObject()
-        {
-            labels = new List<string>();
-            datasets = new List<DataSet>();
-        }
-
-        public List<string> labels { get; set; }
-        public List<DataSet> datasets { get; set; }
-    }
-
-    public class DataSet
-    {
-        public DataSet()
-        {
-            data = new List<int>();
-        }
-        public string label { get; set; }
-        public string fillColor { get; set; }
-        public string strokeColor { get; set; }
-        public string pointColor { get; set; }
-        public List<int> data { get; set; }
-    }
-
+    #region "Import"
     public class Import
     {
         [Key]
@@ -639,5 +758,6 @@ namespace OPSCO_Web.Models
         public int Month { get; set; }
         public int Year { get; set; }
     }
+    #endregion "Import"
     #endregion "ViewModel"
 }
