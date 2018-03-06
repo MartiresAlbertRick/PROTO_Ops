@@ -35,7 +35,6 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_ImportNPT> OSC_ImportNPT { get; set; }
         public virtual DbSet<OSC_ImportTA> OSC_ImportTA { get; set; }
         public virtual DbSet<OSC_IndividualScorecard_Current> OSC_IndividualScorecard_Current { get; set; }
-        public virtual DbSet<OSC_Location> OSC_Location { get; set; }
         public virtual DbSet<OSC_Manager> OSC_Manager { get; set; }
         public virtual DbSet<OSC_ManualEntry> OSC_ManualEntry { get; set; }
         public virtual DbSet<OSC_NptCategory> OSC_NptCategory { get; set; }
@@ -50,5 +49,6 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_TeamNptCategory> OSC_TeamNptCategory { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
         public virtual DbSet<OSC_TeamScorecard_Current> OSC_TeamScorecard_Current { get; set; }
+        public virtual DbSet<OSC_Location> OSC_Location { get; set; }
     }
 }

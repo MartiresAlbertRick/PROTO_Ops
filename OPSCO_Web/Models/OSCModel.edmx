@@ -219,6 +219,7 @@
           <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Location" Type="nvarchar" MaxLength="100" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="OnShore" Type="bit" />
         </EntityType>
         <EntityType Name="OSC_ManageGroup">
           <Key>
@@ -628,14 +629,6 @@
           <Property Name="Year" Type="Int32" />
           <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="OSC_Location">
-          <Key>
-            <PropertyRef Name="LocationId" />
-          </Key>
-          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
         <EntityType Name="OSC_Manager">
           <Key>
             <PropertyRef Name="ManagerId" />
@@ -750,7 +743,6 @@
           <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" />
           <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" />
           <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" />
-          <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" />
           <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" />
           <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" />
           <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" />
@@ -765,6 +757,7 @@
           <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
           <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
+          <EntitySet Name="OSC_Location" EntityType="OSCModel.OSC_Location" />
         </EntityContainer>
         <EntityType Name="OSC_ScorecardField">
           <Key>
@@ -856,6 +849,15 @@
           <Property Name="QualityGoal" Type="Double" />
           <Property Name="EfficiencyGoal" Type="Double" />
           <Property Name="UtilizationGoal" Type="Double" />
+        </EntityType>
+        <EntityType Name="OSC_Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="OnShore" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1068,15 +1070,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_Location">
-            <EntityTypeMapping TypeName="OSCModel.OSC_Location">
-              <MappingFragment StoreEntitySet="OSC_Location">
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OSC_Manager">
             <EntityTypeMapping TypeName="OSCModel.OSC_Manager">
               <MappingFragment StoreEntitySet="OSC_Manager">
@@ -1282,6 +1275,16 @@
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_Location">
+            <EntityTypeMapping TypeName="OSCModel.OSC_Location">
+              <MappingFragment StoreEntitySet="OSC_Location">
+                <ScalarProperty Name="OnShore" ColumnName="OnShore" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

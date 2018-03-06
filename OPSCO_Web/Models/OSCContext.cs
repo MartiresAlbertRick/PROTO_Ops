@@ -198,6 +198,8 @@ namespace OPSCO_Web.Models
             public string Location { get; set; }
             [Display(Name = "Active Flag")]
             public Nullable<bool> IsActive { get; set; }
+            [Display(Name = "Onshore")]
+            public Nullable<bool> OnShore { get; set; }
         }
     }
 
@@ -579,15 +581,8 @@ namespace OPSCO_Web.Models
         public string ManagerSignOff { get; set; }
         public string SignOffBy { get; set; }
         public DateTime SignOffDate { get; set; }
-        public TeamHealth TeamHealth { get; set; }
         public Scorecard Scorecard { get; set; }
     }
-
-    public class TeamHealth
-    {
-        public string Health { get; set; }
-        public double Score { get; set; }
-    }    
 
     public class IndividualSummary
     {
@@ -734,6 +729,71 @@ namespace OPSCO_Web.Models
         public int Count { get; set; }
     }
     #endregion "IndividualVariables"
+
+    public class TeamRanking
+    {
+        [Display(Name = "Team")]
+        public string Team { get; set; }
+        [Display(Name = "Productivity Rating")]
+        public double ProductivityRating { get; set; }
+        [Display(Name = "Quality Rating")]
+        public double QualityRating { get; set; }
+        [Display(Name = "Efficiency Rating")]
+        public double EfficiencyRating { get; set; }
+        [Display(Name = "Utilization Rating")]
+        public double UtilizationRating { get; set; }
+        [Display(Name = "Combined Score")]
+        public double CombinedScore { get; set; }
+        [Display(Name = "Ranking")]
+        public int Ranking { get; set; }
+        [Display(Name = "Health")]
+        public string Health { get; set; }
+        public string Color { get; set; }
+    }
+
+    public class CompletedUnit
+    {
+        [Display(Name = "Completed Unit Name")]
+        public string CompletedUnitName { get; set; }
+        [Display(Name = "Completed Unit Count")]
+        public int CompletedUnitCount { get; set; }
+        [Display(Name = "Status Changes")]
+        public int StatusChanges { get; set; }
+    }
+
+    public class LocationSummary
+    {
+        [Display(Name ="Location")]
+        public string Location { get; set; }
+        [Display(Name = "Representative Count")]
+        public int RepCount { get; set; }
+        [Display(Name = "Representative Percentage")]
+        public double RepPerc { get; set; }
+        [Display(Name = "Onshore/Offshore")]
+        public string Shore { get; set; }
+    }
+
+    public class LocationAllocation
+    {
+        [Display(Name = "Onshore")]
+        public string OnShore { get; set; }
+        [Display(Name = "Onshore Locations")]
+        public string OnShoreLoc { get; set; }
+        [Display(Name = "Onshore Count")]
+        public double OnShoreCount { get; set; }
+        [Display(Name = "Onshore Perc")]
+        public double OnShorePerc { get; set; }
+        [Display(Name = "Offshore")]
+        public string OffShore { get; set; }
+        [Display(Name = "Offshore Locations")]
+        public string OffShoreLoc { get; set; }
+        [Display(Name = "Offshore Count")]
+        public double OffShoreCount { get; set; }
+        [Display(Name = "Offshore Perc")]
+        public double OffShorePerc { get; set; }
+        [Display(Name = "Onshore - Offshore")]
+        public string OnVsOff { get; set; }
+    }
 
     #region "ChartModels"
     public class PieList

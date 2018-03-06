@@ -17,5 +17,6 @@ namespace OPSCO_Web.Models
         public int LocationId { get; set; }
         public string Location { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> OnShore { get; set; }
     }
 }

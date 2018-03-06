@@ -692,6 +692,17 @@ namespace OPSCO_Web.BL
             }
             return result;
         }
+
+        public double GetRepresentativeRequired(double SPT, double NPT, double AvailableTime)
+        {
+            double result = 0;
+            if (AvailableTime > 0)
+            {
+                result = SPT + NPT;
+                result = result / AvailableTime;
+            }
+            return result;
+        }
         #endregion "Formulas"
 
         #region "IndividualScorecardReference"
@@ -1316,12 +1327,12 @@ namespace OPSCO_Web.BL
             result.TeamId = teamId;
             List<IndividualScorecard> source = new List<IndividualScorecard>();
             List<OSC_Representative> reps = (from list in db.Representatives where list.TeamId == teamId && list.IsActive && list.IsCurrent select list).ToList();
-            foreach(OSC_Representative rep in reps)
+            foreach (OSC_Representative rep in reps)
             {
                 IndividualScorecard obj = objlass.GetIndividualScorecard(teamId, rep.RepId, month, year);
                 source.Add(obj);
             }
-            
+
             foreach (IndividualScorecard obj in source)
             {
                 result.HoursWorked += obj.HoursWorked;
@@ -1417,62 +1428,62 @@ namespace OPSCO_Web.BL
                 total.AverageAuxTime += obj.AverageAuxTime;
                 total.AverageHandleTime += obj.AverageHandleTime;
                 total.SupportLineUtilization += obj.SupportLineUtilization;
-                total.Attendance_Days += obj.Attendance_Days; 
-                total.Attendance_Hours += obj.Attendance_Hours; 
-                total.Holiday_Days += obj.Holiday_Days; 
-                total.Holiday_Hours += obj.Holiday_Hours; 
-                total.Overtime_Days += obj.Overtime_Days; 
-                total.Overtime_Hours += obj.Overtime_Hours; 
-                total.TimeOff_Days += obj.TimeOff_Days; 
-                total.TimeOff_Hours += obj.TimeOff_Hours; 
-                total.NPTHours += obj.NPTHours; 
-                total.StatusCount += obj.StatusCount; 
-                total.SelectCount += obj.SelectCount; 
-                total.ReviewCount += obj.ReviewCount; 
-                total.FailCount += obj.FailCount; 
-                total.QualityRating += obj.QualityRating; 
-                total.QualityReviewRate += obj.QualityReviewRate; 
-                total.TotalTransactions += obj.TotalTransactions; 
-                total.ProcessingHours += obj.ProcessingHours; 
-                total.GainLossOccurances += Convert.ToDecimal(obj.GainLossOccurances); 
-                total.GainLossAmount += Convert.ToDouble(obj.GainLossAmount); 
-                total.ProjectResponsibility = obj.ProjectResponsibility; 
-                total.CallManagementScore += Convert.ToDouble(obj.CallManagementScore); 
-                total.ScheduleAdherence += Convert.ToDouble(obj.ScheduleAdherence); 
-                total.Compliance += Convert.ToDouble(obj.Compliance); 
-                total.ProductAccuracy += Convert.ToDouble(obj.ProductAccuracy); 
-                total.Commitment += Convert.ToDouble(obj.Commitment); 
-                total.JHValues += Convert.ToDouble(obj.JHValues); 
-                total.CallEfficiency += Convert.ToDouble(obj.CallEfficiency); 
-                total.Engagement += Convert.ToDouble(obj.Engagement); 
-                total.AdministrativeProcedures += Convert.ToDouble(obj.AdministrativeProcedures); 
-                total.ActiveProjects += Convert.ToInt32(obj.ActiveProjects); 
-                total.CompletedProjects += Convert.ToInt32(obj.CompletedProjects); 
-                total.IntervalStaffedDuration = dtFormat.GetTimeFormat(total.Sec_IntervalStaffedDuration + obj.Sec_IntervalStaffedDuration); 
-                total.Sec_IntervalStaffedDuration += Convert.ToInt64(obj.Sec_IntervalStaffedDuration); 
+                total.Attendance_Days += obj.Attendance_Days;
+                total.Attendance_Hours += obj.Attendance_Hours;
+                total.Holiday_Days += obj.Holiday_Days;
+                total.Holiday_Hours += obj.Holiday_Hours;
+                total.Overtime_Days += obj.Overtime_Days;
+                total.Overtime_Hours += obj.Overtime_Hours;
+                total.TimeOff_Days += obj.TimeOff_Days;
+                total.TimeOff_Hours += obj.TimeOff_Hours;
+                total.NPTHours += obj.NPTHours;
+                total.StatusCount += obj.StatusCount;
+                total.SelectCount += obj.SelectCount;
+                total.ReviewCount += obj.ReviewCount;
+                total.FailCount += obj.FailCount;
+                total.QualityRating += obj.QualityRating;
+                total.QualityReviewRate += obj.QualityReviewRate;
+                total.TotalTransactions += obj.TotalTransactions;
+                total.ProcessingHours += obj.ProcessingHours;
+                total.GainLossOccurances += Convert.ToDecimal(obj.GainLossOccurances);
+                total.GainLossAmount += Convert.ToDouble(obj.GainLossAmount);
+                total.ProjectResponsibility = obj.ProjectResponsibility;
+                total.CallManagementScore += Convert.ToDouble(obj.CallManagementScore);
+                total.ScheduleAdherence += Convert.ToDouble(obj.ScheduleAdherence);
+                total.Compliance += Convert.ToDouble(obj.Compliance);
+                total.ProductAccuracy += Convert.ToDouble(obj.ProductAccuracy);
+                total.Commitment += Convert.ToDouble(obj.Commitment);
+                total.JHValues += Convert.ToDouble(obj.JHValues);
+                total.CallEfficiency += Convert.ToDouble(obj.CallEfficiency);
+                total.Engagement += Convert.ToDouble(obj.Engagement);
+                total.AdministrativeProcedures += Convert.ToDouble(obj.AdministrativeProcedures);
+                total.ActiveProjects += Convert.ToInt32(obj.ActiveProjects);
+                total.CompletedProjects += Convert.ToInt32(obj.CompletedProjects);
+                total.IntervalStaffedDuration = dtFormat.GetTimeFormat(total.Sec_IntervalStaffedDuration + obj.Sec_IntervalStaffedDuration);
+                total.Sec_IntervalStaffedDuration += Convert.ToInt64(obj.Sec_IntervalStaffedDuration);
                 total.TotalPercServiceTime += Convert.ToDouble(obj.TotalPercServiceTime);
                 total.TotalACDCalls += Convert.ToInt32(obj.TotalACDCalls);
                 total.ExtInCalls += Convert.ToInt32(obj.ExtInCalls);
-                total.ExtInAvgActiveDur = dtFormat.GetTimeFormat(total.Sec_ExtInAvgActiveDur + obj.Sec_ExtInAvgActiveDur); 
-                total.Sec_ExtInAvgActiveDur += Convert.ToInt64(obj.Sec_ExtInAvgActiveDur); 
-                total.ExtOutCalls += Convert.ToInt32(obj.ExtOutCalls); 
-                total.AvgExtOutActiveDur = dtFormat.GetTimeFormat(total.Sec_AvgExtOutActiveDur + obj.Sec_AvgExtOutActiveDur); 
-                total.Sec_AvgExtOutActiveDur += Convert.ToInt64(obj.Sec_AvgExtOutActiveDur); 
-                total.ACDWrapUpTime = dtFormat.GetTimeFormat(total.Sec_ACDWrapUpTime + obj.Sec_ACDWrapUpTime); 
-                total.Sec_ACDWrapUpTime += Convert.ToInt64(obj.Sec_ACDWrapUpTime); 
-                total.ACDTalkTime = dtFormat.GetTimeFormat(total.Sec_ACDTalkTime + obj.Sec_ACDTalkTime); 
-                total.Sec_ACDTalkTime += Convert.ToInt64(obj.Sec_ACDTalkTime); 
-                total.ACDRingTime = dtFormat.GetTimeFormat(total.Sec_ACDRingTime + obj.Sec_ACDRingTime); 
-                total.Sec_ACDRingTime += Convert.ToInt64(obj.Sec_ACDRingTime); 
-                total.Aux = dtFormat.GetTimeFormat(total.Sec_Aux + obj.Sec_Aux); 
+                total.ExtInAvgActiveDur = dtFormat.GetTimeFormat(total.Sec_ExtInAvgActiveDur + obj.Sec_ExtInAvgActiveDur);
+                total.Sec_ExtInAvgActiveDur += Convert.ToInt64(obj.Sec_ExtInAvgActiveDur);
+                total.ExtOutCalls += Convert.ToInt32(obj.ExtOutCalls);
+                total.AvgExtOutActiveDur = dtFormat.GetTimeFormat(total.Sec_AvgExtOutActiveDur + obj.Sec_AvgExtOutActiveDur);
+                total.Sec_AvgExtOutActiveDur += Convert.ToInt64(obj.Sec_AvgExtOutActiveDur);
+                total.ACDWrapUpTime = dtFormat.GetTimeFormat(total.Sec_ACDWrapUpTime + obj.Sec_ACDWrapUpTime);
+                total.Sec_ACDWrapUpTime += Convert.ToInt64(obj.Sec_ACDWrapUpTime);
+                total.ACDTalkTime = dtFormat.GetTimeFormat(total.Sec_ACDTalkTime + obj.Sec_ACDTalkTime);
+                total.Sec_ACDTalkTime += Convert.ToInt64(obj.Sec_ACDTalkTime);
+                total.ACDRingTime = dtFormat.GetTimeFormat(total.Sec_ACDRingTime + obj.Sec_ACDRingTime);
+                total.Sec_ACDRingTime += Convert.ToInt64(obj.Sec_ACDRingTime);
+                total.Aux = dtFormat.GetTimeFormat(total.Sec_Aux + obj.Sec_Aux);
                 total.Sec_Aux += Convert.ToInt64(obj.Sec_Aux);
                 total.AvgHoldDur = dtFormat.GetTimeFormat(total.Sec_AvgHoldDur + obj.Sec_AvgHoldDur);
                 total.Sec_AvgHoldDur += Convert.ToInt64(obj.Sec_AvgHoldDur);
                 total.IntervalIdleDur = dtFormat.GetTimeFormat(total.Sec_IntervalIdleDur + obj.Sec_IntervalIdleDur);
-                total.Sec_IntervalIdleDur += Convert.ToInt64(obj.Sec_IntervalIdleDur); 
-                total.Transfers += Convert.ToInt32(obj.Transfers); 
-                total.HeldContacts += Convert.ToInt32(obj.HeldContacts); 
-                total.Redirects += Convert.ToInt32(obj.Redirects); 
+                total.Sec_IntervalIdleDur += Convert.ToInt64(obj.Sec_IntervalIdleDur);
+                total.Transfers += Convert.ToInt32(obj.Transfers);
+                total.HeldContacts += Convert.ToInt32(obj.HeldContacts);
+                total.Redirects += Convert.ToInt32(obj.Redirects);
             }
             result.Add(total);
             return result;
@@ -1564,11 +1575,13 @@ namespace OPSCO_Web.BL
                 }
                 else
                 {
-                    PieList obj = new PieList() {
+                    PieList obj = new PieList()
+                    {
                         Category = "Non-Processing Time",
-                        TimeSpent = item.TimeSpent / 60 };
+                        TimeSpent = item.TimeSpent / 60
+                    };
                     result.Add(obj);
-                } 
+                }
             }
             #endregion "NPT"
             var reps = (from list in db.Representatives where list.TeamId == teamId && list.IsActive && list.IsCurrent select list).ToList();
@@ -1585,9 +1598,11 @@ namespace OPSCO_Web.BL
                 }
                 else
                 {
-                    PieList pie = new PieList() {
+                    PieList pie = new PieList()
+                    {
                         Category = "Standard Processing Time",
-                        TimeSpent = obj.individualBIProd.ProcessingHours };
+                        TimeSpent = obj.individualBIProd.ProcessingHours
+                    };
                     result.Add(pie);
                 }
                 #endregion "SPT"
@@ -1601,9 +1616,11 @@ namespace OPSCO_Web.BL
                 }
                 else
                 {
-                    PieList pie = new PieList() {
+                    PieList pie = new PieList()
+                    {
                         Category = "Phone Time",
-                        TimeSpent = (long)obj.individualAIQ.ACDTalkTime / 3600 };
+                        TimeSpent = (long)obj.individualAIQ.ACDTalkTime / 3600
+                    };
                     result.Add(pie);
                 }
                 #endregion "PhoneTime"
@@ -1635,8 +1652,103 @@ namespace OPSCO_Web.BL
             result.Add(obj4);
             return result.OrderBy(t => t.Category).ToList();
         }
+
+        public List<TeamRanking> GetTeamRankings(List<OSC_Team> teams, int month, int year)
+        {
+            List<TeamRanking> result = new List<TeamRanking>();
+            foreach (OSC_Team team in teams)
+            {
+                result.Add(this.GetTeamRanking(team.TeamId, month, year));
+            }
+            return result;
+        }
+
+        public TeamRanking GetTeamRanking(long teamId, int month, int year)
+        {
+            TeamRanking result = new TeamRanking();
+            var s = this.GetTeamSummary(teamId, month, year);
+            result.Team = db.Teams.Find(teamId).TeamName;
+            result.ProductivityRating = s.ProductivityRating;
+            result.QualityRating = s.QualityRating;
+            result.UtilizationRating = s.TotalUtilization;
+            result.EfficiencyRating = s.Efficiency;
+            result.CombinedScore = result.ProductivityRating + result.QualityRating + result.UtilizationRating + result.EfficiencyRating;
+            result.Ranking = 0;
+            if (result.CombinedScore >= 370)
+            {
+                result.Health = "Good";
+                result.Color = "#5cb85c";
+            }
+            if (result.CombinedScore >= 340 && result.CombinedScore < 370)
+            {
+                result.Health = "Average";
+                result.Color = "#f0ad4e";
+            }
+            if (result.CombinedScore < 340)
+            {
+                result.Health = "Poor";
+                result.Color = "#d9534f";
+            }
+            return result;
+        }
         #endregion "TeamSummaryMethods"
 
+
+        #region "LocationSummaryMethods"
+        public List<LocationSummary> GetLocationSummary(long teamId)
+        {
+            List<LocationSummary> result = new List<LocationSummary>();
+            foreach (OSC_Location loc in db.Locations)
+            {
+                LocationSummary item = new LocationSummary();
+                item.Location = loc.Location;
+                item.RepCount = db.Representatives.Where(t => t.TeamId == teamId && t.LocationId == loc.LocationId && t.IsVPN == false && t.IsActive && t.IsCurrent).Count();
+                int totalReps = db.Representatives.Where(t => t.TeamId == teamId && t.IsActive && t.IsCurrent).Count();
+                item.RepPerc = (item.RepCount / totalReps) * 100;
+                string shore = "Offshore";
+                if ((bool)loc.OnShore)
+                { shore = "Onshore"; }
+                item.Shore = shore;
+                result.Add(item);
+                //WFH
+                item = new LocationSummary();
+                item.Location = "WFH-" + loc.Location;
+                item.RepCount = db.Representatives.Where(t => t.TeamId == teamId && t.LocationId == loc.LocationId && t.IsVPN && t.IsActive && t.IsCurrent).Count();
+                item.RepPerc = (item.RepCount / totalReps) * 100;
+                shore = "Offshore";
+                if ((bool)loc.OnShore)
+                { shore = "Onshore"; }
+                item.Shore = shore;
+                result.Add(item);
+            }
+            return result;
+        }
+
+        public LocationAllocation GetLocationAllocation(long teamId)
+        {
+            LocationAllocation result = new LocationAllocation();
+            var s = this.GetLocationSummary(teamId).ToList();
+            int totalReps = db.Representatives.Where(t => t.TeamId == teamId && t.IsActive && t.IsCurrent).Count();
+            result.OnShore = "Onshore";
+            result.OnShoreCount = 0;
+            foreach (LocationSummary obj in s.Where(t => t.Shore == "Onshore"))
+            {
+                result.OnShoreLoc = result.OnShoreLoc + "," + obj.Location;
+                result.OnShoreCount += obj.RepCount;
+            }
+            result.OffShorePerc = (result.OffShoreCount / totalReps) * 100;
+            result.OffShore = "Offshore";
+            result.OffShoreCount = 0;
+            foreach (LocationSummary obj in s.Where(t => t.Shore == "Offshore"))
+            {
+                result.OffShoreLoc = result.OffShoreLoc + "," + obj.Location;
+                result.OffShoreCount += obj.RepCount;
+            }
+            result.OffShorePerc = (result.OffShoreCount / totalReps) * 100;
+            result.OnVsOff = result.OnShorePerc + "% - " + result.OffShorePerc + "%";
+            return result;
+        }
+        #endregion "LocationSummaryMethods"
     }
 
     class BTSSExtensions

@@ -530,6 +530,8 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.Cod
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\System.IO.Compression.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\roslyn\VBCSCompiler.exe
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\ApplicationInsights.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll.config
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\OPSCO_Web.dll
@@ -638,7 +640,5 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.WebPages.
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Net.Http.Formatting.xml
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.xml
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\System.Web.Http.WebHost.xml
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csprojResolveAssemblyReference.cache
-C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Debug\OPSCO_Web.pdb

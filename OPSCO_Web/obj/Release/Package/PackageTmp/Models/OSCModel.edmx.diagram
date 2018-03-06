@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="OSCModel.OSC_ImportNPT" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ImportTA" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_IndividualScorecard_Current" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OSCModel.OSC_Location" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_Manager" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_ManualEntry" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCModel.OSC_NptCategory" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
@@ -29,6 +28,7 @@
         <EntityTypeShape EntityType="OSCModel.OSC_TeamNptCategory" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamWorkItem" Width="1.5" PointX="15.375" PointY="3.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamScorecard_Current" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="OSCModel.OSC_Location" Width="1.5" PointX="15.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

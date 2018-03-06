@@ -214,6 +214,7 @@
     <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Location" Type="nvarchar" MaxLength="100" />
     <Property Name="IsActive" Type="bit" />
+    <Property Name="OnShore" Type="bit" />
   </EntityType>
   <EntityType Name="OSC_ManageGroup">
     <Key>

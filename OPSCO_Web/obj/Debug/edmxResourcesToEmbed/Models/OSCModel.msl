@@ -206,15 +206,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="OSC_Location">
-      <EntityTypeMapping TypeName="OSCModel.OSC_Location">
-        <MappingFragment StoreEntitySet="OSC_Location">
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-          <ScalarProperty Name="Location" ColumnName="Location" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="OSC_Manager">
       <EntityTypeMapping TypeName="OSCModel.OSC_Manager">
         <MappingFragment StoreEntitySet="OSC_Manager">
@@ -420,6 +411,16 @@
           <ScalarProperty Name="Month" ColumnName="Month" />
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
           <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_Location">
+      <EntityTypeMapping TypeName="OSCModel.OSC_Location">
+        <MappingFragment StoreEntitySet="OSC_Location">
+          <ScalarProperty Name="OnShore" ColumnName="OnShore" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using OPSCO_Web.BL;
 using System.Web.Script.Serialization;
-using Microsoft.Office.Interop.Word;
 using word = Microsoft.Office.Interop.Word;
 using xl = Microsoft.Office.Interop.Excel;
 using System.IO;
+using ClosedXML.Excel;
+
 namespace OPSCO_Web.Controllers
 {
     public class IndividualScorecardController : Controller
@@ -149,9 +150,9 @@ namespace OPSCO_Web.Controllers
             OSC_Team oSC_Team = db.Teams.Find(teamId);
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
             
-            Application app = new word.Application();
+            word.Application app = new word.Application();
             string templateFileName = Server.MapPath("~/Templates/ScorecardTemplate.docx");
-            Document doc = app.Documents.Open(templateFileName);
+            word.Document doc = app.Documents.Open(templateFileName);
             string exportPath = Server.MapPath("~/Export");
             string fileName = exportPath + "/IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".docx";
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
@@ -243,6 +244,117 @@ namespace OPSCO_Web.Controllers
             fileResult.FileDownloadName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".pdf";
             System.IO.File.Delete(fileName);
             return fileResult;
+        }
+
+        public FileResult GetPDF()
+        {
+            string logon_user = (string)Session["logon_user"];
+            long teamId, repId;
+            int month, year;
+            teamId = (long)Session["IS_Team"];
+            repId = (long)Session["IS_Rep"];
+            month = (int)Session["IS_Month"];
+            year = (int)Session["IS_Year"];
+            OSC_Team oSC_Team = db.Teams.Find(teamId);
+            OSC_Representative oSC_Representative = db.Representatives.Find(repId);
+
+            string templateFileName = Server.MapPath("~/Templates/Template.xlsx");
+            XLWorkbook workbook = new XLWorkbook(templateFileName);
+            string exportPath = Server.MapPath("~/Export");
+            string excelFileName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".xlsx";
+            string pdfFileName = "IndividualScorecard_" + oSC_Representative.LastName + oSC_Representative.FirstName + "_" + month.ToString() + year.ToString() + "_" + logon_user + ".pdf";
+            string tempFileName = exportPath + "/" + excelFileName;
+            string outputFileName = exportPath + "/" + pdfFileName;
+            if (System.IO.File.Exists(tempFileName)) System.IO.File.Delete(tempFileName);
+            workbook.SaveAs(tempFileName);
+            #region "Cover"
+            IXLWorksheet worksheet = workbook.Worksheet("Scorecard");
+            worksheet.Cell("D2").Value = oSC_Team.TeamName + " Monthly Scorecard";
+            worksheet.Range("D2:K3").Row(1).Merge();
+            #endregion "Cover"
+            #region "Table"
+            List<IndividualScorecard> list = new List<IndividualScorecard>();
+            list = af.GetIndividualScorecardFull(teamId, repId, month, year);
+            int x = 2;
+            int y = 29;
+            IXLCell cell = worksheet.Cell(y, x);
+            cell.SetValue("Attendance");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Overtime");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("NPT Hours");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Processing Time");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Total Transactions");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Rate of Production");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Processing Quality");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Total Utilization");
+            x += 1;
+            cell = worksheet.Cell(29, x);
+            cell.SetValue("Efficiency");
+            
+            for (int i = 1; i <= list.Count; i++)
+            {
+                y += 1;
+                x = 2;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualActivities.Attendance_Days.ToString());
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualActivities.Overtime_Hours.ToString());
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualNonProcessing.NPTHours.ToString());
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualBIProd.ProcessingHours.ToString());
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualBIProd.Count.ToString());
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].ProductivityRating.ToString() + "%");
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].individualBIQual.QualityRating.ToString() + "%");
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].TotalUtilization.ToString() + "%");
+                x += 1;
+                cell = worksheet.Cell(y, x);
+                cell.SetValue(list[i - 1].Efficiency.ToString() + "%");
+            }
+            do
+            {
+                x += 1;
+                worksheet.Column(x).Clear();
+            }
+            while (x <= 23);
+            #endregion "Table"
+
+            workbook.SaveAs(tempFileName);
+            xl.Application app = new xl.Application();
+            xl.Workbook wb = app.Workbooks.Open(tempFileName);
+            wb.ExportAsFixedFormat(xl.XlFixedFormatType.xlTypePDF, outputFileName);
+            //using (MemoryStream stream = new MemoryStream())
+            //{
+            //                workbook.SaveAs(stream);
+            //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
+            //}
+            byte[] fileBytes = System.IO.File.ReadAllBytes(outputFileName);
+            string fileName = pdfFileName;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
         #endregion "PDF"
 
