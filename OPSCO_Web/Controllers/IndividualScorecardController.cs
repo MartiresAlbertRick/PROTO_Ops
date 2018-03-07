@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using OPSCO_Web.Models;
 using OPSCO_Web.BL;
 using System.Web.Script.Serialization;
+using Microsoft.Office.Core;
 using word = Microsoft.Office.Interop.Word;
 using xl = Microsoft.Office.Interop.Excel;
 using System.IO;
@@ -248,6 +249,7 @@ namespace OPSCO_Web.Controllers
 
         public FileResult GetPDF()
         {
+            #region "GetSessionVariables"
             string logon_user = (string)Session["logon_user"];
             long teamId, repId;
             int month, year;
@@ -257,7 +259,8 @@ namespace OPSCO_Web.Controllers
             year = (int)Session["IS_Year"];
             OSC_Team oSC_Team = db.Teams.Find(teamId);
             OSC_Representative oSC_Representative = db.Representatives.Find(repId);
-
+            #endregion "GetSessionVariables"
+            #region "WorkbookUsingClosedXML"
             string templateFileName = Server.MapPath("~/Templates/Template.xlsx");
             XLWorkbook workbook = new XLWorkbook(templateFileName);
             string exportPath = Server.MapPath("~/Export");
@@ -267,11 +270,10 @@ namespace OPSCO_Web.Controllers
             string outputFileName = exportPath + "/" + pdfFileName;
             if (System.IO.File.Exists(tempFileName)) System.IO.File.Delete(tempFileName);
             workbook.SaveAs(tempFileName);
-            #region "Cover"
             IXLWorksheet worksheet = workbook.Worksheet("Scorecard");
-            worksheet.Cell("D2").Value = oSC_Team.TeamName + " Monthly Scorecard";
-            worksheet.Range("D2:K3").Row(1).Merge();
-            #endregion "Cover"
+            IXLWorksheet worksheet2 = workbook.Worksheet("Workitems");
+            IXLWorksheet worksheet3 = workbook.Worksheet("NPT");
+            
             #region "Table"
             List<IndividualScorecard> list = new List<IndividualScorecard>();
             list = af.GetIndividualScorecardFull(teamId, repId, month, year);
@@ -342,19 +344,118 @@ namespace OPSCO_Web.Controllers
             }
             while (x <= 23);
             #endregion "Table"
-
+            #region "Highlights"
+            IndividualScorecard ind = af.GetIndividualScorecard(teamId, repId, month, year);
+            cell = worksheet.Cell("A47");
+            cell.SetValue(ind.Highlights);
+            #endregion "Highlights"
+            #region "Worktypes"
+            List<IndividualWorkTypes> worktypes = af.GetIndividualWorkTypes(teamId, repId, month, year);
+            y = 1;
+            x = 1;
+            IXLCell cell2 = worksheet2.Cell(y, x);
+            for (int i = 1; i <= worktypes.Count; i++)
+            {
+                y += 1;
+                x = 1;
+                cell2 = worksheet2.Cell(y, x);
+                cell2.SetValue(worktypes[i - 1].WorkType.ToString());
+                x += 1;
+                cell2 = worksheet2.Cell(y, x);
+                cell2.SetValue(((int)worktypes[i - 1].Count));
+            }
+            do
+            {
+                y += 1;
+                worksheet2.Row(y).Clear();
+            }
+            while(y <= 200);
+            #endregion "Worktypes"
+            #region "NPT"
+            List <PieList> npts = af.GetIndividualNPT(teamId, repId, month, year);
+            y = 1;
+            x = 1;
+            IXLCell cell3 = worksheet3.Cell(y, x);
+            for (int i = 1; i <= npts.Count; i++)
+            {
+                y += 1;
+                x = 1;
+                cell3 = worksheet3.Cell(y, x);
+                cell3.SetValue(npts[i - 1].Category.ToString());
+                x += 1;
+                cell3 = worksheet3.Cell(y, x);
+                cell3.SetValue((double)npts[i - 1].TimeSpent);
+            }
+            do
+            {
+                y += 1;
+                worksheet3.Row(y).Clear();
+            }
+            while (y <= 200);
+            #endregion "NPT"
+            #region "SaveWorkBook""
             workbook.SaveAs(tempFileName);
+            #endregion "SaveWorkBook"
+            #endregion "WorkbookUsingClosedXML"
+            #region "WorkbookUsingInterop"
+            //remove this codes when 403 - 454 when closedXML can generate this to PDF
             xl.Application app = new xl.Application();
             xl.Workbook wb = app.Workbooks.Open(tempFileName);
-            wb.ExportAsFixedFormat(xl.XlFixedFormatType.xlTypePDF, outputFileName);
-            //using (MemoryStream stream = new MemoryStream())
-            //{
-            //                workbook.SaveAs(stream);
-            //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
-            //}
+            #region "Cover"
+            xl.Sheets xs = wb.Worksheets;
+            xl.Worksheet ws = (xl.Worksheet)xs.get_Item("Scorecard");
+            xl.Worksheet ws2 = (xl.Worksheet)xs.get_Item("Workitems");
+            xl.Worksheet ws3 = (xl.Worksheet)xs.get_Item("NPT");
+            int txt_ctr = 1;
+            foreach (xl.Shape shp in ws.Shapes)
+            {
+                if (shp.Type == Microsoft.Office.Core.MsoShapeType.msoTextBox)
+                {
+                    if (txt_ctr == 1)
+                    {
+                        shp.TextFrame.Characters(Type.Missing, Type.Missing).Text = oSC_Team.TeamName + " Monthly Scorecard";
+                    }
+                    else if (txt_ctr == 2)
+                    {
+                        shp.TextFrame.Characters(Type.Missing, Type.Missing).Text = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+                        shp.ZOrder(MsoZOrderCmd.msoBringToFront);
+                    }
+                    else
+                    {
+                        shp.TextFrame.Characters(Type.Missing, Type.Missing).Text = db.months.Where(m => m.Value == Convert.ToString((int)month)).First().Text + "-" + year.ToString();
+                        shp.ZOrder(MsoZOrderCmd.msoBringToFront);
+                    }
+                }
+                txt_ctr += 1;
+            }
+            int cht_ctr = 1;
+            foreach (xl.ChartObject cht in ws.ChartObjects())
+            {
+                if (cht_ctr == 1)
+                {
+                    xl.Range last = ws2.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+                    xl.Range chartRange = ws2.get_Range("A1", last);
+                    cht.Chart.SetSourceData(chartRange);
+                }
+                else
+                {
+                    xl.Range last = ws3.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+                    xl.Range chartRange = ws3.get_Range("A1", last);
+                    cht.Chart.SetSourceData(chartRange);
+                }
+                cht_ctr += 1;
+            }
+            #endregion "Cover"
+            wb.Save();
+            wb.ExportAsFixedFormat(xl.XlFixedFormatType.xlTypePDF, outputFileName, xl.XlFixedFormatQuality.xlQualityStandard);
+            wb.Close();
+            app.Quit();
+            #endregion "WorkbookUsingInterop"
+            #region "Return"
             byte[] fileBytes = System.IO.File.ReadAllBytes(outputFileName);
             string fileName = pdfFileName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            #endregion "Return"
         }
         #endregion "PDF"
 

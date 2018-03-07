@@ -4,9 +4,3 @@ C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.cs
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.csproj.CoreCompileInputs.cache
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.dll
 C:\Users\Albert Rick\Documents\GitHub\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.pdb
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\bin\Debug\BTSS_Auth.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\bin\Debug\BTSS_Auth.pdb
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.csprojResolveAssemblyReference.cache
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.csproj.CoreCompileInputs.cache
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.dll
-C:\Users\martiab\Documents\Project2\PROTO_Ops\BTSS_Auth\obj\Debug\BTSS_Auth.pdb
