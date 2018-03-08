@@ -143,3 +143,10 @@ go
 alter table OSC_Location
 add OnShore bit
 go
+
+alter table OSC_TeamWorkItem
+add IsCompletedItem bit
+go
+
+update OSC_TeamWorkItem set IsCompletedItem = 0
+go

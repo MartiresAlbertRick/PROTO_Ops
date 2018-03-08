@@ -15,6 +15,7 @@ namespace OPSCO_Web.BL
         private InitializeLists initializeLists;
         private IndividualScorecardClass individualScorecardClass;
         private TeamScorecardClass teamScorecardClass;
+        private CustomizeScorecardClass customizeScorecardClass;
         private BTSSExtensions btssExtensions;
         private GetReference getReference;
         #endregion "InitializeObjects"
@@ -27,6 +28,7 @@ namespace OPSCO_Web.BL
             initializeLists = new InitializeLists();
             individualScorecardClass = new IndividualScorecardClass();
             teamScorecardClass = new TeamScorecardClass();
+            customizeScorecardClass = new CustomizeScorecardClass();
             btssExtensions = new BTSSExtensions();
             getReference = new GetReference();
         }
@@ -227,8 +229,12 @@ namespace OPSCO_Web.BL
         }
         #endregion "TeamScorecardClass"
 
-        #region "CustomizeScorecard"
-        #endregion "CustomizeScorecard"
+        #region "CustomizeScorecardClass"
+        public List<CustomizedScorecardFields> GetCustomizeScorecard(long teamId, int month, int year, string view)
+        {
+            return customizeScorecardClass.GetCustomizeScorecard(teamId, month, year, view);
+        }
+        #endregion "CustomizeScorecardClass"
 
         #region "BTSSExtensions"
         public bool IsManaged(long? teamId, string user_name, string role)
@@ -391,6 +397,24 @@ namespace OPSCO_Web.BL
         {
             var result = db.TeamGroupIds.Where(t => t.TeamId == teamId);
             return result.ToList();
+        }
+    }
+
+    class CustomizeScorecardClass
+    {
+        private OSCContext db = new OSCContext();
+
+        public List<CustomizedScorecardFields> GetCustomizeScorecard(long teamId, int month, int year, string view)
+        {
+            List<CustomizedScorecardFields> result = new List<CustomizedScorecardFields>();
+            var s = db.CustomizeScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year && t.ScorecardType == view).ToList();
+            foreach (OSC_CustomizeScorecard obj in s)
+            {
+                CustomizedScorecardFields item = new CustomizedScorecardFields();
+                item.FieldName = db.ScorecardFields.Find(obj.FieldId).FieldName;
+                item.SortOrder = (int)obj.Order;
+            }
+            return result;
         }
     }
 
@@ -1693,6 +1717,42 @@ namespace OPSCO_Web.BL
         }
         #endregion "TeamSummaryMethods"
 
+        #region "OutstandingInventory"
+        public List<OutstandingInventoryTableDetailed> GetOutstandingInventoryTableDetailed(long teamId, int month, int year)
+        {
+            List<OutstandingInventoryTableDetailed> result = new List<OutstandingInventoryTableDetailed>();
+            var s = db.TA.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).ToList();
+            foreach (OSC_ImportTA obj in s)
+            {
+                var i = result.Where(t => t.BusinessArea == obj.BusinessArea && t.Worktype == obj.WorkType && t.Status == obj.Status).ToList();
+                if (i.Count > 0)
+                {
+                    OutstandingInventoryTableDetailed item = i.FirstOrDefault();
+                    result.Remove(item);
+                    item.Count += 1;
+                    result.Add(item);
+                }
+                else
+                {
+                    OutstandingInventoryTableDetailed item = new OutstandingInventoryTableDetailed() {
+                        BusinessArea = obj.BusinessArea,
+                        Worktype = obj.WorkType,
+                        Status = obj.Status,
+                        Count = 1
+                    };
+                    result.Add(item);
+                }
+            }
+            return result.OrderBy(t=>t.BusinessArea).ThenBy(t=>t.Worktype).ThenBy(t=>t.Status).ToList();
+        }
+
+        public OutstandingInventoryTable GetOutstandingInventoryTable(long teamId, int month, int year)
+        {
+            OutstandingInventoryTable result = new OutstandingInventoryTable();
+            result.Count = this.GetOutstandingInventoryTableDetailed(teamId, month, year).Count;
+            return result;
+        }
+        #endregion "OutstandingInventory"
 
         #region "LocationSummaryMethods"
         public List<LocationSummary> GetLocationSummary(long teamId)

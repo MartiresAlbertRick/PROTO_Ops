@@ -761,9 +761,16 @@ namespace OPSCO_Web.Models
         public int StatusChanges { get; set; }
     }
 
+    public class WorktypeSummary
+    {
+        public string Worktype { get; set; }
+        public int TotalItemsProcess { get; set; }
+        public int TotalItemsSelected { get; set; }
+    }
+
     public class LocationSummary
     {
-        [Display(Name ="Location")]
+        [Display(Name = "Location")]
         public string Location { get; set; }
         [Display(Name = "Representative Count")]
         public int RepCount { get; set; }
@@ -793,6 +800,25 @@ namespace OPSCO_Web.Models
         public double OffShorePerc { get; set; }
         [Display(Name = "Onshore - Offshore")]
         public string OnVsOff { get; set; }
+    }
+
+
+    public class OutstandingInventoryTable
+    {
+        public int Count { get; set; }
+    }
+
+    public class OutstandingInventoryTableDetailed {
+        public string BusinessArea { get; set; }
+        public string Worktype { get; set; }
+        public string Status { get; set; }
+        public int Count { get; set; }
+    }
+
+    public class CustomizedScorecardFields
+    {
+        public string FieldName { get; set; }
+        public int SortOrder { get; set; }
     }
 
     #region "ChartModels"

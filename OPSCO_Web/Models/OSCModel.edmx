@@ -384,6 +384,7 @@
           <Property Name="November" Type="float" />
           <Property Name="December" Type="float" />
           <Property Name="Year" Type="int" />
+          <Property Name="IsCompletedItem" Type="bit" />
         </EntityType>
         <EntityType Name="OSC_WorkStatus">
           <Key>
@@ -755,9 +756,9 @@
           <EntitySet Name="OSC_ManageGroup" EntityType="OSCModel.OSC_ManageGroup" />
           <EntitySet Name="OSC_TeamGroupIds" EntityType="OSCModel.OSC_TeamGroupIds" />
           <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
-          <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
           <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
           <EntitySet Name="OSC_Location" EntityType="OSCModel.OSC_Location" />
+          <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
         </EntityContainer>
         <EntityType Name="OSC_ScorecardField">
           <Key>
@@ -806,29 +807,6 @@
           <Property Name="CategoryId" Type="Int64" Nullable="false" />
           <Property Name="TNCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="OSC_TeamWorkItem">
-          <Key>
-            <PropertyRef Name="WorkItemNo" />
-          </Key>
-          <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeamId" Type="Int64" />
-          <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="January" Type="Double" />
-          <Property Name="February" Type="Double" />
-          <Property Name="March" Type="Double" />
-          <Property Name="April" Type="Double" />
-          <Property Name="May" Type="Double" />
-          <Property Name="June" Type="Double" />
-          <Property Name="July" Type="Double" />
-          <Property Name="August" Type="Double" />
-          <Property Name="September" Type="Double" />
-          <Property Name="October" Type="Double" />
-          <Property Name="November" Type="Double" />
-          <Property Name="December" Type="Double" />
-          <Property Name="Year" Type="Int32" />
-        </EntityType>
         <EntityType Name="OSC_TeamScorecard_Current">
           <Key>
             <PropertyRef Name="TeamScorecardId" />
@@ -858,6 +836,30 @@
           <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="OnShore" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OSC_TeamWorkItem">
+          <Key>
+            <PropertyRef Name="WorkItemNo" />
+          </Key>
+          <Property Name="WorkItemNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int64" />
+          <Property Name="BusinessAreaCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WorkTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="January" Type="Double" />
+          <Property Name="February" Type="Double" />
+          <Property Name="March" Type="Double" />
+          <Property Name="April" Type="Double" />
+          <Property Name="May" Type="Double" />
+          <Property Name="June" Type="Double" />
+          <Property Name="July" Type="Double" />
+          <Property Name="August" Type="Double" />
+          <Property Name="September" Type="Double" />
+          <Property Name="October" Type="Double" />
+          <Property Name="November" Type="Double" />
+          <Property Name="December" Type="Double" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="IsCompletedItem" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1232,30 +1234,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSC_TeamWorkItem">
-            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
-              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="March" ColumnName="March" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
-                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OSC_TeamScorecard_Current">
             <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecard_Current">
               <MappingFragment StoreEntitySet="OSC_TeamScorecard_Current">
@@ -1285,6 +1263,31 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamWorkItem">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
+              <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
+                <ScalarProperty Name="IsCompletedItem" ColumnName="IsCompletedItem" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="March" ColumnName="March" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="WorkTypeCode" ColumnName="WorkTypeCode" />
+                <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

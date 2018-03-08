@@ -11,6 +11,7 @@ using word = Microsoft.Office.Interop.Word;
 using xl = Microsoft.Office.Interop.Excel;
 using System.IO;
 using ClosedXML.Excel;
+using sxl = Spire.Xls;
 
 namespace OPSCO_Web.Controllers
 {
@@ -397,6 +398,22 @@ namespace OPSCO_Web.Controllers
             workbook.SaveAs(tempFileName);
             #endregion "SaveWorkBook"
             #endregion "WorkbookUsingClosedXML"
+            #region "UsingSpireXLS"
+            sxl.Workbook swb = new sxl.Workbook();
+            swb.LoadFromFile(tempFileName);
+            sxl.Worksheet sws1 = swb.Worksheets[0];
+            sxl.Worksheet sws2 = swb.Worksheets[1];
+            sxl.Worksheet sws3 = swb.Worksheets[2];
+            sws1.TextBoxes[0].Text = oSC_Team.TeamName + " Monthly Scorecard";
+            sws1.TextBoxes[1].Text = oSC_Representative.FirstName + " " + oSC_Representative.LastName;
+            sws1.TextBoxes[2].Text = db.months.Where(m => m.Value == Convert.ToString((int)month)).First().Text + "-" + year.ToString();
+
+            sxl.Chart chart1 = sws1.Charts[0];
+            chart1.DataRange = sws2.Range[1, 1, sws2.Rows.Count(), 2];
+            sxl.Chart chart2 = sws1.Charts[1];
+            chart2.DataRange = sws3.Range[1, 1, sws3.Rows.Count(), 2];
+            swb.Save();
+            #endregion "UsingSpireXLS"
             #region "WorkbookUsingInterop"
             //remove this codes when 403 - 454 when closedXML can generate this to PDF
             xl.Application app = new xl.Application();
@@ -429,28 +446,29 @@ namespace OPSCO_Web.Controllers
                 txt_ctr += 1;
             }
             int cht_ctr = 1;
-            foreach (xl.ChartObject cht in ws.ChartObjects())
-            {
-                if (cht_ctr == 1)
-                {
-                    xl.Range last = ws2.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
-                    xl.Range chartRange = ws2.get_Range("A1", last);
-                    cht.Chart.SetSourceData(chartRange);
-                }
-                else
-                {
-                    xl.Range last = ws3.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
-                    xl.Range chartRange = ws3.get_Range("A1", last);
-                    cht.Chart.SetSourceData(chartRange);
-                }
-                cht_ctr += 1;
-            }
+            //foreach (xl.ChartObject cht in ws.ChartObjects())
+            //{
+            //    if (cht_ctr == 1)
+            //    {
+            //        xl.Range last = ws2.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+            //        xl.Range chartRange = ws2.get_Range("A1", last);
+            //        cht.Chart.SetSourceData(chartRange);
+            //    }
+            //    else
+            //    {
+            //        xl.Range last = ws3.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+            //        xl.Range chartRange = ws3.get_Range("A1", last);
+            //        cht.Chart.SetSourceData(chartRange);
+            //    }
+            //    cht_ctr += 1;
+            //}
             #endregion "Cover"
             wb.Save();
             wb.ExportAsFixedFormat(xl.XlFixedFormatType.xlTypePDF, outputFileName, xl.XlFixedFormatQuality.xlQualityStandard);
             wb.Close();
             app.Quit();
             #endregion "WorkbookUsingInterop"
+
             #region "Return"
             byte[] fileBytes = System.IO.File.ReadAllBytes(outputFileName);
             string fileName = pdfFileName;

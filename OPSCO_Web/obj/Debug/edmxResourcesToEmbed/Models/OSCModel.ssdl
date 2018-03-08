@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OSCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="OSC_ActivityTracker">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="DateFrom" Type="datetime" />
+    <Property Name="DateTo" Type="datetime" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="200" />
+    <Property Name="NoOfHours" Type="float" />
+    <Property Name="DateModified" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoOfDays" Type="float" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_BusinessArea">
+    <Key>
+      <PropertyRef Name="BusinessAreaCode" />
+    </Key>
+    <Property Name="BusinessAreaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessAreaCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="BusinessAreaDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_CoreRole">
+    <Key>
+      <PropertyRef Name="CoreRoleId" />
+    </Key>
+    <Property Name="CoreRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CoreRole" Type="nvarchar" MaxLength="255" />
+    <Property Name="Tier" Type="int" />
+    <Property Name="MonthlyHours" Type="float" />
+    <Property Name="Percentage" Type="float" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="OSC_CustomizeScorecard">
+    <Key>
+      <PropertyRef Name="CSId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="FieldId" Type="int" Nullable="false" />
+    <Property Name="Order" Type="int" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="CSId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScorecardType" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="OSC_Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ImportAIQ">
+    <Key>
+      <PropertyRef Name="AIQReportId" />
+    </Key>
+    <Property Name="AIQReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Agent" Type="nvarchar" MaxLength="100" />
+    <Property Name="IntervalStaffedDuration" Type="bigint" />
+    <Property Name="TotalPercServiceTime" Type="float" />
+    <Property Name="TotalACDCalls" Type="int" />
+    <Property Name="ExtInCalls" Type="int" />
+    <Property Name="ExtInAvgActiveDur" Type="bigint" />
+    <Property Name="ExtOutCalls" Type="int" />
+    <Property Name="AvgExtOutActiveDur" Type="bigint" />
+    <Property Name="ACDWrapUpTime" Type="bigint" />
+    <Property Name="ACDTalkTime" Type="bigint" />
+    <Property Name="ACDRingTime" Type="bigint" />
+    <Property Name="Aux" Type="bigint" />
+    <Property Name="AvgHoldDur" Type="bigint" />
+    <Property Name="IntervalIdleDur" Type="bigint" />
+    <Property Name="Transfers" Type="int" />
+    <Property Name="HeldContacts" Type="int" />
+    <Property Name="Redirects" Type="int" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OSC_ImportBIProd">
+    <Key>
+      <PropertyRef Name="BIPReportId" />
+    </Key>
+    <Property Name="BIPReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Count" Type="int" />
+    <Property Name="Date1" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date2" Type="nvarchar" MaxLength="20" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OSC_ImportBIQual">
+    <Key>
+      <PropertyRef Name="BIQReportId" />
+    </Key>
+    <Property Name="BIQReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Repid" Type="bigint" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="Field1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Field2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Count1" Type="bigint" />
+    <Property Name="Count2" Type="bigint" />
+    <Property Name="Count3" Type="bigint" />
+    <Property Name="Count4" Type="bigint" />
+    <Property Name="ErrorPoints" Type="float" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OSC_ImportNPT">
+    <Key>
+      <PropertyRef Name="NPTReportId" />
+    </Key>
+    <Property Name="NPTReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="1000" />
+    <Property Name="DateOfActivity" Type="date" />
+    <Property Name="TimeSpent" Type="float" />
+    <Property Name="TypeOfActivity" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+    <Property Name="ItemType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Path" Type="nvarchar" MaxLength="1000" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Source" Type="nvarchar" MaxLength="10" />
+    <Property Name="CategoryId" Type="bigint" />
+    <Property Name="SubCategoryId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ImportTA">
+    <Key>
+      <PropertyRef Name="TAReportId" />
+    </Key>
+    <Property Name="TAReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="AssignedId" Type="nvarchar" MaxLength="50" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleInt" Type="nvarchar" MaxLength="5" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDateTime" Type="datetime" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Queue" Type="nvarchar" MaxLength="50" />
+    <Property Name="Suspended" Type="nvarchar" MaxLength="5" />
+    <Property Name="SuspendDate" Type="datetime" />
+    <Property Name="UnsuspendDate" Type="datetime" />
+    <Property Name="LastStatusUpdate" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" />
+    <Property Name="GAC" Type="nvarchar" MaxLength="30" />
+    <Property Name="Assoc" Type="nvarchar" MaxLength="30" />
+    <Property Name="Certificate" Type="nvarchar" MaxLength="30" />
+    <Property Name="CheckAmount" Type="money" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="ProductType" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdminSystem" Type="nvarchar" MaxLength="50" />
+    <Property Name="CheckAmountTotal" Type="money" />
+    <Property Name="UCIVendorMatchDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReasonCodeForAdv" Type="nvarchar" MaxLength="20" />
+    <Property Name="ReasonDescription" Type="nvarchar(max)" />
+    <Property Name="TinSourceType" Type="nvarchar" MaxLength="50" />
+    <Property Name="SSBusinessUnit" Type="nvarchar" MaxLength="50" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OSC_IndividualScorecard_Current">
+    <Key>
+      <PropertyRef Name="IndividualScorecardId" />
+    </Key>
+    <Property Name="IndividualScorecardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OSC_Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Location" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="OnShore" Type="bit" />
+  </EntityType>
+  <EntityType Name="OSC_ManageGroup">
+    <Key>
+      <PropertyRef Name="MGId" />
+    </Key>
+    <Property Name="ManagerId" Type="bigint" Nullable="false" />
+    <Property Name="EntityId" Type="bigint" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="MGId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Manager">
+    <Key>
+      <PropertyRef Name="ManagerId" />
+    </Key>
+    <Property Name="ManagerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PRDUserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ManualEntry">
+    <Key>
+      <PropertyRef Name="EntryId" />
+    </Key>
+    <Property Name="EntryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="GainLossOccurances" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="GainLossAmount" Type="float" />
+    <Property Name="CallManagementScore" Type="float" />
+    <Property Name="ProjectResponsibility" Type="nvarchar" MaxLength="50" />
+    <Property Name="ScheduleAdherence" Type="float" />
+    <Property Name="Compliance" Type="float" />
+    <Property Name="ProductAccuracy" Type="float" />
+    <Property Name="Commitment" Type="float" />
+    <Property Name="JHValues" Type="float" />
+    <Property Name="CallEfficiency" Type="float" />
+    <Property Name="Engagement" Type="float" />
+    <Property Name="AdministrativeProcedures" Type="float" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ActiveProjects" Type="int" />
+    <Property Name="CompletedProjects" Type="int" />
+  </EntityType>
+  <EntityType Name="OSC_NptCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryDesc" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsCategory" Type="bit" Nullable="false" />
+    <Property Name="IsSubCategory" Type="bit" Nullable="false" />
+    <Property Name="Category" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_Representative">
+    <Key>
+      <PropertyRef Name="RepId" />
+    </Key>
+    <Property Name="RepId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PRDUserId" Type="nvarchar" MaxLength="50" />
+    <Property Name="AIQUserId" Type="nvarchar" MaxLength="100" />
+    <Property Name="BIUserId" Type="nvarchar" MaxLength="50" />
+    <Property Name="WorkdayId" Type="bigint" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="CoreRoleId" Type="int" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="255" />
+    <Property Name="OnShoreRep" Type="bit" Nullable="false" />
+    <Property Name="PhoneRep" Type="bit" Nullable="false" />
+    <Property Name="WorkHours" Type="float" />
+    <Property Name="LocationId" Type="int" />
+    <Property Name="HasPrevious" Type="bit" Nullable="false" />
+    <Property Name="PreviousId" Type="bigint" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsVPN" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_ScorecardField">
+    <Key>
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FieldName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsCore" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="OSC_Team">
+    <Key>
+      <PropertyRef Name="TeamId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamName" Type="nvarchar" MaxLength="255" />
+    <Property Name="DepartmentId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="BIUserGroup" Type="nvarchar" MaxLength="50" />
+    <Property Name="AIQUserGroup" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OSC_TeamGroupIds">
+    <Key>
+      <PropertyRef Name="TGIId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="GroupId" Type="nvarchar" MaxLength="50" />
+    <Property Name="GroupType" Type="nvarchar" MaxLength="5" />
+    <Property Name="TGIId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_TeamNptCategory">
+    <Key>
+      <PropertyRef Name="TNCId" />
+    </Key>
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="CategoryId" Type="bigint" Nullable="false" />
+    <Property Name="TNCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_TeamScorecard_Current">
+    <Key>
+      <PropertyRef Name="TeamScorecardId" />
+    </Key>
+    <Property Name="TeamScorecardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="ProductivityGoal" Type="float" />
+    <Property Name="QualityGoal" Type="float" />
+    <Property Name="EfficiencyGoal" Type="float" />
+    <Property Name="UtilizationGoal" Type="float" />
+    <Property Name="IndividualSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="TeamSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WorktypeSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="StatusSummaryComments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="IsSignedOff" Type="bit" Nullable="false" />
+    <Property Name="ManagerSignOff" Type="nvarchar" MaxLength="1000" />
+    <Property Name="SignOffBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="SignOffDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OSC_TeamWorkItem">
+    <Key>
+      <PropertyRef Name="WorkItemNo" />
+    </Key>
+    <Property Name="WorkItemNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="BusinessAreaCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkTypeCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="StatusCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="January" Type="float" />
+    <Property Name="February" Type="float" />
+    <Property Name="March" Type="float" />
+    <Property Name="April" Type="float" />
+    <Property Name="May" Type="float" />
+    <Property Name="June" Type="float" />
+    <Property Name="July" Type="float" />
+    <Property Name="August" Type="float" />
+    <Property Name="September" Type="float" />
+    <Property Name="October" Type="float" />
+    <Property Name="November" Type="float" />
+    <Property Name="December" Type="float" />
+    <Property Name="Year" Type="int" />
+    <Property Name="IsCompletedItem" Type="bit" />
+  </EntityType>
+  <EntityType Name="OSC_WorkStatus">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="StatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StatusDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_WorkType">
+    <Key>
+      <PropertyRef Name="WorkTypeCode" />
+    </Key>
+    <Property Name="WorkTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkTypeCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="WorkTypeDescription" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="OSCModelStoreContainer">
+    <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportAIQ" EntityType="Self.OSC_ImportAIQ" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportBIProd" EntityType="Self.OSC_ImportBIProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportBIQual" EntityType="Self.OSC_ImportBIQual" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportNPT" EntityType="Self.OSC_ImportNPT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportTA" EntityType="Self.OSC_ImportTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_IndividualScorecard_Current" EntityType="Self.OSC_IndividualScorecard_Current" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Location" EntityType="Self.OSC_Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ManageGroup" EntityType="Self.OSC_ManageGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Manager" EntityType="Self.OSC_Manager" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ManualEntry" EntityType="Self.OSC_ManualEntry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_NptCategory" EntityType="Self.OSC_NptCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Representative" EntityType="Self.OSC_Representative" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ScorecardField" EntityType="Self.OSC_ScorecardField" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_Team" EntityType="Self.OSC_Team" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamScorecard_Current" EntityType="Self.OSC_TeamScorecard_Current" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
