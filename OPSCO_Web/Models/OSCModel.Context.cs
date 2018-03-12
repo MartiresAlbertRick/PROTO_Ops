@@ -50,5 +50,7 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_TeamScorecard_Current> OSC_TeamScorecard_Current { get; set; }
         public virtual DbSet<OSC_Location> OSC_Location { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
+        public virtual DbSet<OSC_CompletedItems> OSC_CompletedItems { get; set; }
+        public virtual DbSet<OSC_TeamScorecardAppendix> OSC_TeamScorecardAppendix { get; set; }
     }
 }

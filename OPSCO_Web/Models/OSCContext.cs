@@ -28,6 +28,8 @@ namespace OPSCO_Web.Models
         public DbSet<OSC_WorkType> WorkTypes { get; set; }
         public DbSet<OSC_WorkStatus> Statuses { get; set; }
         public DbSet<OSC_BusinessArea> BusinessAreas { get; set; }
+        public DbSet<OSC_TeamScorecardAppendix> Appendix { get; set; }
+        public DbSet<OSC_CompletedItems> CompletedItems { get; set; }
 
         public DbSet<OSC_Location> Locations { get; set; }
         public DbSet<OSC_CoreRole> CoreRoles { get; set; }
@@ -749,16 +751,6 @@ namespace OPSCO_Web.Models
         [Display(Name = "Health")]
         public string Health { get; set; }
         public string Color { get; set; }
-    }
-
-    public class CompletedUnit
-    {
-        [Display(Name = "Completed Unit Name")]
-        public string CompletedUnitName { get; set; }
-        [Display(Name = "Completed Unit Count")]
-        public int CompletedUnitCount { get; set; }
-        [Display(Name = "Status Changes")]
-        public int StatusChanges { get; set; }
     }
 
     public class WorktypeSummary

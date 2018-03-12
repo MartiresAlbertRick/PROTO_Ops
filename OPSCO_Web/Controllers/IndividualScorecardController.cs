@@ -446,22 +446,22 @@ namespace OPSCO_Web.Controllers
                 txt_ctr += 1;
             }
             int cht_ctr = 1;
-            //foreach (xl.ChartObject cht in ws.ChartObjects())
-            //{
-            //    if (cht_ctr == 1)
-            //    {
-            //        xl.Range last = ws2.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
-            //        xl.Range chartRange = ws2.get_Range("A1", last);
-            //        cht.Chart.SetSourceData(chartRange);
-            //    }
-            //    else
-            //    {
-            //        xl.Range last = ws3.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
-            //        xl.Range chartRange = ws3.get_Range("A1", last);
-            //        cht.Chart.SetSourceData(chartRange);
-            //    }
-            //    cht_ctr += 1;
-            //}
+            foreach (xl.ChartObject cht in ws.ChartObjects())
+            {
+                if (cht_ctr == 1)
+                {
+                    xl.Range last = ws2.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+                    xl.Range chartRange = ws2.get_Range("A1", last);
+                    cht.Chart.SetSourceData(chartRange);
+                }
+                else
+                {
+                    xl.Range last = ws3.Cells.SpecialCells(xl.XlCellType.xlCellTypeLastCell, Type.Missing);
+                    xl.Range chartRange = ws3.get_Range("A1", last);
+                    cht.Chart.SetSourceData(chartRange);
+                }
+                cht_ctr += 1;
+            }
             #endregion "Cover"
             wb.Save();
             wb.ExportAsFixedFormat(xl.XlFixedFormatType.xlTypePDF, outputFileName, xl.XlFixedFormatQuality.xlQualityStandard);

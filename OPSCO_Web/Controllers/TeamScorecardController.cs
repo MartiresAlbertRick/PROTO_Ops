@@ -543,6 +543,64 @@ namespace OPSCO_Web.Controllers
 
             return PartialView();
         }
+
+        public JsonResult GetAppendixList()
+        {
+            long teamId;
+            int month, year;
+            teamId = (long)Session["TS_Team"];
+            month = (int)Session["TS_Month"];
+            year = (int)Session["TS_Year"];
+            OSC_TeamScorecard_Current obj = db.TeamScorecards.Where(t => t.TeamId == teamId && t.Month == month && t.Year == year).FirstOrDefault();
+            var result = db.Appendix.Where(t => t.TeamScorecardId == obj.TeamScorecardId).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveAppendixList(long? id, List<OSC_TeamScorecardAppendix> objects)
+        {
+            object s = new { type = "failed", message = "Saving failed!" };
+            if (id == null) return Json(s, JsonRequestBehavior.AllowGet);
+            try
+            {
+                List<OSC_TeamScorecardAppendix> list = db.Appendix.AsNoTracking().Where(t => t.TeamScorecardId == id).ToList();
+                foreach (OSC_TeamScorecardAppendix obj in list)
+                {
+                    if (objects.Where(t => t.AppendixId == obj.AppendixId && t.AppendixId != 0).FirstOrDefault() == null)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            OSC_TeamScorecardAppendix oSC_TeamScorecardAppendix = db.Appendix.Find(obj.AppendixId);
+                            db.Appendix.Remove(oSC_TeamScorecardAppendix);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                foreach (OSC_TeamScorecardAppendix obj in objects)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        if (obj.AppendixId == 0)
+                        {
+                            db.Appendix.Add(obj);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            db.Entry(obj).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                s = new { type = "success", message = "Successfully saved!" };
+            }
+            catch (Exception ex)
+            {
+                s = new { type = "failed", message = "Saving failed!\nError occured:\n" + ex.Message.ToString() };
+            }
+            return Json(s, JsonRequestBehavior.AllowGet);
+        }
         #endregion "Appendix"
+
     }
 }

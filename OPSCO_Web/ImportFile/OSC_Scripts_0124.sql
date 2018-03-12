@@ -150,3 +150,20 @@ go
 
 update OSC_TeamWorkItem set IsCompletedItem = 0
 go
+
+create table OSC_TeamScorecardAppendix
+(
+	AppendixId bigint identity(1, 1) not null primary key,
+	TeamScorecardId bigint not null,
+	Terminology nvarchar(100) not null,
+	TermDefinition nvarchar(1000) null
+)
+
+create table OSC_CompletedItems
+(
+	CompletedUnitId bigint identity(1, 1) not null primary key,
+	WorkItemNo bigint not null,
+	CompletedUnitName nvarchar(100) not null,
+	CompletedUnitCount int,
+	CompletedUnitStatusChanges int
+)

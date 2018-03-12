@@ -251,6 +251,9 @@
     <Compile Include="Models\OSC_BusinessArea.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OSC_CompletedItems.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OSC_CoreRole.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
@@ -306,6 +309,9 @@
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OSC_TeamNptCategory.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OSC_TeamScorecardAppendix.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OSC_TeamScorecard_Current.cs">

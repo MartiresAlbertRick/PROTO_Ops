@@ -32,6 +32,16 @@
           <Property Name="BusinessAreaDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="OSC_CompletedItems">
+          <Key>
+            <PropertyRef Name="CompletedUnitId" />
+          </Key>
+          <Property Name="CompletedUnitId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkItemNo" Type="bigint" Nullable="false" />
+          <Property Name="CompletedUnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CompletedUnitCount" Type="int" />
+          <Property Name="CompletedUnitStatusChanges" Type="int" />
+        </EntityType>
         <EntityType Name="OSC_CoreRole">
           <Key>
             <PropertyRef Name="CoreRoleId" />
@@ -362,6 +372,15 @@
           <Property Name="SignOffBy" Type="nvarchar" MaxLength="255" />
           <Property Name="SignOffDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="OSC_TeamScorecardAppendix">
+          <Key>
+            <PropertyRef Name="AppendixId" />
+          </Key>
+          <Property Name="AppendixId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamScorecardId" Type="bigint" Nullable="false" />
+          <Property Name="Terminology" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TermDefinition" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
             <PropertyRef Name="WorkItemNo" />
@@ -407,6 +426,7 @@
         <EntityContainer Name="OSCModelStoreContainer">
           <EntitySet Name="OSC_ActivityTracker" EntityType="Self.OSC_ActivityTracker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_BusinessArea" EntityType="Self.OSC_BusinessArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_CompletedItems" EntityType="Self.OSC_CompletedItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_CoreRole" EntityType="Self.OSC_CoreRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_CustomizeScorecard" EntityType="Self.OSC_CustomizeScorecard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_Department" EntityType="Self.OSC_Department" Schema="dbo" store:Type="Tables" />
@@ -427,6 +447,7 @@
           <EntitySet Name="OSC_TeamGroupIds" EntityType="Self.OSC_TeamGroupIds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamNptCategory" EntityType="Self.OSC_TeamNptCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamScorecard_Current" EntityType="Self.OSC_TeamScorecard_Current" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSC_TeamScorecardAppendix" EntityType="Self.OSC_TeamScorecardAppendix" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
@@ -759,6 +780,8 @@
           <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
           <EntitySet Name="OSC_Location" EntityType="OSCModel.OSC_Location" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
+          <EntitySet Name="OSC_CompletedItems" EntityType="OSCModel.OSC_CompletedItems" />
+          <EntitySet Name="OSC_TeamScorecardAppendix" EntityType="OSCModel.OSC_TeamScorecardAppendix" />
         </EntityContainer>
         <EntityType Name="OSC_ScorecardField">
           <Key>
@@ -860,6 +883,25 @@
           <Property Name="December" Type="Double" />
           <Property Name="Year" Type="Int32" />
           <Property Name="IsCompletedItem" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OSC_CompletedItems">
+          <Key>
+            <PropertyRef Name="CompletedUnitId" />
+          </Key>
+          <Property Name="CompletedUnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkItemNo" Type="Int64" Nullable="false" />
+          <Property Name="CompletedUnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompletedUnitCount" Type="Int32" />
+          <Property Name="CompletedUnitStatusChanges" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OSC_TeamScorecardAppendix">
+          <Key>
+            <PropertyRef Name="AppendixId" />
+          </Key>
+          <Property Name="AppendixId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamScorecardId" Type="Int64" Nullable="false" />
+          <Property Name="Terminology" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TermDefinition" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1288,6 +1330,27 @@
                 <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_CompletedItems">
+            <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
+              <MappingFragment StoreEntitySet="OSC_CompletedItems">
+                <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
+                <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
+                <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
+                <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+                <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_TeamScorecardAppendix">
+            <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecardAppendix">
+              <MappingFragment StoreEntitySet="OSC_TeamScorecardAppendix">
+                <ScalarProperty Name="TermDefinition" ColumnName="TermDefinition" />
+                <ScalarProperty Name="Terminology" ColumnName="Terminology" />
+                <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
+                <ScalarProperty Name="AppendixId" ColumnName="AppendixId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
