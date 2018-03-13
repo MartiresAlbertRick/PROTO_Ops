@@ -347,3 +347,11 @@ C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Release\OPSCO_Web.cs
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Release\OPSCO_Web.csproj.CoreCompileInputs.cache
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Release\OPSCO_Web.dll
 C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\obj\Release\OPSCO_Web.pdb
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.Common.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.License.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.Pdf.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.XLS.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Microsoft.mshtml.dll
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.Common.xml
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.Pdf.xml
+C:\Users\martiab\Documents\Project2\PROTO_Ops\OPSCO_Web\bin\Spire.XLS.xml

@@ -40,7 +40,7 @@
             '<div class="col-md-3"><input id="groupId_$rowId" class="form-control input-sm" type="text" value="$groupId" /></div>' +
             '<div class="col-md-1"><a href="#" class="btn btn-danger btn-sm" onclick="deleteGroupId($rowId);" title="delete"><i class="fa fa-trash"></i></a></div>'
             '</div></div></div>';
-        $('#group_container').html('');
+        $('#group_container').empty();
         $.ajax({
             url: '/Team/GetTeamGroupIds/',
             data: '{ id : ' + @ViewBag.TeamId + '}',

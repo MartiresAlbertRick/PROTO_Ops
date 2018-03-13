@@ -323,6 +323,9 @@
     <EntitySet Name="OSC_TeamNptCategory" EntityType="OSCModel.OSC_TeamNptCategory" />
     <EntitySet Name="OSC_TeamScorecard_Current" EntityType="OSCModel.OSC_TeamScorecard_Current" />
     <EntitySet Name="OSC_Location" EntityType="OSCModel.OSC_Location" />
+    <EntitySet Name="OSC_TeamScorecardAppendix" EntityType="OSCModel.OSC_TeamScorecardAppendix" />
+    <EntitySet Name="OSC_CompletedWorkItem" EntityType="OSCModel.OSC_CompletedWorkItem" />
+    <EntitySet Name="OSC_CompletedItems" EntityType="OSCModel.OSC_CompletedItems" />
     <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
   </EntityContainer>
   <EntityType Name="OSC_ScorecardField">
@@ -402,6 +405,36 @@
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="OnShore" Type="Boolean" />
   </EntityType>
+  <EntityType Name="OSC_TeamScorecardAppendix">
+    <Key>
+      <PropertyRef Name="AppendixId" />
+    </Key>
+    <Property Name="AppendixId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeamScorecardId" Type="Int64" Nullable="false" />
+    <Property Name="Terminology" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TermDefinition" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OSC_CompletedWorkItem">
+    <Key>
+      <PropertyRef Name="CompletedWorkItemId" />
+    </Key>
+    <Property Name="CompletedWorkItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkItemNo" Type="Int64" Nullable="false" />
+    <Property Name="CompletedUnitId" Type="Int64" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSC_CompletedItems">
+    <Key>
+      <PropertyRef Name="CompletedUnitId" />
+    </Key>
+    <Property Name="CompletedUnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompletedUnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CompletedUnitCount" Type="Int32" />
+    <Property Name="CompletedUnitStatusChanges" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+  </EntityType>
   <EntityType Name="OSC_TeamWorkItem">
     <Key>
       <PropertyRef Name="WorkItemNo" />
@@ -424,6 +457,5 @@
     <Property Name="November" Type="Double" />
     <Property Name="December" Type="Double" />
     <Property Name="Year" Type="Int32" />
-    <Property Name="IsCompletedItem" Type="Boolean" />
   </EntityType>
 </Schema>

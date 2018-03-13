@@ -254,6 +254,9 @@
     <Compile Include="Models\OSC_CompletedItems.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OSC_CompletedWorkItem.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OSC_CoreRole.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
@@ -270,6 +273,9 @@
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OSC_ImportBIQual.cs">
+      <DependentUpon>OSCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OSC_ImportBIQualDetailed.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OSC_ImportNPT.cs">

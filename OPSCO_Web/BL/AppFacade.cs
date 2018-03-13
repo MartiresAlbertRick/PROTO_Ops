@@ -1588,24 +1588,36 @@ namespace OPSCO_Web.BL
             var s = (from list in db.NPT
                      where list.TeamId == teamId && list.Month == month && list.Year == year
                      select new PieList { Category = list.TypeOfActivity, TimeSpent = (double)list.TimeSpent });
-            foreach (PieList item in s)
-            {
-                if (result.Any(t => t.Category == "Non-Processing Time"))
+            if (s.Count() > 0)
+            { 
+                foreach (PieList item in s)
                 {
-                    PieList obj = result.Where(t => t.Category == "Non-Processing Time").FirstOrDefault();
-                    result.Remove(obj);
-                    obj.TimeSpent += (item.TimeSpent / 60);
-                    result.Add(obj);
-                }
-                else
-                {
-                    PieList obj = new PieList()
+                    if (result.Any(t => t.Category == "Non-Processing Time"))
                     {
-                        Category = "Non-Processing Time",
-                        TimeSpent = item.TimeSpent / 60
-                    };
-                    result.Add(obj);
+                        PieList obj = result.Where(t => t.Category == "Non-Processing Time").FirstOrDefault();
+                        result.Remove(obj);
+                        obj.TimeSpent += (item.TimeSpent / 60);
+                        result.Add(obj);
+                    }
+                    else
+                    {
+                        PieList obj = new PieList()
+                        {
+                            Category = "Non-Processing Time",
+                            TimeSpent = item.TimeSpent / 60
+                        };
+                        result.Add(obj);
+                    }
                 }
+            }
+            else
+            {
+                PieList obj = new PieList()
+                {
+                    Category = "Non-Processing Time",
+                    TimeSpent = 0
+                };
+                result.Add(obj);
             }
             #endregion "NPT"
             var reps = (from list in db.Representatives where list.TeamId == teamId && list.IsActive && list.IsCurrent select list).ToList();
@@ -1716,6 +1728,19 @@ namespace OPSCO_Web.BL
             return result;
         }
         #endregion "TeamSummaryMethods"
+
+        #region WorktypeSummaryMethods
+        public List<WorktypeSummary> GetWorktypeSummary(long teamId, int month, int year) {
+            List<WorktypeSummary> result = new List<WorktypeSummary>();
+            var list1 = (from list in db.BIQD where list.Month == month && list.Year == year && list.TeamId == teamId select list).ToList();
+            var list2 = (from list in db.TeamWorkItems where list.Year == year && list.TeamId == teamId select list).ToList();
+            foreach (OSC_ImportBIQualDetailed item in list1)
+            {
+
+            }
+            return result;
+        }
+        #endregion WorktypeSummaryMethods
 
         #region "OutstandingInventory"
         public List<OutstandingInventoryTableDetailed> GetOutstandingInventoryTableDetailed(long teamId, int month, int year)

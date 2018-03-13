@@ -6,102 +6,118 @@
 @using (Html.BeginForm("Import", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h4>Upload Files</h4>
-        <hr />
-        <div class="form-group">
-            @Html.Label("Month", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, "--Select Month--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Year", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, "--Select Year--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("BI Productivity", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                <div class="input-group">
-                    @Html.TextBox("BIProductivity", null, new { @class = "form-control input-sm", id = "txt_bip" })
-                    <span class="input-group-btn">
-                        <button id="cmd_bip" type="button" class="btn btn-default btn-sm" onclick=" $('#bip').click() ">
-                            <i class="fa fa-folder-open"></i>
-                        </button>
-                    </span>
-                </div>
-                <input type="file" style="display:none;" id="bip" accept=".xlsx,.xls" name="bip" onchange="$('#txt_bip').val($('#bip').val());" />
-            </div>
-            @if (ViewBag.MessageBIP != "" && ViewBag.MessageBIP != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageBIP</label> }
-            @if (ViewBag.ErrorBIP != "" && ViewBag.ErrorBIP != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorBIP</label> }
-        </div>
-        <div class="form-group">
-            @Html.Label("BI Quality", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                <div class="input-group">
-                    @Html.TextBox("BIQuality", null, new { @class = "form-control input-sm", id = "txt_biq" })
-                    <span class="input-group-btn">
-                        <button id="cmd_biq" type="button" class="btn btn-default btn-sm" onclick=" $('#biq').click() ">
-                            <i class="fa fa-folder-open"></i>
-                        </button>
-                    </span>
-                </div>
-                <input type="file" style="display:none;" id="biq" accept=".xlsx,.xls" name="biq" onchange="$('#txt_biq').val($('#biq').val());" />
-            </div>
-            @if (ViewBag.MessageBIQ != "" && ViewBag.MessageBIQ != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageBIQ</label> }
-            @if (ViewBag.ErrorBIQ != "" && ViewBag.ErrorBIQ != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorBIQ</label> }
-        </div>
-        <div class="form-group">
-            @Html.Label("AIQ", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                <div class="input-group">
-                    @Html.TextBox("AIQ", null, new { @class = "form-control input-sm", id = "txt_aiq" })
-                    <span class="input-group-btn">
-                        <button id="cmd_aiq" type="button" class="btn btn-default btn-sm" onclick=" $('#aiq').click() ">
-                            <i class="fa fa-folder-open"></i>
-                        </button>
-                    </span>
-                </div>
-                <input type="file" style="display:none;" id="aiq" accept=".xlsx,.xls" name="aiq" onchange="$('#txt_aiq').val($('#aiq').val());" />
-            </div>
-            @if (ViewBag.MessageAIQ != "" && ViewBag.MessageAIQ != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageAIQ</label> }
-            @if (ViewBag.ErrorAIQ != "" && ViewBag.ErrorAIQ != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorAIQ</label> }
-        </div>
-        <div class="form-group">
-            @Html.Label("TA", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                <div class="input-group">
-                    @Html.TextBox("TA", null, new { @class = "form-control input-sm", id = "txt_ta" })
-                    <span class="input-group-btn">
-                        <button id="cmd_ta" type="button" class="btn btn-default btn-sm" onclick=" $('#ta').click() ">
-                            <i class="fa fa-folder-open"></i>
-                        </button>
-                    </span>
-                </div>
-                <input type="file" style="display:none;" id="ta" accept=".xlsx,.xls" name="ta" onchange="$('#txt_ta').val($('#ta').val());" />
-            </div>
-            @if (ViewBag.MessageTA != "" && ViewBag.MessageTA != null) {<label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageTA</label>}
-            @if (ViewBag.ErrorTA != "" && ViewBag.ErrorTA != null) {<label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorTA</label>}
-        </div>
-        <div class="form-group">
-            @Html.Label("NPT", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
-            <div class="col-md-4">
-                <div class="input-group">
-                    @Html.TextBox("NPT", null, new { @class = "form-control input-sm", id = "txt_npt" })
-                    <span class="input-group-btn">
-                        <button id="cmd_npt" type="button" class="btn btn-default btn-sm" onclick=" $('#npt').click() ">
-                            <i class="fa fa-folder-open"></i>
-                        </button>
-                    </span>
-                </div>
-                <input type="file" style="display:none;" id="npt" accept=".xlsx,.xls" name="npt" onchange="$('#txt_npt').val($('#npt').val());" />
-            </div>
-            @if (ViewBag.MessageNPT != "" && ViewBag.MessageNPT != null) {<label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageNPT</label>}
-            @if (ViewBag.ErrorNPT != "" && ViewBag.ErrorNPT != null) {<label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorNPT</label>}
+<div class="form-horizontal">
+    <h4>Upload Files</h4>
+    <hr />
+    <div class="form-group">
+        @Html.Label("Month", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, "--Select Month--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.Label("Year", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, "--Select Year--", htmlAttributes: new { @class = "form-control input-sm input-required unfilled" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("BI Productivity", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("BIProductivity", null, new { @class = "form-control input-sm", id = "txt_bip" })
+                <span class="input-group-btn">
+                    <button id="cmd_bip" type="button" class="btn btn-default btn-sm" onclick=" $('#bip').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="bip" accept=".xlsx,.xls" name="bip" onchange="$('#txt_bip').val($('#bip').val());" />
+        </div>
+        @if (ViewBag.MessageBIP != "" && ViewBag.MessageBIP != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageBIP</label>}
+        @if (ViewBag.ErrorBIP != "" && ViewBag.ErrorBIP != null) {<label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorBIP</label>}
+    </div>
+    <div class="form-group">
+        @Html.Label("BI Quality", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("BIQuality", null, new { @class = "form-control input-sm", id = "txt_biq" })
+                <span class="input-group-btn">
+                    <button id="cmd_biq" type="button" class="btn btn-default btn-sm" onclick=" $('#biq').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="biq" accept=".xlsx,.xls" name="biq" onchange="$('#txt_biq').val($('#biq').val());" />
+        </div>
+        @if (ViewBag.MessageBIQ != "" && ViewBag.MessageBIQ != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageBIQ</label>}
+        @if (ViewBag.ErrorBIQ != "" && ViewBag.ErrorBIQ != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorBIQ</label>}
+    </div>
+    <div class="form-group">
+        @Html.Label("BI Quality Detailed", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("BIQualityD", null, new { @class = "form-control input-sm", id = "txt_biqd" })
+                <span class="input-group-btn">
+                    <button id="cmd_biqd" type="button" class="btn btn-default btn-sm" onclick=" $('#biqd').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="biqd" accept=".xlsx,.xls" name="biqd" onchange="$('#txt_biqd').val($('#biqd').val());" />
+        </div>
+        @if (ViewBag.MessageBIQD != "" && ViewBag.MessageBIQD != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageBIQD</label>}
+        @if (ViewBag.ErrorBIQD != "" && ViewBag.ErrorBIQD != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorBIQD</label>}
+    </div>
+    <div class="form-group">
+        @Html.Label("AIQ", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("AIQ", null, new { @class = "form-control input-sm", id = "txt_aiq" })
+                <span class="input-group-btn">
+                    <button id="cmd_aiq" type="button" class="btn btn-default btn-sm" onclick=" $('#aiq').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="aiq" accept=".xlsx,.xls" name="aiq" onchange="$('#txt_aiq').val($('#aiq').val());" />
+        </div>
+        @if (ViewBag.MessageAIQ != "" && ViewBag.MessageAIQ != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageAIQ</label>}
+        @if (ViewBag.ErrorAIQ != "" && ViewBag.ErrorAIQ != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorAIQ</label>}
+    </div>
+    <div class="form-group">
+        @Html.Label("TA", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("TA", null, new { @class = "form-control input-sm", id = "txt_ta" })
+                <span class="input-group-btn">
+                    <button id="cmd_ta" type="button" class="btn btn-default btn-sm" onclick=" $('#ta').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="ta" accept=".xlsx,.xls" name="ta" onchange="$('#txt_ta').val($('#ta').val());" />
+        </div>
+        @if (ViewBag.MessageTA != "" && ViewBag.MessageTA != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageTA</label>}
+        @if (ViewBag.ErrorTA != "" && ViewBag.ErrorTA != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorTA</label>}
+    </div>
+    <div class="form-group">
+        @Html.Label("NPT", htmlAttributes: new { @class = "control-label input-sm col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBox("NPT", null, new { @class = "form-control input-sm", id = "txt_npt" })
+                <span class="input-group-btn">
+                    <button id="cmd_npt" type="button" class="btn btn-default btn-sm" onclick=" $('#npt').click() ">
+                        <i class="fa fa-folder-open"></i>
+                    </button>
+                </span>
+            </div>
+            <input type="file" style="display:none;" id="npt" accept=".xlsx,.xls" name="npt" onchange="$('#txt_npt').val($('#npt').val());" />
+        </div>
+        @if (ViewBag.MessageNPT != "" && ViewBag.MessageNPT != null) { <label class="text-success input-sm"><i class='fa fa-info-circle'></i> @ViewBag.MessageNPT</label>}
+        @if (ViewBag.ErrorNPT != "" && ViewBag.ErrorNPT != null) { <label class="text-danger input-sm"><i class='fa fa-info-circle'></i> @ViewBag.ErrorNPT</label>}
+    </div>
+</div>
     <div class="navbar navbar-default navbar-fixed-bottom table-nav">
         <div class="container-fluid">
             <div class="navbar-right navbar-form">

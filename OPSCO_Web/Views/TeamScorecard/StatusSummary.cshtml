@@ -1,5 +1,18 @@
 ﻿<h4>Status Summary @ViewBag.Month-@ViewBag.Year</h4>
 <div class="col-md-12 table-responsive">
-    <i class="fa fa-circle-o-notch fa-spin"></i>Rendering StatusSummaryTable Template...
+    <table class="table coverbg table-striped table-bordered input-sm">
+        <thead>
+            <tr>
+                <th>Worktype</th>
+                <th>Status</th>
+                <th>QC Parameter</th>
+                <th>Completed Count</th>
+                <th>Selected Count</th>
+                <th>Reviewed Count</th>
+                <th>Reviewed %</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
 @Html.Action("StatusSummaryComment")

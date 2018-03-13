@@ -400,10 +400,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OSC_TeamScorecardAppendix">
+      <EntityTypeMapping TypeName="OSCModel.OSC_TeamScorecardAppendix">
+        <MappingFragment StoreEntitySet="OSC_TeamScorecardAppendix">
+          <ScalarProperty Name="TermDefinition" ColumnName="TermDefinition" />
+          <ScalarProperty Name="Terminology" ColumnName="Terminology" />
+          <ScalarProperty Name="TeamScorecardId" ColumnName="TeamScorecardId" />
+          <ScalarProperty Name="AppendixId" ColumnName="AppendixId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_CompletedWorkItem">
+      <EntityTypeMapping TypeName="OSCModel.OSC_CompletedWorkItem">
+        <MappingFragment StoreEntitySet="OSC_CompletedWorkItem">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
+          <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+          <ScalarProperty Name="CompletedWorkItemId" ColumnName="CompletedWorkItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_CompletedItems">
+      <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
+        <MappingFragment StoreEntitySet="OSC_CompletedItems">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
+          <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
+          <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
+          <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="OSC_TeamWorkItem">
       <EntityTypeMapping TypeName="OSCModel.OSC_TeamWorkItem">
         <MappingFragment StoreEntitySet="OSC_TeamWorkItem">
-          <ScalarProperty Name="IsCompletedItem" ColumnName="IsCompletedItem" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="December" ColumnName="December" />
           <ScalarProperty Name="November" ColumnName="November" />

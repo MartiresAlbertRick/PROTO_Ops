@@ -32,6 +32,5 @@ namespace OPSCO_Web.Models
         public Nullable<double> November { get; set; }
         public Nullable<double> December { get; set; }
         public Nullable<int> Year { get; set; }
-        public Nullable<bool> IsCompletedItem { get; set; }
     }
 }

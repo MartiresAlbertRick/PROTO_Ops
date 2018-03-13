@@ -1,5 +1,19 @@
 ﻿<h4>Worktype Summary @ViewBag.Month-@ViewBag.Year</h4>
 <div class="col-md-12 table-responsive">
-    <i class="fa fa-circle-o-notch fa-spin"></i>Rendering WorktypeSummaryTable Template...
+    <table class="table coverbg table-striped table-bordered input-sm">
+        <thead>
+            <tr>
+                <th>Worktype</th>
+                <th>Total Items Processed</th>
+                <th>Total Items Selected</th>
+                <th>% Selected for QC</th>
+                <th>Total Items Reviewed</th>
+                <th>% Selected QC'd</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </div>
 @Html.Action("WorktypeSummaryComment")

@@ -11,13 +11,17 @@ using BTSS_Auth;
 
 namespace OPSCO_Web.Models
 {
-    #region "OSCContext"
+    #region OSCContext
     public class OSCContext : DbContext
     {
+        #region Constructor
         public OSCContext() : base("name=OSCEntities")
-        { }
+        {
+            //
+        }
+        #endregion Constructor
 
-        #region "DBSets"
+        #region DBSets
         public DbSet<OSC_Department> Departments { get; set; }
         public DbSet<OSC_Team> Teams { get; set; }
         public DbSet<OSC_Representative> Representatives { get; set; }
@@ -42,15 +46,16 @@ namespace OPSCO_Web.Models
 
         public DbSet<OSC_ImportBIProd> BIP { get; set; }
         public DbSet<OSC_ImportBIQual> BIQ { get; set; }
+        public DbSet<OSC_ImportBIQualDetailed> BIQD { get; set; }
         public DbSet<OSC_ImportAIQ> AIQ { get; set; }
         public DbSet<OSC_ImportTA> TA { get; set; }
         public DbSet<OSC_ImportNPT> NPT { get; set; }
 
         public DbSet<OSC_IndividualScorecard_Current> IndividualScorecards { get; set; }
         public DbSet<OSC_TeamScorecard_Current> TeamScorecards { get; set; }
-        #endregion "DBSets"
+        #endregion DBSets
 
-        #region "StaticLists"
+        #region StaticLists
         public List<SelectListItem> months = new List<SelectListItem>()
         {
             new SelectListItem { Text = "January", Value = "1" },
@@ -93,9 +98,9 @@ namespace OPSCO_Web.Models
             new SelectListItem { Text = "BI", Value = "BI" },
             new SelectListItem { Text = "AIQ", Value = "AIQ" }
         };
-        #endregion "StaticLists"
+        #endregion StaticLists
     }
-    #endregion "OSCContext"
+    #endregion OSCContext
 
     #region "OSCdbEntities"
     [MetadataType(typeof(OSC_Department.Metadata))]
@@ -758,6 +763,19 @@ namespace OPSCO_Web.Models
         public string Worktype { get; set; }
         public int TotalItemsProcess { get; set; }
         public int TotalItemsSelected { get; set; }
+        public double PercSelectedforQC { get; set; }
+        public int TotalItemsReviewed { get; set; }
+        public double PercSelectedQCd { get; set; }
+    }
+
+    public class StatusSummary
+    {
+        public string Worktype { get; set; }
+        public double QCParameter { get; set; }
+        public int CompletedCount { get; set; }
+        public int SelectedCount { get; set; }
+        public int ReviewedCount { get; set; }
+        public double ReviewedPerc { get; set; }
     }
 
     public class LocationSummary

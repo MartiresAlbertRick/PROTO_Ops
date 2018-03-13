@@ -15,9 +15,10 @@ namespace OPSCO_Web.Models
     public partial class OSC_CompletedItems
     {
         public long CompletedUnitId { get; set; }
-        public long WorkItemNo { get; set; }
         public string CompletedUnitName { get; set; }
         public Nullable<int> CompletedUnitCount { get; set; }
         public Nullable<int> CompletedUnitStatusChanges { get; set; }
+        public Nullable<int> Month { get; set; }
+        public Nullable<int> Year { get; set; }
     }
 }

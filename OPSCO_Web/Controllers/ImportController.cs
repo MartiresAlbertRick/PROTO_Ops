@@ -24,6 +24,8 @@ namespace OPSCO_Web.Controllers
             ViewBag.MessageBIP = null;
             ViewBag.ErrorBIQ = null;
             ViewBag.MessageBIQ = null;
+            ViewBag.ErrorBIQD = null;
+            ViewBag.MessageBIQD = null;
             ViewBag.ErrorAIQ = null;
             ViewBag.MessageAIQ = null;
             ViewBag.ErrorTA = null;
@@ -37,6 +39,7 @@ namespace OPSCO_Web.Controllers
         public ActionResult Import([Bind(Include = "ImportId,Month,Year")] Import import,
                                           HttpPostedFileBase bip,
                                           HttpPostedFileBase biq,
+                                          HttpPostedFileBase biqd,
                                           HttpPostedFileBase aiq,
                                           HttpPostedFileBase ta,
                                           HttpPostedFileBase npt)
@@ -104,6 +107,36 @@ namespace OPSCO_Web.Controllers
                 }
             }
             #endregion "BIQ"
+            #region "BIQD"
+            if (biqd == null || biqd.ContentLength == 0)
+            {
+                ViewBag.ErrorBIQD = "No file selected";
+            }
+            else
+            {
+                if (biqd.FileName.EndsWith("xls") || biqd.FileName.EndsWith("xlsx"))
+                {
+                    string fname = Path.GetFileName(biqd.FileName);
+                    string path = Server.MapPath("~/ImportFile/" + fname);
+                    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    biqd.SaveAs(path);
+                    ImportFiles i = new ImportFiles();
+                    int result2 = i.ImportBIQualD(path, import, DateTime.Now, logon_user);
+                    if (result2 == 1)
+                    {
+                        ViewBag.MessageBIQD = "Success";
+                    }
+                    else
+                    {
+                        ViewBag.ErrorBIQD = "Failed";
+                    }
+                }
+                else
+                {
+                    ViewBag.ErrorBIQD = "File type is incorrect";
+                }
+            }
+            #endregion "BIQD"
             #region "AIQ"
             if (aiq == null || aiq.ContentLength == 0)
             {

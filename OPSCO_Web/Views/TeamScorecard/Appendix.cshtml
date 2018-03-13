@@ -1,24 +1,28 @@
 ﻿<h4>Appendix</h4>
 <div class="col-md-12 table-responsive">
-    <div class="btn-group">
-        <a href="#" class="btn btn-primary btn-sm" id="btn_add_appendix">
-            <i class="fa fa-plus"></i> Add
-        </a>
-        <a href="#" class="btn btn-primary btn-sm" id="btn_save_appendix">
-            <i class="fa fa-save"></i> Save
-        </a>
+    <div class="row">
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary btn-sm" id="btn_add_appendix">
+                <i class="fa fa-plus"></i> Add
+            </a>
+            <a href="#" class="btn btn-primary btn-sm" id="btn_save_appendix">
+                <i class="fa fa-save"></i> Save
+            </a>
+        </div>
     </div>
-    <table id="appendix_table" class="table coverbg table-bordered table-condensed table-striped input-sm">
-        <thead>
-            <tr>
-                <th>Term</th>
-                <th>Definition</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <br />
+    <div class="row">
+        <table id="appendix_table" class="table coverbg table-bordered table-condensed table-striped input-sm">
+            <thead>
+                <tr>
+                    <th>Term</th>
+                    <th>Definition</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 <script>
     $(function () {
@@ -42,7 +46,7 @@
                 $.each(data, function (index, item) {
                     $('#appendix_table tbody').append('<tr id="' + item.AppendixId + '"><td><input id="hid_' + item.AppendixId + '" type="hidden" value="' + item.AppendixId + '"/><input type="text" id="term_' + item.AppendixId + '" value="' + item.Terminology + '" class="form-control input-sm"/></td>' +
                         '<td><input id="def_' + item.AppendixId + '"type="text" value="' + item.TermDefinition + '" class="form-control input-sm"/></td>' +
-                        '<td><a href="#" class="btn btn-default btn-sm" onclick="removeTerm("#' + item.AppendixId + '");"><i class="fa fa-trash"></i></a></td></tr>');
+                        '<td><a href="#" class="btn btn-default btn-sm" onclick="removeTerm(' + item.AppendixId + ');"><i class="fa fa-trash"></i></a></td></tr>');
                 });
             },
             error: function (response) {
@@ -55,7 +59,7 @@
     }
     function saveAppendixList() {
         var terms = [];
-        $('.appendix_table tbody tr').each(function (index, item) {
+        $('#appendix_table tbody tr').each(function (index, item) {
             var s = $(item).prop("id");
             var item = {
                 AppendixId: $('#hid_' + s).val(),
@@ -89,9 +93,9 @@
         randId = randId + 1;
         $('#appendix_table tbody').append('<tr id="' + randId + '"><td><input type="hidden" value="0"/><input type="text" id="term_' + randId + '" class="form-control input-sm"/></td>' +
             '<td><input id="def_' + randId + '"type="text" class="form-control input-sm"/></td>' +
-            '<td><a href="#" class="btn btn-default btn-sm" onclick="removeTerm("#tr_' + randId + '");"><i class="fa fa-trash"></i></a></td></tr>');
+            '<td><a href="#" class="btn btn-default btn-sm" onclick="removeTerm(' + randId + ');"><i class="fa fa-trash"></i></a></td></tr>');
     }
     function removeTerm(id) {
-        $(id).remove();
+        $('#' + id).remove();
     }
 </script>
