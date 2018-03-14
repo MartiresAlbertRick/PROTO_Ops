@@ -226,6 +226,7 @@
     <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\TeamScorecardController.cs" />
+    <Compile Include="Controllers\_AppFacade.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -332,6 +333,7 @@
     <Compile Include="Models\OSC_WorkType.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_ErrorMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
