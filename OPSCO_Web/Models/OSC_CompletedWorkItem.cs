@@ -19,5 +19,6 @@ namespace OPSCO_Web.Models
         public long CompletedUnitId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public long TeamId { get; set; }
     }
 }

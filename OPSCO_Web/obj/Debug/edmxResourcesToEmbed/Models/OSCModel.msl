@@ -413,23 +413,12 @@
     <EntitySetMapping Name="OSC_CompletedWorkItem">
       <EntityTypeMapping TypeName="OSCModel.OSC_CompletedWorkItem">
         <MappingFragment StoreEntitySet="OSC_CompletedWorkItem">
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Month" ColumnName="Month" />
           <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
           <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
           <ScalarProperty Name="CompletedWorkItemId" ColumnName="CompletedWorkItemId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OSC_CompletedItems">
-      <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
-        <MappingFragment StoreEntitySet="OSC_CompletedItems">
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="Month" ColumnName="Month" />
-          <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
-          <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
-          <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
-          <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -454,6 +443,43 @@
           <ScalarProperty Name="BusinessAreaCode" ColumnName="BusinessAreaCode" />
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
           <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_ImportBIQualDetailed">
+      <EntityTypeMapping TypeName="OSCModel.OSC_ImportBIQualDetailed">
+        <MappingFragment StoreEntitySet="OSC_ImportBIQualDetailed">
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="ErrorPoints" ColumnName="ErrorPoints" />
+          <ScalarProperty Name="Count4" ColumnName="Count4" />
+          <ScalarProperty Name="Count3" ColumnName="Count3" />
+          <ScalarProperty Name="Count2" ColumnName="Count2" />
+          <ScalarProperty Name="Count1" ColumnName="Count1" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Worktype" ColumnName="Worktype" />
+          <ScalarProperty Name="BusinessArea" ColumnName="BusinessArea" />
+          <ScalarProperty Name="UserIdName" ColumnName="UserIdName" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="RepId" ColumnName="RepId" />
+          <ScalarProperty Name="BIQReportId" ColumnName="BIQReportId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSC_CompletedItems">
+      <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
+        <MappingFragment StoreEntitySet="OSC_CompletedItems">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
+          <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
+          <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
+          <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -12,7 +12,25 @@
                 <th>Reviewed %</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            @foreach (var item in ViewBag.StatusSummary)
+            {
+            <tr>
+                <td>@item.Worktype</td>
+                <td>@item.Status</td>
+                <td><input type="text" id="txt_@(item.Worktype + "_" + item.Status)" class="form-control input-sm" placeholder="User Experience Level" value="@item.QCParameter" /></td>
+                <td>
+                    @if (item.CompletedCount > 0)
+                        { @item.CompletedCount }
+                    else
+                        { <text>N/A</text> }
+                </td>
+                <td>@item.SelectedCount</td>
+                <td>@item.ReviewedCount</td>
+                <td>@item.ReviewedPerc%</td>
+            </tr>
+            }
+        </tbody>
     </table>
 </div>
 @Html.Action("StatusSummaryComment")

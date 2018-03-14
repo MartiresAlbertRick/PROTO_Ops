@@ -51,8 +51,8 @@ namespace OPSCO_Web.Models
         public virtual DbSet<OSC_Location> OSC_Location { get; set; }
         public virtual DbSet<OSC_TeamScorecardAppendix> OSC_TeamScorecardAppendix { get; set; }
         public virtual DbSet<OSC_CompletedWorkItem> OSC_CompletedWorkItem { get; set; }
-        public virtual DbSet<OSC_CompletedItems> OSC_CompletedItems { get; set; }
         public virtual DbSet<OSC_TeamWorkItem> OSC_TeamWorkItem { get; set; }
         public virtual DbSet<OSC_ImportBIQualDetailed> OSC_ImportBIQualDetailed { get; set; }
+        public virtual DbSet<OSC_CompletedItems> OSC_CompletedItems { get; set; }
     }
 }

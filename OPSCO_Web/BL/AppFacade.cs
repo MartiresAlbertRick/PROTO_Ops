@@ -227,6 +227,16 @@ namespace OPSCO_Web.BL
         {
             return this.teamScorecardClass.GetTeamTimers(teamId, month, year);
         }
+
+        public List<WorktypeSummary> GetWorktypeSummary(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetWorktypeSummary(teamId, month, year);
+        }
+
+        public List<StatusSummary> GetStatusSummary(long teamId, int month, int year)
+        {
+            return teamScorecardClass.GetStatusSummary(teamId, month, year);
+        }
         #endregion "TeamScorecardClass"
 
         #region "CustomizeScorecardClass"
@@ -1730,17 +1740,112 @@ namespace OPSCO_Web.BL
         #endregion "TeamSummaryMethods"
 
         #region WorktypeSummaryMethods
-        public List<WorktypeSummary> GetWorktypeSummary(long teamId, int month, int year) {
+        public List<WorktypeSummary> GetWorktypeSummary(long teamId, int month, int year)
+        {
             List<WorktypeSummary> result = new List<WorktypeSummary>();
             var list1 = (from list in db.BIQD where list.Month == month && list.Year == year && list.TeamId == teamId select list).ToList();
             var list2 = (from list in db.TeamWorkItems where list.Year == year && list.TeamId == teamId select list).ToList();
             foreach (OSC_ImportBIQualDetailed item in list1)
             {
-
+                if (list2.Where(t => t.WorkTypeCode == item.Worktype).ToList().Count > 0)
+                {
+                    if (result.Where(t => t.Worktype == item.Worktype).ToList().Count > 0)
+                    {
+                        WorktypeSummary obj = result.Where(t => t.Worktype == item.Worktype).FirstOrDefault();
+                        result.Remove(obj);
+                        obj.TotalItemsProcess += Convert.ToInt32(item.Count1);
+                        obj.TotalItemsSelected += Convert.ToInt32(item.Count2);
+                        obj.TotalItemsReviewed += Convert.ToInt32(item.Count3);
+                        result.Add(obj);
+                    }
+                    else
+                    {
+                        WorktypeSummary obj = new WorktypeSummary();
+                        obj.Worktype = item.Worktype;
+                        obj.TotalItemsProcess = Convert.ToInt32(item.Count1);
+                        obj.TotalItemsSelected = Convert.ToInt32(item.Count2);
+                        obj.TotalItemsReviewed = Convert.ToInt32(item.Count3);
+                        result.Add(obj);
+                    }
+                }
             }
-            return result;
+            foreach (WorktypeSummary item in result)
+            {
+                if (item.TotalItemsSelected == 0 || item.TotalItemsProcess == 0)
+                {
+                    item.PercSelectedforQC = 0;
+                }
+                else
+                {
+                    item.PercSelectedforQC = Convert.ToDouble(item.TotalItemsSelected) / Convert.ToDouble(item.TotalItemsProcess);
+                    item.PercSelectedforQC = item.PercSelectedforQC * 100;
+                    
+                }
+                if (item.TotalItemsProcess == 0 || item.TotalItemsReviewed == 0)
+                {
+                    item.PercSelectedQCd = 0;
+                }
+                else
+                {
+                    item.PercSelectedQCd = Convert.ToDouble(item.TotalItemsReviewed) / Convert.ToDouble(item.TotalItemsProcess);
+                    item.PercSelectedQCd = item.PercSelectedQCd * 100;
+                }
+                double multiplier = Math.Pow(10, 2);
+                item.PercSelectedforQC = Math.Ceiling(item.PercSelectedforQC * multiplier) / multiplier;
+                item.PercSelectedQCd = Math.Ceiling(item.PercSelectedQCd * multiplier) / multiplier;
+            }
+            return result.OrderBy(t => t.Worktype).ToList();
         }
         #endregion WorktypeSummaryMethods
+
+        #region StatusSummaryMethods
+        public List<StatusSummary> GetStatusSummary(long teamId, int month, int year)
+        {
+            List<StatusSummary> result = new List<StatusSummary>();
+            var list1 = (from list in db.BIQD where list.Month == month && list.Year == year && list.TeamId == teamId select list).ToList();
+            var list2 = (from list in db.TeamWorkItems where list.Year == year && list.TeamId == teamId select list).ToList();
+            foreach (OSC_ImportBIQualDetailed item in list1)
+            {
+                if (list2.Where(t => t.WorkTypeCode == item.Worktype && t.StatusCode == item.Status).ToList().Count > 0)
+                {
+                    if (result.Where(t => t.Worktype == item.Worktype && t.Status == item.Status).ToList().Count > 0)
+                    {
+                        StatusSummary obj = result.Where(t => t.Worktype == item.Worktype && t.Status == item.Status).FirstOrDefault();
+                        result.Remove(obj);
+                        obj.CompletedCount = db.CompletedItems.Where(t => t.Month == month && t.Year == year && t.TeamId == teamId).ToList().Count;
+                        obj.SelectedCount += Convert.ToInt32(item.Count2);
+                        obj.ReviewedCount += Convert.ToInt32(item.Count3);
+                        result.Add(obj);
+                    }
+                    else
+                    {
+                        StatusSummary obj = new StatusSummary();
+                        obj.Worktype = item.Worktype;
+                        obj.Status = item.Status;
+                        obj.CompletedCount = db.CompletedItems.Where(t => t.Month == month && t.Year == year && t.TeamId == teamId).ToList().Count;
+                        obj.SelectedCount += Convert.ToInt32(item.Count2);
+                        obj.ReviewedCount += Convert.ToInt32(item.Count3);
+                        result.Add(obj);
+                    }
+                }
+            }
+            foreach (StatusSummary item in result)
+            {
+                if (item.CompletedCount == 0 || item.SelectedCount == 0 || item.ReviewedCount == 0)
+                {
+                    item.ReviewedPerc = 0;
+                }
+                else
+                {
+                    item.ReviewedPerc = item.ReviewedCount / item.CompletedCount;
+                }
+                double multiplier = Math.Pow(10, 2);
+                item.QCParameter = 0;
+                item.ReviewedPerc = Math.Ceiling(item.ReviewedPerc * multiplier) / multiplier;
+            }
+            return result.OrderBy(t => t.Worktype).ThenBy(t => t.Status).ToList();
+        }
+        #endregion StatusSummaryMethods
 
         #region "OutstandingInventory"
         public List<OutstandingInventoryTableDetailed> GetOutstandingInventoryTableDetailed(long teamId, int month, int year)

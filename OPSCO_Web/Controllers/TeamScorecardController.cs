@@ -361,6 +361,7 @@ namespace OPSCO_Web.Controllers
             year = (int)Session["TS_Year"];
             ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
             ViewBag.Year = year;
+            ViewBag.WorktypeSummary = af.GetWorktypeSummary(teamId, month, year);
             return PartialView();
         }
 
@@ -409,6 +410,7 @@ namespace OPSCO_Web.Controllers
             year = (int)Session["TS_Year"];
             ViewBag.Month = db.months.Where(m => m.Value == Convert.ToString(month)).First().Text;
             ViewBag.Year = year;
+            ViewBag.StatusSummary = af.GetStatusSummary(teamId, month, year);
             return PartialView();
         }
 

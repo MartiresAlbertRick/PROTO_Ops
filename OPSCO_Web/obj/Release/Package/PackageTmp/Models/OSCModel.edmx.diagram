@@ -30,8 +30,9 @@
         <EntityTypeShape EntityType="OSCModel.OSC_Location" Width="1.5" PointX="15.375" PointY="8.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamScorecardAppendix" Width="1.5" PointX="15.375" PointY="11.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_CompletedWorkItem" Width="1.5" PointX="11.375" PointY="15.75" />
-        <EntityTypeShape EntityType="OSCModel.OSC_CompletedItems" Width="1.5" PointX="15.375" PointY="3.75" />
         <EntityTypeShape EntityType="OSCModel.OSC_TeamWorkItem" Width="1.5" PointX="13.375" PointY="15.75" />
+        <EntityTypeShape EntityType="OSCModel.OSC_ImportBIQualDetailed" Width="1.5" PointX="15.375" PointY="14.75" />
+        <EntityTypeShape EntityType="OSCModel.OSC_CompletedItems" Width="1.5" PointX="15.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

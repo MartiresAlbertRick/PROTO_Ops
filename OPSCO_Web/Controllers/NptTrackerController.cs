@@ -19,6 +19,7 @@ namespace OPSCO_Web.Controllers
     {
         private OSCContext db = new OSCContext();
         private AppFacade af = new AppFacade();
+        private _AppFacade _af = new _AppFacade();
 
         // GET: NptTracker
         public ActionResult Index(int? page, int? pageSize, string searchByCategory, string searchByTeam, string searchByRep, string searchByDate, string searchByTimeSpent)

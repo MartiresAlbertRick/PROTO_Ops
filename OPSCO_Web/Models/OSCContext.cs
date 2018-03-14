@@ -771,6 +771,7 @@ namespace OPSCO_Web.Models
     public class StatusSummary
     {
         public string Worktype { get; set; }
+        public string Status { get; set; }
         public double QCParameter { get; set; }
         public int CompletedCount { get; set; }
         public int SelectedCount { get; set; }

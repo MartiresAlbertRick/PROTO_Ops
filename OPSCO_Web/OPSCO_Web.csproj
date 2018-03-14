@@ -565,6 +565,7 @@
     <Content Include="Views\TeamScorecard\TeamSummaryTable.cshtml" />
     <Content Include="Templates\Template.xlsx" />
     <Content Include="Views\Shared\UnableToAccess.cshtml" />
+    <Content Include="Views\Team\CompletedItemsSection.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

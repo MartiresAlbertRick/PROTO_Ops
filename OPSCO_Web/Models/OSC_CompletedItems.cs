@@ -18,7 +18,8 @@ namespace OPSCO_Web.Models
         public string CompletedUnitName { get; set; }
         public Nullable<int> CompletedUnitCount { get; set; }
         public Nullable<int> CompletedUnitStatusChanges { get; set; }
-        public Nullable<int> Month { get; set; }
-        public Nullable<int> Year { get; set; }
+        public long TeamId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
     }
 }

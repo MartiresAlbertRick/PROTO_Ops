@@ -35,8 +35,9 @@
     <Property Name="CompletedUnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="CompletedUnitCount" Type="int" />
     <Property Name="CompletedUnitStatusChanges" Type="int" />
-    <Property Name="Month" Type="int" />
-    <Property Name="Year" Type="int" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="OSC_CompletedWorkItem">
     <Key>
@@ -45,6 +46,7 @@
     <Property Name="CompletedWorkItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="WorkItemNo" Type="bigint" Nullable="false" />
     <Property Name="CompletedUnitId" Type="bigint" Nullable="false" />
+    <Property Name="TeamId" Type="bigint" Nullable="false" />
     <Property Name="Month" Type="int" Nullable="false" />
     <Property Name="Year" Type="int" Nullable="false" />
   </EntityType>
@@ -140,6 +142,31 @@
     <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
     <Property Name="Field1" Type="nvarchar" MaxLength="50" />
     <Property Name="Field2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Count1" Type="bigint" />
+    <Property Name="Count2" Type="bigint" />
+    <Property Name="Count3" Type="bigint" />
+    <Property Name="Count4" Type="bigint" />
+    <Property Name="ErrorPoints" Type="float" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TeamId" Type="bigint" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OSC_ImportBIQualDetailed">
+    <Key>
+      <PropertyRef Name="BIQReportId" />
+    </Key>
+    <Property Name="BIQReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RepId" Type="bigint" />
+    <Property Name="Group" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserIdName" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="Worktype" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="Count1" Type="bigint" />
     <Property Name="Count2" Type="bigint" />
     <Property Name="Count3" Type="bigint" />
@@ -457,5 +484,27 @@
     <EntitySet Name="OSC_TeamWorkItem" EntityType="Self.OSC_TeamWorkItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkStatus" EntityType="Self.OSC_WorkStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OSC_WorkType" EntityType="Self.OSC_WorkType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OSC_ImportBIQualDetailed" EntityType="Self.OSC_ImportBIQualDetailed" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OSC_ImportBIQualDetailed].[BIQReportId] AS [BIQReportId], 
+    [OSC_ImportBIQualDetailed].[RepId] AS [RepId], 
+    [OSC_ImportBIQualDetailed].[Group] AS [Group], 
+    [OSC_ImportBIQualDetailed].[UserIdName] AS [UserIdName], 
+    [OSC_ImportBIQualDetailed].[BusinessArea] AS [BusinessArea], 
+    [OSC_ImportBIQualDetailed].[Worktype] AS [Worktype], 
+    [OSC_ImportBIQualDetailed].[Status] AS [Status], 
+    [OSC_ImportBIQualDetailed].[Count1] AS [Count1], 
+    [OSC_ImportBIQualDetailed].[Count2] AS [Count2], 
+    [OSC_ImportBIQualDetailed].[Count3] AS [Count3], 
+    [OSC_ImportBIQualDetailed].[Count4] AS [Count4], 
+    [OSC_ImportBIQualDetailed].[ErrorPoints] AS [ErrorPoints], 
+    [OSC_ImportBIQualDetailed].[Rating] AS [Rating], 
+    [OSC_ImportBIQualDetailed].[TeamId] AS [TeamId], 
+    [OSC_ImportBIQualDetailed].[Month] AS [Month], 
+    [OSC_ImportBIQualDetailed].[Year] AS [Year], 
+    [OSC_ImportBIQualDetailed].[DateUploaded] AS [DateUploaded], 
+    [OSC_ImportBIQualDetailed].[UploadedBy] AS [UploadedBy]
+    FROM [dbo].[OSC_ImportBIQualDetailed] AS [OSC_ImportBIQualDetailed]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

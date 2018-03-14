@@ -12,7 +12,17 @@
             </tr>
         </thead>
         <tbody>
-
+            @foreach (var item in ViewBag.WorktypeSummary)
+            {
+                <tr>
+                    <td>@item.Worktype</td>
+                    <td>@item.TotalItemsProcess</td>
+                    <td>@item.TotalItemsSelected</td>
+                    <td>@item.PercSelectedforQC%</td>
+                    <td>@item.TotalItemsReviewed</td>
+                    <td>@item.PercSelectedQCd%</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

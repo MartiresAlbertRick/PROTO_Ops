@@ -151,6 +151,7 @@ create table OSC_TeamScorecardAppendix
 	Terminology nvarchar(100) not null,
 	TermDefinition nvarchar(1000) null
 )
+go
 
 create table OSC_CompletedItems
 (
@@ -158,18 +159,22 @@ create table OSC_CompletedItems
 	CompletedUnitName nvarchar(100) not null,
 	CompletedUnitCount int,
 	CompletedUnitStatusChanges int,
-	Month int,
-	Year int,
+	TeamId bigint not null,
+	Month int not null,
+	Year int not null,
 )
+go
 
 create table OSC_CompletedWorkItem
 (
 	CompletedWorkItemId bigint identity(1, 1) not null primary key,
 	WorkItemNo bigint not null,
 	CompletedUnitId bigint not null,
+	TeamId bigint not null,
 	Month int not null,
 	Year int not null
 )
+go
 
 create table OSC_ImportBIQualDetailed_temp
 (

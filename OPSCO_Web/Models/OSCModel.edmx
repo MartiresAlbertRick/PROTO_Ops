@@ -40,8 +40,9 @@
           <Property Name="CompletedUnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CompletedUnitCount" Type="int" />
           <Property Name="CompletedUnitStatusChanges" Type="int" />
-          <Property Name="Month" Type="int" />
-          <Property Name="Year" Type="int" />
+          <Property Name="TeamId" Type="bigint" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OSC_CompletedWorkItem">
           <Key>
@@ -50,6 +51,7 @@
           <Property Name="CompletedWorkItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkItemNo" Type="bigint" Nullable="false" />
           <Property Name="CompletedUnitId" Type="bigint" Nullable="false" />
+          <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
         </EntityType>
@@ -839,9 +841,9 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not h
           <EntitySet Name="OSC_Location" EntityType="OSCModel.OSC_Location" />
           <EntitySet Name="OSC_TeamScorecardAppendix" EntityType="OSCModel.OSC_TeamScorecardAppendix" />
           <EntitySet Name="OSC_CompletedWorkItem" EntityType="OSCModel.OSC_CompletedWorkItem" />
-          <EntitySet Name="OSC_CompletedItems" EntityType="OSCModel.OSC_CompletedItems" />
           <EntitySet Name="OSC_TeamWorkItem" EntityType="OSCModel.OSC_TeamWorkItem" />
           <EntitySet Name="OSC_ImportBIQualDetailed" EntityType="OSCModel.OSC_ImportBIQualDetailed" />
+          <EntitySet Name="OSC_CompletedItems" EntityType="OSCModel.OSC_CompletedItems" />
         </EntityContainer>
         <EntityType Name="OSC_ScorecardField">
           <Key>
@@ -938,17 +940,7 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not h
           <Property Name="CompletedUnitId" Type="Int64" Nullable="false" />
           <Property Name="Month" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OSC_CompletedItems">
-          <Key>
-            <PropertyRef Name="CompletedUnitId" />
-          </Key>
-          <Property Name="CompletedUnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompletedUnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CompletedUnitCount" Type="Int32" />
-          <Property Name="CompletedUnitStatusChanges" Type="Int32" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="OSC_TeamWorkItem">
           <Key>
@@ -995,6 +987,18 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not h
           <Property Name="Year" Type="Int32" />
           <Property Name="DateUploaded" Type="DateTime" Precision="3" />
           <Property Name="UploadedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OSC_CompletedItems">
+          <Key>
+            <PropertyRef Name="CompletedUnitId" />
+          </Key>
+          <Property Name="CompletedUnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompletedUnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompletedUnitCount" Type="Int32" />
+          <Property Name="CompletedUnitStatusChanges" Type="Int32" />
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1414,23 +1418,12 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not h
           <EntitySetMapping Name="OSC_CompletedWorkItem">
             <EntityTypeMapping TypeName="OSCModel.OSC_CompletedWorkItem">
               <MappingFragment StoreEntitySet="OSC_CompletedWorkItem">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
                 <ScalarProperty Name="WorkItemNo" ColumnName="WorkItemNo" />
                 <ScalarProperty Name="CompletedWorkItemId" ColumnName="CompletedWorkItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OSC_CompletedItems">
-            <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
-              <MappingFragment StoreEntitySet="OSC_CompletedItems">
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
-                <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
-                <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
-                <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1479,6 +1472,19 @@ warning 6002: The table/view 'dbbtOSCp1.dbo.OSC_ImportBIQualDetailed' does not h
                 <ScalarProperty Name="Group" ColumnName="Group" />
                 <ScalarProperty Name="RepId" ColumnName="RepId" />
                 <ScalarProperty Name="BIQReportId" ColumnName="BIQReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSC_CompletedItems">
+            <EntityTypeMapping TypeName="OSCModel.OSC_CompletedItems">
+              <MappingFragment StoreEntitySet="OSC_CompletedItems">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="CompletedUnitStatusChanges" ColumnName="CompletedUnitStatusChanges" />
+                <ScalarProperty Name="CompletedUnitCount" ColumnName="CompletedUnitCount" />
+                <ScalarProperty Name="CompletedUnitName" ColumnName="CompletedUnitName" />
+                <ScalarProperty Name="CompletedUnitId" ColumnName="CompletedUnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

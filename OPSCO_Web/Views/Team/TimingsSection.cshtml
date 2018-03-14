@@ -87,7 +87,8 @@
             '<div class="col-md-1"><input id="oct_$rowId" type="text" class="form-control input-sm" value="$oct"/></div>' +
             '<div class="col-md-1"><input id="nov_$rowId" type="text" class="form-control input-sm" value="$nov"/></div>' +
             '<div class="col-md-1"><input id="dec_$rowId" type="text" class="form-control input-sm" value="$dec"/></div>' +
-            '</div><div class="col-md-1"><a href="#" class="btn btn-danger btn-sm" onclick="deleteTiming($rowId)" title="Delete"><i class="fa fa-trash"></i></a></div>' +
+            '</div><div class="col-md-1"><div class="btn-group"><a href="#" class="btn btn-danger btn-sm" onclick="deleteTiming($rowId)" title="Delete"><i class="fa fa-trash"></i></a>' +
+            '<a href= "#" class="btn btn-success btn-sm" onclick= "markCompleted($rowId)" title= "Mark Complete" ><i class="fa fa-check"></i></a></div></div > ' +
             '</div >';
         $('#timings_container').html('');
         $.ajax({
@@ -103,6 +104,7 @@
                     row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo);
                     row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo);
                     row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo); row = row.replace('$rowId', item.WorkItemNo);
+                    row = row.replace('$rowId', item.WorkItemNo);
                     row = row.replace('$workItemNo', item.WorkItemNo);
                     row = row.replace('$teamId', item.TeamId);
                     row = row.replace('$year', item.Year);
@@ -205,5 +207,8 @@
                 alert(response.responseText);
             }
         });
+    }
+    function markCompleted(id) {
+        alert('Workitem mark completed!');
     }
 </script>
