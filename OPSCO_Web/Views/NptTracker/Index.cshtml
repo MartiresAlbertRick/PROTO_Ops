@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="btn-group">
-            @if (ViewBag.CanAdd)
+            @if (ViewBag.Access.CanAdd)
             {
                 <a class="btn btn-primary btn-sm" href="@Url.Action("Create", "NptTracker", null)">
                     <i class="fa fa-plus"></i> New Record
@@ -81,7 +81,7 @@
             <td>
                 <input type="text" class="form-control input-sm" placeholder="Time Spent" id="txt_search_5" value="@ViewBag.TimeSpent"/>
             </td>
-            @if (Session["role"].ToString() == "Admin")
+            @if (ViewBag.Access.Role == "Admin")
             {
                 <td>
                     &nbsp;
@@ -123,7 +123,7 @@
             }
             <td>
                 <div class="btn-group">
-                    @if (ViewBag.CanEdit)
+                    @if (ViewBag.Access.CanEdit)
                     {
                         <a class="btn btn-default btn-xs" href="@Url.Action("Edit", new { id = item.NPTReportId })" title="Edit Record">
                             <i class="fa fa-edit"></i>
@@ -135,7 +135,7 @@
                             <i class="fa fa-edit"></i>
                         </a>
                     }
-                    @if (ViewBag.CanDelete)
+                    @if (ViewBag.Access.CanDelete)
                     {
                         <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", new { id = item.NPTReportId })" title="Delete Record">
                             <i class="fa fa-trash"></i>
@@ -159,22 +159,22 @@
     <div class="container-fluid">
         <div class="col-md-12">
             @Html.DropDownList("PageSize",
-                                new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
-                                "Key", "Value", Model.PageSize),
-                                new { @class = "form-control input-sm page-size", id = "pagesizelist" })
+                         new SelectList(new Dictionary<string, int> { { "10", 10 }, { "25", 25 }, { "50", 50 } },
+                         "Key", "Value", Model.PageSize),
+                         new { @class = "form-control input-sm page-size", id = "pagesizelist" })
         </div>
         <div class="col-md-12">
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-                                new PagedListRenderOptions()
-                                {
-                                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                                    DisplayPageCountAndCurrentLocation = true,
-                                    MaximumPageNumbersToDisplay = 5,
-                                    DisplayItemSliceAndTotal = true
-                                })
+                         new PagedListRenderOptions()
+                         {
+                             DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                             DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                             DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                             DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                             DisplayPageCountAndCurrentLocation = true,
+                             MaximumPageNumbersToDisplay = 5,
+                             DisplayItemSliceAndTotal = true
+                         })
         </div>
     </div>
 </div>
@@ -266,13 +266,16 @@
         $('#btn_search').click();
     });
     $('#btn_search').click(function () {
-        var url = '@Url.Action("Index")?searchByCategory=' + $('#txt_search_1').val() +
-                                        '&searchByTeam=' + $('#txt_search_2').val() +
-                                        '&searchByRep=' + $('#txt_search_3').val() +
-                                        '&searchByDate=' + $('#txt_search_4').val() +
-                                        '&searchByTimeSpent=' + $('#txt_search_5').val() +
-                                        '&pageSize=' + $('#pagesizelist').val();
+        var filter = { SearchCriteria: null, SearchText: null};
+        var filterOn = false;
+        if ($('#txt_search_1').val().trim() != '') {
+            filterOn = true;
+            filter = { SearchCriteria: "category", SearchText: $('#txt_search_1').val() };
+            alert(JSON.stringify(filter));
+        }
+        var url = '@Url.Action("Index")?&pageSize=' + $('#pagesizelist').val() + '&filterOn=' + filterOn + '&filter=' + JSON.stringify(filter);
         window.location.href = url;
+
     });
     var clicked = false;
     $('#btn_filter').click(function () {

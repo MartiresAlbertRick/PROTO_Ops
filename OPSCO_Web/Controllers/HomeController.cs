@@ -10,14 +10,22 @@ namespace OPSCO_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private OSCContext db = new OSCContext();
-        private AppFacade af = new AppFacade();
-
+        #region Variables
+        private AppFacade af;
+        #endregion Variables
+        #region Constructor
+        public HomeController()
+        {
+            af = new AppFacade();
+        }
+        #endregion Constructor
+        #region Method
         public ActionResult Index()
         {
             string logon_user = Request.ServerVariables["LOGON_USER"].ToString();
             logon_user = logon_user.Remove(0, logon_user.IndexOf('\\') + 1);
             //logon_user = "monroea";
+            //logon_user = "degirok";
             Session["logon_user"] = logon_user;
             Session["user_id"] = "";
             try
@@ -67,21 +75,9 @@ namespace OPSCO_Web.Controllers
                 return View("~/Views/Shared/UnableToAccess.cshtml");
             }
         }
+        #endregion Method
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
+        //will be transfered to each page
         public PartialViewResult SideNav()
         {
             return PartialView("SideNav");

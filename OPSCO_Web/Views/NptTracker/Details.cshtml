@@ -15,7 +15,7 @@
                 <a href="@Url.Action("Index", "NptTracker", null)" class="btn btn-default btn-sm">
                     <i class="fa fa-chevron-left"></i> Back to List
                 </a>
-                @if (ViewBag.CanEdit)
+                @if (ViewBag.Access.CanEdit)
                 {
                     <a href="@Url.Action("Edit", "NptTracker", new { id = Model.NPTReportId })" class="btn btn-default btn-sm">
                         <i class="fa fa-edit"></i> Edit
@@ -68,7 +68,7 @@
         <dd>
             @Html.DisplayFor(model => model.TypeOfActivity)
         </dd>
-        @if (Session["role"].ToString() == "Admin")
+        @if (ViewBag.Access.Role == "Admin")
         { 
             <dt>
                 @Html.DisplayNameFor(model => model.IsActive)

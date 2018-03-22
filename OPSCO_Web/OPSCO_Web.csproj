@@ -333,7 +333,9 @@
     <Compile Include="Models\OSC_WorkType.cs">
       <DependentUpon>OSCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_Access.cs" />
     <Compile Include="Models\_ErrorMessage.cs" />
+    <Compile Include="Models\_Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +570,10 @@
     <Content Include="Templates\Template.xlsx" />
     <Content Include="Views\Shared\UnableToAccess.cshtml" />
     <Content Include="Views\Team\CompletedItemsSection.cshtml" />
+    <Content Include="Views\Shared\SessionTimeout.cshtml" />
+    <Content Include="Views\Shared\NoAccess.cshtml" />
+    <Content Include="Views\Shared\SomethingWentWrong.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Prod.config" />
     <None Include="Web.Stage.config" />

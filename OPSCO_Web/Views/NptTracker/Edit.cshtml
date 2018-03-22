@@ -72,7 +72,7 @@
             @Html.ValidationMessageFor(model => model.TimeSpent, "", new { @class = "text-danger" })
         </div>
     </div>
-    @if (Session["role"].ToString() == "Admin")
+    @if (ViewBag.Access.Role == "Admin")
     {
         <div class="form-group">
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label input-sm col-md-2" })
